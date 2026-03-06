@@ -14,7 +14,7 @@ export default function Card({
   return (
     <Link
       href={href}
-      className="group flex flex-col rounded-lg border border-neutral-200 bg-white p-6 transition hover:border-brand-300 hover:shadow-sm"
+      className="group flex flex-col rounded-lg border border-neutral-200 bg-white p-6 shadow-sm transition hover:border-brand-300 hover:shadow-md"
     >
       {tag && (
         <span className="mb-3 inline-block self-start rounded-full bg-accent-50 px-3 py-1 text-xs font-semibold text-accent-700">

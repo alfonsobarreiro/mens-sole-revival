@@ -1,40 +1,125 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Container from "@/components/Container";
 import Button from "@/components/Button";
+
+const navLinks = [
+  { label: "Learn", href: "/learn" },
+  { label: "Kits", href: "/kits" },
+  { label: "About", href: "/about" },
+];
 
 export default function SiteLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [menuOpen]);
+
   return (
     <main className="min-h-screen bg-white text-neutral-900">
+
       {/* ── Header ── */}
       <header className="sticky top-0 z-40 border-b border-neutral-200 bg-white/95 backdrop-blur-sm">
         <Container>
           <div className="flex items-center justify-between py-4">
+
+            {/* Logo */}
             <Link href="/" className="flex items-center gap-2 hover:opacity-80">
               <span className="font-heading text-lg font-semibold text-brand-900">
                 Men's Sole Revival
               </span>
             </Link>
+
+            {/* Desktop nav */}
             <nav className="hidden items-center gap-6 md:flex">
-              <Link href="/learn" className="text-sm font-medium text-neutral-600 hover:text-brand-600">
-                Learn
-              </Link>
-              <Link href="/kits" className="text-sm font-medium text-neutral-600 hover:text-brand-600">
-                Kits
-              </Link>
-              <Link href="/about" className="text-sm font-medium text-neutral-600 hover:text-brand-600">
-                About
-              </Link>
+              {navLinks.map(({ label, href }) => {
+                const isActive = pathname === href || pathname.startsWith(href + "/");
+                return (
+                  <Link
+                    key={href}
+                    href={href}
+                    className={`text-sm font-medium transition ${
+                      isActive
+                        ? "text-brand-600 underline underline-offset-4 decoration-brand-300"
+                        : "text-neutral-600 hover:text-brand-600"
+                    }`}
+                  >
+                    {label}
+                  </Link>
+                );
+              })}
               <Button href="/waitlist" size="sm">Join the Waitlist</Button>
             </nav>
-            <Button href="/waitlist" size="sm" className="md:hidden">
-              Join
-            </Button>
+
+            {/* Mobile: hamburger */}
+            <button
+              type="button"
+              onClick={() => setMenuOpen((o) => !o)}
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
+              className="flex h-9 w-9 items-center justify-center rounded-md text-neutral-700 hover:bg-neutral-100 transition md:hidden"
+            >
+              {menuOpen ? (
+                // X icon
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M18 6 6 18M6 6l12 12" />
+                </svg>
+              ) : (
+                // Hamburger icon
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
+            </button>
           </div>
         </Container>
+
+        {/* Mobile dropdown menu */}
+        {menuOpen && (
+          <div className="border-t border-neutral-100 bg-white md:hidden">
+            <Container>
+              <nav className="flex flex-col py-4">
+                {navLinks.map(({ label, href }) => {
+                  const isActive = pathname === href || pathname.startsWith(href + "/");
+                  return (
+                    <Link
+                      key={href}
+                      href={href}
+                      className={`-mx-2 rounded-md px-3 py-3 text-sm font-medium transition ${
+                        isActive
+                          ? "text-brand-600 bg-brand-50"
+                          : "text-neutral-700 hover:text-brand-600 hover:bg-neutral-50"
+                      }`}
+                    >
+                      {label}
+                    </Link>
+                  );
+                })}
+                <div className="mt-3 pt-3 border-t border-neutral-100">
+                  <Button href="/waitlist" size="sm" className="w-full justify-center">
+                    Join the Waitlist
+                  </Button>
+                </div>
+              </nav>
+            </Container>
+          </div>
+        )}
       </header>
 
       {/* ── Page content ── */}

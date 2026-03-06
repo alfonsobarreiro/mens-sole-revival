@@ -82,7 +82,7 @@ export default function LearnPage() {
                     <Link
                       key={a.href}
                       href={a.href}
-                      className="group flex gap-5 rounded-lg border border-neutral-200 bg-white p-4 transition hover:border-brand-300 hover:shadow-sm md:p-5"
+                      className="group flex gap-5 rounded-lg border border-neutral-200 bg-white p-4 shadow-sm transition hover:border-brand-300 hover:bg-brand-50/60 hover:shadow-md md:p-5"
                     >
                       {/* Thumbnail */}
                       <div className="relative h-28 w-28 flex-shrink-0 overflow-hidden rounded-md md:h-32 md:w-40">

@@ -112,9 +112,9 @@ export default function Home() {
       {/* ── Stats ── */}
       <section className="border-b border-neutral-200 bg-brand-50 py-12">
         <Container>
-          <div className="grid gap-8 md:grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-3">
             {stats.map((s) => (
-              <div key={s.value} className="flex flex-col gap-1">
+              <div key={s.value} className="flex flex-col gap-1 rounded-lg bg-white p-5 shadow-sm ring-1 ring-brand-100">
                 <span className="font-heading text-3xl font-semibold text-brand-600">
                   {s.value}
                 </span>
@@ -150,7 +150,7 @@ export default function Home() {
               },
             ].map((item) => (
               <div key={item.heading}
-                className="rounded-lg border border-neutral-200 bg-white p-6">
+                className="rounded-lg border border-neutral-200 bg-white p-6 shadow-sm">
                 <div className="mb-3 h-1 w-8 rounded-full bg-accent-500" />
                 <h3 className={type.h4}>{item.heading}</h3>
                 <p className="mt-2 text-sm leading-6 text-neutral-600">{item.body}</p>
@@ -205,7 +205,7 @@ export default function Home() {
           <div className="mt-8 space-y-3">
             {articles.map((a) => (
               <Link key={a.href} href={a.href}
-                className="group flex items-center gap-4 rounded-lg border border-neutral-200 bg-white p-3 transition hover:border-brand-300 hover:shadow-sm md:px-5 md:py-4">
+                className="group flex items-center gap-4 rounded-lg border border-neutral-200 bg-white p-3 shadow-sm transition hover:border-brand-300 hover:bg-brand-50/60 hover:shadow-md md:px-5 md:py-4">
                 {/* Thumbnail */}
                 <div className="relative h-16 w-20 flex-shrink-0 overflow-hidden rounded md:h-14 md:w-20">
                   <Image
