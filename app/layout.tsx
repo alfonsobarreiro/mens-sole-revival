@@ -1,33 +1,28 @@
 import type { Metadata } from "next";
+import { Lora, DM_Sans } from "next/font/google";
 import "./globals.css";
+
+const lora = Lora({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-heading",
+  display: "swap",
+});
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-body",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: {
-    default: "Men’s Sole Revival",
-    template: "%s · Men’s Sole Revival",
+    default: "Men's Sole Revival",
+    template: "%s | Men's Sole Revival",
   },
   description:
-    "Evidence-based foot care routines and starter kits for men over 40. No gimmicks. Just practical care that works.",
-  keywords: [
-    "men’s foot care",
-    "foot pain",
-    "toenail fungus",
-    "toe alignment",
-    "plantar fasciitis",
-    "men over 40 health",
-  ],
-  openGraph: {
-    title: "Men’s Sole Revival",
-    description:
-      "Practical, evidence-based foot care for men over 40. Start with a routine. Upgrade with a kit.",
-    url: "https://mens-sole-revival.vercel.app",
-    siteName: "Men’s Sole Revival",
-    type: "website",
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
+    "Foot care, footwear, and the holistic habits that keep men moving well into their best decades.",
 };
 
 export default function RootLayout({
@@ -36,8 +31,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en" className={`${lora.variable} ${dmSans.variable}`}>
+      <body className="min-h-screen bg-white antialiased">
+        {children}
+      </body>
     </html>
   );
 }

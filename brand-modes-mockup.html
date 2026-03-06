@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AB Foundation — Brand Mode Comparison</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #F5F5F5;
+      padding: 48px 32px;
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+    }
+
+    .page-title {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 32px;
+      text-align: center;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* ── Card shell ── */
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.06);
+    }
+
+    /* ── Hero band ── */
+    .hero {
+      padding: 40px 32px 32px;
+      position: relative;
+    }
+
+    .mode-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.65;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .hero h1 {
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      font-size: 15px;
+      line-height: 1.7;
+      opacity: 0.75;
+      margin-bottom: 24px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      margin-right: 8px;
+      margin-bottom: 8px;
+      transition: opacity 0.15s;
+      text-decoration: none;
+    }
+
+    /* ── Article preview band ── */
+    .article {
+      padding: 24px 32px;
+      border-top: 1px solid;
+      background: #FAFAFA;
+    }
+
+    .article-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 12px;
+    }
+
+    .article h2 {
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.35;
+      margin-bottom: 6px;
+    }
+
+    .article p {
+      font-size: 13px;
+      line-height: 1.65;
+      color: #666;
+    }
+
+    /* ── Swatch band ── */
+    .swatches {
+      padding: 20px 32px;
+      border-top: 1px solid #EBEBEB;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .swatch {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .swatch-label {
+      font-size: 10px;
+      color: #999;
+      line-height: 1.4;
+      text-align: center;
+    }
+
+    .swatch-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+
+    /* ── Font specimen band ── */
+    .specimen {
+      padding: 16px 32px 24px;
+      border-top: 1px solid #EBEBEB;
+    }
+
+    .specimen-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+    }
+
+    .specimen-name {
+      font-size: 11px;
+      color: #999;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .specimen-sample {
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+
+    /* ═══════════════════════════════════
+       BRAND MODE — Purple + Amber
+    ═══════════════════════════════════ */
+    .brand .hero          { background: #1E0A4C; color: #fff; }
+    .brand .mode-label    { color: rgba(255,255,255,0.5); }
+    .brand .hero h1       { font-family: 'Plus Jakarta Sans', sans-serif; color: #fff; }
+    .brand .hero p        { font-family: 'DM Sans', sans-serif; color: rgba(255,255,255,0.7); }
+    .brand .btn-primary   { background: #F59E0B; color: #1E0A4C; font-family: 'DM Sans', sans-serif; }
+    .brand .btn-outline   { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.4); font-family: 'DM Sans', sans-serif; }
+    .brand .article       { border-color: #EDE9FE; background: #FAF8FF; }
+    .brand .article h2    { font-family: 'Plus Jakarta Sans', sans-serif; color: #2D1270; }
+    .brand .swatches      { border-color: #EDE9FE; }
+    .brand .specimen-sample.heading { font-family: 'Plus Jakarta Sans', sans-serif; color: #2D1270; }
+    .brand .specimen-sample.body    { font-family: 'DM Sans', sans-serif; color: #555; }
+
+    /* ═══════════════════════════════════
+       WAYFARER MODE — Teal + Warm Sand
+    ═══════════════════════════════════ */
+    .wayfarer .hero         { background: #0E9090; color: #fff; }
+    .wayfarer .mode-label   { color: rgba(255,255,255,0.5); }
+    .wayfarer .hero h1      { font-family: 'DM Serif Display', Georgia, serif; color: #fff; font-weight: 400; letter-spacing: -0.3px; }
+    .wayfarer .hero p       { font-family: 'DM Sans', sans-serif; color: rgba(255,255,255,0.75); }
+    .wayfarer .btn-primary  { background: #E8C87D; color: #0D4E4E; font-family: 'DM Sans', sans-serif; }
+    .wayfarer .btn-outline  { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.4); font-family: 'DM Sans', sans-serif; }
+    .wayfarer .article      { border-color: #D9F2F2; background: #F5FAFA; }
+    .wayfarer .article h2   { font-family: 'DM Serif Display', Georgia, serif; color: #083030; font-weight: 400; }
+    .wayfarer .swatches     { border-color: #D9F2F2; }
+    .wayfarer .specimen-sample.heading { font-family: 'DM Serif Display', Georgia, serif; color: #083030; font-weight: 400; }
+    .wayfarer .specimen-sample.body    { font-family: 'DM Sans', sans-serif; color: #555; }
+
+    /* ═══════════════════════════════════
+       MEN'S SOLE REVIVAL — Navy + Cognac
+    ═══════════════════════════════════ */
+    .msr .hero          { background: #1C3F5E; color: #fff; }
+    .msr .mode-label    { color: rgba(255,255,255,0.5); }
+    .msr .hero h1       { font-family: 'Lora', serif; color: #fff; }
+    .msr .hero p        { font-family: 'DM Sans', sans-serif; color: rgba(255,255,255,0.75); }
+    .msr .btn-primary   { background: #C4703A; color: #fff; font-family: 'DM Sans', sans-serif; }
+    .msr .btn-outline   { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.4); font-family: 'DM Sans', sans-serif; }
+    .msr .article       { border-color: #DFE6EC; background: #F7F9FB; }
+    .msr .article h2    { font-family: 'Lora', serif; color: #091016; }
+    .msr .swatches      { border-color: #DFE6EC; }
+    .msr .specimen-sample.heading { font-family: 'Lora', serif; color: #112840; }
+    .msr .specimen-sample.body    { font-family: 'DM Sans', sans-serif; color: #555; }
+
+  </style>
+</head>
+<body>
+
+  <p class="page-title">AB Foundation / Core Library — Brand Mode Comparison</p>
+
+  <div class="grid">
+
+    <!-- ── BRAND ── -->
+    <div class="card brand">
+      <div class="hero">
+        <span class="mode-label">Brand</span>
+        <h1>Design that moves people forward.</h1>
+        <p>A multi-brand foundation built on systematic decisions. Every token, every state, every component — intentional.</p>
+        <a class="btn btn-primary">Get Started</a>
+        <a class="btn btn-outline">Learn More</a>
+      </div>
+      <div class="article">
+        <p class="article-label">Article preview</p>
+        <h2>Building a Design System That Scales</h2>
+        <p>How intentional token architecture makes multi-brand theming effortless across every surface.</p>
+      </div>
+      <div class="swatches">
+        <div class="swatch-item"><div class="swatch" style="background:#2D1270"></div><div class="swatch-label">900</div></div>
+        <div class="swatch-item"><div class="swatch" style="background:#4C1D95"></div><div class="swatch-label">800</div></div>
+        <div class="swatch-item"><div class="swatch" style="background:#6D28D9"></div><div class="swatch-label">600</div></div>
+        <div class="swatch-item"><div class="swatch" style="background:#7C3AED"></div><div class="swatch-label">500</div></div>
+        <div class="swatch-item"><div class="swatch" style="background:#A78BFA"></div><div class="swatch-label">300</div></div>
+        <div class="swatch-item"><div class="swatch" style="background:#EDE9FE"></div><div class="swatch-label" style="color:#aaa">50</div></div>
+        <div style="width:1px;height:28px;background:#eee;margin:0 4px"></div>
+        <div class="swatch-item"><div class="swatch" style="background:#F59E0B"></div><div class="swatch-label">accent</div></div>
+      </div>
+      <div class="specimen">
+        <div class="specimen-row">
+          <span class="specimen-name">Heading — Plus Jakarta Sans</span>
+          <span class="specimen-sample heading">Aa Bb Cc</span>
+        </div>
+        <div class="specimen-row">
+          <span class="specimen-name">Body — DM Sans</span>
+          <span class="specimen-sample body">Aa Bb Cc</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── WAYFARER ── -->
+    <div class="card wayfarer">
+      <div class="hero">
+        <span class="mode-label">Wayfarer</span>
+        <h1>Every journey begins with a single step.</h1>
+        <p>Travel planning built for the intentional explorer. Curated routes, honest guides, and tools that get out of your way.</p>
+        <a class="btn btn-primary">Explore Routes</a>
+        <a class="btn btn-outline">Learn More</a>
+      </div>
+      <div class="article">
+        <p class="article-label">Article preview</p>
+        <h2>The 10 Most Underrated Coastal Trails in Portugal</h2>
+        <p>Crumbling sea cliffs, hidden coves, and paths that tourists haven't found yet. A guide for the real wanderer.</p>
+      </div>
+      <div class="swatches">
+        <div class="swatch-item"><div class="swatch" style="background:#083030"></div><div class="swatch-label">900</div></div>
+        <div class="swatch-item"><div class="swatch" style="background:#0B4C4C"></div><div class="swatch-label">800</div></div>
+        <div class="swatch-item"><div class="swatch" style="background:#0D6E6E"></div><div class="swatch-label">700</div></div>
+        <div class="swatch-item"><div class="swatch" style="background:#0E9090"></div><div class="swatch-label">500</div></div>
+        <div class="swatch-item"><div class="swatch" style="background:#5DE5E5"></div><div class="swatch-label">300</div></div>
+        <div class="swatch-item"><div class="swatch" style="background:#EEF6F6"></div><div class="swatch-label" style="color:#aaa">50</div></div>
+        <div style="width:1px;height:28px;background:#eee;margin:0 4px"></div>
+        <div class="swatch-item"><div class="swatch" style="background:#E8C87D"></div><div class="swatch-label">accent</div></div>
+      </div>
+      <div class="specimen">
+        <div class="specimen-row">
+          <span class="specimen-name">Heading — DM Serif Display</span>
+          <span class="specimen-sample heading">Aa Bb Cc</span>
+        </div>
+        <div class="specimen-row">
+          <span class="specimen-name">Body — DM Sans</span>
+          <span class="specimen-sample body">Aa Bb Cc</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── MEN'S SOLE REVIVAL ── -->
+    <div class="card msr">
+      <div class="hero">
+        <span class="mode-label">Men's Sole Revival</span>
+        <h1>Your feet carry you through everything.</h1>
+        <p>Foot care, footwear, and the holistic habits that keep men moving well into their best decades. Knowledge, not gimmicks.</p>
+        <a class="btn btn-primary">Start Here</a>
+        <a class="btn btn-outline">Read Articles</a>
+      </div>
+      <div class="article">
+        <p class="article-label">Article preview</p>
+        <h2>Why Foot Health Is the Foundation of Men's Wellness After 40</h2>
+        <p>The connection between foot mechanics, posture, and whole-body vitality — and what you can do about it today.</p>
+      </div>
+      <div class="swatches">
+        <div class="swatch-item"><div class="swatch" style="background:#091016"></div><div class="swatch-label">900</div></div>
+        <div class="swatch-item"><div class="swatch" style="background:#0C1A26"></div><div class="swatch-label">800</div></div>
+        <div class="swatch-item"><div class="swatch" style="background:#112840"></div><div class="swatch-label">700</div></div>
+        <div class="swatch-item"><div class="swatch" style="background:#1C3F5E"></div><div class="swatch-label">500</div></div>
+        <div class="swatch-item"><div class="swatch" style="background:#82A8CA"></div><div class="swatch-label">300</div></div>
+        <div class="swatch-item"><div class="swatch" style="background:#F0F2F4"></div><div class="swatch-label" style="color:#aaa">50</div></div>
+        <div style="width:1px;height:28px;background:#eee;margin:0 4px"></div>
+        <div class="swatch-item"><div class="swatch" style="background:#C4703A"></div><div class="swatch-label">accent</div></div>
+      </div>
+      <div class="specimen">
+        <div class="specimen-row">
+          <span class="specimen-name">Heading — Lora</span>
+          <span class="specimen-sample heading">Aa Bb Cc</span>
+        </div>
+        <div class="specimen-row">
+          <span class="specimen-name">Body — DM Sans</span>
+          <span class="specimen-sample body">Aa Bb Cc</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
