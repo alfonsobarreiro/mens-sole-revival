@@ -16,7 +16,7 @@ const articles = [
     title: "Toenail Fungus: What Actually Works (and What's a Scam)",
     category: "Nail Care",
     readTime: "8 min",
-    image: "https://images.unsplash.com/photo-1608138278598-7e595958dbe0?w=800&q=75",
+    image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=75",
     excerpt:
       "The evidence on OTC treatments, prescription options, and home remedies — ranked by how well they actually work.",
   },

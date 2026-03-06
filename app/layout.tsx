@@ -32,7 +32,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${lora.variable} ${dmSans.variable}`}>
-      <body className="min-h-screen bg-white antialiased">
+      <body className="min-h-screen bg-white antialiased" suppressHydrationWarning>
         {children}
       </body>
     </html>

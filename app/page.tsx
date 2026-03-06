@@ -35,7 +35,7 @@ const articles = [
     readTime: "8 min",
     category: "Nail Care",
     // Unsplash: close-up of foot/nail care
-    image: "https://images.unsplash.com/photo-1608138278598-7e595958dbe0?w=600&q=75",
+    image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&q=75",
   },
   {
     title: "Why toe alignment affects your knees and hips",
