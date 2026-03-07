@@ -63,6 +63,22 @@ const articles = [
     excerpt: "The evidence on OTC treatments, prescription options, and home remedies — ranked by how well they actually work.",
     image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=75",
   },
+  {
+    slug: "why-toe-alignment-affects-knees-and-hips",
+    title: "Why Toe Alignment Affects Your Knees and Hips",
+    category: "Toe Alignment",
+    readTime: "5 min",
+    excerpt: "When your big toe can't extend and stabilize, your knee, hip, and lower back pick up the slack — every single step. Here's how it travels up the chain.",
+    image: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&q=75",
+  },
+  {
+    slug: "5-minute-routine",
+    title: "A 5-Minute Daily Foot-Care Routine You Can Actually Stick To",
+    category: "Daily Routine",
+    readTime: "4 min",
+    excerpt: "Consistency beats intensity. A five-minute habit done after your shower produces dramatically better long-term outcomes than anything more ambitious you'll quit.",
+    image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=75",
+  },
 ];
 
 const stats = [
@@ -230,9 +246,9 @@ export default function Home() {
             </div>
           </div>
 
-          {/* RIGHT — 3 articles that scroll past the sticky left */}
+          {/* RIGHT — 4 articles that scroll past the sticky left */}
           <div className="divide-y divide-neutral-200 border-t border-neutral-200 md:border-t-0">
-            {articles.slice(1, 4).map((a) => (
+            {articles.slice(1, 5).map((a) => (
               <Link
                 key={a.slug}
                 href={`/blog/${a.slug}`}
