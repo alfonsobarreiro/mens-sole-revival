@@ -7,7 +7,7 @@ import SiteLayout from "@/components/SiteLayout";
 import { type } from "@/components/typography";
 
 export const metadata: Metadata = {
-  title: "Journal",
+  title: "The Library",
   description: "Practical, evidence-based writing on foot health, consistency, and care for men.",
 };
 

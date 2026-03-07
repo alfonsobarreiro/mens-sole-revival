@@ -139,7 +139,7 @@ export default function Home() {
                   size="lg"
                   className="border-white/30 text-white hover:bg-white/10 active:bg-white/20"
                 >
-                  Browse Articles
+                  Browse the Library
                 </Button>
               </div>
 
@@ -185,26 +185,29 @@ export default function Home() {
       </section>
 
       {/* ── From the Library — featured left sticky + 3 articles right ── */}
-      <section className="border-t border-neutral-200 overflow-hidden">
+      {/* NOTE: no overflow-hidden on this section — it breaks position:sticky */}
+      <section className="border-t border-neutral-200">
         <div className="grid grid-cols-1 md:grid-cols-2">
 
-          {/* LEFT — sticky featured story */}
-          <div className="border-b border-neutral-200 md:border-b-0 md:border-r md:border-neutral-200">
-            <div className="md:sticky md:top-0 p-8 md:p-10 lg:p-14">
+          {/* LEFT — sticky panel: fills viewport, heading top, article bottom */}
+          <div className="md:border-r md:border-neutral-200">
+            <div className="md:sticky md:top-0 md:flex md:min-h-screen md:flex-col md:justify-between p-8 md:p-10 lg:p-14">
 
-              {/* Section heading */}
-              <p className={`${type.displayHero} text-brand-900 leading-none`}>
-                FROM<br />THE<br />LIBRARY.
-              </p>
-              <Link
-                href="/learn"
-                className="mt-6 mb-10 inline-flex items-center gap-2 border border-brand-900 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-brand-900 transition hover:bg-brand-900 hover:text-white"
-              >
-                View all guides
-              </Link>
+              {/* Top: section heading + CTA */}
+              <div>
+                <p className={`${type.displayHero} text-brand-900 leading-none`}>
+                  FROM<br />THE<br />LIBRARY.
+                </p>
+                <Link
+                  href="/learn"
+                  className="mt-6 inline-flex items-center gap-2 border border-brand-900 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-brand-900 transition hover:bg-brand-900 hover:text-white"
+                >
+                  View all guides
+                </Link>
+              </div>
 
-              {/* Featured article */}
-              <Link href={`/blog/${articles[0].slug}`} className="group block">
+              {/* Bottom: featured article */}
+              <Link href={`/blog/${articles[0].slug}`} className="group mt-10 block md:mt-0">
                 <div className="relative overflow-hidden" style={{ aspectRatio: "3/2" }}>
                   <Image
                     src={articles[0].image}
@@ -228,7 +231,7 @@ export default function Home() {
           </div>
 
           {/* RIGHT — 3 articles that scroll past the sticky left */}
-          <div className="divide-y divide-neutral-200">
+          <div className="divide-y divide-neutral-200 border-t border-neutral-200 md:border-t-0">
             {articles.slice(1, 4).map((a) => (
               <Link
                 key={a.slug}
