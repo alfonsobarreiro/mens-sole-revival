@@ -94,40 +94,37 @@ export default function LearnPage() {
       <section className="py-10 md:py-14">
         <Container>
 
-          {/* Filter tabs — Vivobarefoot-style horizontal pill row */}
-          <div className="mb-8 flex flex-wrap gap-2">
+          {/* Filter tabs — angular underline style */}
+          <div className="mb-8 flex flex-wrap gap-0 border-b border-neutral-200">
             {allCategories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActive(cat)}
-                className={`rounded-full px-5 py-2 text-sm font-semibold transition ${
+                className={`-mb-px px-5 py-3 text-xs font-bold uppercase tracking-wider border-b-2 transition ${
                   active === cat
-                    ? "bg-brand-900 text-white"
-                    : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200 hover:text-neutral-900"
+                    ? "border-brand-900 text-brand-900"
+                    : "border-transparent text-neutral-500 hover:text-neutral-900"
                 }`}
               >
                 {cat}
                 {cat !== "All" && (
-                  <span className={`ml-2 text-xs font-normal opacity-60`}>
+                  <span className="ml-2 font-normal opacity-50">
                     {articles.filter((a) => a.category === cat).length}
                   </span>
                 )}
               </button>
             ))}
-            <span className="flex items-center text-xs text-neutral-400 ml-1">
-              {filtered.length} {filtered.length === 1 ? "guide" : "guides"}
-            </span>
           </div>
 
-          {/* Article grid — image-first cards, 2 col mobile → 3 col desktop */}
+          {/* Article grid — sharp image-first cards, no rounding */}
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {filtered.map((a) => (
               <Link
                 key={a.href}
                 href={a.href}
-                className="group flex flex-col overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-sm transition hover:border-brand-300 hover:shadow-md"
+                className="group flex flex-col overflow-hidden border border-neutral-200 bg-white shadow-sm transition hover:border-brand-300 hover:shadow-md"
               >
-                {/* Full-bleed image — dominant, like Vivobarefoot */}
+                {/* Full-bleed image — sharp edges */}
                 <div className="relative aspect-[4/3] w-full overflow-hidden">
                   <Image
                     src={a.image}
@@ -135,9 +132,9 @@ export default function LearnPage() {
                     fill
                     className="object-cover transition duration-500 group-hover:scale-105"
                   />
-                  {/* Category badge overlaid bottom-left on image */}
+                  {/* Category badge overlaid bottom-left */}
                   <div className="absolute bottom-3 left-3">
-                    <span className={`rounded-full px-3 py-1 text-xs font-semibold backdrop-blur-sm ${categoryColor[a.category] ?? "bg-white/80 text-neutral-700"}`}>
+                    <span className="bg-white/90 px-3 py-1 text-xs font-bold uppercase tracking-wider text-brand-900 backdrop-blur-sm">
                       {a.category}
                     </span>
                   </div>
@@ -145,29 +142,29 @@ export default function LearnPage() {
 
                 {/* Text below image */}
                 <div className="flex flex-1 flex-col p-4 md:p-5">
-                  <div className="mb-2 flex items-center gap-2">
-                    <span className="text-xs text-neutral-400">{a.readTime} read</span>
-                  </div>
-                  <h2 className="font-heading text-base font-semibold leading-snug text-neutral-900 group-hover:text-brand-700 md:text-lg">
+                  <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-neutral-400">
+                    {a.readTime} read
+                  </p>
+                  <h2 className="font-display text-lg font-bold uppercase leading-tight text-neutral-900 transition group-hover:text-brand-700 md:text-xl">
                     {a.title}
                   </h2>
                   <p className="mt-2 flex-1 text-sm leading-6 text-neutral-500">
                     {a.excerpt}
                   </p>
-                  <p className="mt-4 text-sm font-semibold text-brand-500 group-hover:text-brand-700">
+                  <p className="mt-4 text-xs font-bold uppercase tracking-wider text-brand-500 group-hover:text-brand-700">
                     Read guide →
                   </p>
                 </div>
               </Link>
             ))}
 
-            {/* Empty-state when filter returns nothing (future-proofing) */}
+            {/* Empty-state */}
             {filtered.length === 0 && (
               <div className="col-span-full py-16 text-center text-neutral-400">
                 <p className="text-sm">No guides in this category yet.</p>
                 <button
                   onClick={() => setActive("All")}
-                  className="mt-3 text-sm font-semibold text-brand-500 underline underline-offset-4"
+                  className="mt-3 text-xs font-bold uppercase tracking-wider text-brand-500 underline underline-offset-4"
                 >
                   View all guides
                 </button>
@@ -175,17 +172,17 @@ export default function LearnPage() {
             )}
           </div>
 
-          {/* Coming soon callout */}
-          <div className="mt-12 rounded-xl border border-neutral-200 bg-neutral-50 p-6 md:flex md:items-center md:justify-between">
+          {/* Coming soon callout — sharp edges */}
+          <div className="mt-12 border border-neutral-200 bg-neutral-50 p-6 md:flex md:items-center md:justify-between">
             <div>
-              <p className={type.h4}>More guides coming soon.</p>
+              <p className="font-display text-xl font-bold uppercase leading-tight text-brand-900">More guides coming soon.</p>
               <p className="mt-1 text-sm text-neutral-600">
                 Join the waitlist to get notified when new articles and topic series are published.
               </p>
             </div>
             <Link
               href="/waitlist"
-              className="mt-4 inline-block flex-shrink-0 rounded-full bg-brand-900 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-700 md:mt-0 md:ml-8"
+              className="mt-4 inline-block flex-shrink-0 bg-brand-900 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-brand-700 md:mt-0 md:ml-8"
             >
               Join the waitlist
             </Link>

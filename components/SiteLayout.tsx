@@ -126,32 +126,32 @@ export default function SiteLayout({
       {children}
 
       {/* ── Footer ── */}
-      <footer className="border-t border-neutral-200 bg-neutral-50">
+      <footer className="bg-brand-900">
         <Container>
-          <div className="py-12">
-            <div className="flex flex-col gap-8 md:flex-row md:justify-between">
+          <div className="py-14">
+            <div className="flex flex-col gap-10 md:flex-row md:justify-between">
               <div>
-                <p className="font-heading text-base font-semibold text-brand-900">
+                <p className="font-display text-xl font-bold uppercase tracking-tight text-white">
                   Men's Sole Revival
                 </p>
-                <p className="mt-2 max-w-xs text-sm text-neutral-500">
+                <p className="mt-3 max-w-xs text-sm leading-6 text-brand-400">
                   Foot care, footwear, and the holistic habits that keep men
                   moving well into their best decades.
                 </p>
               </div>
-              <div className="flex gap-12">
+              <div className="flex gap-16">
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-widest text-neutral-400">
+                  <p className="text-xs font-semibold uppercase tracking-widest text-brand-500">
                     Explore
                   </p>
-                  <ul className="mt-3 space-y-2">
+                  <ul className="mt-4 space-y-2">
                     {[
                       { label: "Learn", href: "/learn" },
                       { label: "Kits", href: "/kits" },
                       { label: "Blog", href: "/blog" },
                     ].map((l) => (
                       <li key={l.href}>
-                        <Link href={l.href} className="text-sm text-neutral-600 hover:text-brand-600">
+                        <Link href={l.href} className="text-sm text-brand-300 transition hover:text-white">
                           {l.label}
                         </Link>
                       </li>
@@ -159,16 +159,16 @@ export default function SiteLayout({
                   </ul>
                 </div>
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-widest text-neutral-400">
+                  <p className="text-xs font-semibold uppercase tracking-widest text-brand-500">
                     Company
                   </p>
-                  <ul className="mt-3 space-y-2">
+                  <ul className="mt-4 space-y-2">
                     {[
                       { label: "About", href: "/about" },
                       { label: "Waitlist", href: "/waitlist" },
                     ].map((l) => (
                       <li key={l.href}>
-                        <Link href={l.href} className="text-sm text-neutral-600 hover:text-brand-600">
+                        <Link href={l.href} className="text-sm text-brand-300 transition hover:text-white">
                           {l.label}
                         </Link>
                       </li>
@@ -177,7 +177,7 @@ export default function SiteLayout({
                 </div>
               </div>
             </div>
-            <div className="mt-10 border-t border-neutral-200 pt-6 text-xs text-neutral-400">
+            <div className="mt-12 border-t border-brand-800 pt-6 text-xs text-brand-600">
               © {new Date().getFullYear()} Men's Sole Revival. Built with intention.
             </div>
           </div>

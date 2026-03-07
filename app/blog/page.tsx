@@ -85,15 +85,15 @@ export default function BlogPage() {
       {/* ── Article list ── */}
       <section className="py-12">
         <Container>
-          <div className="space-y-4">
+          <div className="divide-y divide-neutral-200">
             {articles.map((a) => (
               <Link
                 key={a.slug}
                 href={`/blog/${a.slug}`}
-                className="group flex gap-5 rounded-lg border border-neutral-200 bg-white p-4 shadow-sm transition hover:border-brand-300 hover:bg-brand-50/60 hover:shadow-md md:p-5"
+                className="group flex gap-5 py-6 transition hover:bg-brand-50/40 first:pt-0 px-1"
               >
-                {/* Thumbnail */}
-                <div className="relative h-28 w-28 flex-shrink-0 overflow-hidden rounded-md md:h-32 md:w-40">
+                {/* Thumbnail — sharp, no rounding */}
+                <div className="relative h-28 w-28 flex-shrink-0 overflow-hidden md:h-32 md:w-40">
                   <Image
                     src={a.image}
                     alt={a.title}
@@ -104,12 +104,12 @@ export default function BlogPage() {
                 <div className="flex flex-1 items-start justify-between gap-4">
                   <div>
                     <div className="flex items-center gap-3">
-                      <span className="rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-600">
+                      <span className="bg-brand-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-brand-700">
                         {a.category}
                       </span>
                       <span className="text-xs text-neutral-400">{a.readTime} read</span>
                     </div>
-                    <h2 className={`mt-3 ${type.h4} group-hover:text-brand-700`}>
+                    <h2 className="mt-3 font-display text-xl font-bold uppercase leading-tight text-brand-900 transition group-hover:text-brand-600 md:text-2xl">
                       {a.title}
                     </h2>
                     <p className="mt-2 text-sm leading-6 text-neutral-600">

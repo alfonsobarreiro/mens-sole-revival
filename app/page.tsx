@@ -151,68 +151,71 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Stats ── */}
-      <section className="border-b border-neutral-200 bg-neutral-50 py-14 md:py-16">
+      {/* ── Stats — large display numbers, no cards ── */}
+      <section className="border-b border-neutral-200 py-14 md:py-20">
         <Container>
-          <p className={`${type.displaySm} mb-8 text-neutral-300`}>
-            By the numbers
-          </p>
-          <div className="grid gap-4 md:grid-cols-3">
+          <p className={`${type.overline} mb-10 text-neutral-400`}>By the numbers</p>
+          <div className="grid grid-cols-1 divide-y divide-neutral-100 md:grid-cols-3 md:divide-x md:divide-y-0">
             {stats.map((s) => (
-              <div
-                key={s.value}
-                className="flex flex-col gap-1 rounded-lg bg-white p-5 shadow-sm ring-1 ring-neutral-100"
-              >
-                <span className="font-heading text-3xl font-semibold text-brand-500">
+              <div key={s.value} className="py-8 md:py-0 md:px-10 first:md:pl-0">
+                <span className={`${type.displaySection} block text-brand-900`}>
                   {s.value}
                 </span>
-                <span className="text-sm text-neutral-600">{s.label}</span>
+                <span className="mt-2 block text-sm leading-6 text-neutral-500">{s.label}</span>
               </div>
             ))}
           </div>
         </Container>
       </section>
 
-      {/* ── Why it matters ── */}
-      <section className="py-16 md:py-24">
+      {/* ── Why it matters — three full-bleed dark image panels ── */}
+      <section>
         <Container>
-          {/* Display-scale section opener */}
-          <div className="mb-12 max-w-2xl">
-            <p className={`${type.displaySection} text-brand-900`}>
-              Know your feet.
-            </p>
-            <p className="mt-4 max-w-lg text-base leading-7 text-neutral-500">
-              Foot problems rarely announce themselves. By the time they're obvious,
-              they've usually been building for years.
-            </p>
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-3">
-            {[
-              {
-                heading: "Problems start quietly",
-                body: "Foot issues rarely announce themselves. By the time they're obvious — the pain, the discoloration, the cramped toes — they've usually been building for years.",
-              },
-              {
-                heading: "Most advice is backwards",
-                body: "The internet is full of miracle products and 3-day fixes. Real foot care is a long game that rewards consistency over shortcuts.",
-              },
-              {
-                heading: "It compounds upward",
-                body: "When your feet work well, everything else gets easier — your knees, your posture, your energy. This is the leverage most men overlook.",
-              },
-            ].map((item) => (
-              <div
-                key={item.heading}
-                className="rounded-lg border border-neutral-200 bg-white p-6 shadow-sm"
-              >
-                <div className="mb-4 h-1 w-8 rounded-full bg-accent-500" />
-                <h3 className={type.h4}>{item.heading}</h3>
-                <p className="mt-2 text-sm leading-6 text-neutral-600">{item.body}</p>
-              </div>
-            ))}
+          <div className="py-14 md:py-16">
+            <p className={`${type.overline} text-neutral-400`}>Why this matters</p>
+            <p className={`mt-2 ${type.displaySection} text-brand-900`}>Know your feet.</p>
           </div>
         </Container>
+        {/* Edge-to-edge panel grid — no rounded corners */}
+        <div className="grid grid-cols-1 md:grid-cols-3">
+          {[
+            {
+              heading: "Problems start quietly",
+              body: "By the time they're obvious — the pain, the discoloration, the cramped toes — they've usually been building for years.",
+              image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=70",
+            },
+            {
+              heading: "Most advice is backwards",
+              body: "The internet is full of miracle products and 3-day fixes. Real foot care rewards consistency over shortcuts.",
+              image: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&q=70",
+            },
+            {
+              heading: "It compounds upward",
+              body: "When your feet work well, everything else gets easier — your knees, your posture, your energy. This is the leverage most men overlook.",
+              image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=70",
+            },
+          ].map((item) => (
+            <div
+              key={item.heading}
+              className="relative flex min-h-[340px] flex-col justify-end overflow-hidden bg-brand-900 md:min-h-[420px]"
+            >
+              <Image
+                src={item.image}
+                alt=""
+                fill
+                className="object-cover opacity-50"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-900/95 via-brand-900/50 to-transparent" />
+              <div className="relative z-10 p-7 md:p-8">
+                <div className="mb-3 h-0.5 w-8 bg-accent-500" />
+                <h3 className="font-display text-2xl font-bold uppercase leading-tight text-white md:text-3xl">
+                  {item.heading}
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-brand-300">{item.body}</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* ── Kits ── */}
@@ -244,72 +247,38 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* ── From the Library ── */}
+      {/* ── From the Library — Vivobarefoot "LATEST STORIES" layout ── */}
       <section className="border-t border-neutral-200 py-16 md:py-24">
         <Container>
-          <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-[5fr_8fr]">
+
+            {/* Left: giant sticky title + link */}
             <div>
-              <p className={`${type.displaySection} text-brand-900`}>
-                From the library.
+              <p className={`${type.displayHero} text-brand-900 leading-none`}>
+                FROM<br />THE<br />LIBRARY.
               </p>
-              <p className="mt-3 max-w-xl text-base leading-7 text-neutral-500">
-                Practical, evidence-based articles built to reduce confusion
-                and help you make better decisions about your feet.
+              <p className="mt-5 max-w-xs text-sm leading-6 text-neutral-500">
+                Practical, evidence-based articles on foot health, footwear,
+                and the habits that keep men moving well.
               </p>
+              <Link
+                href="/learn"
+                className="mt-7 inline-flex items-center gap-2 border border-brand-900 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-brand-900 transition hover:bg-brand-900 hover:text-white"
+              >
+                View all guides
+              </Link>
             </div>
-            <Link
-              href="/learn"
-              className="hidden text-sm font-semibold text-brand-500 underline underline-offset-4 hover:text-brand-700 md:block"
-            >
-              Browse all →
-            </Link>
-          </div>
 
-          {/* Editorial layout: featured article large, two compact below */}
-          <div className="grid gap-4 md:grid-cols-3">
-
-            {/* Featured — spans 2 columns on desktop */}
-            <Link
-              href={`/blog/${articles[0].slug}`}
-              className="group flex flex-col overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-sm transition hover:border-brand-300 hover:shadow-md md:col-span-2"
-            >
-              <div className="relative h-52 w-full overflow-hidden md:h-64">
-                <Image
-                  src={articles[0].image}
-                  alt={articles[0].title}
-                  fill
-                  className="object-cover transition duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-              </div>
-              <div className="flex flex-1 flex-col p-5 md:p-6">
-                <div className="flex items-center gap-3">
-                  <span className="rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-600">
-                    {articles[0].category}
-                  </span>
-                  <span className="text-xs text-neutral-400">{articles[0].readTime} read</span>
-                </div>
-                <h2 className={`mt-3 ${type.h3} group-hover:text-brand-700`}>
-                  {articles[0].title}
-                </h2>
-                <p className="mt-2 flex-1 text-sm leading-6 text-neutral-600">
-                  {articles[0].excerpt}
-                </p>
-                <p className="mt-4 text-sm font-semibold text-brand-500 group-hover:text-brand-700">
-                  Read article →
-                </p>
-              </div>
-            </Link>
-
-            {/* Two compact articles stacked */}
-            <div className="flex flex-col gap-4">
-              {articles.slice(1).map((a) => (
+            {/* Right: article list with sharp thumbnails */}
+            <div className="divide-y divide-neutral-200">
+              {articles.map((a) => (
                 <Link
                   key={a.slug}
                   href={`/blog/${a.slug}`}
-                  className="group flex flex-1 flex-col overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-sm transition hover:border-brand-300 hover:shadow-md"
+                  className="group flex gap-5 py-7 first:pt-0"
                 >
-                  <div className="relative h-36 w-full overflow-hidden">
+                  {/* Sharp thumbnail — no rounding */}
+                  <div className="relative h-24 w-32 flex-shrink-0 overflow-hidden">
                     <Image
                       src={a.image}
                       alt={a.title}
@@ -317,29 +286,19 @@ export default function Home() {
                       className="object-cover transition duration-500 group-hover:scale-105"
                     />
                   </div>
-                  <div className="flex flex-1 flex-col p-4">
-                    <div className="flex items-center gap-2">
-                      <span className="rounded-full bg-brand-50 px-2 py-0.5 text-xs font-semibold text-brand-600">
-                        {a.category}
-                      </span>
-                      <span className="text-xs text-neutral-400">{a.readTime} read</span>
-                    </div>
-                    <h3 className="mt-2 text-sm font-semibold leading-snug text-neutral-800 group-hover:text-brand-700">
+                  <div className="flex flex-col justify-center">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-accent-600">
+                      {a.category} · {a.readTime} read
+                    </p>
+                    <h3 className="mt-1 font-display text-xl font-bold uppercase leading-tight text-brand-900 transition group-hover:text-brand-600 md:text-2xl">
                       {a.title}
                     </h3>
+                    <p className="mt-1 text-sm leading-6 text-neutral-500">{a.excerpt}</p>
                   </div>
                 </Link>
               ))}
             </div>
-          </div>
 
-          <div className="mt-6 md:hidden">
-            <Link
-              href="/learn"
-              className="text-sm font-semibold text-brand-500 underline underline-offset-4 hover:text-brand-700"
-            >
-              Browse all articles →
-            </Link>
           </div>
         </Container>
       </section>
