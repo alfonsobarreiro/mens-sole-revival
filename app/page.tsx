@@ -57,9 +57,21 @@ const articles = [
 ];
 
 const stats = [
-  { value: "1 in 4", label: "men over 40 experience chronic foot pain" },
-  { value: "75%", label: "of foot problems are preventable with consistent care" },
-  { value: "6 months", label: "average time to see results from proper treatment" },
+  {
+    value: "1 in 4",
+    label: "men over 40 experience chronic foot pain",
+    context: "That's probably someone in your household.",
+  },
+  {
+    value: "75%",
+    label: "of foot problems are preventable with consistent care",
+    context: "Most of what slows men down after 40 was preventable.",
+  },
+  {
+    value: "6 months",
+    label: "average time to see real results from proper treatment",
+    context: "Slow progress. Real results. Worth starting today.",
+  },
 ];
 
 const marqueeItems = [
@@ -97,21 +109,20 @@ export default function Home() {
             <div className="max-w-3xl py-24 md:py-32">
 
               <p className="mb-6 text-xs font-semibold uppercase tracking-widest text-accent-400">
-                Foot Care · Footwear · Holistic Health
+                For men over 40 who are finally paying attention.
               </p>
 
-              {/* Display-scale hero headline — Barlow Condensed */}
               <h1 className={`${type.displayHero} text-white`}>
-                Your feet<br />
-                carry you<br />
-                through<br />
-                everything.
+                Fix your feet.<br />
+                Keep up with<br />
+                everything else.
               </h1>
 
               <p className="mt-8 max-w-xl text-lg leading-relaxed text-brand-200">
-                Evidence-based foot care for men over 40. Clear routines,
-                honest guides, and starter kits for the problems men actually
-                deal with — without the miracle claims.
+                Foot problems don't stay in your feet — they change how your
+                knees load, how your hips move, and how your back feels by
+                evening. Most men don't notice until a decade of damage has
+                already passed.
               </p>
 
               <div className="mt-10 flex flex-wrap gap-3">
@@ -154,7 +165,7 @@ export default function Home() {
       {/* ── Stats — large display numbers, no cards ── */}
       <section className="border-b border-neutral-200 py-14 md:py-20">
         <Container>
-          <p className={`${type.overline} mb-10 text-neutral-400`}>By the numbers</p>
+          <p className={`${type.overline} mb-10 text-neutral-400`}>The numbers most men ignore</p>
           <div className="grid grid-cols-1 divide-y divide-neutral-100 md:grid-cols-3 md:divide-x md:divide-y-0">
             {stats.map((s) => (
               <div key={s.value} className="py-8 md:py-0 md:px-10 first:md:pl-0">
@@ -162,6 +173,7 @@ export default function Home() {
                   {s.value}
                 </span>
                 <span className="mt-2 block text-sm leading-6 text-neutral-500">{s.label}</span>
+                <span className="mt-2 block text-xs font-semibold text-accent-600">{s.context}</span>
               </div>
             ))}
           </div>
