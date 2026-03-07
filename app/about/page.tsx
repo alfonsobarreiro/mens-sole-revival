@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Container from "@/components/Container";
 import SiteLayout from "@/components/SiteLayout";
 import Button from "@/components/Button";
@@ -14,20 +15,36 @@ export default function AboutPage() {
     <SiteLayout>
 
       {/* ── Hero ── */}
-      <section className="border-b border-neutral-200 py-16 md:py-20">
-        <Container>
-          <div className="max-w-2xl">
-            <p className={type.overline}>About</p>
-            <h1 className={`mt-3 ${type.h1}`}>
-              Built for the men who are finally paying attention.
-            </h1>
-            <p className={`mt-6 ${type.lead}`}>
-              Men's Sole Revival started with a simple observation: most men
-              ignore their feet until something goes wrong — and by then, the
-              problem is already compounding.
-            </p>
-          </div>
-        </Container>
+      <section className="relative flex min-h-[55vh] flex-col overflow-hidden bg-brand-900">
+        {/* Background image */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="https://images.unsplash.com/photo-1530143311094-34d807799e8f?w=1600&q=60"
+            alt=""
+            fill
+            className="object-cover object-center opacity-35"
+            priority
+          />
+        </div>
+        {/* Gradient */}
+        <div className="absolute inset-0 z-0 bg-gradient-to-r from-brand-900 via-brand-900/80 to-brand-900/25" />
+
+        {/* Text */}
+        <div className="relative z-10 flex flex-1 items-end">
+          <Container>
+            <div className="max-w-3xl pb-12 md:pb-16">
+              <p className={`${type.overline} text-accent-400`}>About</p>
+              <h1 className={`mt-3 ${type.displaySection} text-white`}>
+                Built for the men<br />finally paying attention.
+              </h1>
+              <p className="mt-5 max-w-xl text-base leading-relaxed text-brand-200">
+                Men's Sole Revival started with a simple observation: most men
+                ignore their feet until something goes wrong — and by then, the
+                problem is already compounding.
+              </p>
+            </div>
+          </Container>
+        </div>
       </section>
 
       {/* ── Story ── */}
@@ -59,8 +76,8 @@ export default function AboutPage() {
       <section className="border-t border-neutral-200 bg-neutral-50 py-16 md:py-20">
         <Container>
           <div className="max-w-xl">
-            <p className={type.overline}>How we work</p>
-            <h2 className={`mt-3 ${type.h2}`}>What we believe</h2>
+            <p className={`${type.overline} text-neutral-500`}>How we work</p>
+            <h2 className={`mt-3 ${type.displaySection} text-brand-900`}>What we believe.</h2>
           </div>
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             {[
@@ -92,7 +109,7 @@ export default function AboutPage() {
       <section className="border-t border-neutral-200 py-16 md:py-20">
         <Container>
           <div className="max-w-xl">
-            <h2 className={type.h2}>Join us as we build.</h2>
+            <h2 className={`${type.displaySection} text-brand-900`}>Join us as<br />we build.</h2>
             <p className={`mt-4 ${type.lead}`}>
               Get on the waitlist and help shape what gets built first.
               No spam, no pressure — just occasional updates.

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Container from "@/components/Container";
 import Card from "@/components/Card";
 import SiteLayout from "@/components/SiteLayout";
@@ -53,19 +54,37 @@ export default function KitsPage() {
   return (
     <SiteLayout>
 
-      {/* ── Header ── */}
-      <section className="border-b border-neutral-200 py-16 md:py-20">
-        <Container>
-          <div className="max-w-2xl">
-            <p className={type.overline}>Starter Kits</p>
-            <h1 className={`mt-3 ${type.h1}`}>Start with a kit.</h1>
-            <p className={`mt-6 ${type.lead}`}>
-              Each kit bundles a simple routine with the right tools for a
-              specific problem. Tell us which you need — we'll prioritize what
-              ships first.
-            </p>
-          </div>
-        </Container>
+      {/* ── Hero ── */}
+      <section className="relative flex min-h-[55vh] flex-col overflow-hidden bg-brand-900">
+        {/* Background image */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=1600&q=75"
+            alt=""
+            fill
+            className="object-cover object-center opacity-35"
+            priority
+          />
+        </div>
+        {/* Gradient */}
+        <div className="absolute inset-0 z-0 bg-gradient-to-r from-brand-900 via-brand-900/80 to-brand-900/25" />
+
+        {/* Text */}
+        <div className="relative z-10 flex flex-1 items-end">
+          <Container>
+            <div className="max-w-3xl pb-12 md:pb-16">
+              <p className={`${type.overline} text-accent-400`}>Starter Kits</p>
+              <h1 className={`mt-3 ${type.displaySection} text-white`}>
+                Start with<br />a kit.
+              </h1>
+              <p className="mt-5 max-w-xl text-base leading-relaxed text-brand-200">
+                Each kit bundles a simple routine with the right tools for a
+                specific problem. Tell us which you need — we'll prioritize
+                what ships first.
+              </p>
+            </div>
+          </Container>
+        </div>
       </section>
 
       {/* ── Kits grid ── */}
@@ -83,7 +102,7 @@ export default function KitsPage() {
       <section className="border-t border-neutral-200 bg-neutral-50 py-12">
         <Container>
           <div className="max-w-lg">
-            <h2 className={type.h3}>Not sure where to start?</h2>
+            <h2 className={`${type.displaySm} text-brand-900`}>Not sure where to start?</h2>
             <p className="mt-3 text-sm leading-6 text-neutral-600">
               Join the waitlist and we'll ask you a few questions about
               what you're dealing with. We'll recommend the right kit and

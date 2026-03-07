@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
+import Button from "@/components/Button";
 import Container from "@/components/Container";
 import SiteLayout from "@/components/SiteLayout";
 import { type } from "@/components/typography";
@@ -44,18 +45,41 @@ export default function BlogPage() {
   return (
     <SiteLayout>
 
-      {/* ── Header ── */}
-      <section className="border-b border-neutral-200 py-16 md:py-20">
-        <Container>
-          <div className="max-w-2xl">
-            <p className={type.overline}>Journal</p>
-            <h1 className={`mt-3 ${type.h1}`}>Clear guides, no hype.</h1>
-            <p className={`mt-6 ${type.lead}`}>
-              Practical, evidence-based writing on foot health, footwear, and
-              the habits that keep men moving well.
-            </p>
-          </div>
-        </Container>
+      {/* ── Hero ── */}
+      <section className="relative flex min-h-[55vh] flex-col overflow-hidden bg-brand-900">
+        {/* Background image */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=1600&q=75"
+            alt=""
+            fill
+            className="object-cover object-center opacity-40"
+            priority
+          />
+        </div>
+        {/* Directional gradient */}
+        <div className="absolute inset-0 z-0 bg-gradient-to-r from-brand-900 via-brand-900/80 to-brand-900/30" />
+
+        {/* Text — anchored to bottom-left for editorial feel */}
+        <div className="relative z-10 flex flex-1 items-end">
+          <Container>
+            <div className="max-w-3xl pb-12 md:pb-16">
+              <p className={`${type.overline} text-accent-400`}>Journal</p>
+              <h1 className={`mt-3 ${type.displaySection} text-white`}>
+                Clear guides.<br />No hype.
+              </h1>
+              <p className="mt-5 max-w-xl text-base leading-relaxed text-brand-200">
+                Practical, evidence-based writing on foot health, footwear,
+                and the habits that keep men moving well.
+              </p>
+              <div className="mt-8">
+                <Button href="/waitlist" size="md">
+                  Join the Waitlist
+                </Button>
+              </div>
+            </div>
+          </Container>
+        </div>
       </section>
 
       {/* ── Article list ── */}

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import Button from "@/components/Button";
 import Container from "@/components/Container";
 import SiteLayout from "@/components/SiteLayout";
 import { type } from "@/components/typography";
@@ -57,20 +58,36 @@ export default function LearnPage() {
   return (
     <SiteLayout>
 
-      {/* ── Header ── */}
-      <section className="border-b border-neutral-200 py-16 md:py-20">
-        <Container>
-          <div className="max-w-2xl">
-            <p className={type.overline}>Learn</p>
-            <h1 className={`mt-3 ${type.displaySection} text-brand-900`}>
-              The knowledge base.
-            </h1>
-            <p className={`mt-5 ${type.lead}`}>
-              Guides organized by topic. Start with what's bothering you
-              most — every article links out to the next logical step.
-            </p>
-          </div>
-        </Container>
+      {/* ── Hero ── */}
+      <section className="relative flex min-h-[55vh] flex-col overflow-hidden bg-brand-900">
+        {/* Background image */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1600&q=75"
+            alt=""
+            fill
+            className="object-cover object-center opacity-40"
+            priority
+          />
+        </div>
+        {/* Gradient */}
+        <div className="absolute inset-0 z-0 bg-gradient-to-r from-brand-900 via-brand-900/80 to-brand-900/20" />
+
+        {/* Text — bottom-left editorial anchor */}
+        <div className="relative z-10 flex flex-1 items-end">
+          <Container>
+            <div className="max-w-3xl pb-12 md:pb-16">
+              <p className={`${type.overline} text-accent-400`}>Learn</p>
+              <h1 className={`mt-3 ${type.displaySection} text-white`}>
+                The knowledge<br />base.
+              </h1>
+              <p className="mt-5 max-w-xl text-base leading-relaxed text-brand-200">
+                Guides organized by topic. Start with what's bothering you
+                most — every article links to the next logical step.
+              </p>
+            </div>
+          </Container>
+        </div>
       </section>
 
       {/* ── Filter tabs + grid ── */}
