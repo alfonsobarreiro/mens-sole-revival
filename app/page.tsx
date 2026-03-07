@@ -2,6 +2,7 @@ import Container from "@/components/Container";
 import Button from "@/components/Button";
 import Card from "@/components/Card";
 import SiteLayout from "@/components/SiteLayout";
+import TopicsSection from "@/components/TopicsSection";
 import Link from "next/link";
 import Image from "next/image";
 import { type } from "@/components/typography";
@@ -31,28 +32,28 @@ const kits = [
 
 const articles = [
   {
-    slug: "toenail-fungus-what-works",
-    title: "Toenail Fungus: What Actually Works (and What's a Scam)",
-    category: "Nail Care",
-    readTime: "8 min",
-    excerpt: "The evidence on OTC treatments, prescription options, and home remedies — ranked by how well they actually work.",
-    image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=75",
+    slug: "what-your-dress-shoes-are-doing-to-your-feet",
+    title: "What 30 Years in Dress Shoes Actually Does to Your Feet",
+    category: "Footwear Fit",
+    readTime: "7 min",
+    excerpt: "Most men don't connect the shoes they wore for decades to the foot problems they have now. Here's the chain of cause and effect.",
+    image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800&q=75",
   },
   {
-    slug: "why-toe-alignment-affects-knees-and-hips",
-    title: "Why Toe Alignment Affects Your Knees and Hips",
-    category: "Alignment",
+    slug: "big-toe-and-your-whole-body",
+    title: "Your Big Toe Controls More of Your Body Than You Think",
+    category: "Toe Alignment",
     readTime: "6 min",
-    excerpt: "The connection between cramped toes, altered gait, and the knee and hip pain that follows years later.",
-    image: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&q=75",
+    excerpt: "The big toe is responsible for 40–60% of your push-off force. Most men have spent decades restricting it — and wondering why their knee hurts.",
+    image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=75",
   },
   {
-    slug: "5-minute-routine",
-    title: "A 5-Minute Daily Foot-Care Routine You Can Stick To",
-    category: "Routine",
-    readTime: "4 min",
-    excerpt: "A consistency-first approach: five focused minutes after your shower, anchored to a habit you already have.",
-    image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=75",
+    slug: "cracked-heels-what-actually-works",
+    title: "Cracked Heels: The Fix That Isn't a Pumice Stone",
+    category: "Dry Skin",
+    readTime: "5 min",
+    excerpt: "Scrubbing dry, cracked heel skin is the wrong starting point. Here's what's actually happening — and the routine that addresses it.",
+    image: "https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?w=800&q=75",
   },
 ];
 
@@ -66,11 +67,6 @@ const stats = [
     value: "75%",
     label: "of foot problems are preventable with consistent care",
     context: "Most of what slows men down after 40 was preventable.",
-  },
-  {
-    value: "6 months",
-    label: "average time to see real results from proper treatment",
-    context: "Slow progress. Real results. Worth starting today.",
   },
 ];
 
@@ -166,7 +162,7 @@ export default function Home() {
       <section className="border-b border-neutral-200 py-14 md:py-20">
         <Container>
           <p className={`${type.overline} mb-10 text-neutral-400`}>The numbers most men ignore</p>
-          <div className="grid grid-cols-1 divide-y divide-neutral-100 md:grid-cols-3 md:divide-x md:divide-y-0">
+          <div className="grid grid-cols-1 divide-y divide-neutral-100 md:grid-cols-2 md:divide-x md:divide-y-0">
             {stats.map((s) => (
               <div key={s.value} className="py-8 md:py-0 md:px-10 first:md:pl-0">
                 <span className={`${type.displaySection} block text-brand-900`}>
@@ -180,86 +176,7 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* ── Why it matters — three full-bleed dark image panels ── */}
-      <section>
-        <Container>
-          <div className="py-14 md:py-16">
-            <p className={`${type.overline} text-neutral-400`}>Why this matters</p>
-            <p className={`mt-2 ${type.displaySection} text-brand-900`}>Know your feet.</p>
-          </div>
-        </Container>
-        {/* Edge-to-edge panel grid — no rounded corners */}
-        <div className="grid grid-cols-1 md:grid-cols-3">
-          {[
-            {
-              heading: "Problems start quietly",
-              body: "By the time they're obvious — the pain, the discoloration, the cramped toes — they've usually been building for years.",
-              image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=70",
-            },
-            {
-              heading: "Most advice is backwards",
-              body: "The internet is full of miracle products and 3-day fixes. Real foot care rewards consistency over shortcuts.",
-              image: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&q=70",
-            },
-            {
-              heading: "It compounds upward",
-              body: "When your feet work well, everything else gets easier — your knees, your posture, your energy. This is the leverage most men overlook.",
-              image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=70",
-            },
-          ].map((item) => (
-            <div
-              key={item.heading}
-              className="relative flex min-h-[340px] flex-col justify-end overflow-hidden bg-brand-900 md:min-h-[420px]"
-            >
-              <Image
-                src={item.image}
-                alt=""
-                fill
-                className="object-cover opacity-50"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-900/95 via-brand-900/50 to-transparent" />
-              <div className="relative z-10 p-7 md:p-8">
-                <div className="mb-3 h-0.5 w-8 bg-accent-500" />
-                <h3 className="font-display text-2xl font-bold uppercase leading-tight text-white md:text-3xl">
-                  {item.heading}
-                </h3>
-                <p className="mt-2 text-sm leading-6 text-brand-300">{item.body}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── Kits ── */}
-      <section className="border-t border-neutral-200 bg-neutral-50 py-16 md:py-24">
-        <Container>
-          <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p className={`${type.displaySection} text-brand-900`}>
-                The kits.
-              </p>
-              <p className="mt-3 max-w-xl text-base leading-7 text-neutral-500">
-                Each kit bundles a simple routine with the right tools.
-                Tell us which you need — we'll prioritize what ships first.
-              </p>
-            </div>
-            <Link
-              href="/kits"
-              className="hidden text-sm font-semibold text-brand-500 underline underline-offset-4 hover:text-brand-700 md:block"
-            >
-              View all kits →
-            </Link>
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-3">
-            {kits.map((kit) => (
-              <Card key={kit.title} {...kit} />
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* ── From the Library — Vivobarefoot "LATEST STORIES" layout ── */}
+      {/* ── From the Library — lead with content, earn trust first ── */}
       <section className="border-t border-neutral-200 py-16 md:py-24">
         <Container>
           <div className="grid grid-cols-1 gap-10 md:grid-cols-[5fr_8fr]">
@@ -289,7 +206,6 @@ export default function Home() {
                   href={`/blog/${a.slug}`}
                   className="group flex gap-5 py-7 first:pt-0"
                 >
-                  {/* Sharp thumbnail — no rounding */}
                   <div className="relative h-24 w-32 flex-shrink-0 overflow-hidden">
                     <Image
                       src={a.image}
@@ -315,20 +231,93 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* ── CTA ── */}
-      <section className="border-t border-neutral-200 bg-brand-800 py-16 md:py-24">
+      {/* ── Why it matters — single editorial split panel ── */}
+      <section className="flex min-h-[420px] flex-col md:flex-row md:min-h-[500px]">
+        <div className="relative h-64 w-full md:h-auto md:w-1/2">
+          <Image
+            src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1000&q=70"
+            alt=""
+            fill
+            className="object-cover"
+          />
+        </div>
+        <div className="flex w-full items-center bg-brand-900 px-8 py-14 md:w-1/2 md:px-14 lg:px-20">
+          <div>
+            <div className="mb-5 h-0.5 w-8 bg-accent-500" />
+            <h2 className={`${type.displaySection} text-white leading-tight`}>
+              IT COMPOUNDS<br />UPWARD.
+            </h2>
+            <p className="mt-5 max-w-md text-base leading-7 text-brand-300">
+              When your feet work well, everything else gets easier — your knees,
+              your posture, your energy. This is the leverage most men overlook,
+              and the reason we built this.
+            </p>
+            <Link
+              href="/about"
+              className="mt-8 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent-400 transition hover:text-accent-300"
+            >
+              Why we built this →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Topics selector — interactive hover panel ── */}
+      <TopicsSection />
+
+      {/* ── Kits — what we're building, tell us what you need ── */}
+      <section className="border-t border-neutral-200 bg-neutral-50 py-16 md:py-24">
         <Container>
-          <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+          <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
-              <p className={`${type.displaySection} text-white`}>
-                Be first.
+              <p className={`${type.displaySection} text-brand-900`}>
+                The kits.
               </p>
-              <p className="mt-4 max-w-lg text-lg leading-relaxed text-brand-200">
-                We're building this carefully. Join the waitlist and help shape
-                what gets built first — no spam, no pressure.
+              <p className="mt-3 max-w-xl text-base leading-7 text-neutral-500">
+                Each kit bundles a simple routine with the right tools.
+                Tell us which you need — we'll prioritize what ships first.
               </p>
             </div>
-            <div className="flex flex-wrap gap-3 md:flex-shrink-0">
+            <Link
+              href="/kits"
+              className="hidden text-sm font-semibold text-brand-500 underline underline-offset-4 hover:text-brand-700 md:block"
+            >
+              View all kits →
+            </Link>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-3">
+            {kits.map((kit) => (
+              <Card key={kit.title} {...kit} />
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* ── Parallax CTA ── */}
+      <section
+        className="relative overflow-hidden py-28 md:py-44"
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=1600&q=60')",
+          backgroundAttachment: "fixed",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-brand-900/80" />
+
+        <Container className="relative z-10">
+          <div className="flex flex-col items-center gap-8 text-center">
+            <p className={`${type.displayHero} text-white leading-none`}>
+              BE FIRST.
+            </p>
+            <p className="max-w-lg text-lg leading-relaxed text-brand-200">
+              We're building this carefully. Join the waitlist and help shape
+              what gets built first — no spam, no pressure.
+            </p>
+            <div className="flex flex-wrap justify-center gap-3">
               <Button href="/waitlist" size="lg">
                 Join the Waitlist
               </Button>
@@ -336,7 +325,7 @@ export default function Home() {
                 href="/about"
                 variant="outline"
                 size="lg"
-                className="border-white/30 text-white hover:bg-white/10"
+                className="border-white/30 text-white hover:bg-white/10 active:bg-white/20"
               >
                 Learn more
               </Button>

@@ -13,6 +13,33 @@ export const metadata: Metadata = {
 
 const articles = [
   {
+    slug: "what-your-dress-shoes-are-doing-to-your-feet",
+    title: "What 30 Years in Dress Shoes Actually Does to Your Feet",
+    category: "Footwear Fit",
+    readTime: "7 min",
+    image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800&q=75",
+    excerpt:
+      "Most men don't connect the shoes they wore for decades to the foot problems they have now. Here's the chain of cause and effect.",
+  },
+  {
+    slug: "big-toe-and-your-whole-body",
+    title: "Your Big Toe Controls More of Your Body Than You Think",
+    category: "Toe Alignment",
+    readTime: "6 min",
+    image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=75",
+    excerpt:
+      "The big toe is responsible for 40–60% of your push-off force. Most men have spent decades restricting it — and wondering why their knee hurts.",
+  },
+  {
+    slug: "cracked-heels-what-actually-works",
+    title: "Cracked Heels: The Fix That Isn't a Pumice Stone",
+    category: "Dry Skin",
+    readTime: "5 min",
+    image: "https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?w=800&q=75",
+    excerpt:
+      "Scrubbing dry, cracked heel skin is the wrong starting point. Here's what's actually happening — and the routine that addresses it.",
+  },
+  {
     slug: "toenail-fungus-what-works",
     title: "Toenail Fungus: What Actually Works (and What's a Scam)",
     category: "Nail Care",
