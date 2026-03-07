@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Lora, DM_Sans } from "next/font/google";
+import { Lora, DM_Sans, Barlow_Condensed } from "next/font/google";
 import "./globals.css";
 
 const lora = Lora({
@@ -13,6 +13,16 @@ const dmSans = DM_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   variable: "--font-body",
+  display: "swap",
+});
+
+// Display typeface — used ONLY for large architectural section labels and hero headlines.
+// Barlow Condensed ExtraBold gives the bold editorial punch of Vivobarefoot-style type
+// without displacing Lora (warmth/editorial) or DM Sans (UI/clarity).
+const barlowCondensed = Barlow_Condensed({
+  subsets: ["latin"],
+  weight: ["700", "800"],
+  variable: "--font-display",
   display: "swap",
 });
 
@@ -31,7 +41,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${lora.variable} ${dmSans.variable}`}>
+    <html lang="en" className={`${lora.variable} ${dmSans.variable} ${barlowCondensed.variable}`}>
       <body className="min-h-screen bg-white antialiased" suppressHydrationWarning>
         {children}
       </body>

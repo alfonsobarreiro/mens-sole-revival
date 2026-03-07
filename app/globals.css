@@ -95,6 +95,10 @@
   ---------------------------------------------------------- */
   --font-heading: 'Lora', Georgia, serif;
   --font-body:    'DM Sans', system-ui, sans-serif;
+  --font-display: 'Barlow Condensed', 'Impact', sans-serif;
+
+  /* Marquee animation */
+  --animate-marquee: marquee 30s linear infinite;
 
   /* Type scale */
   --text-display:    3.5rem;   /* 56px — hero */
@@ -287,4 +291,10 @@
   --sidebar-border:  oklch(1 0 0 / 10%);
   --sidebar-ring:  oklch(0.556 0 0);
 
+}
+
+/* ── Marquee keyframe ── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
