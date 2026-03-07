@@ -55,6 +55,14 @@ const articles = [
     excerpt: "Scrubbing dry, cracked heel skin is the wrong starting point. Here's what's actually happening — and the routine that addresses it.",
     image: "https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?w=800&q=75",
   },
+  {
+    slug: "toenail-fungus-what-works",
+    title: "Toenail Fungus: What Actually Works (and What's a Scam)",
+    category: "Nail Care",
+    readTime: "8 min",
+    excerpt: "The evidence on OTC treatments, prescription options, and home remedies — ranked by how well they actually work.",
+    image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=75",
+  },
 ];
 
 const stats = [
@@ -176,59 +184,79 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* ── From the Library — lead with content, earn trust first ── */}
-      <section className="border-t border-neutral-200 py-16 md:py-24">
-        <Container>
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-[5fr_8fr]">
+      {/* ── From the Library — featured left sticky + 3 articles right ── */}
+      <section className="border-t border-neutral-200 overflow-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-2">
 
-            {/* Left: giant sticky title + link */}
-            <div>
+          {/* LEFT — sticky featured story */}
+          <div className="border-b border-neutral-200 md:border-b-0 md:border-r md:border-neutral-200">
+            <div className="md:sticky md:top-0 p-8 md:p-10 lg:p-14">
+
+              {/* Section heading */}
               <p className={`${type.displayHero} text-brand-900 leading-none`}>
                 FROM<br />THE<br />LIBRARY.
               </p>
-              <p className="mt-5 max-w-xs text-sm leading-6 text-neutral-500">
-                Practical, evidence-based articles on foot health, footwear,
-                and the habits that keep men moving well.
-              </p>
               <Link
                 href="/learn"
-                className="mt-7 inline-flex items-center gap-2 border border-brand-900 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-brand-900 transition hover:bg-brand-900 hover:text-white"
+                className="mt-6 mb-10 inline-flex items-center gap-2 border border-brand-900 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-brand-900 transition hover:bg-brand-900 hover:text-white"
               >
                 View all guides
               </Link>
-            </div>
 
-            {/* Right: article list with sharp thumbnails */}
-            <div className="divide-y divide-neutral-200">
-              {articles.map((a) => (
-                <Link
-                  key={a.slug}
-                  href={`/blog/${a.slug}`}
-                  className="group flex gap-5 py-7 first:pt-0"
-                >
-                  <div className="relative h-24 w-32 flex-shrink-0 overflow-hidden">
-                    <Image
-                      src={a.image}
-                      alt={a.title}
-                      fill
-                      className="object-cover transition duration-500 group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="flex flex-col justify-center">
-                    <p className="text-xs font-semibold uppercase tracking-wider text-accent-600">
-                      {a.category} · {a.readTime} read
-                    </p>
-                    <h3 className="mt-1 font-display text-xl font-bold uppercase leading-tight text-brand-900 transition group-hover:text-brand-600 md:text-2xl">
-                      {a.title}
-                    </h3>
-                    <p className="mt-1 text-sm leading-6 text-neutral-500">{a.excerpt}</p>
-                  </div>
-                </Link>
-              ))}
-            </div>
+              {/* Featured article */}
+              <Link href={`/blog/${articles[0].slug}`} className="group block">
+                <div className="relative overflow-hidden" style={{ aspectRatio: "3/2" }}>
+                  <Image
+                    src={articles[0].image}
+                    alt={articles[0].title}
+                    fill
+                    className="object-cover transition duration-700 group-hover:scale-105"
+                  />
+                </div>
+                <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-accent-600">
+                  {articles[0].category} · {articles[0].readTime} read
+                </p>
+                <h3 className="mt-2 font-display text-2xl font-bold uppercase leading-tight text-brand-900 transition group-hover:text-brand-600 md:text-3xl">
+                  {articles[0].title}
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-neutral-500">
+                  {articles[0].excerpt}
+                </p>
+              </Link>
 
+            </div>
           </div>
-        </Container>
+
+          {/* RIGHT — 3 articles that scroll past the sticky left */}
+          <div className="divide-y divide-neutral-200">
+            {articles.slice(1, 4).map((a) => (
+              <Link
+                key={a.slug}
+                href={`/blog/${a.slug}`}
+                className="group flex gap-5 p-8 transition hover:bg-neutral-50/60 md:p-10"
+              >
+                <div className="relative h-24 w-32 flex-shrink-0 overflow-hidden md:h-28 md:w-36">
+                  <Image
+                    src={a.image}
+                    alt={a.title}
+                    fill
+                    className="object-cover transition duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="flex flex-col justify-center">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-accent-600">
+                    {a.category} · {a.readTime} read
+                  </p>
+                  <h3 className="mt-1 font-display text-xl font-bold uppercase leading-tight text-brand-900 transition group-hover:text-brand-600 md:text-2xl">
+                    {a.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-neutral-500">{a.excerpt}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+        </div>
       </section>
 
       {/* ── Why it matters — single editorial split panel ── */}
