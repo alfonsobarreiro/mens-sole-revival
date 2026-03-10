@@ -10,37 +10,49 @@ const topics = [
     label: "Pain & Recovery",
     href: "/waitlist?kit=pain-recovery",
     leftImage: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=70",
-    rightImage: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=70",
+    tagline: "Your body is sending a signal.",
+    description:
+      "Plantar fasciitis, heel spurs, arch strain — foot pain rarely disappears on its own. Learn how to identify the source, reduce inflammation, and build the resilience to move without hesitation.",
   },
   {
     label: "Nail Care",
     href: "/waitlist?kit=fungus-care",
     leftImage: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&q=70",
-    rightImage: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=70",
+    tagline: "Small details, big confidence.",
+    description:
+      "Thick, discolored, or ingrown nails are more common than you think — and more treatable. A consistent trimming habit and the right antifungal protocol can restore clean, healthy nails in weeks.",
   },
   {
     label: "Toe Alignment",
     href: "/waitlist?kit=alignment-mobility",
     leftImage: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=70",
-    rightImage: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&q=70",
+    tagline: "Your toes set the foundation.",
+    description:
+      "Bunions, hammer toes, and crowded toe boxes all trace back to how your foot contacts the ground. Simple daily spreader exercises and footwear awareness can reverse years of drift.",
   },
   {
     label: "Daily Routine",
     href: "/blog/5-minute-routine",
     leftImage: "https://images.unsplash.com/photo-1530143311094-34d807799e8f?w=800&q=70",
-    rightImage: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=70",
+    tagline: "Five minutes. Every day.",
+    description:
+      "The men who take care of their feet do it consistently — not occasionally. Washing, drying, moisturizing, inspecting: a simple morning or evening ritual that prevents 90% of common foot problems.",
   },
   {
     label: "Footwear Fit",
     href: "/waitlist?kit=footwear-fit",
     leftImage: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=70",
-    rightImage: "https://images.unsplash.com/photo-1530143311094-34d807799e8f?w=800&q=70",
+    tagline: "The wrong shoe is a slow injury.",
+    description:
+      "Most men wear shoes half a size too small and twice as narrow as their feet need. Understanding your foot shape — length, width, arch — changes how you buy footwear for the rest of your life.",
   },
   {
     label: "Dry Skin & Cracking",
     href: "/waitlist?kit=dry-skin",
     leftImage: "https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?w=800&q=70",
-    rightImage: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=70",
+    tagline: "Cracks heal. Calluses soften.",
+    description:
+      "Heel fissures and rough skin aren't just cosmetic — deep cracks can split and become painful entry points for infection. A targeted moisturizing routine with the right emollients makes a visible difference in days.",
   },
 ];
 
@@ -96,24 +108,51 @@ export default function TopicsSection() {
           </div>
         </div>
 
-        {/* Right image panel */}
-        <div className="relative hidden md:block bg-brand-900 overflow-hidden">
-          {topics.map((t, i) => (
-            <div
-              key={i}
-              className={`absolute inset-0 transition-opacity duration-500 ${
-                i === activeIndex ? "opacity-100" : "opacity-0"
-              }`}
-            >
-              <Image
-                src={t.rightImage}
-                alt=""
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-brand-900/20" />
-            </div>
-          ))}
+        {/* Right panel: editorial text block — warm parchment */}
+        <div className="relative hidden md:block bg-accent-50 overflow-hidden">
+          {/* Cognac top-border accent */}
+          <div className="absolute top-0 left-0 right-0 h-[3px] bg-accent-500 z-10" />
+
+          <div className="relative z-10 flex flex-col justify-between h-full p-8 lg:p-10">
+            {topics.map((t, i) => (
+              <div
+                key={i}
+                className={`absolute inset-0 flex flex-col justify-between p-8 lg:p-10 pt-10 transition-all duration-500 ${
+                  i === activeIndex ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none"
+                }`}
+              >
+                {/* Top: index */}
+                <span className="font-body text-xs tracking-[0.2em] uppercase text-neutral-400">
+                  {String(i + 1).padStart(2, "0")} / {String(topics.length).padStart(2, "0")}
+                </span>
+
+                {/* Middle: content */}
+                <div className="space-y-4">
+                  <p className="font-heading text-accent-600 text-sm tracking-wide italic leading-snug">
+                    {t.tagline}
+                  </p>
+                  <h3
+                    className="font-display font-bold uppercase text-brand-900 leading-tight tracking-tight"
+                    style={{ fontSize: "clamp(1.4rem, 2.2vw, 2rem)" }}
+                  >
+                    {t.label}
+                  </h3>
+                  <p className="font-body text-neutral-600 text-sm leading-relaxed">
+                    {t.description}
+                  </p>
+                </div>
+
+                {/* Bottom: CTA */}
+                <Link
+                  href={t.href}
+                  className="inline-flex items-center gap-2 font-body text-xs tracking-[0.15em] uppercase text-accent-600 hover:text-brand-900 transition-colors duration-200 group"
+                >
+                  Explore this topic
+                  <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
+                </Link>
+              </div>
+            ))}
+          </div>
         </div>
 
       </div>
