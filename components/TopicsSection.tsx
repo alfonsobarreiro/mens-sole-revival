@@ -114,7 +114,7 @@ export default function TopicsSection() {
                   href={topic.href}
                   onMouseEnter={() => setActiveIndex(i)}
                   onClick={(e) => handleTopicClick(e, i)}
-                  className={`block font-display font-bold uppercase tracking-tight leading-tight py-1.5 transition-colors duration-300 ${
+                  className={`flex items-center justify-center gap-2 font-display font-bold uppercase tracking-tight leading-tight py-1.5 transition-colors duration-300 ${
                     i === activeIndex
                       ? "text-brand-900"
                       : "text-neutral-300 hover:text-neutral-600"
@@ -122,9 +122,24 @@ export default function TopicsSection() {
                   style={{ fontSize: "clamp(1.75rem, 3.5vw, 3.25rem)" }}
                 >
                   {topic.label}
+                  {/* Tap indicator — mobile only */}
+                  <span
+                    className={`md:hidden text-accent-500 transition-opacity duration-300 ${
+                      i === activeIndex ? "opacity-100" : "opacity-40"
+                    }`}
+                    style={{ fontSize: "0.65em" }}
+                    aria-hidden="true"
+                  >
+                    ›
+                  </span>
                 </Link>
               ))}
             </div>
+
+            {/* Mobile hint */}
+            <p className="md:hidden mt-6 font-body text-xs text-neutral-400 tracking-[0.12em] uppercase">
+              Tap a topic to learn more
+            </p>
           </div>
 
           {/* Right panel: editorial text block — warm parchment (desktop only) */}
