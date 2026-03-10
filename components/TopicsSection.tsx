@@ -60,6 +60,18 @@ export default function TopicsSection() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [panelOpen, setPanelOpen] = useState(false);
   const [panelIndex, setPanelIndex] = useState(0);
+  // Track whether the user is on a mobile viewport
+  const [isMobile, setIsMobile] = useState(false);
+  // On mobile, nothing appears "selected" until the user first taps
+  const [mobileTapped, setMobileTapped] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    setIsMobile(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
 
   // Lock body scroll when panel is open
   useEffect(() => {
@@ -74,10 +86,15 @@ export default function TopicsSection() {
   const handleTopicClick = (e: React.MouseEvent, i: number) => {
     if (window.innerWidth < 768) {
       e.preventDefault();
+      setMobileTapped(true);
+      setActiveIndex(i);
       setPanelIndex(i);
       setPanelOpen(true);
     }
   };
+
+  // A topic is "active" on desktop always; on mobile only after the first tap
+  const isActive = (i: number) => i === activeIndex && (!isMobile || mobileTapped);
 
   const t = topics[panelIndex];
 
@@ -115,7 +132,7 @@ export default function TopicsSection() {
                   onMouseEnter={() => setActiveIndex(i)}
                   onClick={(e) => handleTopicClick(e, i)}
                   className={`flex items-center justify-center gap-2 font-display font-bold uppercase tracking-tight leading-tight py-1.5 transition-colors duration-300 ${
-                    i === activeIndex
+                    isActive(i)
                       ? "text-brand-900"
                       : "text-neutral-300 hover:text-neutral-600"
                   }`}
@@ -125,7 +142,7 @@ export default function TopicsSection() {
                   {/* Tap indicator — mobile only */}
                   <span
                     className={`md:hidden text-accent-500 transition-opacity duration-300 ${
-                      i === activeIndex ? "opacity-100" : "opacity-40"
+                      isActive(i) ? "opacity-100" : "opacity-40"
                     }`}
                     style={{ fontSize: "0.65em" }}
                     aria-hidden="true"
