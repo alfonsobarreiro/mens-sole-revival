@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { type } from "@/components/typography";
@@ -58,104 +58,190 @@ const topics = [
 
 export default function TopicsSection() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [panelOpen, setPanelOpen] = useState(false);
+  const [panelIndex, setPanelIndex] = useState(0);
+
+  // Lock body scroll when panel is open
+  useEffect(() => {
+    if (panelOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [panelOpen]);
+
+  const handleTopicClick = (e: React.MouseEvent, i: number) => {
+    if (window.innerWidth < 768) {
+      e.preventDefault();
+      setPanelIndex(i);
+      setPanelOpen(true);
+    }
+  };
+
+  const t = topics[panelIndex];
 
   return (
-    <section className="border-t border-neutral-200">
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr_1fr]" style={{ minHeight: "600px" }}>
+    <>
+      <section className="border-t border-neutral-200">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr_1fr]" style={{ minHeight: "600px" }}>
 
-        {/* Left image panel */}
-        <div className="relative hidden md:block bg-brand-900 overflow-hidden">
-          {topics.map((t, i) => (
-            <div
-              key={i}
-              className={`absolute inset-0 transition-opacity duration-500 ${
-                i === activeIndex ? "opacity-100" : "opacity-0"
-              }`}
-            >
-              <Image
-                src={t.leftImage}
-                alt=""
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-brand-900/20" />
-            </div>
-          ))}
-        </div>
-
-        {/* Center: stacked topic words */}
-        <div className="flex flex-col justify-center items-center py-16 px-6 md:px-10 border-x border-neutral-100 text-center">
-          <p className={`${type.displaySection} text-brand-900 leading-none mb-10`}>
-            KNOW YOUR FEET.
-          </p>
-
-          <div>
-            {topics.map((t, i) => (
-              <Link
-                key={i}
-                href={t.href}
-                onMouseEnter={() => setActiveIndex(i)}
-                className={`block font-display font-bold uppercase tracking-tight leading-tight py-1.5 transition-colors duration-300 ${
-                  i === activeIndex
-                    ? "text-brand-900"
-                    : "text-neutral-300 hover:text-neutral-600"
-                }`}
-                style={{ fontSize: "clamp(1.75rem, 3.5vw, 3.25rem)" }}
-              >
-                {t.label}
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        {/* Right panel: editorial text block — warm parchment */}
-        <div className="relative hidden md:block bg-accent-50 overflow-hidden">
-          {/* Cognac top-border accent */}
-          <div className="absolute top-0 left-0 right-0 h-[3px] bg-accent-500 z-10" />
-
-          <div className="relative z-10 flex flex-col justify-between h-full p-8 lg:p-10">
-            {topics.map((t, i) => (
+          {/* Left image panel */}
+          <div className="relative hidden md:block bg-brand-900 overflow-hidden">
+            {topics.map((topic, i) => (
               <div
                 key={i}
-                className={`absolute inset-0 flex flex-col justify-between p-8 lg:p-10 pt-10 transition-all duration-500 ${
-                  i === activeIndex ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none"
+                className={`absolute inset-0 transition-opacity duration-500 ${
+                  i === activeIndex ? "opacity-100" : "opacity-0"
                 }`}
               >
-                {/* Top: index */}
-                <span className="font-body text-xs tracking-[0.2em] uppercase text-neutral-400">
-                  {String(i + 1).padStart(2, "0")} / {String(topics.length).padStart(2, "0")}
-                </span>
-
-                {/* Middle: content */}
-                <div className="space-y-4">
-                  <p className="font-heading text-accent-600 text-sm tracking-wide italic leading-snug">
-                    {t.tagline}
-                  </p>
-                  <h3
-                    className="font-display font-bold uppercase text-brand-900 leading-tight tracking-tight"
-                    style={{ fontSize: "clamp(1.4rem, 2.2vw, 2rem)" }}
-                  >
-                    {t.label}
-                  </h3>
-                  <p className="font-body text-neutral-600 text-sm leading-relaxed">
-                    {t.description}
-                  </p>
-                </div>
-
-                {/* Bottom: CTA */}
-                <Link
-                  href={t.href}
-                  className="inline-flex items-center gap-2 font-body text-xs tracking-[0.15em] uppercase text-accent-600 hover:text-brand-900 transition-colors duration-200 group"
-                >
-                  Explore this topic
-                  <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
-                </Link>
+                <Image src={topic.leftImage} alt="" fill className="object-cover" />
+                <div className="absolute inset-0 bg-brand-900/20" />
               </div>
             ))}
           </div>
+
+          {/* Center: stacked topic words */}
+          <div className="flex flex-col justify-center items-center py-16 px-6 md:px-10 border-x border-neutral-100 text-center">
+            <p className={`${type.displaySection} text-brand-900 leading-none mb-10`}>
+              KNOW YOUR FEET.
+            </p>
+
+            <div>
+              {topics.map((topic, i) => (
+                <Link
+                  key={i}
+                  href={topic.href}
+                  onMouseEnter={() => setActiveIndex(i)}
+                  onClick={(e) => handleTopicClick(e, i)}
+                  className={`block font-display font-bold uppercase tracking-tight leading-tight py-1.5 transition-colors duration-300 ${
+                    i === activeIndex
+                      ? "text-brand-900"
+                      : "text-neutral-300 hover:text-neutral-600"
+                  }`}
+                  style={{ fontSize: "clamp(1.75rem, 3.5vw, 3.25rem)" }}
+                >
+                  {topic.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Right panel: editorial text block — warm parchment (desktop only) */}
+          <div className="relative hidden md:block bg-accent-50 overflow-hidden">
+            {/* Cognac top-border accent */}
+            <div className="absolute top-0 left-0 right-0 h-[3px] bg-accent-500 z-10" />
+
+            <div className="relative z-10 flex flex-col justify-between h-full p-8 lg:p-10">
+              {topics.map((topic, i) => (
+                <div
+                  key={i}
+                  className={`absolute inset-0 flex flex-col justify-between p-8 lg:p-10 pt-10 transition-all duration-500 ${
+                    i === activeIndex ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none"
+                  }`}
+                >
+                  <span className="font-body text-xs tracking-[0.2em] uppercase text-neutral-400">
+                    {String(i + 1).padStart(2, "0")} / {String(topics.length).padStart(2, "0")}
+                  </span>
+
+                  <div className="space-y-4">
+                    <p className="font-heading text-accent-600 text-sm tracking-wide italic leading-snug">
+                      {topic.tagline}
+                    </p>
+                    <h3
+                      className="font-display font-bold uppercase text-brand-900 leading-tight tracking-tight"
+                      style={{ fontSize: "clamp(1.4rem, 2.2vw, 2rem)" }}
+                    >
+                      {topic.label}
+                    </h3>
+                    <p className="font-body text-neutral-600 text-sm leading-relaxed">
+                      {topic.description}
+                    </p>
+                  </div>
+
+                  <Link
+                    href={topic.href}
+                    className="inline-flex items-center gap-2 font-body text-xs tracking-[0.15em] uppercase text-accent-600 hover:text-brand-900 transition-colors duration-200 group"
+                  >
+                    Explore this topic
+                    <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ── Mobile bottom sheet ────────────────────────────────── */}
+
+      {/* Backdrop */}
+      <div
+        aria-hidden="true"
+        onClick={() => setPanelOpen(false)}
+        className={`fixed inset-0 z-40 bg-brand-900/60 md:hidden transition-opacity duration-300 ${
+          panelOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+      />
+
+      {/* Sheet */}
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label={t.label}
+        className={`fixed bottom-0 left-0 right-0 z-50 md:hidden bg-accent-50 rounded-t-2xl shadow-2xl
+          transition-transform duration-300 ease-out
+          ${panelOpen ? "translate-y-0" : "translate-y-full"}`}
+        style={{ maxHeight: "78vh" }}
+      >
+        {/* Drag handle */}
+        <div className="flex justify-center pt-3 pb-1">
+          <div className="w-10 h-1 rounded-full bg-neutral-300" />
         </div>
 
+        {/* Cognac rule */}
+        <div className="mx-6 mt-3 h-[2px] bg-accent-500" />
+
+        {/* Scrollable content */}
+        <div className="overflow-y-auto px-6 pt-5 pb-10" style={{ maxHeight: "calc(78vh - 48px)" }}>
+
+          {/* Index + close row */}
+          <div className="flex items-center justify-between mb-5">
+            <span className="font-body text-xs tracking-[0.2em] uppercase text-neutral-400">
+              {String(panelIndex + 1).padStart(2, "0")} / {String(topics.length).padStart(2, "0")}
+            </span>
+            <button
+              onClick={() => setPanelOpen(false)}
+              aria-label="Close"
+              className="w-8 h-8 flex items-center justify-center rounded-full bg-neutral-200 hover:bg-neutral-300 transition-colors text-neutral-600 text-sm font-body"
+            >
+              ✕
+            </button>
+          </div>
+
+          {/* Editorial content */}
+          <p className="font-heading text-accent-600 text-sm tracking-wide italic leading-snug mb-3">
+            {t.tagline}
+          </p>
+          <h3 className="font-display font-bold uppercase text-brand-900 leading-tight tracking-tight text-3xl mb-4">
+            {t.label}
+          </h3>
+          <p className="font-body text-neutral-600 text-sm leading-relaxed mb-8">
+            {t.description}
+          </p>
+
+          {/* CTA */}
+          <Link
+            href={t.href}
+            onClick={() => setPanelOpen(false)}
+            className="inline-flex items-center gap-2 bg-brand-900 text-white font-body text-xs tracking-[0.15em] uppercase px-5 py-3 rounded-full hover:bg-brand-800 transition-colors"
+          >
+            Explore this topic
+            <span>→</span>
+          </Link>
+        </div>
       </div>
-    </section>
+    </>
   );
 }
