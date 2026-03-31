@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import Container from "@/components/Container";
 import SiteLayout from "@/components/SiteLayout";
 import Button from "@/components/Button";
@@ -13,6 +14,17 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <SiteLayout>
+
+      {/* ── Breadcrumb ── */}
+      <div className="border-b border-neutral-100 py-3">
+        <Container>
+          <nav className="flex items-center gap-2 text-xs text-neutral-400">
+            <Link href="/" className="hover:text-brand-600 transition">Home</Link>
+            <span>›</span>
+            <span className="text-neutral-600">About</span>
+          </nav>
+        </Container>
+      </div>
 
       {/* ── Hero ── */}
       <section className="relative flex min-h-[55vh] flex-col overflow-hidden bg-brand-900">
@@ -64,9 +76,10 @@ export default function AboutPage() {
               everything else moves.
             </p>
             <p>
-              Right now we're building this in the open: publishing guides,
-              developing starter kits, and letting the waitlist shape what gets
-              built first. No venture funding. No commerce yet. Just the work.
+              Right now we're building this in the open: publishing evidence-based
+              guides, developing starter kits, and reviewing the products men
+              actually ask about. No venture funding. No sponsored content.
+              Just honest work.
             </p>
           </div>
         </Container>

@@ -3,11 +3,10 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { type } from "@/components/typography";
 
 const topics = [
   {
-    label: "Pain & Recovery",
+    label: "Pain",
     href: "/waitlist?kit=pain-recovery",
     leftImage: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=70",
     tagline: "Your body is sending a signal.",
@@ -15,7 +14,7 @@ const topics = [
       "Plantar fasciitis, heel spurs, arch strain — foot pain rarely disappears on its own. Learn how to identify the source, reduce inflammation, and build the resilience to move without hesitation.",
   },
   {
-    label: "Nail Care",
+    label: "Nails",
     href: "/waitlist?kit=fungus-care",
     leftImage: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&q=70",
     tagline: "Small details, big confidence.",
@@ -23,7 +22,7 @@ const topics = [
       "Thick, discolored, or ingrown nails are more common than you think — and more treatable. A consistent trimming habit and the right antifungal protocol can restore clean, healthy nails in weeks.",
   },
   {
-    label: "Toe Alignment",
+    label: "Alignment",
     href: "/waitlist?kit=alignment-mobility",
     leftImage: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=70",
     tagline: "Your toes set the foundation.",
@@ -31,7 +30,7 @@ const topics = [
       "Bunions, hammer toes, and crowded toe boxes all trace back to how your foot contacts the ground. Simple daily spreader exercises and footwear awareness can reverse years of drift.",
   },
   {
-    label: "Daily Routine",
+    label: "Routine",
     href: "/blog/5-minute-routine",
     leftImage: "https://images.unsplash.com/photo-1530143311094-34d807799e8f?w=800&q=70",
     tagline: "Five minutes. Every day.",
@@ -39,7 +38,7 @@ const topics = [
       "The men who take care of their feet do it consistently — not occasionally. Washing, drying, moisturizing, inspecting: a simple morning or evening ritual that prevents 90% of common foot problems.",
   },
   {
-    label: "Footwear Fit",
+    label: "Fit",
     href: "/waitlist?kit=footwear-fit",
     leftImage: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=70",
     tagline: "The wrong shoe is a slow injury.",
@@ -47,7 +46,7 @@ const topics = [
       "Most men wear shoes half a size too small and twice as narrow as their feet need. Understanding your foot shape — length, width, arch — changes how you buy footwear for the rest of your life.",
   },
   {
-    label: "Dry Skin & Cracking",
+    label: "Skin",
     href: "/waitlist?kit=dry-skin",
     leftImage: "https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?w=800&q=70",
     tagline: "Cracks heal. Calluses soften.",
@@ -100,43 +99,26 @@ export default function TopicsSection() {
 
   return (
     <>
-      <section className="border-t border-neutral-200">
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr_1fr]" style={{ minHeight: "600px" }}>
+      <section className="py-8 md:py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2" style={{ minHeight: "580px" }}>
 
-          {/* Left image panel */}
-          <div className="relative hidden md:block bg-brand-900 overflow-hidden">
-            {topics.map((topic, i) => (
-              <div
-                key={i}
-                className={`absolute inset-0 transition-opacity duration-500 ${
-                  i === activeIndex ? "opacity-100" : "opacity-0"
-                }`}
-              >
-                <Image src={topic.leftImage} alt="" fill className="object-cover" />
-                <div className="absolute inset-0 bg-brand-900/20" />
-              </div>
-            ))}
-          </div>
+          {/* Left: stacked words + active description */}
+          <div className="flex flex-col justify-center px-10 py-12 lg:px-16">
 
-          {/* Center: stacked topic words */}
-          <div className="flex flex-col justify-center items-center py-16 px-6 md:px-10 border-x border-neutral-100 text-center">
-            <p className={`${type.displaySection} text-brand-900 leading-none mb-10`}>
-              KNOW YOUR FEET.
-            </p>
-
-            <div>
+            {/* Stacked word list */}
+            <div className="mb-10">
               {topics.map((topic, i) => (
                 <Link
                   key={i}
                   href={topic.href}
                   onMouseEnter={() => setActiveIndex(i)}
                   onClick={(e) => handleTopicClick(e, i)}
-                  className={`flex items-center justify-center gap-2 font-display font-bold uppercase tracking-tight leading-tight py-1.5 transition-colors duration-300 ${
+                  className={`flex items-center gap-2 font-display font-bold uppercase tracking-tight leading-none py-0.5 transition-colors duration-300 ${
                     isActive(i)
                       ? "text-brand-900"
                       : "text-neutral-300 hover:text-neutral-600"
                   }`}
-                  style={{ fontSize: "clamp(1.75rem, 3.5vw, 3.25rem)" }}
+                  style={{ fontSize: "clamp(2rem, 3.5vw, 3.5rem)" }}
                 >
                   {topic.label}
                   {/* Tap indicator — mobile only */}
@@ -153,44 +135,24 @@ export default function TopicsSection() {
               ))}
             </div>
 
-            {/* Mobile hint */}
-            <p className="md:hidden mt-6 font-body text-xs text-neutral-400 tracking-[0.12em] uppercase">
-              Tap a topic to learn more
-            </p>
-          </div>
-
-          {/* Right panel: editorial text block — warm parchment (desktop only) */}
-          <div className="relative hidden md:block bg-accent-50 overflow-hidden">
-            {/* Cognac top-border accent */}
-            <div className="absolute top-0 left-0 right-0 h-[3px] bg-accent-500 z-10" />
-
-            <div className="relative z-10 flex flex-col justify-between h-full p-8 lg:p-10">
+            {/* Active description — stacked via absolute to avoid layout shift */}
+            <div className="relative hidden md:block" style={{ minHeight: "11rem" }}>
               {topics.map((topic, i) => (
                 <div
                   key={i}
-                  className={`absolute inset-0 flex flex-col justify-between p-8 lg:p-10 pt-10 transition-all duration-500 ${
+                  className={`absolute inset-0 transition-all duration-500 ${
                     i === activeIndex ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none"
                   }`}
                 >
-                  <span className="font-body text-xs tracking-[0.2em] uppercase text-neutral-400">
+                  <span className="block font-body text-xs tracking-[0.2em] uppercase text-neutral-400 mb-3">
                     {String(i + 1).padStart(2, "0")} / {String(topics.length).padStart(2, "0")}
                   </span>
-
-                  <div className="space-y-4">
-                    <p className="font-heading text-accent-600 text-sm tracking-wide italic leading-snug">
-                      {topic.tagline}
-                    </p>
-                    <h3
-                      className="font-display font-bold uppercase text-brand-900 leading-tight tracking-tight"
-                      style={{ fontSize: "clamp(1.4rem, 2.2vw, 2rem)" }}
-                    >
-                      {topic.label}
-                    </h3>
-                    <p className="font-body text-neutral-600 text-sm leading-relaxed">
-                      {topic.description}
-                    </p>
-                  </div>
-
+                  <p className="font-heading text-accent-600 text-sm tracking-wide italic leading-snug mb-2">
+                    {topic.tagline}
+                  </p>
+                  <p className="font-body text-neutral-600 text-base leading-snug mb-5">
+                    {topic.description}
+                  </p>
                   <Link
                     href={topic.href}
                     className="inline-flex items-center gap-2 font-body text-xs tracking-[0.15em] uppercase text-accent-600 hover:text-brand-900 transition-colors duration-200 group"
@@ -198,6 +160,28 @@ export default function TopicsSection() {
                     Explore this topic
                     <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
                   </Link>
+                </div>
+              ))}
+            </div>
+
+            {/* Mobile hint */}
+            <p className="md:hidden mt-6 font-body text-xs text-neutral-400 tracking-[0.12em] uppercase">
+              Tap a topic to learn more
+            </p>
+          </div>
+
+          {/* Right: crossfading image — inset from all edges for breathing room */}
+          <div className="relative hidden md:block" style={{ minHeight: "580px" }}>
+            <div className="absolute inset-8 overflow-hidden bg-brand-900">
+              {topics.map((topic, i) => (
+                <div
+                  key={i}
+                  className={`absolute inset-0 transition-opacity duration-500 ${
+                    i === activeIndex ? "opacity-100" : "opacity-0"
+                  }`}
+                >
+                  <Image src={topic.leftImage} alt="" fill className="object-cover object-center" />
+                  <div className="absolute inset-0 bg-brand-900/10" />
                 </div>
               ))}
             </div>
@@ -259,7 +243,7 @@ export default function TopicsSection() {
           <h3 className="font-display font-bold uppercase text-brand-900 leading-tight tracking-tight text-3xl mb-4">
             {t.label}
           </h3>
-          <p className="font-body text-neutral-600 text-sm leading-relaxed mb-8">
+          <p className="font-body text-neutral-600 text-base leading-snug mb-8">
             {t.description}
           </p>
 

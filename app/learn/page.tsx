@@ -58,6 +58,17 @@ export default function LearnPage() {
   return (
     <SiteLayout>
 
+      {/* ── Breadcrumb ── */}
+      <div className="border-b border-neutral-100 py-3">
+        <Container>
+          <nav className="flex items-center gap-2 text-xs text-neutral-400">
+            <Link href="/" className="hover:text-brand-600 transition">Home</Link>
+            <span>›</span>
+            <span className="text-neutral-600">Library</span>
+          </nav>
+        </Container>
+      </div>
+
       {/* ── Hero ── */}
       <section className="relative flex min-h-[55vh] flex-col overflow-hidden bg-brand-900">
         {/* Background image */}

@@ -7,7 +7,7 @@ const base =
   "inline-flex items-center justify-center font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-700 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-40";
 
 const variants: Record<Variant, string> = {
-  solid:   "bg-brand-500 text-white hover:bg-brand-600 active:bg-brand-700",
+  solid:   "bg-accent-500 text-white hover:bg-accent-600 active:bg-accent-700",
   outline: "border border-brand-500 text-brand-500 bg-transparent hover:bg-brand-50 active:bg-brand-100",
   ghost:   "border border-brand-300 text-brand-500 bg-brand-50 hover:bg-brand-100 active:bg-brand-200",
   text:    "text-brand-500 hover:text-brand-600 underline-offset-4 hover:underline",

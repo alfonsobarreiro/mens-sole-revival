@@ -180,6 +180,19 @@
   }
 }
 
+/* Logo on dark backgrounds — renders SVG fills as brand-200 (#BBCDDD).
+   Chain: normalize to black → invert to white → shift to cool blue-gray */
+.logo-on-dark {
+  filter: brightness(0) invert(83%) sepia(16%) saturate(580%) hue-rotate(180deg) brightness(104%) contrast(92%);
+}
+
+/* Pause marquee for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
+}
+
 @theme inline {
   --radius-sm:  calc(var(--radius) - 4px);
   --radius-md:  calc(var(--radius) - 2px);

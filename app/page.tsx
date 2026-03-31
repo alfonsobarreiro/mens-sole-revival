@@ -15,18 +15,21 @@ const kits = [
     tag: "Most requested",
     desc: "For soreness, fatigue, plantar discomfort, and everyday foot ache. Simple routines that actually work.",
     href: "/waitlist?kit=pain-recovery",
+    image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=75",
   },
   {
     title: "Fungus & Nail Care",
     tag: "Long game",
     desc: "For discoloration, thick nails, and the confidence tax of hiding your feet. Evidence-based, not gimmicks.",
     href: "/waitlist?kit=fungus-care",
+    image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&q=75",
   },
   {
     title: "Toe Alignment & Mobility",
     tag: "Foundation",
     desc: "For cramped toes, bunions, balance, and restoring natural foot function before problems compound.",
     href: "/waitlist?kit=alignment-mobility",
+    image: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&q=75",
   },
 ];
 
@@ -95,8 +98,8 @@ const stats = [
 ];
 
 const marqueeItems = [
-  "Nail Care", "Toe Alignment", "Daily Routine",
-  "Foot Health", "Footwear Fit", "Pain & Recovery",
+  "Nails", "Alignment", "Routine",
+  "Foot Health", "Fit", "Pain",
   "Evidence-Based", "Men's Wellness", "Long Game",
 ];
 
@@ -138,7 +141,7 @@ export default function Home() {
                 everything else.
               </h1>
 
-              <p className="mt-8 max-w-xl text-lg leading-relaxed text-brand-200">
+              <p className="mt-8 max-w-xl text-lg leading-relaxed text-white/75">
                 Foot problems don't stay in your feet — they change how your
                 knees load, how your hips move, and how your back feels by
                 evening. Most men don't notice until a decade of damage has
@@ -153,14 +156,14 @@ export default function Home() {
                   href="/learn"
                   variant="outline"
                   size="lg"
-                  className="border-white/30 text-white hover:bg-white/10 active:bg-white/20"
+                  className="border-white/50 text-white hover:bg-white/10 active:bg-white/20"
                 >
                   Browse the Library
                 </Button>
               </div>
 
-              <p className="mt-5 text-sm text-brand-400">
-                No commerce yet — we're building this in the open.
+              <p className="mt-5 text-sm text-white/40">
+                Evidence-based reviews and kits — we're building this in the open.
               </p>
             </div>
           </Container>
@@ -172,7 +175,7 @@ export default function Home() {
             {[...marqueeItems, ...marqueeItems, ...marqueeItems].map((item, i) => (
               <span
                 key={i}
-                className="mx-5 text-xs font-semibold uppercase tracking-widest text-brand-300"
+                className="mx-5 text-xs font-semibold uppercase tracking-widest text-white/50"
               >
                 {item}
                 <span className="ml-5 text-accent-500">·</span>
@@ -183,9 +186,9 @@ export default function Home() {
       </section>
 
       {/* ── Stats — large display numbers, no cards ── */}
-      <section className="border-b border-neutral-200 py-14 md:py-20">
+      <section className="bg-neutral-50 py-14 md:py-20">
         <Container>
-          <p className={`${type.overline} mb-10 text-neutral-400`}>The numbers most men ignore</p>
+          <p className={`${type.overline} mb-10 text-neutral-600`}>The numbers most men ignore</p>
           <div className="grid grid-cols-1 divide-y divide-neutral-100 md:grid-cols-2 md:divide-x md:divide-y-0">
             {stats.map((s) => (
               <div key={s.value} className="py-8 md:py-0 md:px-10 first:md:pl-0">
@@ -202,11 +205,11 @@ export default function Home() {
 
       {/* ── From the Library — featured left sticky + 3 articles right ── */}
       {/* NOTE: no overflow-hidden on this section — it breaks position:sticky */}
-      <section className="border-t border-neutral-200">
+      <section>
         <div className="grid grid-cols-1 md:grid-cols-2">
 
           {/* LEFT — sticky panel: fills viewport, heading top, article bottom */}
-          <div className="md:border-r md:border-neutral-200">
+          <div>
             <div className="md:sticky md:top-0 md:flex md:min-h-screen md:flex-col md:justify-between p-8 md:p-10 lg:p-14">
 
               {/* Top: section heading + CTA */}
@@ -247,7 +250,7 @@ export default function Home() {
           </div>
 
           {/* RIGHT — 4 articles that scroll past the sticky left */}
-          <div className="divide-y divide-neutral-200 border-t border-neutral-200 md:border-t-0">
+          <div>
             {articles.slice(1, 5).map((a) => (
               <Link
                 key={a.slug}
@@ -294,7 +297,7 @@ export default function Home() {
             <h2 className={`${type.displaySection} text-white leading-tight`}>
               IT COMPOUNDS<br />UPWARD.
             </h2>
-            <p className="mt-5 max-w-md text-base leading-7 text-brand-300">
+            <p className="mt-5 max-w-md text-base leading-7 text-white/65">
               When your feet work well, everything else gets easier — your knees,
               your posture, your energy. This is the leverage most men overlook,
               and the reason we built this.
@@ -313,7 +316,7 @@ export default function Home() {
       <TopicsSection />
 
       {/* ── Kits — what we're building, tell us what you need ── */}
-      <section className="border-t border-neutral-200 bg-neutral-50 py-16 md:py-24">
+      <section className="bg-neutral-50 py-16 md:py-24">
         <Container>
           <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
@@ -335,7 +338,15 @@ export default function Home() {
 
           <div className="grid gap-4 md:grid-cols-3">
             {kits.map((kit) => (
-              <Card key={kit.title} {...kit} />
+              <Card
+                key={kit.title}
+                title={kit.title}
+                tag={kit.tag}
+                desc={kit.desc}
+                href={kit.href}
+                image={kit.image}
+                imageAlt={kit.title}
+              />
             ))}
           </div>
         </Container>
@@ -372,9 +383,9 @@ export default function Home() {
                 href="/about"
                 variant="outline"
                 size="lg"
-                className="border-white/30 text-white hover:bg-white/10 active:bg-white/20"
+                className="border-white/50 text-white hover:bg-white/10 active:bg-white/20"
               >
-                Learn more
+                Our story
               </Button>
             </div>
           </div>
