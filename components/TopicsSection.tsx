@@ -8,7 +8,7 @@ const topics = [
   {
     label: "Pain",
     href: "/routines",
-    leftImage: "https://images.pexels.com/photos/15098712/pexels-photo-15098712.jpeg?auto=compress&cs=tinysrgb&w=800",
+    leftImage: "/images/pexels-15098712.jpg",
     tagline: "Your body is sending a signal.",
     description:
       "Plantar fasciitis, heel spurs, arch strain — foot pain rarely disappears on its own. Learn how to identify the source, reduce inflammation, and build the resilience to move without hesitation.",
@@ -16,7 +16,7 @@ const topics = [
   {
     label: "Nails",
     href: "/blog/toenail-fungus-what-works",
-    leftImage: "https://images.pexels.com/photos/9767780/pexels-photo-9767780.jpeg?auto=compress&cs=tinysrgb&w=800",
+    leftImage: "/images/pexels-9767780.jpg",
     tagline: "Small details, big confidence.",
     description:
       "Thick, discolored, or ingrown nails are more common than you think — and more treatable. A consistent trimming habit and the right antifungal protocol can restore clean, healthy nails in weeks.",
@@ -24,7 +24,7 @@ const topics = [
   {
     label: "Alignment",
     href: "/blog/why-toe-alignment-affects-knees-and-hips",
-    leftImage: "https://images.pexels.com/photos/33360918/pexels-photo-33360918.jpeg?auto=compress&cs=tinysrgb&w=800",
+    leftImage: "/images/pexels-33360918.jpg",
     tagline: "Your toes set the foundation.",
     description:
       "Bunions, hammer toes, and crowded toe boxes all trace back to how your foot contacts the ground. Simple daily spreader exercises and footwear awareness can reverse years of drift.",
@@ -32,7 +32,7 @@ const topics = [
   {
     label: "Routine",
     href: "/blog/5-minute-routine",
-    leftImage: "https://images.pexels.com/photos/4909313/pexels-photo-4909313.jpeg?auto=compress&cs=tinysrgb&w=800",
+    leftImage: "/images/pexels-4909313.jpg",
     tagline: "Five minutes. Every day.",
     description:
       "The men who take care of their feet do it consistently — not occasionally. Washing, drying, moisturizing, inspecting: a simple morning or evening ritual that prevents 90% of common foot problems.",
@@ -40,7 +40,7 @@ const topics = [
   {
     label: "Fit",
     href: "/blog/what-your-dress-shoes-are-doing-to-your-feet",
-    leftImage: "https://images.pexels.com/photos/8729236/pexels-photo-8729236.jpeg?auto=compress&cs=tinysrgb&w=800",
+    leftImage: "/images/pexels-8729236.jpg",
     tagline: "The wrong shoe is a slow injury.",
     description:
       "Most men wear shoes half a size too small and twice as narrow as their feet need. Understanding your foot shape — length, width, arch — changes how you buy footwear for the rest of your life.",
@@ -48,7 +48,7 @@ const topics = [
   {
     label: "Skin",
     href: "/blog/cracked-heels-what-actually-works",
-    leftImage: "https://images.pexels.com/photos/11873696/pexels-photo-11873696.jpeg?auto=compress&cs=tinysrgb&w=800",
+    leftImage: "/images/pexels-11873696.jpg",
     tagline: "Cracks heal. Calluses soften.",
     description:
       "Heel fissures and rough skin aren't just cosmetic — deep cracks can split and become painful entry points for infection. A targeted moisturizing routine with the right emollients makes a visible difference in days.",

@@ -17,7 +17,7 @@ const articles = [
     href: "/blog/what-your-dress-shoes-are-doing-to-your-feet",
     category: "Footwear Fit",
     readTime: "7 min",
-    image: "https://images.pexels.com/photos/12031206/pexels-photo-12031206.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "/images/pexels-12031206.jpg",
     excerpt: "Most men don't connect the shoes they wore for decades to the foot problems they have now. Here's the chain of cause and effect.",
   },
   {
@@ -25,7 +25,7 @@ const articles = [
     href: "/blog/big-toe-and-your-whole-body",
     category: "Alignment",
     readTime: "6 min",
-    image: "https://images.pexels.com/photos/9467290/pexels-photo-9467290.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "/images/pexels-9467290.jpg",
     excerpt: "The big toe is responsible for 40–60% of your push-off force. Most men have spent decades restricting it — and wondering why their knee hurts.",
   },
   {
@@ -33,7 +33,7 @@ const articles = [
     href: "/blog/cracked-heels-what-actually-works",
     category: "Dry Skin",
     readTime: "5 min",
-    image: "https://images.pexels.com/photos/29145634/pexels-photo-29145634.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "/images/pexels-29145634.jpg",
     excerpt: "Scrubbing dry, cracked heel skin is the wrong starting point. Here's what's actually happening — and the routine that addresses it.",
   },
   {
@@ -41,7 +41,7 @@ const articles = [
     href: "/blog/toenail-fungus-what-works",
     category: "Nail Care",
     readTime: "8 min",
-    image: "https://images.pexels.com/photos/8980963/pexels-photo-8980963.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "/images/pexels-8980963.jpg",
     excerpt: "The evidence on OTC treatments, prescription options, and home remedies — ranked by how well they actually work.",
   },
   {
@@ -49,7 +49,7 @@ const articles = [
     href: "/blog/why-toe-alignment-affects-knees-and-hips",
     category: "Alignment",
     readTime: "6 min",
-    image: "https://images.pexels.com/photos/35206081/pexels-photo-35206081.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "/images/pexels-35206081.jpg",
     excerpt: "The connection between cramped toes, altered gait, and the knee and hip pain that follows years later.",
   },
   {
@@ -57,7 +57,7 @@ const articles = [
     href: "/blog/5-minute-routine",
     category: "Daily Routine",
     readTime: "4 min",
-    image: "https://images.pexels.com/photos/7047464/pexels-photo-7047464.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "/images/pexels-7047464.jpg",
     excerpt: "A consistency-first approach: five focused minutes after your shower, anchored to a habit you already have.",
   },
 ];
@@ -109,7 +109,7 @@ export default function LearnPage() {
       <section className="relative flex min-h-[55vh] flex-col overflow-hidden bg-brand-900">
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://images.pexels.com/photos/7047464/pexels-photo-7047464.jpeg?auto=compress&cs=tinysrgb&w=1600"
+            src="/images/pexels-7047464.jpg"
             alt=""
             fill
             className="object-cover object-center opacity-40"

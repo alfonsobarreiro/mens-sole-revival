@@ -15,7 +15,7 @@ const routineHighlights = [
     desc: "Wash, dry, inspect, moisturize. Done before your phone goes to the charger. This is the foundation.",
     time: "5 min / every night",
     href: "/routines",
-    image: "https://images.pexels.com/photos/4909313/pexels-photo-4909313.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "/images/pexels-4909313.jpg",
   },
   {
     label: "Stretch",
@@ -23,7 +23,7 @@ const routineHighlights = [
     desc: "Three moves, three minutes, right after you get out of bed. The men who do this stop having morning heel pain.",
     time: "3 min / every morning",
     href: "/routines",
-    image: "https://images.pexels.com/photos/3771071/pexels-photo-3771071.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "/images/pexels-3771071.jpg",
   },
   {
     label: "Recovery",
@@ -31,7 +31,7 @@ const routineHighlights = [
     desc: "Roll the arch, hold on the sore spot, let it release. Three minutes per foot. Combine with the stretch.",
     time: "6 min / as needed",
     href: "/routines",
-    image: "https://images.pexels.com/photos/8729018/pexels-photo-8729018.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "/images/pexels-8729018.jpg",
   },
 ];
 
@@ -42,7 +42,7 @@ const articles = [
     category: "Footwear Fit",
     readTime: "7 min",
     excerpt: "Most men don't connect the shoes they wore for decades to the foot problems they have now. Here's the chain of cause and effect.",
-    image: "https://images.pexels.com/photos/12031206/pexels-photo-12031206.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "/images/pexels-12031206.jpg",
   },
   {
     slug: "big-toe-and-your-whole-body",
@@ -50,7 +50,7 @@ const articles = [
     category: "Toe Alignment",
     readTime: "6 min",
     excerpt: "The big toe is responsible for 40–60% of your push-off force. Most men have spent decades restricting it — and wondering why their knee hurts.",
-    image: "https://images.pexels.com/photos/9467290/pexels-photo-9467290.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "/images/pexels-9467290.jpg",
   },
   {
     slug: "cracked-heels-what-actually-works",
@@ -58,7 +58,7 @@ const articles = [
     category: "Dry Skin",
     readTime: "5 min",
     excerpt: "Scrubbing dry, cracked heel skin is the wrong starting point. Here's what's actually happening — and the routine that addresses it.",
-    image: "https://images.pexels.com/photos/29145634/pexels-photo-29145634.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "/images/pexels-29145634.jpg",
   },
   {
     slug: "toenail-fungus-what-works",
@@ -66,7 +66,7 @@ const articles = [
     category: "Nail Care",
     readTime: "8 min",
     excerpt: "The evidence on OTC treatments, prescription options, and home remedies — ranked by how well they actually work.",
-    image: "https://images.pexels.com/photos/5960467/pexels-photo-5960467.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "/images/pexels-5960467.jpg",
   },
   {
     slug: "why-toe-alignment-affects-knees-and-hips",
@@ -74,7 +74,7 @@ const articles = [
     category: "Toe Alignment",
     readTime: "5 min",
     excerpt: "When your big toe can't extend and stabilize, your knee, hip, and lower back pick up the slack — every single step. Here's how it travels up the chain.",
-    image: "https://images.pexels.com/photos/13065922/pexels-photo-13065922.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "/images/pexels-13065922.jpg",
   },
   {
     slug: "5-minute-routine",
@@ -82,7 +82,7 @@ const articles = [
     category: "Daily Routine",
     readTime: "4 min",
     excerpt: "Consistency beats intensity. A five-minute habit done after your shower produces dramatically better long-term outcomes than anything more ambitious you'll quit.",
-    image: "https://images.pexels.com/photos/7205913/pexels-photo-7205913.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "/images/pexels-7205913.jpg",
   },
 ];
 
@@ -127,7 +127,7 @@ export default function Home() {
         {/* Background photo — full bleed, higher opacity for depth */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://images.pexels.com/photos/17979558/pexels-photo-17979558.jpeg?auto=compress&cs=tinysrgb&w=1600"
+            src="/images/pexels-17979558.jpg"
             alt=""
             fill
             className="object-cover object-center opacity-30"
@@ -317,7 +317,7 @@ export default function Home() {
       <section className="flex min-h-[420px] flex-col md:flex-row md:min-h-[500px]">
         <div className="relative h-64 w-full md:h-auto md:w-1/2">
           <Image
-            src="https://images.pexels.com/photos/34806666/pexels-photo-34806666.jpeg?auto=compress&cs=tinysrgb&w=1000"
+            src="/images/pexels-34806666.jpg"
             alt=""
             fill
             className="object-cover"
@@ -406,7 +406,7 @@ export default function Home() {
         className="relative overflow-hidden py-28 md:py-44"
         style={{
           backgroundImage:
-            "url('https://images.pexels.com/photos/7787491/pexels-photo-7787491.jpeg?auto=compress&cs=tinysrgb&w=1600')",
+            "url('/images/pexels-7787491.jpg')",
           backgroundAttachment: "fixed",
           backgroundSize: "cover",
           backgroundPosition: "center",

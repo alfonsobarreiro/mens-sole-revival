@@ -31,7 +31,7 @@ export default function AboutPage() {
         {/* Background image */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://images.pexels.com/photos/8637976/pexels-photo-8637976.jpeg?auto=compress&cs=tinysrgb&w=1600"
+            src="/images/pexels-8637976.jpg"
             alt=""
             fill
             className="object-cover object-center opacity-50"

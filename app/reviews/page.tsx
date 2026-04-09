@@ -63,7 +63,7 @@ export const staticReviews: Review[] = [
     tagline: "The most reliable OTC insole for men who stand or walk all day.",
     retailPriceUsd: 55,
     publishedAt: "2026-03-01",
-    imageUrl: "https://images.pexels.com/photos/8729236/pexels-photo-8729236.jpeg?auto=compress&cs=tinysrgb&w=800",
+    imageUrl: "/images/pexels-8729236.jpg",
   },
   {
     productName: "Lamisil AT Antifungal Cream",
@@ -75,7 +75,7 @@ export const staticReviews: Review[] = [
     tagline: "The OTC antifungal with the best clinical track record for athlete's foot.",
     retailPriceUsd: 18,
     publishedAt: "2026-03-05",
-    imageUrl: "https://images.pexels.com/photos/10904211/pexels-photo-10904211.jpeg?auto=compress&cs=tinysrgb&w=800",
+    imageUrl: "/images/pexels-10904211.jpg",
   },
   {
     productName: "Gehwol Fusskraft Soft Feet Cream",
@@ -87,7 +87,7 @@ export const staticReviews: Review[] = [
     tagline: "The German heel cream most podiatrists quietly recommend and most men have never heard of.",
     retailPriceUsd: 22,
     publishedAt: "2026-03-10",
-    imageUrl: "https://images.pexels.com/photos/29145634/pexels-photo-29145634.jpeg?auto=compress&cs=tinysrgb&w=800",
+    imageUrl: "/images/pexels-29145634.jpg",
   },
   {
     productName: "Gold Bond Medicated Foot Powder",
@@ -99,7 +99,7 @@ export const staticReviews: Review[] = [
     tagline: "Classic for a reason — but the formula trade-offs are worth understanding before you reach for it.",
     retailPriceUsd: 9,
     publishedAt: "2026-03-15",
-    imageUrl: "https://images.pexels.com/photos/8980963/pexels-photo-8980963.jpeg?auto=compress&cs=tinysrgb&w=800",
+    imageUrl: "/images/pexels-8980963.jpg",
   },
   {
     productName: "Yoga Toes GEM Toe Separators",
@@ -111,7 +111,7 @@ export const staticReviews: Review[] = [
     tagline: "Legitimate tool for toe alignment — but the wearing schedule matters as much as the product.",
     retailPriceUsd: 30,
     publishedAt: "2026-03-18",
-    imageUrl: "https://images.pexels.com/photos/35206081/pexels-photo-35206081.jpeg?auto=compress&cs=tinysrgb&w=800",
+    imageUrl: "/images/pexels-35206081.jpg",
   },
   {
     productName: "KURU ATOM Sneakers",
@@ -123,7 +123,7 @@ export const staticReviews: Review[] = [
     tagline: "The rare casual shoe actually designed around foot anatomy — not fashion.",
     retailPriceUsd: 145,
     publishedAt: "2026-03-22",
-    imageUrl: "https://images.pexels.com/photos/12031206/pexels-photo-12031206.jpeg?auto=compress&cs=tinysrgb&w=800",
+    imageUrl: "/images/pexels-12031206.jpg",
   },
 ];
 
@@ -232,7 +232,7 @@ export default async function ReviewsPage() {
       <section className="relative flex min-h-[55vh] flex-col overflow-hidden bg-brand-900">
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://images.pexels.com/photos/13122754/pexels-photo-13122754.jpeg?auto=compress&cs=tinysrgb&w=1600"
+            src="/images/pexels-13122754.jpg"
             alt=""
             fill
             className="object-cover object-center opacity-25"

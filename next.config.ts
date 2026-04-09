@@ -24,10 +24,6 @@ const nextConfig: NextConfig = {
         hostname: "images.unsplash.com",
       },
       {
-        protocol: "https",
-        hostname: "images.pexels.com",
-      },
-      {
         // Sanity CDN — for kit images uploaded via Studio
         protocol: "https",
         hostname: "cdn.sanity.io",
