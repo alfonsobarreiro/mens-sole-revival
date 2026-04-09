@@ -31,7 +31,7 @@ const staticProducts: ProductDetail[] = [
     status: "waitlist",
     category: "kit",
     waitlistParam: "pain-recovery",
-    imageUrl: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1200&q=80",
+    imageUrl: "https://images.pexels.com/photos/8729236/pexels-photo-8729236.jpeg?auto=compress&cs=tinysrgb&w=1200",
     contents: [
       { item: "Plantar fascia massage ball", detail: "High-density rubber, 65mm" },
       { item: "Arch support insole pair", detail: "EVA, full-length, 3 arch heights" },
@@ -51,7 +51,7 @@ const staticProducts: ProductDetail[] = [
     status: "waitlist",
     category: "kit",
     waitlistParam: "fungus-care",
-    imageUrl: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=1200&q=80",
+    imageUrl: "https://images.pexels.com/photos/10904211/pexels-photo-10904211.jpeg?auto=compress&cs=tinysrgb&w=1200",
     contents: [
       { item: "Antifungal topical (urea 40%)", detail: "Clinical-grade, 30ml" },
       { item: "Nail file set", detail: "Coarse + fine grit, stainless" },
@@ -71,7 +71,7 @@ const staticProducts: ProductDetail[] = [
     status: "coming-soon",
     category: "kit",
     waitlistParam: "alignment-mobility",
-    imageUrl: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=1200&q=80",
+    imageUrl: "https://images.pexels.com/photos/35206081/pexels-photo-35206081.jpeg?auto=compress&cs=tinysrgb&w=1200",
     contents: [
       { item: "Toe spacers (medical silicone)", detail: "Set of 4, washable, reusable" },
       { item: "Big toe extension splint", detail: "Night use, adjustable strap" },
@@ -91,7 +91,7 @@ const staticProducts: ProductDetail[] = [
     status: "coming-soon",
     category: "kit",
     waitlistParam: "dry-skin",
-    imageUrl: "https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?w=1200&q=80",
+    imageUrl: "https://images.pexels.com/photos/29145634/pexels-photo-29145634.jpeg?auto=compress&cs=tinysrgb&w=1200",
     contents: [
       { item: "Urea 25% heel cream", detail: "Exfoliates + hydrates, 100ml" },
       { item: "Pumice bar", detail: "Wet-use, medium grit" },
@@ -111,7 +111,7 @@ const staticProducts: ProductDetail[] = [
     status: "coming-soon",
     category: "kit",
     waitlistParam: "odor-hygiene",
-    imageUrl: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=1200&q=80",
+    imageUrl: "https://images.pexels.com/photos/8980963/pexels-photo-8980963.jpeg?auto=compress&cs=tinysrgb&w=1200",
     contents: [
       { item: "Antibacterial foot wash", detail: "Tea tree + neem, 200ml" },
       { item: "Foot powder", detail: "Talc-free, absorbs 6–8 hrs" },
@@ -131,7 +131,7 @@ const staticProducts: ProductDetail[] = [
     status: "coming-soon",
     category: "treatment",
     waitlistParam: "footwear-fit",
-    imageUrl: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=1200&q=80",
+    imageUrl: "https://images.pexels.com/photos/12031206/pexels-photo-12031206.jpeg?auto=compress&cs=tinysrgb&w=1200",
     contents: [
       { item: "Brannock measurement guide", detail: "Self-measure accurately at home" },
       { item: "Fit assessment checklist", detail: "6-point shoe evaluation" },

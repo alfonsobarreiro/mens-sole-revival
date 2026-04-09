@@ -8,7 +8,7 @@ export default function Page() {
   return (
     <SiteLayout>
       <ArticleLayout
-        heroSrc="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1400&q=80"
+        heroSrc="https://images.pexels.com/photos/7047464/pexels-photo-7047464.jpeg?auto=compress&cs=tinysrgb&w=1400"
         heroAlt="Man relaxing after a foot care routine — daily habit guide"
         title="A 5-Minute Daily Foot-Care Routine You Can Stick To"
         category="Daily Routine"

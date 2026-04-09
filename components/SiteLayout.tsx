@@ -8,10 +8,11 @@ import Container from "@/components/Container";
 import Button from "@/components/Button";
 
 const navLinks = [
-  { label: "Library", href: "/learn" },
-  { label: "Kits", href: "/kits" },
+  { label: "Learn", href: "/learn" },
   { label: "Reviews", href: "/reviews" },
+  { label: "Routines", href: "/routines" },
   { label: "About", href: "/about" },
+  { label: "Assessment", href: "/assessment" },
 ];
 
 export default function SiteLayout({
@@ -113,8 +114,8 @@ export default function SiteLayout({
                 {/* Right: CTA (desktop) + hamburger (mobile) */}
                 <div className="flex items-center justify-end gap-2">
                   <div className="hidden md:block">
-                    <Button href="/waitlist" size="sm">
-                      Join the Waitlist
+                    <Button href="/assessment" size="sm">
+                      Take the Assessment
                     </Button>
                   </div>
                   <button
@@ -167,7 +168,7 @@ export default function SiteLayout({
                 {/* Right: CTA (desktop) + hamburger (mobile) */}
                 <div className="flex items-center justify-end gap-2">
                   <div className="hidden md:block">
-                    <Button href="/waitlist" size="sm">Join the Waitlist</Button>
+                    <Button href="/assessment" size="sm">Take the Assessment</Button>
                   </div>
                   <button
                     type="button"
@@ -203,8 +204,8 @@ export default function SiteLayout({
                     );
                   })}
                   <div className="mt-3 border-t border-neutral-100 pt-3">
-                    <Button href="/waitlist" size="sm" className="w-full justify-center">
-                      Join the Waitlist
+                    <Button href="/assessment" size="sm" className="w-full justify-center">
+                      Take the Assessment
                     </Button>
                   </div>
                 </nav>
@@ -245,8 +246,10 @@ export default function SiteLayout({
                   </p>
                   <ul className="mt-4 space-y-2">
                     {[
-                      { label: "Library", href: "/learn" },
-                      { label: "Kits", href: "/kits" },
+                      { label: "Assessment", href: "/assessment" },
+                      { label: "Learn", href: "/learn" },
+                      { label: "Reviews", href: "/reviews" },
+                      { label: "Routines", href: "/routines" },
                       { label: "About", href: "/about" },
                     ].map((l) => (
                       <li key={l.href}>

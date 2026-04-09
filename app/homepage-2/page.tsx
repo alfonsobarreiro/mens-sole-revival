@@ -71,7 +71,7 @@ const articles = [
     category: "Footwear Fit",
     readTime: "7 min",
     excerpt: "Research in podiatric biomechanics shows a direct correlation between prolonged use of narrow toe-box shoes and progressive forefoot deformity. A clinical overview.",
-    image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800&q=75",
+    image: "https://images.pexels.com/photos/12031206/pexels-photo-12031206.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
   {
     slug: "big-toe-and-your-whole-body",
@@ -79,7 +79,7 @@ const articles = [
     category: "Toe Alignment",
     readTime: "6 min",
     excerpt: "The hallux contributes 40–60% of propulsive force during terminal stance. Hallux limitus and rigidus have measurable downstream effects on knee and hip loading patterns.",
-    image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=75",
+    image: "https://images.pexels.com/photos/9467290/pexels-photo-9467290.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
   {
     slug: "cracked-heels-what-actually-works",
@@ -87,7 +87,7 @@ const articles = [
     category: "Dermatology",
     readTime: "5 min",
     excerpt: "Mechanical debridement alone is insufficient for chronic heel fissures. Current dermatological guidance recommends urea-based emollients (20–40%) as first-line treatment.",
-    image: "https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?w=800&q=75",
+    image: "https://images.pexels.com/photos/7312082/pexels-photo-7312082.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
   {
     slug: "toenail-fungus-what-works",
@@ -95,7 +95,7 @@ const articles = [
     category: "Nail Care",
     readTime: "8 min",
     excerpt: "Systematic reviews indicate oral terbinafine achieves 76% mycological cure rates vs. 22% for topical ciclopirox. A clinical comparison of available treatment modalities.",
-    image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=75",
+    image: "https://images.pexels.com/photos/8980963/pexels-photo-8980963.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
   {
     slug: "why-toe-alignment-affects-knees-and-hips",
@@ -103,7 +103,7 @@ const articles = [
     category: "Biomechanics",
     readTime: "5 min",
     excerpt: "Restricted hallux dorsiflexion during terminal stance produces compensatory pronation and internal tibial rotation, with documented effects at the patellofemoral joint.",
-    image: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&q=75",
+    image: "https://images.pexels.com/photos/35206081/pexels-photo-35206081.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
 ];
 
@@ -124,42 +124,42 @@ const topics = [
   {
     label: "Pain & Recovery",
     href: "/waitlist?kit=pain-recovery",
-    image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=70",
+    image: "https://images.pexels.com/photos/8980963/pexels-photo-8980963.jpeg?auto=compress&cs=tinysrgb&w=800",
     tagline: "Your body is sending a signal.",
     description: "Plantar fasciitis, heel spurs, arch strain — foot pain rarely disappears on its own. Learn how to identify the source, reduce inflammation, and build resilience.",
   },
   {
     label: "Nail Care",
     href: "/waitlist?kit=fungus-care",
-    image: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&q=70",
+    image: "https://images.pexels.com/photos/35206081/pexels-photo-35206081.jpeg?auto=compress&cs=tinysrgb&w=800",
     tagline: "Small details, big confidence.",
     description: "Thick, discolored, or ingrown nails are more common than you think — and more treatable. A consistent protocol can restore clean, healthy nails in weeks.",
   },
   {
     label: "Toe Alignment",
     href: "/waitlist?kit=alignment-mobility",
-    image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=70",
+    image: "https://images.pexels.com/photos/7047464/pexels-photo-7047464.jpeg?auto=compress&cs=tinysrgb&w=800",
     tagline: "Your toes set the foundation.",
     description: "Bunions, hammer toes, and crowded toe boxes trace back to how your foot contacts the ground. Simple daily exercises and footwear awareness can reverse years of drift.",
   },
   {
     label: "Daily Routine",
     href: "/blog/5-minute-routine",
-    image: "https://images.unsplash.com/photo-1530143311094-34d807799e8f?w=800&q=70",
+    image: "https://images.pexels.com/photos/13122754/pexels-photo-13122754.jpeg?auto=compress&cs=tinysrgb&w=800",
     tagline: "Five minutes. Every day.",
     description: "The men who take care of their feet do it consistently — not occasionally. A simple washing, drying, and moisturizing habit prevents 90% of common foot problems.",
   },
   {
     label: "Footwear Fit",
     href: "/waitlist?kit=footwear-fit",
-    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=70",
+    image: "https://images.pexels.com/photos/8729236/pexels-photo-8729236.jpeg?auto=compress&cs=tinysrgb&w=800",
     tagline: "The wrong shoe is a slow injury.",
     description: "Most men wear shoes half a size too small. Understanding your foot shape — length, width, arch — changes how you buy footwear for the rest of your life.",
   },
   {
     label: "Dry Skin & Cracking",
     href: "/waitlist?kit=dry-skin",
-    image: "https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?w=800&q=70",
+    image: "https://images.pexels.com/photos/7312082/pexels-photo-7312082.jpeg?auto=compress&cs=tinysrgb&w=800",
     tagline: "Cracks heal. Calluses soften.",
     description: "Heel fissures and rough skin aren't just cosmetic — deep cracks can become painful entry points for infection. A targeted moisturizing routine makes a visible difference in days.",
   },
@@ -273,7 +273,7 @@ export default function Homepage2() {
           {/* Right: hero image */}
           <div style={{ position: "relative", borderRadius: 12, overflow: "hidden", height: 420 }}>
             <Image
-              src="https://images.unsplash.com/photo-1530143311094-34d807799e8f?w=1600&q=60"
+              src="https://images.pexels.com/photos/13122754/pexels-photo-13122754.jpeg?auto=compress&cs=tinysrgb&w=1600"
               alt=""
               fill
               className="object-cover object-center"
@@ -407,7 +407,7 @@ export default function Homepage2() {
       <section style={{ display: "flex", minHeight: 460 }}>
         <div style={{ position: "relative", width: "50%" }}>
           <Image
-            src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1000&q=70"
+            src="https://images.pexels.com/photos/7047464/pexels-photo-7047464.jpeg?auto=compress&cs=tinysrgb&w=1000"
             alt=""
             fill
             className="object-cover"
@@ -571,7 +571,7 @@ export default function Homepage2() {
       {/* ── Parallax CTA — clinical version ── */}
       <section style={{ position: "relative", overflow: "hidden", padding: "100px 40px", textAlign: "center", minHeight: 420, display: "flex", alignItems: "center", justifyContent: "center" }}>
         <Image
-          src="https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=1600&q=60"
+          src="https://images.pexels.com/photos/35206081/pexels-photo-35206081.jpeg?auto=compress&cs=tinysrgb&w=1600"
           alt=""
           fill
           className="object-cover object-center"

@@ -156,7 +156,7 @@ export default function Homepage3() {
       <section style={{ background: s.bgDark, padding: "80px 40px", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, opacity: 0.15 }}>
           <Image
-            src="https://images.unsplash.com/photo-1530143311094-34d807799e8f?w=1600&q=60"
+            src="https://images.pexels.com/photos/13122754/pexels-photo-13122754.jpeg?auto=compress&cs=tinysrgb&w=1600"
             alt=""
             fill
             className="object-cover object-center"

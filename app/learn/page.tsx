@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import Button from "@/components/Button";
@@ -12,11 +13,35 @@ import { type } from "@/components/typography";
 
 const articles = [
   {
+    title: "What 30 Years in Dress Shoes Actually Does to Your Feet",
+    href: "/blog/what-your-dress-shoes-are-doing-to-your-feet",
+    category: "Footwear Fit",
+    readTime: "7 min",
+    image: "https://images.pexels.com/photos/12031206/pexels-photo-12031206.jpeg?auto=compress&cs=tinysrgb&w=800",
+    excerpt: "Most men don't connect the shoes they wore for decades to the foot problems they have now. Here's the chain of cause and effect.",
+  },
+  {
+    title: "Your Big Toe Controls More of Your Body Than You Think",
+    href: "/blog/big-toe-and-your-whole-body",
+    category: "Alignment",
+    readTime: "6 min",
+    image: "https://images.pexels.com/photos/9467290/pexels-photo-9467290.jpeg?auto=compress&cs=tinysrgb&w=800",
+    excerpt: "The big toe is responsible for 40–60% of your push-off force. Most men have spent decades restricting it — and wondering why their knee hurts.",
+  },
+  {
+    title: "Cracked Heels: The Fix That Isn't a Pumice Stone",
+    href: "/blog/cracked-heels-what-actually-works",
+    category: "Dry Skin",
+    readTime: "5 min",
+    image: "https://images.pexels.com/photos/29145634/pexels-photo-29145634.jpeg?auto=compress&cs=tinysrgb&w=800",
+    excerpt: "Scrubbing dry, cracked heel skin is the wrong starting point. Here's what's actually happening — and the routine that addresses it.",
+  },
+  {
     title: "Toenail Fungus: What Actually Works (and What's a Scam)",
     href: "/blog/toenail-fungus-what-works",
     category: "Nail Care",
     readTime: "8 min",
-    image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=75",
+    image: "https://images.pexels.com/photos/8980963/pexels-photo-8980963.jpeg?auto=compress&cs=tinysrgb&w=800",
     excerpt: "The evidence on OTC treatments, prescription options, and home remedies — ranked by how well they actually work.",
   },
   {
@@ -24,7 +49,7 @@ const articles = [
     href: "/blog/why-toe-alignment-affects-knees-and-hips",
     category: "Alignment",
     readTime: "6 min",
-    image: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&q=75",
+    image: "https://images.pexels.com/photos/35206081/pexels-photo-35206081.jpeg?auto=compress&cs=tinysrgb&w=800",
     excerpt: "The connection between cramped toes, altered gait, and the knee and hip pain that follows years later.",
   },
   {
@@ -32,24 +57,35 @@ const articles = [
     href: "/blog/5-minute-routine",
     category: "Daily Routine",
     readTime: "4 min",
-    image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=75",
+    image: "https://images.pexels.com/photos/7047464/pexels-photo-7047464.jpeg?auto=compress&cs=tinysrgb&w=800",
     excerpt: "A consistency-first approach: five focused minutes after your shower, anchored to a habit you already have.",
   },
 ];
 
 const allCategories = ["All", ...Array.from(new Set(articles.map((a) => a.category)))];
 
-// ── Category colour map ───────────────────────────────────────────────────────
 const categoryColor: Record<string, string> = {
-  "Nail Care":      "bg-teal-50 text-teal-700",
-  "Alignment":      "bg-brand-50 text-brand-700",
-  "Daily Routine":  "bg-accent-50 text-accent-700",
+  "Footwear Fit":  "bg-brand-50 text-brand-700",
+  "Alignment":     "bg-brand-50 text-brand-700",
+  "Dry Skin":      "bg-amber-50 text-amber-700",
+  "Nail Care":     "bg-teal-50 text-teal-700",
+  "Daily Routine": "bg-accent-50 text-accent-700",
 };
 
 // ── Page ─────────────────────────────────────────────────────────────────────
 
 export default function LearnPage() {
+  const searchParams = useSearchParams();
+  const catParam = searchParams.get("cat");
+
   const [active, setActive] = useState("All");
+
+  // Sync URL param → active tab on load
+  useEffect(() => {
+    if (catParam && allCategories.includes(catParam)) {
+      setActive(catParam);
+    }
+  }, [catParam]);
 
   const filtered = active === "All"
     ? articles
@@ -64,27 +100,24 @@ export default function LearnPage() {
           <nav className="flex items-center gap-2 text-xs text-neutral-400">
             <Link href="/" className="hover:text-brand-600 transition">Home</Link>
             <span>›</span>
-            <span className="text-neutral-600">Library</span>
+            <span className="text-neutral-600">Learn</span>
           </nav>
         </Container>
       </div>
 
       {/* ── Hero ── */}
       <section className="relative flex min-h-[55vh] flex-col overflow-hidden bg-brand-900">
-        {/* Background image */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1600&q=75"
+            src="https://images.pexels.com/photos/7047464/pexels-photo-7047464.jpeg?auto=compress&cs=tinysrgb&w=1600"
             alt=""
             fill
             className="object-cover object-center opacity-40"
             priority
           />
         </div>
-        {/* Gradient */}
         <div className="absolute inset-0 z-0 bg-gradient-to-r from-brand-900 via-brand-900/80 to-brand-900/20" />
 
-        {/* Text — bottom-left editorial anchor */}
         <div className="relative z-10 flex flex-1 items-end">
           <Container>
             <div className="max-w-3xl pb-12 md:pb-16">
@@ -105,7 +138,6 @@ export default function LearnPage() {
       <section className="py-10 md:py-14">
         <Container>
 
-          {/* Filter tabs — angular underline style */}
           <div className="mb-8 flex flex-wrap gap-0 border-b border-neutral-200">
             {allCategories.map((cat) => (
               <button
@@ -127,7 +159,6 @@ export default function LearnPage() {
             ))}
           </div>
 
-          {/* Article grid — sharp image-first cards, no rounding */}
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {filtered.map((a) => (
               <Link
@@ -135,7 +166,6 @@ export default function LearnPage() {
                 href={a.href}
                 className="group flex flex-col overflow-hidden border border-neutral-200 bg-white shadow-sm transition hover:border-brand-300 hover:shadow-md"
               >
-                {/* Full-bleed image — sharp edges */}
                 <div className="relative aspect-[4/3] w-full overflow-hidden">
                   <Image
                     src={a.image}
@@ -143,15 +173,13 @@ export default function LearnPage() {
                     fill
                     className="object-cover transition duration-500 group-hover:scale-105"
                   />
-                  {/* Category badge overlaid bottom-left */}
                   <div className="absolute bottom-3 left-3">
-                    <span className="bg-white/90 px-3 py-1 text-xs font-bold uppercase tracking-wider text-brand-900 backdrop-blur-sm">
+                    <span className={`px-3 py-1 text-xs font-bold uppercase tracking-wider backdrop-blur-sm ${categoryColor[a.category] ?? "bg-white/90 text-brand-900"}`}>
                       {a.category}
                     </span>
                   </div>
                 </div>
 
-                {/* Text below image */}
                 <div className="flex flex-1 flex-col p-4 md:p-5">
                   <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-neutral-400">
                     {a.readTime} read
@@ -169,7 +197,6 @@ export default function LearnPage() {
               </Link>
             ))}
 
-            {/* Empty-state */}
             {filtered.length === 0 && (
               <div className="col-span-full py-16 text-center text-neutral-400">
                 <p className="text-sm">No guides in this category yet.</p>
@@ -183,7 +210,6 @@ export default function LearnPage() {
             )}
           </div>
 
-          {/* Coming soon callout — sharp edges */}
           <div className="mt-12 border border-neutral-200 bg-neutral-50 p-6 md:flex md:items-center md:justify-between">
             <div>
               <p className="font-display text-xl font-bold uppercase leading-tight text-brand-900">More guides coming soon.</p>

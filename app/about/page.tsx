@@ -31,10 +31,10 @@ export default function AboutPage() {
         {/* Background image */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://images.unsplash.com/photo-1530143311094-34d807799e8f?w=1600&q=60"
+            src="https://images.pexels.com/photos/8637976/pexels-photo-8637976.jpeg?auto=compress&cs=tinysrgb&w=1600"
             alt=""
             fill
-            className="object-cover object-center opacity-35"
+            className="object-cover object-center opacity-50"
             priority
           />
         </div>
@@ -50,9 +50,8 @@ export default function AboutPage() {
                 Built for the men<br />finally paying attention.
               </h1>
               <p className="mt-5 max-w-xl text-base leading-relaxed text-brand-200">
-                Men's Sole Revival started with a simple observation: most men
-                ignore their feet until something goes wrong — and by then, the
-                problem is already compounding.
+                I spent most of my life taking care of other people.
+                That's what got ignored.
               </p>
             </div>
           </Container>
@@ -62,25 +61,60 @@ export default function AboutPage() {
       {/* ── Story ── */}
       <section className="py-16 md:py-20">
         <Container>
-          <div className="mx-auto max-w-2xl space-y-6 text-base leading-7 text-neutral-700">
-            <p>
-              This site exists to fill a gap. There's no shortage of miracle
-              products and 3-day fixes online. What's harder to find is
-              straightforward, honest information about foot care — the kind that
-              actually requires consistency and rewards patience.
-            </p>
-            <p>
-              We write for men in their 40s and 50s who are serious about
-              staying healthy. Not athletes, not podiatrists — just men who've
-              started to realize that the feet are the foundation of how
-              everything else moves.
-            </p>
-            <p>
-              Right now we're building this in the open: publishing evidence-based
-              guides, developing starter kits, and reviewing the products men
-              actually ask about. No venture funding. No sponsored content.
-              Just honest work.
-            </p>
+          <div className="mx-auto grid max-w-5xl gap-12 md:grid-cols-[1fr_2fr] md:items-start">
+
+            {/* Photo */}
+            <div className="relative aspect-[3/4] w-full overflow-hidden rounded-lg bg-neutral-100 shadow-md">
+              {/* Replace /images/about-alfonso.jpg with your photo.
+                  Drop the file into /public/images/ and update the src below. */}
+              <Image
+                src="/about-alfonso.png"
+                alt="Alfonso Barreiro at Silver Falls"
+                fill
+                className="object-cover object-top"
+              />
+            </div>
+
+            {/* Story text */}
+            <div className="space-y-5 text-base leading-7 text-neutral-700">
+              <p>
+                I spent years taking care of everyone around me. That's what you do
+                when you're a dad, when you're the one who shows up. Your own health
+                — specifically your feet — you stop thinking about.
+              </p>
+              <p>
+                Mine were bad. Nail fungus on both big toes for longer than I want
+                to admit. Plantar fasciitis from running while overweight, not
+                understanding which muscles I was supposed to be using. Cracked skin
+                I assumed was just how feet looked. A low-grade shame whenever the
+                subject came up, which meant I avoided it.
+              </p>
+              <p>
+                At some point I got serious. Not overnight — gradually. I started
+                treating the fungal infection the right way: the right medication,
+                kept them dry, stayed consistent. I learned what actually helps
+                plantar fasciitis and what does nothing. I built a nightly lotion
+                routine. I figured out how to stop the ingrown nail cycles. It took
+                months, not days. Things changed.
+              </p>
+              <p>
+                What I noticed was that none of that information was in one place.
+                I was Googling in private and reading Reddit threads at midnight. For
+                a problem that affects a huge percentage of men over 40, the
+                resources were scattered, product-heavy, and built for people who
+                were already motivated.
+              </p>
+              <p>
+                I wanted something that started earlier — with the man who knows
+                something is wrong but doesn't know where to begin.
+              </p>
+              <p className="font-semibold text-brand-900">
+                That's what this is.
+              </p>
+              <p className="text-sm text-neutral-500">
+                — Alfonso Barreiro, UX/UI Designer · Portland, OR
+              </p>
+            </div>
           </div>
         </Container>
       </section>
@@ -96,15 +130,15 @@ export default function AboutPage() {
             {[
               {
                 heading: "Evidence over claims",
-                body: "We cite our sources and acknowledge uncertainty. If something doesn't have solid evidence behind it, we'll say so.",
+                body: "We cite our sources and say so when the evidence is thin. If something doesn't have solid data behind it, we'll tell you.",
               },
               {
                 heading: "Long game over quick fixes",
-                body: "Real improvement in foot health takes months, not days. We design routines and products for that reality.",
+                body: "Real improvement takes months. We design routines and write guides for that reality — not for a 3-day result.",
               },
               {
                 heading: "Simple over comprehensive",
-                body: "A 5-minute routine you actually do beats a perfect one you don't. We optimize for adherence.",
+                body: "A 5-minute routine you actually do beats a perfect one you don't. We optimize for consistency.",
               },
             ].map((item) => (
               <div key={item.heading}
@@ -124,8 +158,8 @@ export default function AboutPage() {
           <div className="max-w-xl">
             <h2 className={`${type.displaySection} text-brand-900`}>Join us as<br />we build.</h2>
             <p className={`mt-4 ${type.lead}`}>
-              Get on the waitlist and help shape what gets built first.
-              No spam, no pressure — just occasional updates.
+              Get on the list and help shape what gets built first.
+              No spam, no pressure — just updates when something worth reading is ready.
             </p>
             <div className="mt-8">
               <Button href="/waitlist" size="lg">

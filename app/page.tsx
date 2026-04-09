@@ -1,6 +1,5 @@
 import Container from "@/components/Container";
 import Button from "@/components/Button";
-import Card from "@/components/Card";
 import SiteLayout from "@/components/SiteLayout";
 import TopicsSection from "@/components/TopicsSection";
 import Link from "next/link";
@@ -9,27 +8,30 @@ import { type } from "@/components/typography";
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
-const kits = [
+const routineHighlights = [
   {
-    title: "Pain & Recovery",
-    tag: "Most requested",
-    desc: "For soreness, fatigue, plantar discomfort, and everyday foot ache. Simple routines that actually work.",
-    href: "/waitlist?kit=pain-recovery",
-    image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=75",
+    label: "Daily",
+    title: "The nightly 5 minutes.",
+    desc: "Wash, dry, inspect, moisturize. Done before your phone goes to the charger. This is the foundation.",
+    time: "5 min / every night",
+    href: "/routines",
+    image: "https://images.pexels.com/photos/4909313/pexels-photo-4909313.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
   {
-    title: "Fungus & Nail Care",
-    tag: "Long game",
-    desc: "For discoloration, thick nails, and the confidence tax of hiding your feet. Evidence-based, not gimmicks.",
-    href: "/waitlist?kit=fungus-care",
-    image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&q=75",
+    label: "Stretch",
+    title: "Plantar stretch sequence.",
+    desc: "Three moves, three minutes, right after you get out of bed. The men who do this stop having morning heel pain.",
+    time: "3 min / every morning",
+    href: "/routines",
+    image: "https://images.pexels.com/photos/3771071/pexels-photo-3771071.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
   {
-    title: "Toe Alignment & Mobility",
-    tag: "Foundation",
-    desc: "For cramped toes, bunions, balance, and restoring natural foot function before problems compound.",
-    href: "/waitlist?kit=alignment-mobility",
-    image: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&q=75",
+    label: "Recovery",
+    title: "Lacrosse ball work.",
+    desc: "Roll the arch, hold on the sore spot, let it release. Three minutes per foot. Combine with the stretch.",
+    time: "6 min / as needed",
+    href: "/routines",
+    image: "https://images.pexels.com/photos/8729018/pexels-photo-8729018.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
 ];
 
@@ -40,7 +42,7 @@ const articles = [
     category: "Footwear Fit",
     readTime: "7 min",
     excerpt: "Most men don't connect the shoes they wore for decades to the foot problems they have now. Here's the chain of cause and effect.",
-    image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800&q=75",
+    image: "https://images.pexels.com/photos/12031206/pexels-photo-12031206.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
   {
     slug: "big-toe-and-your-whole-body",
@@ -48,7 +50,7 @@ const articles = [
     category: "Toe Alignment",
     readTime: "6 min",
     excerpt: "The big toe is responsible for 40–60% of your push-off force. Most men have spent decades restricting it — and wondering why their knee hurts.",
-    image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=75",
+    image: "https://images.pexels.com/photos/9467290/pexels-photo-9467290.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
   {
     slug: "cracked-heels-what-actually-works",
@@ -56,7 +58,7 @@ const articles = [
     category: "Dry Skin",
     readTime: "5 min",
     excerpt: "Scrubbing dry, cracked heel skin is the wrong starting point. Here's what's actually happening — and the routine that addresses it.",
-    image: "https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?w=800&q=75",
+    image: "https://images.pexels.com/photos/29145634/pexels-photo-29145634.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
   {
     slug: "toenail-fungus-what-works",
@@ -64,7 +66,7 @@ const articles = [
     category: "Nail Care",
     readTime: "8 min",
     excerpt: "The evidence on OTC treatments, prescription options, and home remedies — ranked by how well they actually work.",
-    image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=75",
+    image: "https://images.pexels.com/photos/5960467/pexels-photo-5960467.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
   {
     slug: "why-toe-alignment-affects-knees-and-hips",
@@ -72,7 +74,7 @@ const articles = [
     category: "Toe Alignment",
     readTime: "5 min",
     excerpt: "When your big toe can't extend and stabilize, your knee, hip, and lower back pick up the slack — every single step. Here's how it travels up the chain.",
-    image: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&q=75",
+    image: "https://images.pexels.com/photos/13065922/pexels-photo-13065922.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
   {
     slug: "5-minute-routine",
@@ -80,7 +82,7 @@ const articles = [
     category: "Daily Routine",
     readTime: "4 min",
     excerpt: "Consistency beats intensity. A five-minute habit done after your shower produces dramatically better long-term outcomes than anything more ambitious you'll quit.",
-    image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=75",
+    image: "https://images.pexels.com/photos/7205913/pexels-photo-7205913.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
 ];
 
@@ -89,18 +91,28 @@ const stats = [
     value: "1 in 4",
     label: "men over 40 experience chronic foot pain",
     context: "That's probably someone in your household.",
+    source: "American Podiatric Medical Association",
+    sourceUrl: "https://www.apma.org/",
   },
   {
-    value: "75%",
-    label: "of foot problems are preventable with consistent care",
-    context: "Most of what slows men down after 40 was preventable.",
+    value: "63–72%",
+    label: "of adults wear shoes that don't fit them correctly",
+    context: "The most upstream variable. And the most fixable.",
+    source: "PMC — Incorrectly Fitted Footwear, Systematic Review",
+    sourceUrl: "https://pmc.ncbi.nlm.nih.gov/articles/PMC6064070/",
   },
 ];
 
 const marqueeItems = [
-  "Nails", "Alignment", "Routine",
-  "Foot Health", "Fit", "Pain",
-  "Evidence-Based", "Men's Wellness", "Long Game",
+  { label: "Nails",          href: "/learn?cat=Nail+Care" },
+  { label: "Alignment",      href: "/learn?cat=Alignment" },
+  { label: "Routine",        href: "/learn?cat=Daily+Routine" },
+  { label: "Foot Health",    href: "/learn" },
+  { label: "Fit",            href: "/learn?cat=Footwear+Fit" },
+  { label: "Pain",           href: "/routines" },
+  { label: "Evidence-Based", href: "/reviews" },
+  { label: "Men's Wellness", href: "/learn" },
+  { label: "Long Game",      href: "/about" },
 ];
 
 // ── Page ────────────────────────────────────────────────────────────────────
@@ -115,7 +127,7 @@ export default function Home() {
         {/* Background photo — full bleed, higher opacity for depth */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://images.unsplash.com/photo-1530143311094-34d807799e8f?w=1600&q=60"
+            src="https://images.pexels.com/photos/17979558/pexels-photo-17979558.jpeg?auto=compress&cs=tinysrgb&w=1600"
             alt=""
             fill
             className="object-cover object-center opacity-30"
@@ -149,8 +161,8 @@ export default function Home() {
               </p>
 
               <div className="mt-10 flex flex-wrap gap-3">
-                <Button href="/waitlist" size="lg">
-                  Join the Waitlist
+                <Button href="/assessment" size="lg">
+                  Take the Assessment
                 </Button>
                 <Button
                   href="/learn"
@@ -158,12 +170,12 @@ export default function Home() {
                   size="lg"
                   className="border-white/50 text-white hover:bg-white/10 active:bg-white/20"
                 >
-                  Browse the Library
+                  Browse Guides
                 </Button>
               </div>
 
               <p className="mt-5 text-sm text-white/40">
-                Evidence-based reviews and kits — we're building this in the open.
+                5-minute self-check · find out where to start
               </p>
             </div>
           </Container>
@@ -171,16 +183,28 @@ export default function Home() {
 
         {/* Marquee ticker — sits at the very bottom of the hero */}
         <div className="relative z-10 overflow-hidden border-t border-white/10 bg-brand-900/70 py-3 backdrop-blur-sm">
-          <div className="flex animate-marquee whitespace-nowrap">
-            {[...marqueeItems, ...marqueeItems, ...marqueeItems].map((item, i) => (
-              <span
-                key={i}
-                className="mx-5 text-xs font-semibold uppercase tracking-widest text-white/50"
-              >
-                {item}
-                <span className="ml-5 text-accent-500">·</span>
+          <div className="flex items-center">
+            {/* Signifier label — pinned left, not part of the scroll */}
+            <div className="flex-shrink-0 border-r border-white/10 px-4">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-white/30">
+                Browse topics
               </span>
-            ))}
+            </div>
+            {/* Scrolling links */}
+            <div className="overflow-hidden flex-1">
+              <div className="flex animate-marquee whitespace-nowrap">
+                {[...marqueeItems, ...marqueeItems, ...marqueeItems].map((item, i) => (
+                  <Link
+                    key={i}
+                    href={item.href}
+                    className="mx-5 text-xs font-semibold uppercase tracking-widest text-white/50 hover:text-white/80 transition-colors duration-200 underline-offset-4 hover:underline"
+                  >
+                    {item.label}
+                    <span className="ml-5 text-accent-500">·</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -197,6 +221,14 @@ export default function Home() {
                 </span>
                 <span className="mt-2 block text-sm leading-6 text-neutral-500">{s.label}</span>
                 <span className="mt-2 block text-xs font-semibold text-accent-600">{s.context}</span>
+                <a
+                  href={s.sourceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 inline-block text-xs text-neutral-400 underline underline-offset-2 hover:text-neutral-600 transition"
+                >
+                  Source: {s.source}
+                </a>
               </div>
             ))}
           </div>
@@ -215,7 +247,7 @@ export default function Home() {
               {/* Top: section heading + CTA */}
               <div>
                 <p className={`${type.displayHero} text-brand-900 leading-none`}>
-                  FROM<br />THE<br />LIBRARY.
+                  FROM<br />THE<br />GUIDES.
                 </p>
                 <Link
                   href="/learn"
@@ -285,7 +317,7 @@ export default function Home() {
       <section className="flex min-h-[420px] flex-col md:flex-row md:min-h-[500px]">
         <div className="relative h-64 w-full md:h-auto md:w-1/2">
           <Image
-            src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1000&q=70"
+            src="https://images.pexels.com/photos/34806666/pexels-photo-34806666.jpeg?auto=compress&cs=tinysrgb&w=1000"
             alt=""
             fill
             className="object-cover"
@@ -315,38 +347,55 @@ export default function Home() {
       {/* ── Topics selector — interactive hover panel ── */}
       <TopicsSection />
 
-      {/* ── Kits — what we're building, tell us what you need ── */}
+      {/* ── Routines — what to actually do ── */}
       <section className="bg-neutral-50 py-16 md:py-24">
         <Container>
           <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
               <p className={`${type.displaySection} text-brand-900`}>
-                The kits.
+                The routines.
               </p>
               <p className="mt-3 max-w-xl text-base leading-7 text-neutral-500">
-                Each kit bundles a simple routine with the right tools.
-                Tell us which you need — we'll prioritize what ships first.
+                Not a program — a set of small consistent actions that compound
+                over months. Start with one. Add the next.
               </p>
             </div>
             <Link
-              href="/kits"
+              href="/routines"
               className="hidden text-sm font-semibold text-brand-500 underline underline-offset-4 hover:text-brand-700 md:block"
             >
-              View all kits →
+              View all routines →
             </Link>
           </div>
 
           <div className="grid gap-4 md:grid-cols-3">
-            {kits.map((kit) => (
-              <Card
-                key={kit.title}
-                title={kit.title}
-                tag={kit.tag}
-                desc={kit.desc}
-                href={kit.href}
-                image={kit.image}
-                imageAlt={kit.title}
-              />
+            {routineHighlights.map((r) => (
+              <Link
+                key={r.title}
+                href={r.href}
+                className="group flex flex-col overflow-hidden border border-neutral-200 bg-white shadow-sm transition hover:border-brand-300 hover:shadow-md"
+              >
+                <div className="relative aspect-[4/3] w-full overflow-hidden">
+                  <Image
+                    src={r.image}
+                    alt={r.title}
+                    fill
+                    className="object-cover transition duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute bottom-3 left-3">
+                    <span className="bg-white/90 px-3 py-1 text-xs font-bold uppercase tracking-wider text-brand-900 backdrop-blur-sm">
+                      {r.label}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex flex-1 flex-col p-5">
+                  <h3 className="font-display text-lg font-bold uppercase leading-tight text-neutral-900 transition group-hover:text-brand-700">
+                    {r.title}
+                  </h3>
+                  <p className="mt-2 flex-1 text-sm leading-6 text-neutral-500">{r.desc}</p>
+                  <p className="mt-4 text-xs font-semibold text-neutral-400">{r.time}</p>
+                </div>
+              </Link>
             ))}
           </div>
         </Container>
@@ -357,7 +406,7 @@ export default function Home() {
         className="relative overflow-hidden py-28 md:py-44"
         style={{
           backgroundImage:
-            "url('https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=1600&q=60')",
+            "url('https://images.pexels.com/photos/7787491/pexels-photo-7787491.jpeg?auto=compress&cs=tinysrgb&w=1600')",
           backgroundAttachment: "fixed",
           backgroundSize: "cover",
           backgroundPosition: "center",
@@ -369,15 +418,15 @@ export default function Home() {
         <Container className="relative z-10">
           <div className="flex flex-col items-center gap-8 text-center">
             <p className={`${type.displayHero} text-white leading-none`}>
-              BE FIRST.
+              START HERE.
             </p>
             <p className="max-w-lg text-lg leading-relaxed text-brand-200">
-              We're building this carefully. Join the waitlist and help shape
-              what gets built first — no spam, no pressure.
+              Five sections. 30 questions. You'll know exactly where you stand
+              and where to start — in under five minutes.
             </p>
             <div className="flex flex-wrap justify-center gap-3">
-              <Button href="/waitlist" size="lg">
-                Join the Waitlist
+              <Button href="/assessment" size="lg">
+                Take the Assessment
               </Button>
               <Button
                 href="/about"

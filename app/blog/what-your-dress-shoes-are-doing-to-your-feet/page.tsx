@@ -8,7 +8,7 @@ export default function Page() {
   return (
     <SiteLayout>
       <ArticleLayout
-        heroSrc="https://images.unsplash.com/photo-1549298916-b41d501d3772?w=1400&q=80"
+        heroSrc="https://images.pexels.com/photos/12031206/pexels-photo-12031206.jpeg?auto=compress&cs=tinysrgb&w=1400"
         heroAlt="Close-up of polished leather dress shoes"
         title="What 30 Years in Dress Shoes Actually Does to Your Feet"
         category="Footwear Fit"
