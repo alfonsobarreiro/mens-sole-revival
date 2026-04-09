@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -74,7 +74,7 @@ const categoryColor: Record<string, string> = {
 
 // ── Page ─────────────────────────────────────────────────────────────────────
 
-export default function LearnPage() {
+function LearnContent() {
   const searchParams = useSearchParams();
   const catParam = searchParams.get("cat");
 
@@ -229,5 +229,13 @@ export default function LearnPage() {
       </section>
 
     </SiteLayout>
+  );
+}
+
+export default function LearnPage() {
+  return (
+    <Suspense fallback={null}>
+      <LearnContent />
+    </Suspense>
   );
 }
