@@ -100,13 +100,13 @@ export default function SiteLayout({
                 </nav>
 
                 {/* Center: logo */}
-                <Link href="/" className="flex items-center justify-center hover:opacity-75 transition-opacity">
+                <Link href="/" className="flex items-center justify-center transition-transform duration-150 hover:scale-[96%] active:scale-[93%]">
                   <Image
                     src="/logo-msr-light.svg"
                     alt="Men's Sole Revival"
                     width={130}
                     height={58}
-                    className="h-14 w-auto transition-all duration-300"
+                    className="h-14 w-auto"
                     priority
                   />
                 </Link>
@@ -154,7 +154,7 @@ export default function SiteLayout({
                 </nav>
 
                 {/* Center: logo */}
-                <Link href="/" className="flex items-center justify-center hover:opacity-75 transition-opacity">
+                <Link href="/" className="flex items-center justify-center transition-transform duration-150 hover:scale-[96%] active:scale-[93%]">
                   <Image
                     src="/logo-msr-light.svg"
                     alt="Men's Sole Revival"
