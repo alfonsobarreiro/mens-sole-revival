@@ -229,17 +229,17 @@ export default async function ReviewsPage() {
     <SiteLayout>
 
       {/* ── Hero ── */}
-      <section className="relative flex min-h-[55vh] flex-col overflow-hidden bg-brand-900">
+      <section className="relative flex h-[45vh] flex-col overflow-hidden bg-brand-900">
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/pexels-13122754.jpg"
             alt=""
             fill
-            className="object-cover object-center opacity-25"
+            className="object-cover object-center opacity-70"
             priority
           />
         </div>
-        <div className="absolute inset-0 z-0 bg-gradient-to-r from-brand-900 via-brand-900/85 to-brand-900/30" />
+        <div className="absolute inset-0 z-0 bg-gradient-to-r from-brand-900/90 via-brand-900/50 to-transparent" />
 
         <div className="relative z-10 flex flex-1 items-end">
           <Container>

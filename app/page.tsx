@@ -124,19 +124,19 @@ export default function Home() {
       {/* ── Hero ── */}
       <section className="relative flex min-h-[90vh] flex-col overflow-hidden bg-brand-800">
 
-        {/* Background photo — full bleed, higher opacity for depth */}
+        {/* Background photo — full bleed */}
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/pexels-17979558.jpg"
             alt=""
             fill
-            className="object-cover object-center opacity-30"
+            className="object-cover object-center opacity-55"
             priority
           />
         </div>
 
-        {/* Strong directional gradient — content readable on left, image shows on right */}
-        <div className="absolute inset-0 z-0 bg-gradient-to-r from-brand-900 via-brand-900/85 to-brand-900/30" />
+        {/* Directional gradient — left stays dark for headline legibility, right opens up */}
+        <div className="absolute inset-0 z-0 bg-gradient-to-r from-brand-900/95 via-brand-900/65 to-brand-900/20" />
 
         {/* Content — flex-1 centers it vertically */}
         <div className="relative z-10 flex flex-1 items-center">

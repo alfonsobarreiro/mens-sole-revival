@@ -94,29 +94,19 @@ function LearnContent() {
   return (
     <SiteLayout>
 
-      {/* ── Breadcrumb ── */}
-      <div className="border-b border-neutral-100 py-3">
-        <Container>
-          <nav className="flex items-center gap-2 text-xs text-neutral-400">
-            <Link href="/" className="hover:text-brand-600 transition">Home</Link>
-            <span>›</span>
-            <span className="text-neutral-600">Learn</span>
-          </nav>
-        </Container>
-      </div>
 
       {/* ── Hero ── */}
-      <section className="relative flex min-h-[55vh] flex-col overflow-hidden bg-brand-900">
+      <section className="relative flex h-[45vh] flex-col overflow-hidden bg-brand-900">
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/pexels-7047464.jpg"
             alt=""
             fill
-            className="object-cover object-center opacity-40"
+            className="object-cover object-center opacity-70"
             priority
           />
         </div>
-        <div className="absolute inset-0 z-0 bg-gradient-to-r from-brand-900 via-brand-900/80 to-brand-900/20" />
+        <div className="absolute inset-0 z-0 bg-gradient-to-r from-brand-900/90 via-brand-900/50 to-transparent" />
 
         <div className="relative z-10 flex flex-1 items-end">
           <Container>

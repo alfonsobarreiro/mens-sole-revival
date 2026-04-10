@@ -26,18 +26,18 @@ export default function ArticleLayout({
   return (
     <div>
       {heroSrc && (
-        <div className="relative flex min-h-[55vh] w-full flex-col overflow-hidden bg-brand-900">
+        <div className="relative flex h-[45vh] w-full flex-col overflow-hidden bg-brand-900">
           {/* Full-bleed hero image */}
           <Image
             src={heroSrc}
             alt={heroAlt}
             fill
-            className="object-cover object-center opacity-60"
+            className="object-cover object-center opacity-75"
             priority
           />
 
-          {/* Gradient — bottom-heavy so text is always readable */}
-          <div className="absolute inset-0 bg-gradient-to-t from-brand-900/90 via-brand-900/40 to-brand-900/10" />
+          {/* Gradient — bottom-heavy so text is readable, top shows the image */}
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-900/90 via-brand-900/30 to-transparent" />
 
           {/* Text overlay — anchored to bottom-left */}
           {title && (
