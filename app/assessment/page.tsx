@@ -5,6 +5,7 @@ import SiteLayout from "@/components/SiteLayout";
 import Container from "@/components/Container";
 import Link from "next/link";
 import { type } from "@/components/typography";
+import { generateAssessmentPDF } from "@/lib/generateAssessmentPDF";
 
 // ── Types ────────────────────────────────────────────────────
 
@@ -552,26 +553,42 @@ export default function AssessmentPage() {
                   </Link>
                 </div>
 
-                {/* Download PDF */}
-                <div className="mb-8 flex items-start gap-5 border border-neutral-200 bg-white p-6">
-                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center bg-brand-900">
-                    <svg className="h-5 w-5 text-accent-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="font-semibold text-brand-900">Download the printable checklist</p>
-                    <p className="mt-1 text-sm text-neutral-500">
-                      The same five sections as a PDF you can save, print, or share.
+                {/* Download personalized PDF */}
+                <div className="mb-8 flex items-center gap-4 border border-neutral-200 bg-white px-5 py-4">
+                  <div className="flex-1">
+                    <p className="text-sm font-semibold text-neutral-800">
+                      Save your results
                     </p>
-                    <a
-                      href="/MSR-Foot-Health-Assessment.pdf"
-                      download
-                      className="mt-3 inline-flex items-center gap-2 border border-brand-900 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-brand-900 transition hover:bg-brand-900 hover:text-white"
-                    >
-                      Download PDF →
-                    </a>
+                    <p className="mt-0.5 text-xs text-neutral-400">
+                      Download a personalized PDF with your flags and recommendations.
+                    </p>
                   </div>
+                  <button
+                    onClick={() => {
+                      const allSections = steps.map((s) => {
+                        const flaggedItems = s.items
+                          .filter((item) => checked[item.id])
+                          .map((item) => item.text);
+                        return {
+                          title: s.title,
+                          count: flaggedItems.length,
+                          items: flaggedItems,
+                          guideHref: s.guideHref,
+                          note: s.note,
+                        };
+                      });
+                      generateAssessmentPDF({
+                        totalFlags,
+                        tier: result.tier,
+                        headline: result.headline,
+                        recommendation: result.body,
+                        sections: allSections,
+                      });
+                    }}
+                    className="flex-shrink-0 bg-brand-900 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-brand-700"
+                  >
+                    Download PDF
+                  </button>
                 </div>
 
                 {/* Sources */}

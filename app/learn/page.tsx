@@ -25,7 +25,7 @@ const articles = [
     href: "/blog/big-toe-and-your-whole-body",
     category: "Alignment",
     readTime: "6 min",
-    image: "/images/pexels-9467290.jpg",
+    image: "/images/pexels-7312082.jpg",
     excerpt: "The big toe is responsible for 40–60% of your push-off force. Most men have spent decades restricting it — and wondering why their knee hurts.",
   },
   {

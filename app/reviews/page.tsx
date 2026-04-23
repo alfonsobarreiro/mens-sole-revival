@@ -99,7 +99,7 @@ export const staticReviews: Review[] = [
     tagline: "Classic for a reason — but the formula trade-offs are worth understanding before you reach for it.",
     retailPriceUsd: 9,
     publishedAt: "2026-03-15",
-    imageUrl: "/images/pexels-8980963.jpg",
+    imageUrl: "/images/pexels-7312082.jpg",
   },
   {
     productName: "Yoga Toes GEM Toe Separators",
@@ -232,7 +232,7 @@ export default async function ReviewsPage() {
       <section className="relative flex h-[45vh] flex-col overflow-hidden bg-brand-900">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/pexels-13122754.jpg"
+            src="/images/pexels-8729236.jpg"
             alt=""
             fill
             className="object-cover object-center opacity-70"
