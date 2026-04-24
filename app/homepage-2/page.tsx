@@ -95,7 +95,7 @@ const articles = [
     category: "Nail Care",
     readTime: "8 min",
     excerpt: "Systematic reviews indicate oral terbinafine achieves 76% mycological cure rates vs. 22% for topical ciclopirox. A clinical comparison of available treatment modalities.",
-    image: "/images/pexels-8980963.jpg",
+    image: "/images/pexels-5960467.jpg",
   },
   {
     slug: "why-toe-alignment-affects-knees-and-hips",
@@ -124,7 +124,7 @@ const topics = [
   {
     label: "Pain & Recovery",
     href: "/waitlist?kit=pain-recovery",
-    image: "/images/pexels-8980963.jpg",
+    image: "/images/pexels-5960467.jpg",
     tagline: "Your body is sending a signal.",
     description: "Plantar fasciitis, heel spurs, arch strain — foot pain rarely disappears on its own. Learn how to identify the source, reduce inflammation, and build resilience.",
   },

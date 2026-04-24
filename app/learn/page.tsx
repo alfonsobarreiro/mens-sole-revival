@@ -41,7 +41,7 @@ const articles = [
     href: "/blog/toenail-fungus-what-works",
     category: "Nail Care",
     readTime: "8 min",
-    image: "/images/pexels-8980963.jpg",
+    image: "/images/pexels-5960467.jpg",
     excerpt: "The evidence on OTC treatments, prescription options, and home remedies — ranked by how well they actually work.",
   },
   {
