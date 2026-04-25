@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Lora, DM_Sans, Barlow_Condensed } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 
 const lora = Lora({
@@ -45,6 +47,8 @@ export default function RootLayout({
       <body className="min-h-screen bg-white antialiased" suppressHydrationWarning>
         {children}
       </body>
+      <GoogleAnalytics gaId="G-QT90WR1MPD" />
+      <Analytics />
     </html>
   );
 }
