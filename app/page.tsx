@@ -50,7 +50,7 @@ const articles = [
     category: "Toe Alignment",
     readTime: "6 min",
     excerpt: "The big toe is responsible for 40–60% of your push-off force. Most men have spent decades restricting it — and wondering why their knee hurts.",
-    image: "/images/pexels-7312082.jpg",
+    image: "/images/pexels-11873696.jpg",
   },
   {
     slug: "cracked-heels-what-actually-works",

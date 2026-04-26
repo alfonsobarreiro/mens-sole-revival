@@ -27,7 +27,7 @@ const articles = [
     title: "Your Big Toe Controls More of Your Body Than You Think",
     category: "Toe Alignment",
     readTime: "6 min",
-    image: "/images/pexels-7312082.jpg",
+    image: "/images/pexels-11873696.jpg",
   },
   {
     title: "Cracked Heels: The Fix That Isn't a Pumice Stone",

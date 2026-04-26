@@ -25,7 +25,7 @@ const articles = [
     href: "/blog/big-toe-and-your-whole-body",
     category: "Alignment",
     readTime: "6 min",
-    image: "/images/pexels-7312082.jpg",
+    image: "/images/pexels-11873696.jpg",
     excerpt: "The big toe is responsible for 40–60% of your push-off force. Most men have spent decades restricting it — and wondering why their knee hurts.",
   },
   {
@@ -57,7 +57,7 @@ const articles = [
     href: "/blog/5-minute-routine",
     category: "Daily Routine",
     readTime: "4 min",
-    image: "/images/pexels-7047464.jpg",
+    image: "/images/pexels-10904211.jpg",
     excerpt: "A consistency-first approach: five focused minutes after your shower, anchored to a habit you already have.",
   },
 ];
@@ -99,7 +99,7 @@ function LearnContent() {
       <section className="relative flex h-[45vh] flex-col overflow-hidden bg-brand-900">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/pexels-7047464.jpg"
+            src="/images/pexels-10904211.jpg"
             alt=""
             fill
             className="object-cover object-center opacity-70"

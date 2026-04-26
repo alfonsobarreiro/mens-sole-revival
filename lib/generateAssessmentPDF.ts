@@ -101,7 +101,7 @@ export async function generateAssessmentPDF(data: AssessmentData) {
 
   // Try to load the hero image
   try {
-    const imgData = await loadImageAsBase64("/images/pexels-7312082.jpg");
+    const imgData = await loadImageAsBase64("/images/pexels-11873696.jpg");
     // Place image full-bleed across header
     // The image is landscape; we crop-to-fill the header area
     doc.addImage(imgData, "JPEG", 0, 0, W, HEADER_H, undefined, "FAST");

@@ -99,7 +99,7 @@ export const staticReviews: Review[] = [
     tagline: "Classic for a reason — but the formula trade-offs are worth understanding before you reach for it.",
     retailPriceUsd: 9,
     publishedAt: "2026-03-15",
-    imageUrl: "/images/pexels-7312082.jpg",
+    imageUrl: "/images/pexels-11873696.jpg",
   },
   {
     productName: "Yoga Toes GEM Toe Separators",

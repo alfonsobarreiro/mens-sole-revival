@@ -46,9 +46,9 @@ export default function RootLayout({
     <html lang="en" className={`${lora.variable} ${dmSans.variable} ${barlowCondensed.variable}`}>
       <body className="min-h-screen bg-white antialiased" suppressHydrationWarning>
         {children}
+        <GoogleAnalytics gaId="G-QT90WR1MPD" />
+        <Analytics />
       </body>
-      <GoogleAnalytics gaId="G-QT90WR1MPD" />
-      <Analytics />
     </html>
   );
 }

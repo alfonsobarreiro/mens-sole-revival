@@ -79,7 +79,7 @@ const articles = [
     category: "Toe Alignment",
     readTime: "6 min",
     excerpt: "The hallux contributes 40–60% of propulsive force during terminal stance. Hallux limitus and rigidus have measurable downstream effects on knee and hip loading patterns.",
-    image: "/images/pexels-7312082.jpg",
+    image: "/images/pexels-11873696.jpg",
   },
   {
     slug: "cracked-heels-what-actually-works",
@@ -138,7 +138,7 @@ const topics = [
   {
     label: "Toe Alignment",
     href: "/waitlist?kit=alignment-mobility",
-    image: "/images/pexels-7047464.jpg",
+    image: "/images/pexels-10904211.jpg",
     tagline: "Your toes set the foundation.",
     description: "Bunions, hammer toes, and crowded toe boxes trace back to how your foot contacts the ground. Simple daily exercises and footwear awareness can reverse years of drift.",
   },
@@ -407,7 +407,7 @@ export default function Homepage2() {
       <section style={{ display: "flex", minHeight: 460 }}>
         <div style={{ position: "relative", width: "50%" }}>
           <Image
-            src="/images/pexels-7047464.jpg"
+            src="/images/pexels-10904211.jpg"
             alt=""
             fill
             className="object-cover"
