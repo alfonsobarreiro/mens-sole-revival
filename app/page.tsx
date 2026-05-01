@@ -143,7 +143,7 @@ export default function Home() {
           <Container>
             <div className="max-w-3xl py-24 md:py-32">
 
-              <p className="mb-6 text-xs font-semibold uppercase tracking-widest text-accent-400">
+              <p className="mb-6 text-xs font-semibold uppercase tracking-widest text-white">
                 For men over 40 who are finally paying attention.
               </p>
 
