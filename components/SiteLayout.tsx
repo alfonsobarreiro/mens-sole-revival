@@ -22,10 +22,6 @@ export default function SiteLayout({
 }) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  const isHomepage = pathname === "/";
-  const isTransparent = isHomepage && !scrolled;
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -37,15 +33,6 @@ export default function SiteLayout({
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
-
-  // Scroll-aware pill transition for homepage
-  useEffect(() => {
-    if (!isHomepage) return;
-    const handleScroll = () => setScrolled(window.scrollY > 60);
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isHomepage]);
 
   // Reusable hamburger / close icons
   const HamburgerIcon = () => (
@@ -65,154 +52,88 @@ export default function SiteLayout({
     <main className="min-h-screen bg-white text-neutral-900">
 
       {/* ── Header ── */}
-      <header className={`z-40 left-0 right-0 top-0 ${isHomepage ? "fixed" : "sticky"}`}>
-        <div className={`transition-all duration-300 ${isTransparent ? "px-4 pt-3 md:px-6 md:pt-4" : ""}`}>
-          <div className={`overflow-hidden transition-all duration-300 ${
-              isTransparent
-                ? "mx-auto max-w-7xl rounded-lg bg-white/65 backdrop-blur-md"
-                : "bg-white/95 shadow-md backdrop-blur-md"
-            }`}>
+      <header className="sticky top-0 left-0 right-0 z-40">
+        <div className="bg-white/95 shadow-md backdrop-blur-md">
+          {/* 3-column grid: nav links, centered logo, CTA + hamburger */}
+          <div className="mx-auto grid max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-4 py-3 md:px-6">
 
-            {isHomepage ? (
-              /* ── Homepage: 3-column grid with centered logo ── */
-              <div className="mx-auto grid max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-4 py-3 md:px-6">
-
-                {/* Left: nav links (desktop) */}
-                <nav className="hidden items-center gap-6 md:flex">
-                  {navLinks.map(({ label, href }) => {
-                    const isActive = pathname === href || pathname.startsWith(href + "/");
-                    return (
-                      <Link
-                        key={href}
-                        href={href}
-                        className={`text-sm font-medium transition ${
-                          isActive
-                            ? "text-brand-600 underline underline-offset-4 decoration-brand-300"
-                            : isTransparent
-                            ? "text-neutral-800 hover:text-brand-600 hover:underline hover:underline-offset-4 hover:decoration-brand-300"
-                            : "text-neutral-600 hover:text-brand-600 hover:underline hover:underline-offset-4 hover:decoration-brand-300"
-                        }`}
-                      >
-                        {label}
-                      </Link>
-                    );
-                  })}
-                </nav>
-
-                {/* Center: logo */}
-                <Link href="/" className="flex items-center justify-center transition-transform duration-150 hover:scale-[96%] active:scale-[93%]">
-                  <Image
-                    src="/logo-msr-light.svg"
-                    alt="Men's Sole Revival"
-                    width={130}
-                    height={58}
-                    className="h-14 w-auto"
-                    priority
-                  />
-                </Link>
-
-                {/* Right: CTA (desktop) + hamburger (mobile) */}
-                <div className="flex items-center justify-end gap-2">
-                  <div className="hidden md:block">
-                    <Button href="/assessment" size="sm">
-                      Take the Assessment
-                    </Button>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setMenuOpen((o) => !o)}
-                    aria-label={menuOpen ? "Close menu" : "Open menu"}
-                    aria-expanded={menuOpen}
-                    className="flex h-9 w-9 items-center justify-center rounded-md transition md:hidden text-neutral-700 hover:bg-neutral-100"
+            {/* Left: nav links (desktop) */}
+            <nav className="hidden items-center gap-6 md:flex">
+              {navLinks.map(({ label, href }) => {
+                const isActive = pathname === href || pathname.startsWith(href + "/");
+                return (
+                  <Link
+                    key={href}
+                    href={href}
+                    className={`text-sm font-medium transition ${
+                      isActive
+                        ? "text-brand-600 underline underline-offset-4 decoration-brand-300"
+                        : "text-neutral-600 hover:text-brand-600 hover:underline hover:underline-offset-4 hover:decoration-brand-300"
+                    }`}
                   >
-                    {menuOpen ? <CloseIcon /> : <HamburgerIcon />}
-                  </button>
-                </div>
+                    {label}
+                  </Link>
+                );
+              })}
+            </nav>
+
+            {/* Center: logo */}
+            <Link href="/" className="flex items-center justify-center transition-transform duration-150 hover:scale-[96%] active:scale-[93%]">
+              <Image
+                src="/logo-msr-light.svg"
+                alt="Men's Sole Revival"
+                width={130}
+                height={58}
+                className="h-14 w-auto"
+                priority
+              />
+            </Link>
+
+            {/* Right: CTA (desktop) + hamburger (mobile) */}
+            <div className="flex items-center justify-end gap-2">
+              <div className="hidden md:block">
+                <Button href="/assessment" size="sm">Take the Assessment</Button>
               </div>
-            ) : (
-              /* ── Non-homepage: centered logo, same 3-col grid as homepage ── */
-              <div className="mx-auto grid max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-4 py-3 md:px-6">
-
-                {/* Left: nav links (desktop) */}
-                <nav className="hidden items-center gap-6 md:flex">
-                  {navLinks.map(({ label, href }) => {
-                    const isActive = pathname === href || pathname.startsWith(href + "/");
-                    return (
-                      <Link
-                        key={href}
-                        href={href}
-                        className={`text-sm font-medium transition ${
-                          isActive
-                            ? "text-brand-600 underline underline-offset-4 decoration-brand-300"
-                            : "text-neutral-600 hover:text-brand-600 hover:underline hover:underline-offset-4 hover:decoration-brand-300"
-                        }`}
-                      >
-                        {label}
-                      </Link>
-                    );
-                  })}
-                </nav>
-
-                {/* Center: logo */}
-                <Link href="/" className="flex items-center justify-center transition-transform duration-150 hover:scale-[96%] active:scale-[93%]">
-                  <Image
-                    src="/logo-msr-light.svg"
-                    alt="Men's Sole Revival"
-                    width={130}
-                    height={58}
-                    className="h-14 w-auto"
-                    priority
-                  />
-                </Link>
-
-                {/* Right: CTA (desktop) + hamburger (mobile) */}
-                <div className="flex items-center justify-end gap-2">
-                  <div className="hidden md:block">
-                    <Button href="/assessment" size="sm">Take the Assessment</Button>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setMenuOpen((o) => !o)}
-                    aria-label={menuOpen ? "Close menu" : "Open menu"}
-                    aria-expanded={menuOpen}
-                    className="flex h-9 w-9 items-center justify-center rounded-md text-neutral-700 hover:bg-neutral-100 transition md:hidden"
-                  >
-                    {menuOpen ? <CloseIcon /> : <HamburgerIcon />}
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* Mobile dropdown — inside the pill */}
-            {menuOpen && (
-              <div className={`border-t md:hidden ${isTransparent ? "border-white/10" : "border-neutral-100"}`}>
-                <nav className="mx-auto flex max-w-7xl flex-col px-4 py-3">
-                  {navLinks.map(({ label, href }) => {
-                    const isActive = pathname === href || pathname.startsWith(href + "/");
-                    return (
-                      <Link
-                        key={href}
-                        href={href}
-                        className={`-mx-2 rounded-md px-3 py-3 text-sm font-medium transition ${
-                          isActive
-                            ? "text-brand-600 bg-brand-50"
-                            : "text-neutral-700 hover:text-brand-600 hover:bg-neutral-50"
-                        }`}
-                      >
-                        {label}
-                      </Link>
-                    );
-                  })}
-                  <div className="mt-3 border-t border-neutral-100 pt-3">
-                    <Button href="/assessment" size="sm" className="w-full justify-center">
-                      Take the Assessment
-                    </Button>
-                  </div>
-                </nav>
-              </div>
-            )}
-
+              <button
+                type="button"
+                onClick={() => setMenuOpen((o) => !o)}
+                aria-label={menuOpen ? "Close menu" : "Open menu"}
+                aria-expanded={menuOpen}
+                className="flex h-9 w-9 items-center justify-center rounded-md text-neutral-700 hover:bg-neutral-100 transition md:hidden"
+              >
+                {menuOpen ? <CloseIcon /> : <HamburgerIcon />}
+              </button>
+            </div>
           </div>
+
+          {/* Mobile dropdown */}
+          {menuOpen && (
+            <div className="border-t border-neutral-100 md:hidden">
+              <nav className="mx-auto flex max-w-7xl flex-col px-4 py-3">
+                {navLinks.map(({ label, href }) => {
+                  const isActive = pathname === href || pathname.startsWith(href + "/");
+                  return (
+                    <Link
+                      key={href}
+                      href={href}
+                      className={`-mx-2 rounded-md px-3 py-3 text-sm font-medium transition ${
+                        isActive
+                          ? "text-brand-600 bg-brand-50"
+                          : "text-neutral-700 hover:text-brand-600 hover:bg-neutral-50"
+                      }`}
+                    >
+                      {label}
+                    </Link>
+                  );
+                })}
+                <div className="mt-3 border-t border-neutral-100 pt-3">
+                  <Button href="/assessment" size="sm" className="w-full justify-center">
+                    Take the Assessment
+                  </Button>
+                </div>
+              </nav>
+            </div>
+          )}
         </div>
       </header>
 
