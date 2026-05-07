@@ -54,11 +54,33 @@ export default function SiteLayout({
       {/* ── Header ── */}
       <header className="sticky top-0 left-0 right-0 z-40">
         <div className="bg-white/95 shadow-md backdrop-blur-md">
-          {/* 3-column grid: nav links, centered logo, CTA + hamburger */}
-          <div className="mx-auto grid max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-4 py-3 md:px-6">
+          {/* ── Mobile header: logo left, hamburger right ── */}
+          <div className="flex items-center justify-between px-4 py-3 md:hidden">
+            <Link href="/" className="flex items-center transition-transform duration-150 hover:scale-[96%] active:scale-[93%]">
+              <Image
+                src="/logo-msr-light.svg"
+                alt="Men's Sole Revival"
+                width={130}
+                height={58}
+                className="h-12 w-auto"
+                priority
+              />
+            </Link>
+            <button
+              type="button"
+              onClick={() => setMenuOpen((o) => !o)}
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
+              className="flex h-9 w-9 items-center justify-center rounded-md text-neutral-700 hover:bg-neutral-100 transition"
+            >
+              {menuOpen ? <CloseIcon /> : <HamburgerIcon />}
+            </button>
+          </div>
 
-            {/* Left: nav links (desktop) */}
-            <nav className="hidden items-center gap-6 md:flex">
+          {/* ── Desktop header: 3-col grid ── */}
+          <div className="mx-auto hidden max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-6 py-3 md:grid">
+            {/* Left: nav links */}
+            <nav className="flex items-center gap-6">
               {navLinks.map(({ label, href }) => {
                 const isActive = pathname === href || pathname.startsWith(href + "/");
                 return (
@@ -76,7 +98,6 @@ export default function SiteLayout({
                 );
               })}
             </nav>
-
             {/* Center: logo */}
             <Link href="/" className="flex items-center justify-center transition-transform duration-150 hover:scale-[96%] active:scale-[93%]">
               <Image
@@ -88,21 +109,9 @@ export default function SiteLayout({
                 priority
               />
             </Link>
-
-            {/* Right: CTA (desktop) + hamburger (mobile) */}
-            <div className="flex items-center justify-end gap-2">
-              <div className="hidden md:block">
-                <Button href="/assessment" size="sm">Take the Assessment</Button>
-              </div>
-              <button
-                type="button"
-                onClick={() => setMenuOpen((o) => !o)}
-                aria-label={menuOpen ? "Close menu" : "Open menu"}
-                aria-expanded={menuOpen}
-                className="flex h-9 w-9 items-center justify-center rounded-md text-neutral-700 hover:bg-neutral-100 transition md:hidden"
-              >
-                {menuOpen ? <CloseIcon /> : <HamburgerIcon />}
-              </button>
+            {/* Right: CTA */}
+            <div className="flex items-center justify-end">
+              <Button href="/assessment" size="sm">Take the Assessment</Button>
             </div>
           </div>
 
