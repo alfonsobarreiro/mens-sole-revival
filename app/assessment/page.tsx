@@ -9,6 +9,7 @@ import { type } from "@/components/typography";
 import { generateAssessmentPDF } from "@/lib/generateAssessmentPDF";
 import { symptomRecommendations } from "@/lib/ecosystem";
 import { staticReviews } from "@/lib/reviews";
+import AssessmentFeedback from "@/components/AssessmentFeedback";
 
 /** Maps assessment-section titles to the symptom key used by the
  * ecosystem recommendation map. The full assessment redesign (see
@@ -667,6 +668,11 @@ export default function AssessmentPage() {
                   >
                     Download PDF
                   </button>
+                </div>
+
+                {/* Feedback — Item 6 */}
+                <div className="mb-8 -mx-6 border border-neutral-200 bg-white shadow-sm sm:mx-0">
+                  <AssessmentFeedback totalFlags={totalFlags} />
                 </div>
 
                 {/* Sources */}
