@@ -7,6 +7,7 @@ import Image from "next/image";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import SiteLayout from "@/components/SiteLayout";
+import AssessmentEntryStrip from "@/components/AssessmentEntryStrip";
 import { type } from "@/components/typography";
 
 // ── Article data ─────────────────────────────────────────────────────────────
@@ -123,6 +124,8 @@ function LearnContent() {
           </Container>
         </div>
       </section>
+
+      <AssessmentEntryStrip />
 
       {/* ── Filter tabs + grid ── */}
       <section className="py-10 md:py-14">

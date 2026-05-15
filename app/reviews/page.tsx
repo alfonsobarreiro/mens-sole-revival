@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Container from "@/components/Container";
 import SiteLayout from "@/components/SiteLayout";
+import AssessmentEntryStrip from "@/components/AssessmentEntryStrip";
 import { type } from "@/components/typography";
 
 export const metadata: Metadata = {
@@ -257,6 +258,8 @@ export default async function ReviewsPage() {
           </Container>
         </div>
       </section>
+
+      <AssessmentEntryStrip />
 
       {/* ── Recommended ── */}
       {recommended.length > 0 && (

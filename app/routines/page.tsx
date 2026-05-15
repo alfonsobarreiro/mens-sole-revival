@@ -4,6 +4,7 @@ import Link from "next/link";
 import Container from "@/components/Container";
 import SiteLayout from "@/components/SiteLayout";
 import Button from "@/components/Button";
+import AssessmentEntryStrip from "@/components/AssessmentEntryStrip";
 import { type } from "@/components/typography";
 
 export const metadata: Metadata = {
@@ -107,6 +108,8 @@ export default function RoutinesPage() {
           </Container>
         </div>
       </section>
+
+      <AssessmentEntryStrip />
 
       {/* ── Routine cards ── */}
       <section className="py-12 md:py-16">
