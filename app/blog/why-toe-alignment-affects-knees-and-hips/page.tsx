@@ -2,7 +2,11 @@
 
 import SiteLayout from "@/components/SiteLayout";
 import ArticleLayout from "@/components/ArticleLayout";
+import EcosystemFooter from "@/components/EcosystemFooter";
+import { articleRelations } from "@/lib/ecosystem";
 import Article from "./article.mdx";
+
+const rel = articleRelations["why-toe-alignment-affects-knees-and-hips"];
 
 export default function Page() {
   return (
@@ -16,6 +20,12 @@ export default function Page() {
       >
         <Article />
       </ArticleLayout>
+      <EcosystemFooter
+        heading="Start the upstream fix."
+        intro="The morning stretch is what gives you back motion. The toe spreader and a wider toe box are how you keep it."
+        routineKey={rel.routine}
+        reviewSlugs={rel.reviews}
+      />
     </SiteLayout>
   );
 }

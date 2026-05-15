@@ -2,7 +2,11 @@
 
 import SiteLayout from "@/components/SiteLayout";
 import ArticleLayout from "@/components/ArticleLayout";
+import EcosystemFooter from "@/components/EcosystemFooter";
+import { articleRelations } from "@/lib/ecosystem";
 import Article from "./article.mdx";
+
+const rel = articleRelations["big-toe-and-your-whole-body"];
 
 export default function Page() {
   return (
@@ -16,6 +20,12 @@ export default function Page() {
       >
         <Article />
       </ArticleLayout>
+      <EcosystemFooter
+        heading="The two ways to give it back."
+        intro="A daily strength habit is the slow fix. A toe spreader is the assist while you build it. Footwear that doesn't crush is the third leg of the stool."
+        routineKey={rel.routine}
+        reviewSlugs={rel.reviews}
+      />
     </SiteLayout>
   );
 }

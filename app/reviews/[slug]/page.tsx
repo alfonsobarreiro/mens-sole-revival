@@ -4,8 +4,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Container from "@/components/Container";
 import SiteLayout from "@/components/SiteLayout";
+import EcosystemFooter from "@/components/EcosystemFooter";
+import { reviewRelations } from "@/lib/ecosystem";
 import { type } from "@/components/typography";
-import { verdictConfig, categoryLabel, staticReviews, type Review } from "@/app/reviews/page";
+import { verdictConfig, categoryLabel, staticReviews, type Review } from "@/lib/reviews";
 
 // ── Extended type for detail page ─────────────────────────────────────────────
 
@@ -404,6 +406,16 @@ export default async function ReviewPage({
             </div>
           </Container>
         </section>
+      )}
+
+      {/* ── Ecosystem footer: related routine + guides ── */}
+      {reviewRelations[review.slug] && (
+        <EcosystemFooter
+          heading="What it pairs with."
+          intro="A product alone rarely fixes the problem. Here's the routine that puts this one to work, and the guide that explains why."
+          routineKey={reviewRelations[review.slug].routine}
+          articleSlugs={reviewRelations[review.slug].articles}
+        />
       )}
 
       {/* ── Back to reviews ── */}

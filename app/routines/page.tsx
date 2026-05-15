@@ -17,6 +17,7 @@ export const metadata: Metadata = {
 
 const categories = [
   {
+    anchor: "daily",
     label: "Daily",
     heading: "The nightly 5 minutes.",
     body:
@@ -26,6 +27,7 @@ const categories = [
     icon: "🌙",
   },
   {
+    anchor: "weekly",
     label: "Weekly",
     heading: "The Sunday reset.",
     body:
@@ -35,6 +37,7 @@ const categories = [
     icon: "🛁",
   },
   {
+    anchor: "movement",
     label: "Movement",
     heading: "Plantar stretch sequence.",
     body:
@@ -44,6 +47,7 @@ const categories = [
     icon: "🦶",
   },
   {
+    anchor: "strength",
     label: "Strength",
     heading: "Toe spread and grip.",
     body:
@@ -53,6 +57,7 @@ const categories = [
     icon: "💪",
   },
   {
+    anchor: "treatment",
     label: "Treatment",
     heading: "Antifungal protocol.",
     body:
@@ -62,6 +67,7 @@ const categories = [
     icon: "💊",
   },
   {
+    anchor: "recovery",
     label: "Recovery",
     heading: "Lacrosse ball work.",
     body:
@@ -118,7 +124,8 @@ export default function RoutinesPage() {
             {categories.map((r) => (
               <div
                 key={r.label}
-                className="flex flex-col border border-neutral-200 bg-white p-6 shadow-sm"
+                id={r.anchor}
+                className="flex flex-col border border-neutral-200 bg-white p-6 shadow-sm scroll-mt-24"
               >
                 <div className="mb-4 flex items-start justify-between">
                   <span className="text-2xl">{r.icon}</span>

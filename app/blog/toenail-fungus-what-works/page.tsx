@@ -2,7 +2,11 @@
 
 import SiteLayout from "@/components/SiteLayout";
 import ArticleLayout from "@/components/ArticleLayout";
+import EcosystemFooter from "@/components/EcosystemFooter";
+import { articleRelations } from "@/lib/ecosystem";
 import Article from "./article.mdx";
+
+const rel = articleRelations["toenail-fungus-what-works"];
 
 export default function Page() {
   return (
@@ -16,6 +20,12 @@ export default function Page() {
       >
         <Article />
       </ArticleLayout>
+      <EcosystemFooter
+        heading="The protocol, not just the product."
+        intro="Recurrence kills most fungus treatments before they finish. Pair the antifungal with a twice-daily routine and a powder for the in-between."
+        routineKey={rel.routine}
+        reviewSlugs={rel.reviews}
+      />
     </SiteLayout>
   );
 }

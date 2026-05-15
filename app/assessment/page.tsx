@@ -1,11 +1,27 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import SiteLayout from "@/components/SiteLayout";
 import Container from "@/components/Container";
 import Link from "next/link";
 import { type } from "@/components/typography";
 import { generateAssessmentPDF } from "@/lib/generateAssessmentPDF";
+import { symptomRecommendations } from "@/lib/ecosystem";
+import { staticReviews } from "@/lib/reviews";
+
+/** Maps assessment-section titles to the symptom key used by the
+ * ecosystem recommendation map. The full assessment redesign (see
+ * MSR-Assessment-Redesign.md) will replace this with symptom-first
+ * triage as Step 0; for now this lets the current results screen
+ * surface specific products tied to where the user flagged. */
+const symptomKeyByTitle: Record<string, keyof typeof symptomRecommendations> = {
+  "Nail Health": "nails",
+  "Skin & Heels": "skin",
+  "Pain & Inflammation": "pain",
+  "Alignment & Structure": "alignment",
+  "Footwear Fit": "footwear",
+};
 
 // ── Types ────────────────────────────────────────────────────
 
@@ -552,6 +568,68 @@ export default function AssessmentPage() {
                     {result.cta}
                   </Link>
                 </div>
+
+                {/* Product recs tied to flag pattern */}
+                {(() => {
+                  const top = [...sectionBreakdown].sort(
+                    (a, b) => b.count - a.count
+                  )[0];
+                  if (!top || top.count === 0) return null;
+                  const symptomKey = symptomKeyByTitle[top.title];
+                  if (!symptomKey) return null;
+                  const recSlugs =
+                    symptomRecommendations[symptomKey]?.reviews.slice(0, 2) ??
+                    [];
+                  const recs = recSlugs
+                    .map((s) => staticReviews.find((r) => r.slug === s))
+                    .filter((r): r is NonNullable<typeof r> => Boolean(r));
+                  if (recs.length === 0) return null;
+                  return (
+                    <div className="mb-8">
+                      <p className="mb-1 text-xs font-bold uppercase tracking-wider text-neutral-400">
+                        Products that match what you flagged
+                      </p>
+                      <p className="mb-4 text-xs text-neutral-500">
+                        Based on your strongest area ({top.title}). Reviewed,
+                        not sponsored.
+                      </p>
+                      <div className="grid gap-3 sm:grid-cols-2">
+                        {recs.map((r) => (
+                          <Link
+                            key={r.slug}
+                            href={`/reviews/${r.slug}`}
+                            className="group flex items-center gap-4 border border-neutral-200 bg-white p-4 transition hover:border-brand-300 hover:bg-neutral-50"
+                          >
+                            <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden bg-neutral-100">
+                              {r.imageUrl && (
+                                <Image
+                                  src={r.imageUrl}
+                                  alt={r.productName}
+                                  fill
+                                  className="object-cover"
+                                />
+                              )}
+                            </div>
+                            <div className="flex flex-1 flex-col">
+                              <p className="text-[10px] font-semibold uppercase tracking-wider text-accent-600">
+                                {r.brand}
+                              </p>
+                              <p className="mt-0.5 text-sm font-bold leading-tight text-brand-900 group-hover:text-brand-600">
+                                {r.productName}
+                              </p>
+                              <p className="mt-1 text-xs text-neutral-500">
+                                {r.rating != null
+                                  ? `${r.rating}/10`
+                                  : "See the verdict"}{" "}
+                                · Read the review →
+                              </p>
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })()}
 
                 {/* Download personalized PDF */}
                 <div className="mb-8 flex items-center gap-4 border border-neutral-200 bg-white px-5 py-4">
