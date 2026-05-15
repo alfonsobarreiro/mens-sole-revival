@@ -48,7 +48,7 @@ const steps: Step[] = [
   {
     section: "01",
     title: "Nail Health",
-    subtitle: "Check both feet. Toenail problems are extremely common and very treatable — most men just don't know what they're looking at.",
+    subtitle: "Check both feet. Toenail problems are extremely common and very treatable. Most men just don't know what they're looking at.",
     callLabel: "Look for:",
     guideHref: "/learn?symptom=nails",
     items: [
@@ -66,12 +66,12 @@ const steps: Step[] = [
       source: "Gupta et al., Mycoses 2024",
       sourceUrl: "https://onlinelibrary.wiley.com/doi/full/10.1111/myc.13725",
     },
-    note: "3+ checks likely points to fungal infection or an ingrown nail. Both are treatable — the guide at the end points you in the right direction.",
+    note: "3+ checks likely points to fungal infection or an ingrown nail. Both are treatable. The guide at the end points you in the right direction.",
   },
   {
     section: "02",
     title: "Skin & Heels",
-    subtitle: "Your heels have no oil glands. Cracking isn't a hygiene failure — it's biology. But it is fixable.",
+    subtitle: "Your heels have no oil glands. Cracking isn't a hygiene failure. It's biology. But it is fixable.",
     callLabel: "Look for:",
     guideHref: "/learn?symptom=skin",
     items: [
@@ -101,7 +101,7 @@ const steps: Step[] = [
       { id: "p2", text: "Burning or aching in the arch during or after standing" },
       { id: "p3", text: "Ball-of-foot pain when walking or wearing dress shoes" },
       { id: "p4", text: "Any joint in the foot is swollen, red, or warm to touch" },
-      { id: "p5", text: "Pain in the big toe joint — especially after rich food or alcohol" },
+      { id: "p5", text: "Pain in the big toe joint, especially after rich food or alcohol" },
       { id: "p6", text: "General aching in both feet by end of day" },
     ],
     stat: {
@@ -110,12 +110,12 @@ const steps: Step[] = [
       source: "NIH / NCBI StatPearls",
       sourceUrl: "https://www.ncbi.nlm.nih.gov/books/NBK431073/",
     },
-    note: "Morning heel pain that eases after a few minutes is the classic plantar fasciitis pattern. Big toe swelling with warmth after eating is gout — see a doctor for that one.",
+    note: "Morning heel pain that eases after a few minutes is the classic plantar fasciitis pattern. Big toe swelling with warmth after eating is gout. See a doctor for that one.",
   },
   {
     section: "04",
     title: "Alignment & Structure",
-    subtitle: "Your toes set the foundation. Misalignment doesn't stay in your feet — it travels up to your knees, hips, and lower back.",
+    subtitle: "Your toes set the foundation. Misalignment doesn't stay in your feet. It travels up to your knees, hips, and lower back.",
     callLabel: "Look for:",
     guideHref: "/learn?symptom=alignment",
     items: [
@@ -163,7 +163,7 @@ function getResult(total: number) {
     return {
       tier: "0–2 Flags",
       headline: "You're in pretty good shape.",
-      body: "Nothing urgent. Build a 5-minute nightly routine — wash, dry, inspect, moisturize — and check your footwear fit. Come back in 3 months and see if anything changes.",
+      body: "Nothing urgent. Build a 5-minute nightly routine (wash, dry, inspect, moisturize) and check your footwear fit. Come back in 3 months and see if anything changes.",
       cta: "Start with the 5-minute routine →",
       ctaHref: "/routines",
     };
@@ -178,7 +178,7 @@ function getResult(total: number) {
   return {
     tier: "6+ Flags",
     headline: "It's been building a while.",
-    body: "See a podiatrist for the pain and structural issues — that's the right tool for those. Everything else (skin, nails, footwear) you can address yourself with the right information. Start there.",
+    body: "See a podiatrist for the pain and structural issues. That's the right tool for those. Everything else (skin, nails, footwear) you can address yourself with the right information. Start there.",
     cta: "Read the guide for where to start →",
     ctaHref: "/learn",
   };
@@ -285,7 +285,7 @@ export default function AssessmentPage() {
           </h1>
           <p className="mt-4 max-w-xl text-base leading-7 text-white/65">
             Work through five sections. Check what applies. Get a clear picture of
-            where you stand — and exactly where to start.
+            where you stand, and exactly where to start.
           </p>
 
           {/* Progress bar */}
@@ -369,7 +369,7 @@ export default function AssessmentPage() {
 
                 <p className="mb-3 text-sm leading-7 text-neutral-600">
                   Five sections. 30 questions total. Check anything that applies to
-                  you right now — no wrong answers. At the end you'll get a clear
+                  you right now. No wrong answers. At the end you'll get a clear
                   picture of where you stand and where to start.
                 </p>
 
@@ -682,13 +682,13 @@ export default function AssessmentPage() {
                   </p>
                   <ul className="space-y-1.5">
                     {[
-                      { label: "APMA — Public Opinion Research on Foot Health and Care", url: "https://www.apma.org/document-server/?cfp=/apmamain/assets/file/public/resources/todayspodiatristsurvey-9-30-10.pdf" },
-                      { label: "NIH / NCBI — Plantar Fasciitis StatPearls", url: "https://www.ncbi.nlm.nih.gov/books/NBK431073/" },
-                      { label: "Gupta et al., Mycoses 2024 — Global Prevalence of Onychomycosis", url: "https://onlinelibrary.wiley.com/doi/full/10.1111/myc.13725" },
-                      { label: "PMC — Antifungal Selection for Onychomycosis", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC10922011/" },
-                      { label: "PMC — Incorrectly Fitted Footwear, Foot Pain and Foot Disorders", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC6064070/" },
-                      { label: "PMC — Global Prevalence and Incidence of Hallux Valgus (2023)", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC10510234/" },
-                      { label: "AAFP — Common Foot Problems: OTC Treatments and Home Care", url: "https://www.aafp.org/pubs/afp/issues/2018/0901/p298.html" },
+                      { label: "APMA · Public Opinion Research on Foot Health and Care", url: "https://www.apma.org/document-server/?cfp=/apmamain/assets/file/public/resources/todayspodiatristsurvey-9-30-10.pdf" },
+                      { label: "NIH / NCBI · Plantar Fasciitis StatPearls", url: "https://www.ncbi.nlm.nih.gov/books/NBK431073/" },
+                      { label: "Gupta et al., Mycoses 2024 · Global Prevalence of Onychomycosis", url: "https://onlinelibrary.wiley.com/doi/full/10.1111/myc.13725" },
+                      { label: "PMC · Antifungal Selection for Onychomycosis", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC10922011/" },
+                      { label: "PMC · Incorrectly Fitted Footwear, Foot Pain and Foot Disorders", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC6064070/" },
+                      { label: "PMC · Global Prevalence and Incidence of Hallux Valgus (2023)", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC10510234/" },
+                      { label: "AAFP · Common Foot Problems: OTC Treatments and Home Care", url: "https://www.aafp.org/pubs/afp/issues/2018/0901/p298.html" },
                     ].map((s) => (
                       <li key={s.url}>
                         <a

@@ -49,7 +49,7 @@ const articles = [
     title: "Your Big Toe Controls More of Your Body Than You Think",
     category: "Toe Alignment",
     readTime: "6 min",
-    excerpt: "The big toe is responsible for 40–60% of your push-off force. Most men have spent decades restricting it — and wondering why their knee hurts.",
+    excerpt: "The big toe is responsible for 40–60% of your push-off force. Most men have spent decades restricting it, and wondering why their knee hurts.",
     image: "/images/pexels-11873696.jpg",
   },
   {
@@ -57,7 +57,7 @@ const articles = [
     title: "Cracked Heels: The Fix That Isn't a Pumice Stone",
     category: "Dry Skin",
     readTime: "5 min",
-    excerpt: "Scrubbing dry, cracked heel skin is the wrong starting point. Here's what's actually happening — and the routine that addresses it.",
+    excerpt: "Scrubbing dry, cracked heel skin is the wrong starting point. Here's what's actually happening, and the routine that addresses it.",
     image: "/images/pexels-29145634.jpg",
   },
   {
@@ -65,7 +65,7 @@ const articles = [
     title: "Toenail Fungus: What Actually Works (and What's a Scam)",
     category: "Nail Care",
     readTime: "8 min",
-    excerpt: "The evidence on OTC treatments, prescription options, and home remedies — ranked by how well they actually work.",
+    excerpt: "The evidence on OTC treatments, prescription options, and home remedies, ranked by how well they actually work.",
     image: "/images/pexels-5960467.jpg",
   },
   {
@@ -73,7 +73,7 @@ const articles = [
     title: "Why Toe Alignment Affects Your Knees and Hips",
     category: "Toe Alignment",
     readTime: "5 min",
-    excerpt: "When your big toe can't extend and stabilize, your knee, hip, and lower back pick up the slack — every single step. Here's how it travels up the chain.",
+    excerpt: "When your big toe can't extend and stabilize, your knee, hip, and lower back pick up the slack every single step. Here's how it travels up the chain.",
     image: "/images/pexels-13065922.jpg",
   },
   {
@@ -98,7 +98,7 @@ const stats = [
     value: "63–72%",
     label: "of adults wear shoes that don't fit them correctly",
     context: "The most upstream variable. And the most fixable.",
-    source: "PMC — Incorrectly Fitted Footwear, Systematic Review",
+    source: "PMC · Incorrectly Fitted Footwear, Systematic Review",
     sourceUrl: "https://pmc.ncbi.nlm.nih.gov/articles/PMC6064070/",
   },
 ];
@@ -154,7 +154,7 @@ export default function Home() {
               </h1>
 
               <p className="mt-8 max-w-xl text-lg leading-relaxed text-white/75">
-                Foot problems don't stay in your feet — they change how your
+                Foot problems don't stay in your feet. They change how your
                 knees load, how your hips move, and how your back feels by
                 evening. Most men don't notice until a decade of damage has
                 already passed.
@@ -330,7 +330,7 @@ export default function Home() {
               IT COMPOUNDS<br />UPWARD.
             </h2>
             <p className="mt-5 max-w-md text-base leading-7 text-white/65">
-              When your feet work well, everything else gets easier — your knees,
+              When your feet work well, everything else gets easier. Your knees,
               your posture, your energy. This is the leverage most men overlook,
               and the reason we built this.
             </p>
@@ -356,7 +356,7 @@ export default function Home() {
                 The routines.
               </p>
               <p className="mt-3 max-w-xl text-base leading-7 text-neutral-500">
-                Not a program — a set of small consistent actions that compound
+                Not a program. A set of small consistent actions that compound
                 over months. Start with one. Add the next.
               </p>
             </div>
@@ -421,8 +421,8 @@ export default function Home() {
               START HERE.
             </p>
             <p className="max-w-lg text-lg leading-relaxed text-brand-200">
-              Five sections. 30 questions. You'll know exactly where you stand
-              and where to start — in under five minutes.
+              Five sections. 30 questions. Under five minutes. You'll know
+              exactly where you stand and where to start.
             </p>
             <div className="flex flex-wrap justify-center gap-3">
               <Button href="/assessment" size="lg">

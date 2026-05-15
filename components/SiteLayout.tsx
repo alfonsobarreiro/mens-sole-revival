@@ -218,7 +218,7 @@ export default function SiteLayout({
                     Built by
                   </p>
                   <p className="mt-1 text-sm font-medium text-white">
-                    Alfonso Barreiro — UX/UI Designer · Portland, OR
+                    Alfonso Barreiro · UX/UI Designer · Portland, OR
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-3">

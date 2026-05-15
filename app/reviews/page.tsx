@@ -13,7 +13,7 @@ import {
 } from "@/lib/reviews";
 
 export const metadata: Metadata = {
-  title: "Reviews — Men's Sole Revival",
+  title: "Reviews · Men's Sole Revival",
   description:
     "Honest, evidence-based product reviews for men's foot health. We test the gear, break down the science, and tell you what's actually worth buying.",
 };
@@ -186,14 +186,14 @@ export default async function ReviewsPage() {
             <p className={`${type.overline} mb-4 text-neutral-500`}>How we review</p>
             <h2 className={`${type.displaySm} text-brand-900`}>Evidence first. Opinion second.</h2>
             <p className="mt-4 text-sm leading-7 text-neutral-600">
-              Every review starts with the mechanism — how the product is supposed to work,
+              Every review starts with the mechanism: how the product is supposed to work,
               and what the evidence actually says. Then we test it. Verdict categories are
               Recommended, Conditional (works, but with caveats), and Skip. No product
               escapes a clear call.
             </p>
             <p className="mt-3 text-sm leading-7 text-neutral-600">
-              If there's an affiliate link, it's labeled. It doesn't change the verdict —
-              we don't review products we wouldn't actually recommend.
+              If there's an affiliate link, it's labeled. It doesn't change the verdict.
+              We don't review products we wouldn't actually recommend.
             </p>
           </div>
         </Container>

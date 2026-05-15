@@ -10,7 +10,7 @@ import { type } from "@/components/typography";
 export const metadata: Metadata = {
   title: "Routines | Men's Sole Revival",
   description:
-    "Daily and weekly foot care routines for men. Stretches, soaking, lotion, toe strengthening — what to actually do.",
+    "Daily and weekly foot care routines for men. Stretches, soaking, lotion, toe strengthening: what to actually do.",
 };
 
 // ── Routine categories ──────────────────────────────────────────────────────
@@ -21,7 +21,7 @@ const categories = [
     label: "Daily",
     heading: "The nightly 5 minutes.",
     body:
-      "Wash, dry, inspect, moisturize. Done before your phone goes to the charger. This is the foundation — everything else builds on it.",
+      "Wash, dry, inspect, moisturize. Done before your phone goes to the charger. This is the foundation. Everything else builds on it.",
     time: "5 min",
     frequency: "Every night",
     icon: "🌙",
@@ -107,7 +107,7 @@ export default function RoutinesPage() {
               </h1>
               <p className="mt-5 max-w-xl text-base leading-relaxed text-brand-200">
                 Stretches, soaks, daily habits, and treatment protocols. Not a
-                plan you'll quit — a set of small consistent actions that compound
+                plan you'll quit. A set of small consistent actions that compound
                 over months.
               </p>
             </div>
