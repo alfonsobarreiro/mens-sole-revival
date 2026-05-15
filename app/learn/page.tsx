@@ -1,69 +1,21 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useMemo, useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import Button from "@/components/Button";
 import Container from "@/components/Container";
 import SiteLayout from "@/components/SiteLayout";
 import AssessmentEntryStrip from "@/components/AssessmentEntryStrip";
 import { type } from "@/components/typography";
+import {
+  articleList,
+  symptomLabels,
+  symptomOrder,
+  type Symptom,
+} from "@/lib/ecosystem";
 
-// ── Article data ─────────────────────────────────────────────────────────────
-
-const articles = [
-  {
-    title: "What 30 Years in Dress Shoes Actually Does to Your Feet",
-    href: "/blog/what-your-dress-shoes-are-doing-to-your-feet",
-    category: "Footwear Fit",
-    readTime: "7 min",
-    image: "/images/pexels-12031206.jpg",
-    excerpt: "Most men don't connect the shoes they wore for decades to the foot problems they have now. Here's the chain of cause and effect.",
-  },
-  {
-    title: "Your Big Toe Controls More of Your Body Than You Think",
-    href: "/blog/big-toe-and-your-whole-body",
-    category: "Alignment",
-    readTime: "6 min",
-    image: "/images/pexels-11873696.jpg",
-    excerpt: "The big toe is responsible for 40–60% of your push-off force. Most men have spent decades restricting it — and wondering why their knee hurts.",
-  },
-  {
-    title: "Cracked Heels: The Fix That Isn't a Pumice Stone",
-    href: "/blog/cracked-heels-what-actually-works",
-    category: "Dry Skin",
-    readTime: "5 min",
-    image: "/images/pexels-29145634.jpg",
-    excerpt: "Scrubbing dry, cracked heel skin is the wrong starting point. Here's what's actually happening — and the routine that addresses it.",
-  },
-  {
-    title: "Toenail Fungus: What Actually Works (and What's a Scam)",
-    href: "/blog/toenail-fungus-what-works",
-    category: "Nail Care",
-    readTime: "8 min",
-    image: "/images/pexels-5960467.jpg",
-    excerpt: "The evidence on OTC treatments, prescription options, and home remedies — ranked by how well they actually work.",
-  },
-  {
-    title: "Why Toe Alignment Affects Your Knees and Hips",
-    href: "/blog/why-toe-alignment-affects-knees-and-hips",
-    category: "Alignment",
-    readTime: "6 min",
-    image: "/images/pexels-35206081.jpg",
-    excerpt: "The connection between cramped toes, altered gait, and the knee and hip pain that follows years later.",
-  },
-  {
-    title: "A 5-Minute Daily Foot-Care Routine You Can Stick To",
-    href: "/blog/5-minute-routine",
-    category: "Daily Routine",
-    readTime: "4 min",
-    image: "/images/pexels-10904211.jpg",
-    excerpt: "A consistency-first approach: five focused minutes after your shower, anchored to a habit you already have.",
-  },
-];
-
-const allCategories = ["All", ...Array.from(new Set(articles.map((a) => a.category)))];
+// ── Category color (kept from the previous version) ───────────────────────────
 
 const categoryColor: Record<string, string> = {
   "Footwear Fit":  "bg-brand-50 text-brand-700",
@@ -77,25 +29,43 @@ const categoryColor: Record<string, string> = {
 
 function LearnContent() {
   const searchParams = useSearchParams();
-  const catParam = searchParams.get("cat");
+  const initialSymptom = searchParams.get("symptom") as Symptom | null;
+  const initialQ = searchParams.get("q") ?? "";
 
-  const [active, setActive] = useState("All");
+  const [active, setActive] = useState<Symptom | "all">(
+    initialSymptom && symptomOrder.includes(initialSymptom)
+      ? initialSymptom
+      : "all"
+  );
+  const [query, setQuery] = useState(initialQ);
 
-  // Sync URL param → active tab on load
+  // Keep filter state in sync if the URL changes (e.g. nav from homepage chips)
   useEffect(() => {
-    if (catParam && allCategories.includes(catParam)) {
-      setActive(catParam);
-    }
-  }, [catParam]);
+    const s = searchParams.get("symptom") as Symptom | null;
+    if (s && symptomOrder.includes(s)) setActive(s);
+    const q = searchParams.get("q");
+    if (q !== null) setQuery(q);
+  }, [searchParams]);
 
-  const filtered = active === "All"
-    ? articles
-    : articles.filter((a) => a.category === active);
+  // ── Filter pipeline: symptom chip → text query ──────────────────────────────
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    return articleList.filter((a) => {
+      const matchesSymptom = active === "all" || a.symptoms.includes(active);
+      if (!matchesSymptom) return false;
+      if (!q) return true;
+      const hay = `${a.title} ${a.excerpt} ${a.category} ${a.symptoms.join(
+        " "
+      )}`.toLowerCase();
+      return hay.includes(q);
+    });
+  }, [active, query]);
+
+  const countFor = (s: Symptom) =>
+    articleList.filter((a) => a.symptoms.includes(s)).length;
 
   return (
     <SiteLayout>
-
-
       {/* ── Hero ── */}
       <section className="relative flex h-[45vh] flex-col overflow-hidden bg-brand-900">
         <div className="absolute inset-0 z-0">
@@ -117,8 +87,8 @@ function LearnContent() {
                 The knowledge<br />base.
               </h1>
               <p className="mt-5 max-w-xl text-base leading-relaxed text-brand-200">
-                Guides organized by topic. Start with what's bothering you
-                most — every article links to the next logical step.
+                Guides organized by symptom. Start with what's bothering you
+                most. Every article links to the next logical step.
               </p>
             </div>
           </Container>
@@ -127,41 +97,89 @@ function LearnContent() {
 
       <AssessmentEntryStrip />
 
-      {/* ── Filter tabs + grid ── */}
+      {/* ── Filter bar: search + symptom chips ── */}
       <section className="py-10 md:py-14">
         <Container>
+          {/* Search input */}
+          <div className="mb-6">
+            <label htmlFor="learn-search" className="sr-only">
+              Search guides
+            </label>
+            <div className="relative">
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="m21 21-4.3-4.3" />
+                </svg>
+              </span>
+              <input
+                id="learn-search"
+                type="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search by symptom or topic. Try: heel, fungus, knee, fit."
+                className="w-full border border-neutral-300 bg-white py-3 pl-12 pr-4 text-sm leading-6 text-neutral-800 placeholder:text-neutral-400 focus:border-brand-500 focus:outline-none"
+              />
+            </div>
+          </div>
 
-          <div className="mb-8 flex flex-wrap gap-0 border-b border-neutral-200">
-            {allCategories.map((cat) => (
+          {/* Symptom chips */}
+          <div className="mb-8 flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={() => setActive("all")}
+              className={`px-4 py-2 text-xs font-bold uppercase tracking-wider transition ${
+                active === "all"
+                  ? "bg-brand-900 text-white"
+                  : "border border-neutral-300 bg-white text-neutral-700 hover:border-brand-500"
+              }`}
+            >
+              All
+              <span className="ml-2 font-normal opacity-60">
+                {articleList.length}
+              </span>
+            </button>
+            {symptomOrder.map((s) => (
               <button
-                key={cat}
-                onClick={() => setActive(cat)}
-                className={`-mb-px px-5 py-3 text-xs font-bold uppercase tracking-wider border-b-2 transition ${
-                  active === cat
-                    ? "border-brand-900 text-brand-900"
-                    : "border-transparent text-neutral-500 hover:text-neutral-900"
+                key={s}
+                type="button"
+                onClick={() => setActive(s)}
+                className={`px-4 py-2 text-xs font-bold uppercase tracking-wider transition ${
+                  active === s
+                    ? "bg-brand-900 text-white"
+                    : "border border-neutral-300 bg-white text-neutral-700 hover:border-brand-500"
                 }`}
               >
-                {cat}
-                {cat !== "All" && (
-                  <span className="ml-2 font-normal opacity-50">
-                    {articles.filter((a) => a.category === cat).length}
-                  </span>
-                )}
+                {symptomLabels[s]}
+                <span className="ml-2 font-normal opacity-60">
+                  {countFor(s)}
+                </span>
               </button>
             ))}
           </div>
 
+          {/* Result count */}
+          <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-neutral-500">
+            {filtered.length === articleList.length
+              ? `${articleList.length} guides`
+              : `${filtered.length} of ${articleList.length} guides`}
+            {query && ` matching "${query}"`}
+          </p>
+
+          {/* Grid */}
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {filtered.map((a) => (
               <Link
-                key={a.href}
-                href={a.href}
+                key={a.slug}
+                href={`/blog/${a.slug}`}
                 className="group flex flex-col overflow-hidden border border-neutral-200 bg-white shadow-sm transition hover:border-brand-300 hover:shadow-md"
               >
                 <div className="relative aspect-[4/3] w-full overflow-hidden">
                   <Image
-                    src={a.image}
+                    src={a.imageUrl}
                     alt={a.title}
                     fill
                     className="object-cover transition duration-500 group-hover:scale-105"
@@ -183,6 +201,18 @@ function LearnContent() {
                   <p className="mt-2 flex-1 text-sm leading-6 text-neutral-500">
                     {a.excerpt}
                   </p>
+                  {a.symptoms.length > 0 && (
+                    <div className="mt-4 flex flex-wrap gap-1.5">
+                      {a.symptoms.map((s) => (
+                        <span
+                          key={s}
+                          className="bg-neutral-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-neutral-500"
+                        >
+                          {symptomLabels[s]}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                   <p className="mt-4 text-xs font-bold uppercase tracking-wider text-brand-500 group-hover:text-brand-700">
                     Read guide →
                   </p>
@@ -191,13 +221,18 @@ function LearnContent() {
             ))}
 
             {filtered.length === 0 && (
-              <div className="col-span-full py-16 text-center text-neutral-400">
-                <p className="text-sm">No guides in this category yet.</p>
+              <div className="col-span-full border border-dashed border-neutral-200 py-16 text-center">
+                <p className="text-sm text-neutral-500">
+                  No guides match{query ? ` "${query}"` : ""} yet.
+                </p>
                 <button
-                  onClick={() => setActive("All")}
+                  onClick={() => {
+                    setActive("all");
+                    setQuery("");
+                  }}
                   className="mt-3 text-xs font-bold uppercase tracking-wider text-brand-500 underline underline-offset-4"
                 >
-                  View all guides
+                  Clear filters
                 </button>
               </div>
             )}
@@ -217,10 +252,8 @@ function LearnContent() {
               Join the waitlist
             </Link>
           </div>
-
         </Container>
       </section>
-
     </SiteLayout>
   );
 }

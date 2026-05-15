@@ -104,12 +104,12 @@ const stats = [
 ];
 
 const marqueeItems = [
-  { label: "Nails",          href: "/learn?cat=Nail+Care" },
-  { label: "Alignment",      href: "/learn?cat=Alignment" },
-  { label: "Routine",        href: "/learn?cat=Daily+Routine" },
+  { label: "Nails",          href: "/learn?symptom=nails" },
+  { label: "Alignment",      href: "/learn?symptom=alignment" },
+  { label: "Skin",           href: "/learn?symptom=skin" },
   { label: "Foot Health",    href: "/learn" },
-  { label: "Fit",            href: "/learn?cat=Footwear+Fit" },
-  { label: "Pain",           href: "/routines" },
+  { label: "Fit",            href: "/learn?symptom=footwear" },
+  { label: "Pain",           href: "/learn?symptom=pain" },
   { label: "Evidence-Based", href: "/reviews" },
   { label: "Men's Wellness", href: "/learn" },
   { label: "Long Game",      href: "/about" },

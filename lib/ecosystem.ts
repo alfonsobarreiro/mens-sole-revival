@@ -63,12 +63,35 @@ export const routines: Record<string, RoutineRef> = {
  * Source of truth for full content lives on /learn (article cards) and
  * on each /blog/[slug] page (full MDX). This catalog only needs the bits
  * the cross-link cards display. */
+export type Symptom = "pain" | "nails" | "skin" | "alignment" | "footwear";
+
+/** Human-readable labels + ordering for symptom chips in the UI. */
+export const symptomLabels: Record<Symptom, string> = {
+  pain: "Pain",
+  nails: "Nails",
+  skin: "Skin",
+  alignment: "Alignment",
+  footwear: "Footwear",
+};
+
+export const symptomOrder: Symptom[] = [
+  "pain",
+  "nails",
+  "skin",
+  "alignment",
+  "footwear",
+];
+
 export type ArticleMeta = {
   slug: string;
   title: string;
   category: string;
   readTime: string;
   imageUrl: string;
+  /** Short, scannable excerpt used by /learn cards and the search results. */
+  excerpt: string;
+  /** Symptom tags — drive the symptom-first search/filter on /learn. */
+  symptoms: Symptom[];
 };
 
 export const articles: Record<string, ArticleMeta> = {
@@ -78,6 +101,9 @@ export const articles: Record<string, ArticleMeta> = {
     category: "Footwear Fit",
     readTime: "7 min",
     imageUrl: "/images/pexels-12031206.jpg",
+    excerpt:
+      "Most men don't connect the shoes they wore for decades to the foot problems they have now. Here's the chain of cause and effect.",
+    symptoms: ["footwear", "alignment", "pain"],
   },
   "big-toe-and-your-whole-body": {
     slug: "big-toe-and-your-whole-body",
@@ -85,6 +111,9 @@ export const articles: Record<string, ArticleMeta> = {
     category: "Alignment",
     readTime: "6 min",
     imageUrl: "/images/pexels-11873696.jpg",
+    excerpt:
+      "The big toe is responsible for 40 to 60% of your push-off force. Most men have spent decades restricting it and wondering why their knee hurts.",
+    symptoms: ["alignment", "pain"],
   },
   "cracked-heels-what-actually-works": {
     slug: "cracked-heels-what-actually-works",
@@ -92,6 +121,9 @@ export const articles: Record<string, ArticleMeta> = {
     category: "Dry Skin",
     readTime: "5 min",
     imageUrl: "/images/pexels-29145634.jpg",
+    excerpt:
+      "Scrubbing dry, cracked heel skin is the wrong starting point. Here's what's actually happening, and the routine that addresses it.",
+    symptoms: ["skin"],
   },
   "toenail-fungus-what-works": {
     slug: "toenail-fungus-what-works",
@@ -99,6 +131,9 @@ export const articles: Record<string, ArticleMeta> = {
     category: "Nail Care",
     readTime: "8 min",
     imageUrl: "/images/pexels-5960467.jpg",
+    excerpt:
+      "The evidence on OTC treatments, prescription options, and home remedies, ranked by how well they actually work.",
+    symptoms: ["nails", "skin"],
   },
   "why-toe-alignment-affects-knees-and-hips": {
     slug: "why-toe-alignment-affects-knees-and-hips",
@@ -106,6 +141,9 @@ export const articles: Record<string, ArticleMeta> = {
     category: "Alignment",
     readTime: "6 min",
     imageUrl: "/images/pexels-35206081.jpg",
+    excerpt:
+      "When your big toe can't extend and stabilize, your knee, hip, and lower back pick up the slack every single step. Here's how it travels up the chain.",
+    symptoms: ["alignment", "pain", "footwear"],
   },
   "5-minute-routine": {
     slug: "5-minute-routine",
@@ -113,8 +151,14 @@ export const articles: Record<string, ArticleMeta> = {
     category: "Daily Routine",
     readTime: "4 min",
     imageUrl: "/images/pexels-10904211.jpg",
+    excerpt:
+      "Consistency beats intensity. A five-minute habit done after your shower produces dramatically better long-term outcomes than anything more ambitious you'll quit.",
+    symptoms: ["skin", "nails"],
   },
 };
+
+/** Convenience: array form for list iteration. */
+export const articleList: ArticleMeta[] = Object.values(articles);
 
 /** Article slug → its ecosystem links. */
 export const articleRelations: Record<
