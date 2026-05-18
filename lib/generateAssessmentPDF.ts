@@ -90,23 +90,6 @@ const SIZE = {
   tiny: 10 * PX_TO_PT,  // 7.5   · text-[10px] · card category eyebrows
 };
 
-// ── Font loading ────────────────────────────────────────────────────────
-async function loadFont(url: string): Promise<string> {
-  const res = await fetch(url);
-  const buf = await res.arrayBuffer();
-  // ArrayBuffer → base64 (browser-safe).
-  let binary = "";
-  const bytes = new Uint8Array(buf);
-  const chunk = 0x8000;
-  for (let i = 0; i < bytes.length; i += chunk) {
-    binary += String.fromCharCode.apply(
-      null,
-      Array.from(bytes.subarray(i, i + chunk))
-    );
-  }
-  return btoa(binary);
-}
-
 // ── Image loading (for article thumbnails) ──────────────────────────────
 function loadImage(src: string, type: "png" | "jpeg" = "jpeg", maxDim?: number): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -143,59 +126,19 @@ export async function generateAssessmentPDF(data: AssessmentData) {
   const CW = W - M * 2;                          // 500
   let y = 0;
 
-  // ── Register brand fonts ──────────────────────────────────────────────
-  // Fetch all six TTFs in parallel, base64 them, register with jsPDF.
-  // Each registration gives doc.setFont(family, style) → that font.
-  // "DMSansMedium" is a separate family alias since jsPDF only has
-  // normal/bold/italic style slots.
-  const [
-    barlowBold,
-    dmRegular, dmMedium, dmBold,
-    loraRegular, loraBold,
-  ] = await Promise.all([
-    loadFont("/fonts/BarlowCondensed-Bold.ttf").catch(() => null),
-    loadFont("/fonts/DMSans-Regular.ttf").catch(() => null),
-    loadFont("/fonts/DMSans-Medium.ttf").catch(() => null),
-    loadFont("/fonts/DMSans-Bold.ttf").catch(() => null),
-    loadFont("/fonts/Lora-Regular.ttf").catch(() => null),
-    loadFont("/fonts/Lora-Bold.ttf").catch(() => null),
-  ]);
-
-  // Register each font defensively. If one fails (TTF parsing quirk,
-  // jsPDF version mismatch, etc.), the others can still register and
-  // we degrade just that one family to a system fallback. The whole
-  // PDF should never fail to generate because of font issues.
-  function tryRegister(filename: string, base64: string | null, family: string, style: "normal" | "bold"): boolean {
-    if (!base64) return false;
-    try {
-      doc.addFileToVFS(filename, base64);
-      doc.addFont(filename, family, style);
-      return true;
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.warn(`PDF: failed to register ${family} ${style}`, err);
-      return false;
-    }
-  }
-
-  const barlowOK   = tryRegister("BarlowCondensed-Bold.ttf", barlowBold, "BarlowCondensed", "bold");
-  const dmRegOK    = tryRegister("DMSans-Regular.ttf",       dmRegular,  "DMSans",          "normal");
-  const dmBoldOK   = tryRegister("DMSans-Bold.ttf",          dmBold,     "DMSans",          "bold");
-  const dmMedOK    = tryRegister("DMSans-Medium.ttf",        dmMedium,   "DMSansMedium",    "normal");
-  const loraRegOK  = tryRegister("Lora-Regular.ttf",         loraRegular,"Lora",            "normal");
-  const loraBoldOK = tryRegister("Lora-Bold.ttf",            loraBold,   "Lora",            "bold");
-
-  // Per-family availability (used to pick the right family in F).
-  const dmOK     = dmRegOK && dmBoldOK;
-  const loraOK   = loraRegOK && loraBoldOK;
-
-  // Font shortcuts that fall back to system fonts per family if any
-  // registration in that family failed.
+  // Font shortcuts. We previously embedded Lora / DM Sans / Barlow
+  // Condensed as TTFs via doc.addFileToVFS + doc.addFont, but that path
+  // is unreliable across jsPDF versions — the proper way to ship custom
+  // fonts is jsPDF's fontconverter tool (converts TTF → .js font
+  // module). Until that lands, we use system fonts that ALWAYS work
+  // and tune sizes/weights to mirror the on-screen recipes.
+  //   helvetica = DM Sans approximation (clean sans-serif UI font)
+  //   times     = Lora / Barlow Condensed approximation (serif display)
   const F = {
-    display:    barlowOK ? "BarlowCondensed" : "helvetica",  // display headlines
-    body:       dmOK     ? "DMSans"          : "helvetica",  // body / UI
-    bodyMedium: dmMedOK  ? "DMSansMedium"    : (dmOK ? "DMSans" : "helvetica"),
-    editorial:  loraOK   ? "Lora"            : "times",      // logo wordmark
+    display:    "helvetica",  // mirrors font-display (Barlow Condensed)
+    body:       "helvetica",  // mirrors body / UI (DM Sans)
+    bodyMedium: "helvetica",  // mirrors text-sm font-medium (DM Sans Medium)
+    editorial:  "times",      // mirrors editorial / logo wordmark (Lora)
   };
 
   // ── Drawing helpers ───────────────────────────────────────────────────
