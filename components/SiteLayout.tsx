@@ -57,10 +57,10 @@ export default function SiteLayout({
           <div className="flex items-center justify-between px-4 py-3 md:hidden">
             <Link href="/" className="flex items-center transition-transform duration-150 hover:scale-[96%] active:scale-[93%]">
               <Image
-                src="/logo-msr-light.svg"
+                src="/logo-msr-lockup-stacked.png"
                 alt="Men's Sole Revival"
-                width={130}
-                height={58}
+                width={200}
+                height={80}
                 className="h-12 w-auto"
                 priority
               />
@@ -97,14 +97,14 @@ export default function SiteLayout({
                 );
               })}
             </nav>
-            {/* Center: logo */}
+            {/* Center: logo (M01 + wordmark horizontal lockup) */}
             <Link href="/" className="flex items-center justify-center transition-transform duration-150 hover:scale-[96%] active:scale-[93%]">
               <Image
-                src="/logo-msr-light.svg"
+                src="/logo-msr-lockup-horizontal.png"
                 alt="Men's Sole Revival"
-                width={130}
-                height={58}
-                className="h-14 w-auto"
+                width={340}
+                height={60}
+                className="h-12 w-auto"
                 priority
               />
             </Link>
@@ -157,11 +157,11 @@ export default function SiteLayout({
             <div className="flex flex-col gap-10 md:flex-row md:justify-between">
               <div>
                 <Image
-                  src="/logo-msr-light.svg"
+                  src="/logo-msr-lockup-horizontal.png"
                   alt="Men's Sole Revival"
-                  width={160}
-                  height={71}
-                  className="h-16 w-auto brightness-0 invert"
+                  width={340}
+                  height={60}
+                  className="h-14 w-auto brightness-0 invert"
                 />
                 <p className="mt-3 max-w-xs text-sm leading-6 text-white/60">
                   Foot care, footwear, and the holistic habits that keep men
