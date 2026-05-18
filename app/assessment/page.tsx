@@ -48,7 +48,7 @@ const steps: StepDef[] = [
     subtitle:
       "Check both feet. Toenail problems are extremely common and very treatable. Most men just don't know what they're looking at.",
     callLabel: "Look for:",
-    guideHref: "/learn?symptom=nails",
+    guideHref: "/guides?symptom=nails",
     items: [
       { id: "n1", text: "Nails are thick, yellowed, white, or brittle" },
       { id: "n2", text: "Nails crumble or break easily at the edges" },
@@ -75,7 +75,7 @@ const steps: StepDef[] = [
     subtitle:
       "Your heels have no oil glands. Cracking isn't a hygiene failure. It's biology. But it is fixable.",
     callLabel: "Look for:",
-    guideHref: "/learn?symptom=skin",
+    guideHref: "/guides?symptom=skin",
     items: [
       { id: "s1", text: "Heels have visible cracks or fissures (even shallow ones)" },
       { id: "s2", text: "Skin on heels or balls of feet is hard, calloused, or rough" },
@@ -124,7 +124,7 @@ const steps: StepDef[] = [
     subtitle:
       "Your toes set the foundation. Misalignment doesn't stay in your feet. It travels up to your knees, hips, and lower back.",
     callLabel: "Look for:",
-    guideHref: "/learn?symptom=alignment",
+    guideHref: "/guides?symptom=alignment",
     items: [
       { id: "a1", text: "Big toe leans toward the second toe (early bunion formation)" },
       { id: "a2", text: "Lesser toes (2nd to 4th) curl downward when you relax your foot" },
@@ -147,7 +147,7 @@ const steps: StepDef[] = [
     title: "Footwear Fit",
     subtitle: "The most upstream variable. Most foot problems trace back here.",
     callLabel: "Quick fit check:",
-    guideHref: "/learn?symptom=footwear",
+    guideHref: "/guides?symptom=footwear",
     items: [
       { id: "f1", text: "Toes feel compressed when shoes are laced or buckled" },
       { id: "f2", text: "Haven't had feet measured in the last 5 years" },

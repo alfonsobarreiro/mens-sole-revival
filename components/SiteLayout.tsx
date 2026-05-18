@@ -8,10 +8,9 @@ import Container from "@/components/Container";
 import Button from "@/components/Button";
 
 const navLinks = [
-  { label: "Learn", href: "/learn" },
-  { label: "Reviews", href: "/reviews" },
+  { label: "Guides", href: "/guides" },
+  { label: "Product Reviews", href: "/reviews" },
   { label: "Routines", href: "/routines" },
-  { label: "About", href: "/about" },
   { label: "Assessment", href: "/assessment" },
 ];
 
@@ -177,8 +176,8 @@ export default function SiteLayout({
                   <ul className="mt-4 space-y-2">
                     {[
                       { label: "Assessment", href: "/assessment" },
-                      { label: "Learn", href: "/learn" },
-                      { label: "Reviews", href: "/reviews" },
+                      { label: "Guides", href: "/guides" },
+                      { label: "Product Reviews", href: "/reviews" },
                       { label: "Routines", href: "/routines" },
                       { label: "About", href: "/about" },
                     ].map((l) => (

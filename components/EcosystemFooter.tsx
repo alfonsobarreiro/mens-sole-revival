@@ -90,7 +90,7 @@ export default function EcosystemFooter({
           {relatedArticles.map((a) => (
             <Link
               key={a.slug}
-              href={`/blog/${a.slug}`}
+              href={`/guides/${a.slug}`}
               className="group flex flex-col overflow-hidden border border-neutral-200 bg-white shadow-sm transition hover:border-brand-300 hover:shadow-md"
             >
               <div className="relative aspect-[4/3] w-full overflow-hidden">

@@ -16,6 +16,10 @@ const nextConfig: NextConfig = {
     return [
       { source: "/shop", destination: "/reviews", permanent: true },
       { source: "/shop/:slug", destination: "/reviews", permanent: true },
+      // Old editorial routes → /guides (vocabulary aligned across the site)
+      { source: "/learn", destination: "/guides", permanent: true },
+      { source: "/blog", destination: "/guides", permanent: true },
+      { source: "/blog/:slug", destination: "/guides/:slug", permanent: true },
     ];
   },
   // IMPORTANT: ensure MDX is treated as React components

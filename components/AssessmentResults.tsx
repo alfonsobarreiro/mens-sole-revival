@@ -121,7 +121,7 @@ export default function AssessmentResults({
             {result.articles.map((a) => (
               <Link
                 key={a.slug}
-                href={`/blog/${a.slug}`}
+                href={`/guides/${a.slug}`}
                 className="group flex gap-4 border border-neutral-200 bg-white p-4 transition hover:border-brand-300 hover:bg-neutral-50"
               >
                 <div className="relative h-20 w-24 flex-shrink-0 overflow-hidden bg-neutral-100">

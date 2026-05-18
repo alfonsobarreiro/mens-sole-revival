@@ -104,14 +104,14 @@ const stats = [
 ];
 
 const marqueeItems = [
-  { label: "Nails",          href: "/learn?symptom=nails" },
-  { label: "Alignment",      href: "/learn?symptom=alignment" },
-  { label: "Skin",           href: "/learn?symptom=skin" },
-  { label: "Foot Health",    href: "/learn" },
-  { label: "Fit",            href: "/learn?symptom=footwear" },
-  { label: "Pain",           href: "/learn?symptom=pain" },
+  { label: "Nails",          href: "/guides?symptom=nails" },
+  { label: "Alignment",      href: "/guides?symptom=alignment" },
+  { label: "Skin",           href: "/guides?symptom=skin" },
+  { label: "Foot Health",    href: "/guides" },
+  { label: "Fit",            href: "/guides?symptom=footwear" },
+  { label: "Pain",           href: "/guides?symptom=pain" },
   { label: "Evidence-Based", href: "/reviews" },
-  { label: "Men's Wellness", href: "/learn" },
+  { label: "Men's Wellness", href: "/guides" },
   { label: "Long Game",      href: "/about" },
 ];
 
@@ -165,7 +165,7 @@ export default function Home() {
                   Take the Assessment
                 </Button>
                 <Button
-                  href="/learn"
+                  href="/guides"
                   variant="outline"
                   size="lg"
                   className="border-white/50 text-white hover:bg-white/10 active:bg-white/20"
@@ -250,7 +250,7 @@ export default function Home() {
                   FROM<br />THE<br />GUIDES.
                 </p>
                 <Link
-                  href="/learn"
+                  href="/guides"
                   className="mt-6 inline-flex items-center gap-2 border border-brand-900 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-brand-900 transition hover:bg-brand-900 hover:text-white"
                 >
                   View all guides
@@ -258,7 +258,7 @@ export default function Home() {
               </div>
 
               {/* Bottom: featured article */}
-              <Link href={`/blog/${articles[0].slug}`} className="group mt-10 block md:mt-0">
+              <Link href={`/guides/${articles[0].slug}`} className="group mt-10 block md:mt-0">
                 <div className="relative overflow-hidden" style={{ aspectRatio: "3/2" }}>
                   <Image
                     src={articles[0].image}
@@ -286,7 +286,7 @@ export default function Home() {
             {articles.slice(1, 5).map((a) => (
               <Link
                 key={a.slug}
-                href={`/blog/${a.slug}`}
+                href={`/guides/${a.slug}`}
                 className="group flex gap-5 p-8 transition hover:bg-neutral-50/60 md:p-10"
               >
                 <div className="relative h-24 w-32 flex-shrink-0 overflow-hidden md:h-28 md:w-36">

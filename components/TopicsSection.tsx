@@ -15,7 +15,7 @@ const topics = [
   },
   {
     label: "Nails",
-    href: "/blog/toenail-fungus-what-works",
+    href: "/guides/toenail-fungus-what-works",
     leftImage: "/images/pexels-9767780.jpg",
     tagline: "Small details, big confidence.",
     description:
@@ -23,7 +23,7 @@ const topics = [
   },
   {
     label: "Alignment",
-    href: "/blog/why-toe-alignment-affects-knees-and-hips",
+    href: "/guides/why-toe-alignment-affects-knees-and-hips",
     leftImage: "/images/pexels-33360918.jpg",
     tagline: "Your toes set the foundation.",
     description:
@@ -31,7 +31,7 @@ const topics = [
   },
   {
     label: "Routine",
-    href: "/blog/5-minute-routine",
+    href: "/guides/5-minute-routine",
     leftImage: "/images/pexels-4909313.jpg",
     tagline: "Five minutes. Every day.",
     description:
@@ -39,7 +39,7 @@ const topics = [
   },
   {
     label: "Fit",
-    href: "/blog/what-your-dress-shoes-are-doing-to-your-feet",
+    href: "/guides/what-your-dress-shoes-are-doing-to-your-feet",
     leftImage: "/images/pexels-8729236.jpg",
     tagline: "The wrong shoe is a slow injury.",
     description:
@@ -47,7 +47,7 @@ const topics = [
   },
   {
     label: "Skin",
-    href: "/blog/cracked-heels-what-actually-works",
+    href: "/guides/cracked-heels-what-actually-works",
     leftImage: "/images/pexels-11873696.jpg",
     tagline: "Cracks heal. Calluses soften.",
     description:
