@@ -287,6 +287,19 @@ export default function AssessmentPage() {
       ? 100
       : 0;
 
+  // Estimated time remaining — drives a "≈ N min left" indicator next to the
+  // progress bar. Heuristic: ~15 items per minute (4 seconds each: read, scan,
+  // decide). Rounded up so the estimate never lies low. Floors at 1 min until
+  // the user is genuinely past the last section.
+  const minutesRemaining = useMemo(() => {
+    if (phase !== "section") return 0;
+    const remainingItems = visibleSteps
+      .slice(sectionIndex)
+      .reduce((sum, s) => sum + s.items.length, 0);
+    if (remainingItems === 0) return 0;
+    return Math.max(1, Math.ceil(remainingItems / 15));
+  }, [phase, visibleSteps, sectionIndex]);
+
   // ── Actions ──
   function toggleCheck(id: string) {
     setChecked((prev) => {
@@ -434,6 +447,11 @@ export default function AssessmentPage() {
                   style={{ width: `${progress}%` }}
                 />
               </div>
+              {minutesRemaining > 0 && (
+                <p className="mt-2 text-[11px] uppercase tracking-widest text-white/35">
+                  About {minutesRemaining} min left
+                </p>
+              )}
             </div>
           )}
         </Container>
