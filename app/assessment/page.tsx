@@ -974,6 +974,12 @@ export default function AssessmentPage() {
                 notSureCount={notSureCount}
                 onDownloadPdf={downloadPdf}
                 onRestart={restart}
+                onBackToLastSection={() => {
+                  if (visibleSteps.length === 0) return;
+                  setSectionIndex(visibleSteps.length - 1);
+                  setPhase("section");
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
               />
 
               {/* Feedback form (Item 6) */}

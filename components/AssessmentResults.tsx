@@ -30,6 +30,10 @@ interface AssessmentResultsProps {
   onDownloadPdf: () => void;
   /** Called when the user clicks Restart. */
   onRestart: () => void;
+  /** Called when the user wants to step back into the last section to
+   * edit an answer. Their previous answers persist; results recompute
+   * after they hit Next again. */
+  onBackToLastSection: () => void;
 }
 
 /**
@@ -46,6 +50,7 @@ export default function AssessmentResults({
   notSureCount,
   onDownloadPdf,
   onRestart,
+  onBackToLastSection,
 }: AssessmentResultsProps) {
   const result = composeResult({
     flagsBySection,
@@ -316,10 +321,33 @@ export default function AssessmentResults({
         </p>
 
         {emailState.status === "success" ? (
-          <div className="mt-3 border border-emerald-200 bg-emerald-50 p-4">
-            <p className="text-sm font-semibold text-emerald-800">
-              Sent. Check your inbox.
+          <div className="mt-3 border border-emerald-200 bg-emerald-50 p-6">
+            <p className="text-xs font-bold uppercase tracking-widest text-emerald-700">
+              ✓ Sent
             </p>
+            <p className="mt-2 font-display text-xl font-bold uppercase leading-tight text-emerald-800">
+              Check your inbox.
+            </p>
+            <p className="mt-2 text-sm leading-6 text-emerald-800/80">
+              Your results are on the way. If you opted in to the 30 and 90
+              day check-ins, we'll nudge you when it's time to re-take.
+            </p>
+            <div className="mt-5 flex flex-wrap gap-3 border-t border-emerald-200 pt-5">
+              <button
+                type="button"
+                onClick={onRestart}
+                className="bg-brand-900 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-brand-700"
+              >
+                Take a fresh self-check
+              </button>
+              <button
+                type="button"
+                onClick={handlePdf}
+                className="border border-brand-900 bg-white px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-brand-900 transition hover:bg-brand-900 hover:text-white"
+              >
+                Download PDF for my doctor
+              </button>
+            </div>
           </div>
         ) : (
           <form
@@ -394,13 +422,22 @@ export default function AssessmentResults({
           </button>
         </div>
 
-        <button
-          type="button"
-          onClick={handleRestart}
-          className="mt-4 text-xs font-semibold uppercase tracking-wider text-neutral-500 underline underline-offset-4 hover:text-brand-700"
-        >
-          Restart the assessment →
-        </button>
+        <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2">
+          <button
+            type="button"
+            onClick={onBackToLastSection}
+            className="text-xs font-semibold uppercase tracking-wider text-neutral-500 underline underline-offset-4 hover:text-brand-700"
+          >
+            ← Edit my answers
+          </button>
+          <button
+            type="button"
+            onClick={handleRestart}
+            className="text-xs font-semibold uppercase tracking-wider text-neutral-500 underline underline-offset-4 hover:text-brand-700"
+          >
+            Restart the assessment →
+          </button>
+        </div>
       </section>
     </div>
   );
