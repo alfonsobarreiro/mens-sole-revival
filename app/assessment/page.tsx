@@ -446,7 +446,7 @@ export default function AssessmentPage() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  function downloadPdf() {
+  async function downloadPdf() {
     // The PDF is the doctor-visit artifact (spec §3.5): prep bullets on
     // top, then flagged items per section, then routine + articles.
     // Reuses the same composeResult() the on-screen results use.
@@ -455,28 +455,35 @@ export default function AssessmentPage() {
       durationBySection,
       notSureCount,
     });
-    const sectionsForPdf = visibleSteps
-      .map((s) => {
-        const flaggedItems = s.items
-          .filter((it) => checked[it.id])
-          .map((it) => it.text);
-        return {
-          title: s.title,
-          count: flaggedItems.length,
-          items: flaggedItems,
-          duration: durationBySection[s.sectionId],
-          guideHref: s.guideHref,
-        };
-      });
-    generateAssessmentPDF({
-      totalFlags,
-      notSureCount,
-      recommendsClinic: composed.recommendsClinic,
-      sections: sectionsForPdf,
-      prepBullets: composed.prepBullets,
-      routine: composed.routine,
-      articles: composed.articles,
+    const sectionsForPdf = visibleSteps.map((s) => {
+      const flaggedItems = s.items
+        .filter((it) => checked[it.id])
+        .map((it) => it.text);
+      return {
+        title: s.title,
+        count: flaggedItems.length,
+        items: flaggedItems,
+        duration: durationBySection[s.sectionId],
+        guideHref: s.guideHref,
+      };
     });
+    try {
+      await generateAssessmentPDF({
+        totalFlags,
+        notSureCount,
+        recommendsClinic: composed.recommendsClinic,
+        sections: sectionsForPdf,
+        prepBullets: composed.prepBullets,
+        routine: composed.routine,
+        articles: composed.articles,
+      });
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error("[PDF download] failed:", err);
+      alert(
+        "Sorry — the PDF download hit an error. Try again, or use the Email option to send yourself a copy. (Error logged to the browser console.)"
+      );
+    }
   }
 
   const isIntro = phase === "intro";

@@ -161,32 +161,41 @@ export async function generateAssessmentPDF(data: AssessmentData) {
     loadFont("/fonts/Lora-Bold.ttf").catch(() => null),
   ]);
 
-  let fontsAvailable = false;
-  if (barlowBold && dmRegular && dmMedium && dmBold && loraRegular && loraBold) {
-    doc.addFileToVFS("BarlowCondensed-Bold.ttf", barlowBold);
-    doc.addFont("BarlowCondensed-Bold.ttf", "BarlowCondensed", "bold");
-
-    doc.addFileToVFS("DMSans-Regular.ttf", dmRegular);
-    doc.addFont("DMSans-Regular.ttf", "DMSans", "normal");
-    doc.addFileToVFS("DMSans-Bold.ttf", dmBold);
-    doc.addFont("DMSans-Bold.ttf", "DMSans", "bold");
-    doc.addFileToVFS("DMSans-Medium.ttf", dmMedium);
-    doc.addFont("DMSans-Medium.ttf", "DMSansMedium", "normal");
-
-    doc.addFileToVFS("Lora-Regular.ttf", loraRegular);
-    doc.addFont("Lora-Regular.ttf", "Lora", "normal");
-    doc.addFileToVFS("Lora-Bold.ttf", loraBold);
-    doc.addFont("Lora-Bold.ttf", "Lora", "bold");
-
-    fontsAvailable = true;
+  // Register each font defensively. If one fails (TTF parsing quirk,
+  // jsPDF version mismatch, etc.), the others can still register and
+  // we degrade just that one family to a system fallback. The whole
+  // PDF should never fail to generate because of font issues.
+  function tryRegister(filename: string, base64: string | null, family: string, style: "normal" | "bold"): boolean {
+    if (!base64) return false;
+    try {
+      doc.addFileToVFS(filename, base64);
+      doc.addFont(filename, family, style);
+      return true;
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.warn(`PDF: failed to register ${family} ${style}`, err);
+      return false;
+    }
   }
 
-  // Font shortcuts that fall back to system fonts if registration failed.
+  const barlowOK   = tryRegister("BarlowCondensed-Bold.ttf", barlowBold, "BarlowCondensed", "bold");
+  const dmRegOK    = tryRegister("DMSans-Regular.ttf",       dmRegular,  "DMSans",          "normal");
+  const dmBoldOK   = tryRegister("DMSans-Bold.ttf",          dmBold,     "DMSans",          "bold");
+  const dmMedOK    = tryRegister("DMSans-Medium.ttf",        dmMedium,   "DMSansMedium",    "normal");
+  const loraRegOK  = tryRegister("Lora-Regular.ttf",         loraRegular,"Lora",            "normal");
+  const loraBoldOK = tryRegister("Lora-Bold.ttf",            loraBold,   "Lora",            "bold");
+
+  // Per-family availability (used to pick the right family in F).
+  const dmOK     = dmRegOK && dmBoldOK;
+  const loraOK   = loraRegOK && loraBoldOK;
+
+  // Font shortcuts that fall back to system fonts per family if any
+  // registration in that family failed.
   const F = {
-    display:    fontsAvailable ? "BarlowCondensed" : "helvetica",  // display headlines
-    body:       fontsAvailable ? "DMSans"          : "helvetica",  // body / UI
-    bodyMedium: fontsAvailable ? "DMSansMedium"    : "helvetica",  // labels
-    editorial:  fontsAvailable ? "Lora"            : "times",      // logo wordmark
+    display:    barlowOK ? "BarlowCondensed" : "helvetica",  // display headlines
+    body:       dmOK     ? "DMSans"          : "helvetica",  // body / UI
+    bodyMedium: dmMedOK  ? "DMSansMedium"    : (dmOK ? "DMSans" : "helvetica"),
+    editorial:  loraOK   ? "Lora"            : "times",      // logo wordmark
   };
 
   // ── Drawing helpers ───────────────────────────────────────────────────
