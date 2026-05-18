@@ -53,7 +53,12 @@ export default function SiteLayout({
       {/* ── Header ── */}
       <header className="sticky top-0 left-0 right-0 z-40">
         <div className="bg-white/95 shadow-md backdrop-blur-md">
-          {/* ── Mobile header: logo left, hamburger right ── */}
+          {/* ── Mobile header: logo left, hamburger right ──
+              `unoptimized` keeps the original PNG bytes intact. Next's
+              optimizer was flattening the lockup's transparent regions
+              to white, which made the footer logo look like an opaque
+              block. The PNGs are small (~3-4 KB) so skipping
+              optimization costs nothing. */}
           <div className="flex items-center justify-between px-4 py-3 md:hidden">
             <Link href="/" className="flex items-center transition-transform duration-150 hover:scale-[96%] active:scale-[93%]">
               <Image
@@ -63,6 +68,7 @@ export default function SiteLayout({
                 height={60}
                 className="h-10 w-auto"
                 priority
+                unoptimized
               />
             </Link>
             <button
@@ -106,6 +112,7 @@ export default function SiteLayout({
                 height={60}
                 className="h-10 w-auto"
                 priority
+                unoptimized
               />
             </Link>
             {/* Right: CTA */}
@@ -162,6 +169,7 @@ export default function SiteLayout({
                   width={320}
                   height={60}
                   className="h-12 w-auto"
+                  unoptimized
                 />
                 <p className="mt-3 max-w-xs text-sm leading-6 text-white/60">
                   Foot care, footwear, and the holistic habits that keep men

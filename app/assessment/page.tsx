@@ -514,6 +514,24 @@ export default function AssessmentPage() {
               )}
             </div>
           )}
+
+          {/* Mid-flow restart affordance. Lives in the hero so it's reachable
+              from any phase past the intro without scrolling. Confirms before
+              wiping the session so a stray click doesn't lose progress. */}
+          {!isIntro && (
+            <button
+              type="button"
+              onClick={() => {
+                const ok = window.confirm(
+                  "Restart the assessment? Your current answers will be cleared."
+                );
+                if (ok) restart();
+              }}
+              className="mt-6 text-[11px] font-semibold uppercase tracking-widest text-white/40 underline underline-offset-4 transition hover:text-white/70"
+            >
+              Restart from the beginning
+            </button>
+          )}
         </Container>
       </section>
 
