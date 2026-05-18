@@ -1,10 +1,11 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import {
   submitAssessmentFeedback,
   type FeedbackState,
 } from "@/app/actions/assessment-feedback";
+import { trackAssessment } from "@/lib/analytics";
 
 const initialState: FeedbackState = { status: "idle" };
 
@@ -35,6 +36,15 @@ export default function AssessmentFeedback({
     initialState
   );
   const [usefulness, setUsefulness] = useState<string>("");
+
+  useEffect(() => {
+    if (state.status === "success") {
+      trackAssessment("assessment_feedback_sent", {
+        usefulness,
+        total_flags: totalFlags,
+      });
+    }
+  }, [state.status, usefulness, totalFlags]);
 
   if (state.status === "success") {
     return (

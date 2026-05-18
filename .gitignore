@@ -40,5 +40,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# local reference resources (not for deployment)
+# Local reference resources (not for deployment, not for git either).
+# Working artifacts that should travel with the repo (study plans,
+# inventories, research writeups) live under /docs instead.
 /_resources

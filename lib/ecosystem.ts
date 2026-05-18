@@ -15,6 +15,10 @@ export type RoutineRef = {
   label: string;
   heading: string;
   time: string;
+  /** Single-sentence "do this" instruction surfaced on the assessment
+   * results screen so the recommendation is actionable, not just a
+   * read-this link. */
+  action: string;
 };
 
 /** Catalog of routines surfaced on /routines. Lightweight references — the
@@ -26,36 +30,42 @@ export const routines: Record<string, RoutineRef> = {
     label: "Daily",
     heading: "The nightly 5 minutes.",
     time: "5 min · every night",
+    action: "Start tonight: wash, dry between toes, inspect, moisturize. Five minutes before bed.",
   },
   weekly: {
     anchor: "weekly",
     label: "Weekly",
     heading: "The Sunday reset.",
     time: "20 min · once a week",
+    action: "Pick a Sunday: foot soak, nail trim, heel cream with socks overnight.",
   },
   movement: {
     anchor: "movement",
     label: "Movement",
     heading: "Plantar stretch sequence.",
     time: "3 min · every morning",
+    action: "Do the three-move stretch sequence before your feet hit the floor for the next 14 mornings.",
   },
   strength: {
     anchor: "strength",
     label: "Strength",
     heading: "Toe spread and grip.",
     time: "5 min · 3x per week",
+    action: "Three times this week: towel scrunches and toe spreads, five minutes each.",
   },
   treatment: {
     anchor: "treatment",
     label: "Treatment",
     heading: "Antifungal protocol.",
     time: "2 min · twice daily",
+    action: "Apply an OTC terbinafine cream twice daily for 4 to 6 weeks. Don't stop when it looks better.",
   },
   recovery: {
     anchor: "recovery",
     label: "Recovery",
     heading: "Lacrosse ball work.",
     time: "6 min · daily or as needed",
+    action: "Roll the arch of each foot on a lacrosse ball for three minutes. Hold on tender spots.",
   },
 };
 
@@ -88,10 +98,14 @@ export type ArticleMeta = {
   category: string;
   readTime: string;
   imageUrl: string;
-  /** Short, scannable excerpt used by /learn cards and the search results. */
+  /** Short, scannable excerpt used by /guides cards and search results. */
   excerpt: string;
-  /** Symptom tags — drive the symptom-first search/filter on /learn. */
+  /** Symptom tags — drive symptom-first search/filter on /guides. */
   symptoms: Symptom[];
+  /** Single-line "first move" instruction surfaced on the assessment
+   * results screen so the recommendation is actionable, not just a
+   * read-this link. */
+  action: string;
 };
 
 export const articles: Record<string, ArticleMeta> = {
@@ -104,6 +118,7 @@ export const articles: Record<string, ArticleMeta> = {
     excerpt:
       "Most men don't connect the shoes they wore for decades to the foot problems they have now. Here's the chain of cause and effect.",
     symptoms: ["footwear", "alignment", "pain"],
+    action: "This week: try one pair of wider-toe-box shoes for daily wear.",
   },
   "big-toe-and-your-whole-body": {
     slug: "big-toe-and-your-whole-body",
@@ -114,6 +129,7 @@ export const articles: Record<string, ArticleMeta> = {
     excerpt:
       "The big toe is responsible for 40 to 60% of your push-off force. Most men have spent decades restricting it and wondering why their knee hurts.",
     symptoms: ["alignment", "pain"],
+    action: "Try a 5-minute toe spread and grip session three times this week.",
   },
   "cracked-heels-what-actually-works": {
     slug: "cracked-heels-what-actually-works",
@@ -124,6 +140,7 @@ export const articles: Record<string, ArticleMeta> = {
     excerpt:
       "Scrubbing dry, cracked heel skin is the wrong starting point. Here's what's actually happening, and the routine that addresses it.",
     symptoms: ["skin"],
+    action: "Tonight: apply a 10% urea cream to damp heels, put cotton socks on, sleep.",
   },
   "toenail-fungus-what-works": {
     slug: "toenail-fungus-what-works",
@@ -134,6 +151,7 @@ export const articles: Record<string, ArticleMeta> = {
     excerpt:
       "The evidence on OTC treatments, prescription options, and home remedies, ranked by how well they actually work.",
     symptoms: ["nails", "skin"],
+    action: "Start an OTC terbinafine (Lamisil) protocol twice daily for 4 to 6 weeks.",
   },
   "why-toe-alignment-affects-knees-and-hips": {
     slug: "why-toe-alignment-affects-knees-and-hips",
@@ -144,6 +162,7 @@ export const articles: Record<string, ArticleMeta> = {
     excerpt:
       "When your big toe can't extend and stabilize, your knee, hip, and lower back pick up the slack every single step. Here's how it travels up the chain.",
     symptoms: ["alignment", "pain", "footwear"],
+    action: "Start the morning plantar stretch sequence: 3 moves, 3 minutes, every day.",
   },
   "5-minute-routine": {
     slug: "5-minute-routine",
@@ -154,6 +173,7 @@ export const articles: Record<string, ArticleMeta> = {
     excerpt:
       "Consistency beats intensity. A five-minute habit done after your shower produces dramatically better long-term outcomes than anything more ambitious you'll quit.",
     symptoms: ["skin", "nails"],
+    action: "Tonight, anchor a 5-minute foot-care habit to your shower or bedtime routine.",
   },
 };
 

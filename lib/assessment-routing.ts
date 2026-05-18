@@ -68,6 +68,50 @@ export function bucketForFlags(count: number): FlagBucket | null {
   return "high";
 }
 
+/** Duration the user reports for each section (asked once per section
+ * that has at least one flag). Drives severity-aware routing: a chronic
+ * issue widens the podiatrist-prep band; a recent issue keeps the user
+ * on the routine-first track. */
+export type Duration = "recent" | "ongoing" | "chronic";
+//  recent   = less than 1 month
+//  ongoing  = 1 to 6 months
+//  chronic  = more than 6 months
+
+export const durationLabels: Record<Duration, string> = {
+  recent: "Less than a month",
+  ongoing: "1 to 6 months",
+  chronic: "More than 6 months",
+};
+
+/** Severity-aware bucket promotion.
+ *
+ * Rules of thumb:
+ * - Chronic + low flags → promote to mid (long-running matters even at low count).
+ * - Chronic + mid flags → promote to high (unlocks the podiatrist-prep bullet).
+ * - Recent + high flags → demote to mid (acute presentation often resolves with routine).
+ * - Anything else keeps its raw bucket.
+ *
+ * The base bucket comes from flag count; duration shifts up or down by one.
+ */
+export function bucketForFlagsAndDuration(
+  count: number,
+  duration?: Duration
+): FlagBucket | null {
+  const base = bucketForFlags(count);
+  if (!base) return null;
+  if (!duration) return base;
+  if (duration === "chronic") {
+    if (base === "low") return "mid";
+    if (base === "mid") return "high";
+    return "high";
+  }
+  if (duration === "recent") {
+    if (base === "high") return "mid";
+    return base;
+  }
+  return base; // "ongoing" tracks the raw count
+}
+
 /** What each section + flag bucket recommends. Article slugs map to
  * the real catalog in lib/ecosystem.ts; routine keys map to /routines
  * anchors. Each level inherits the lower level's articles + routine. */
@@ -151,7 +195,8 @@ const sectionOutputs: Record<SectionId, Record<FlagBucket, SectionOutputs>> = {
   },
 };
 
-/** Composed result for the three-block result screen. Spec §6.3. */
+/** Composed result for the three-block result screen. Spec §6.3,
+ * extended with severity- and not-sure-driven routing signals. */
 export interface ComposedResult {
   articles: ArticleMeta[];
   routine?: RoutineRef;
@@ -159,29 +204,64 @@ export interface ComposedResult {
   /** The single section that contributed the routine, used for the
    * "Based on..." line on the result block. */
   routineSource?: SectionId;
+  /** True if the result set leans toward "see a podiatrist" — either
+   * because severity bumped a section into the high band, or because
+   * the user marked enough pain items as "Not sure" that self-routing
+   * isn't safe. */
+  recommendsClinic: boolean;
+  /** Per-section bucket actually used after severity adjustment.
+   * Surfaces in the per-section summary on the results screen so the
+   * user can see *why* a section was treated the way it was. */
+  bucketBySection: Partial<Record<SectionId, FlagBucket>>;
 }
 
-export function composeResult(
-  flagsBySection: Partial<Record<SectionId, number>>
-): ComposedResult {
+export interface ComposeInput {
+  flagsBySection: Partial<Record<SectionId, number>>;
+  /** Optional duration the user reported per section. */
+  durationBySection?: Partial<Record<SectionId, Duration>>;
+  /** Count of pain items the user marked "Not sure" (interoceptive
+   * uncertainty). Above the threshold this routes the user to a
+   * professional rather than a self-resolve recommendation. */
+  notSureCount?: number;
+}
+
+/** When the user marked at least this many pain items as "Not sure",
+ * surface an explicit "see a podiatrist" callout on the results
+ * screen rather than relying on self-routing. */
+export const NOT_SURE_CLINIC_THRESHOLD = 3;
+
+const NOT_SURE_PREP_BULLET =
+  "I had trouble telling whether some pain items applied to me. I'd like help interpreting them with you in person.";
+
+export function composeResult(input: ComposeInput): ComposedResult {
+  const { flagsBySection, durationBySection = {}, notSureCount = 0 } = input;
+
   const articleSlugs = new Set<string>();
   const prepBullets: string[] = [];
+  const bucketBySection: Partial<Record<SectionId, FlagBucket>> = {};
 
   // Walk every section that has flags, accumulate articles + prep bullets.
   for (const sectionId of Object.keys(flagsBySection) as SectionId[]) {
     const count = flagsBySection[sectionId] ?? 0;
-    const bucket = bucketForFlags(count);
+    const bucket = bucketForFlagsAndDuration(count, durationBySection[sectionId]);
     if (!bucket) continue;
+    bucketBySection[sectionId] = bucket;
     const outputs = sectionOutputs[sectionId][bucket];
     outputs.articles.forEach((slug) => articleSlugs.add(slug));
     if (outputs.prep) prepBullets.push(outputs.prep);
   }
 
+  // Not-sure-heavy pain answers: add an explicit prep bullet about the
+  // interpretive uncertainty so a podiatrist visit gets the right frame.
+  const notSureTriggersClinic = notSureCount >= NOT_SURE_CLINIC_THRESHOLD;
+  if (notSureTriggersClinic) {
+    prepBullets.push(NOT_SURE_PREP_BULLET);
+  }
+
   // Articles capped at 4, in priority order so the most relevant land first.
   const orderedSlugs = sectionPriority
     .flatMap((sid) => {
-      const count = flagsBySection[sid] ?? 0;
-      const bucket = bucketForFlags(count);
+      const bucket = bucketBySection[sid];
       if (!bucket) return [];
       return sectionOutputs[sid][bucket].articles;
     })
@@ -196,8 +276,7 @@ export function composeResult(
   let routine: RoutineRef | undefined;
   let routineSource: SectionId | undefined;
   for (const sid of sectionPriority) {
-    const count = flagsBySection[sid] ?? 0;
-    const bucket = bucketForFlags(count);
+    const bucket = bucketBySection[sid];
     if (!bucket) continue;
     const r = sectionOutputs[sid][bucket].routine;
     if (r) {
@@ -207,7 +286,17 @@ export function composeResult(
     }
   }
 
-  return { articles: articleMeta, routine, prepBullets, routineSource };
+  const hasHighBucket = Object.values(bucketBySection).some((b) => b === "high");
+  const recommendsClinic = hasHighBucket || notSureTriggersClinic;
+
+  return {
+    articles: articleMeta,
+    routine,
+    prepBullets,
+    routineSource,
+    recommendsClinic,
+    bucketBySection,
+  };
 }
 
 /** Helper: section title labels for display. Mirrors `steps` in

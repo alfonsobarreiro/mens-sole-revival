@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import {
   submitAssessmentEmail,
   type AssessmentEmailState,
@@ -11,13 +11,16 @@ import {
 import {
   composeResult,
   sectionTitle,
+  type Duration,
   type SectionId,
 } from "@/lib/assessment-routing";
+import { trackAssessment } from "@/lib/analytics";
 
 const initialEmail: AssessmentEmailState = { status: "idle" };
 
 interface AssessmentResultsProps {
   flagsBySection: Partial<Record<SectionId, number>>;
+  durationBySection: Partial<Record<SectionId, Duration>>;
   totalFlags: number;
   /** Section IDs the user worked through (used for the per-section
    * flag summary on top of the result blocks). */
@@ -37,23 +40,61 @@ interface AssessmentResultsProps {
  */
 export default function AssessmentResults({
   flagsBySection,
+  durationBySection,
   totalFlags,
   attemptedSections,
   notSureCount,
   onDownloadPdf,
   onRestart,
 }: AssessmentResultsProps) {
-  const result = composeResult(flagsBySection);
+  const result = composeResult({
+    flagsBySection,
+    durationBySection,
+    notSureCount,
+  });
+
+  // Fire results_view exactly once, when the component first mounts.
+  useEffect(() => {
+    trackAssessment("assessment_results_view", {
+      total_flags: totalFlags,
+      not_sure_count: notSureCount,
+      attempted_sections: attemptedSections.length,
+      recommends_clinic: result.recommendsClinic,
+      articles_count: result.articles.length,
+      has_routine: Boolean(result.routine),
+      prep_bullet_count: result.prepBullets.length,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const [emailState, emailAction, emailPending] = useActionState(
     submitAssessmentEmail,
     initialEmail
   );
 
+  useEffect(() => {
+    if (emailState.status === "success") {
+      trackAssessment("assessment_email_save", { total_flags: totalFlags });
+    }
+  }, [emailState.status, totalFlags]);
+
   const flagsForEmail: FlagsByLabel[] = attemptedSections.map((sid) => ({
     label: sectionTitle[sid],
     count: flagsBySection[sid] ?? 0,
   }));
+
+  const handleArticleClick = (slug: string) =>
+    trackAssessment("assessment_article_click", { slug });
+  const handleRoutineClick = (anchor?: string) =>
+    trackAssessment("assessment_routine_click", { anchor: anchor ?? "none" });
+  const handlePdf = () => {
+    trackAssessment("assessment_pdf_download", { total_flags: totalFlags });
+    onDownloadPdf();
+  };
+  const handleRestart = () => {
+    trackAssessment("assessment_restart", { total_flags: totalFlags });
+    onRestart();
+  };
 
   return (
     <div className="space-y-10">
@@ -72,9 +113,7 @@ export default function AssessmentResults({
           {notSureCount > 0 && (
             <>
               , with{" "}
-              <span className="font-bold text-brand-900">
-                {notSureCount}
-              </span>{" "}
+              <span className="font-bold text-brand-900">{notSureCount}</span>{" "}
               marked &ldquo;Not sure&rdquo;
             </>
           )}
@@ -84,14 +123,22 @@ export default function AssessmentResults({
           <ul className="mt-5 grid gap-2 sm:grid-cols-2">
             {attemptedSections.map((sid) => {
               const count = flagsBySection[sid] ?? 0;
+              const bucket = result.bucketBySection[sid];
               return (
                 <li
                   key={sid}
                   className="flex items-center justify-between border border-neutral-200 bg-white px-4 py-3"
                 >
-                  <span className="text-sm font-medium text-neutral-800">
-                    {sectionTitle[sid]}
-                  </span>
+                  <div className="flex flex-col">
+                    <span className="text-sm font-medium text-neutral-800">
+                      {sectionTitle[sid]}
+                    </span>
+                    {bucket === "high" && (
+                      <span className="text-[10px] font-semibold uppercase tracking-wider text-accent-600">
+                        Worth a podiatrist visit
+                      </span>
+                    )}
+                  </div>
                   <span className="text-xs font-bold uppercase tracking-wider text-brand-500">
                     {count} flag{count === 1 ? "" : "s"}
                   </span>
@@ -102,15 +149,39 @@ export default function AssessmentResults({
         )}
       </div>
 
+      {/* ── Clinic recommendation callout ─────────────────────────────── */}
+      {result.recommendsClinic && (
+        <section className="border-l-4 border-accent-500 bg-accent-50 px-5 py-5">
+          <p className="text-xs font-bold uppercase tracking-widest text-accent-700">
+            Worth a professional visit
+          </p>
+          <p className="mt-2 text-sm leading-6 text-neutral-700">
+            {notSureCount >= 3
+              ? "You marked several pain items as Not sure. That interpretive uncertainty is exactly what a 20-minute podiatrist consult is for. The routine and articles below still apply, but don't try to self-resolve this one."
+              : "One or more sections came back severe enough that a podiatrist visit is the right next step. The routine and articles below help in the meantime, but they're not a substitute."}
+          </p>
+          <a
+            href="https://www.apma.org/find-a-podiatrist"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-accent-700 underline underline-offset-4 hover:text-accent-800"
+          >
+            Find a podiatrist near you →
+          </a>
+        </section>
+      )}
+
       {/* ── Block 1: Articles to read ──────────────────────────────────── */}
       <section>
         <p className="text-xs font-bold uppercase tracking-widest text-accent-600">
           Block 1
         </p>
         <h3 className="mt-2 font-display text-2xl font-bold uppercase leading-tight text-brand-900">
-          Articles to read.
+          Read &amp; do.
         </h3>
-        <p className="mt-1 text-sm text-neutral-500">Based on what you flagged.</p>
+        <p className="mt-1 text-sm text-neutral-500">
+          Each card is a guide plus the first concrete move from it.
+        </p>
         {result.articles.length === 0 ? (
           <p className="mt-4 border border-dashed border-neutral-200 p-4 text-sm text-neutral-500">
             No flags strong enough to recommend specific reading. Browse the
@@ -122,24 +193,33 @@ export default function AssessmentResults({
               <Link
                 key={a.slug}
                 href={`/guides/${a.slug}`}
-                className="group flex gap-4 border border-neutral-200 bg-white p-4 transition hover:border-brand-300 hover:bg-neutral-50"
+                onClick={() => handleArticleClick(a.slug)}
+                className="group flex flex-col border border-neutral-200 bg-white transition hover:border-brand-300 hover:bg-neutral-50"
               >
-                <div className="relative h-20 w-24 flex-shrink-0 overflow-hidden bg-neutral-100">
-                  <Image
-                    src={a.imageUrl}
-                    alt={a.title}
-                    fill
-                    className="object-cover"
-                  />
+                <div className="flex gap-4 p-4">
+                  <div className="relative h-20 w-24 flex-shrink-0 overflow-hidden bg-neutral-100">
+                    <Image
+                      src={a.imageUrl}
+                      alt={a.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="flex flex-1 flex-col">
+                    <p className="text-[10px] font-semibold uppercase tracking-wider text-accent-600">
+                      {a.category} · {a.readTime} read
+                    </p>
+                    <p className="mt-1 text-sm font-bold leading-tight text-brand-900 group-hover:text-brand-600">
+                      {a.title}
+                    </p>
+                  </div>
                 </div>
-                <div className="flex flex-1 flex-col">
-                  <p className="text-[10px] font-semibold uppercase tracking-wider text-accent-600">
-                    {a.category} · {a.readTime} read
-                  </p>
-                  <p className="mt-1 text-sm font-bold leading-tight text-brand-900 group-hover:text-brand-600">
-                    {a.title}
-                  </p>
-                </div>
+                <p className="border-t border-neutral-100 bg-neutral-50/60 px-4 py-3 text-xs leading-5 text-neutral-700">
+                  <span className="font-bold uppercase tracking-wider text-brand-500">
+                    First move:
+                  </span>{" "}
+                  {a.action}
+                </p>
               </Link>
             ))}
           </div>
@@ -160,22 +240,31 @@ export default function AssessmentResults({
         {result.routine ? (
           <Link
             href={`/routines#${result.routine.anchor}`}
-            className="group mt-4 flex items-center justify-between border border-neutral-200 bg-white p-5 transition hover:border-brand-300 hover:bg-neutral-50"
+            onClick={() => handleRoutineClick(result.routine?.anchor)}
+            className="group mt-4 block border border-neutral-200 bg-white transition hover:border-brand-300 hover:bg-neutral-50"
           >
-            <div>
-              <p className="text-xs font-bold uppercase tracking-wider text-brand-500">
-                Routine · {result.routine.label}
-              </p>
-              <p className="mt-2 font-display text-xl font-bold uppercase leading-tight text-brand-900 group-hover:text-brand-600">
-                {result.routine.heading}
-              </p>
-              <p className="mt-1 text-xs font-semibold text-neutral-500">
-                {result.routine.time}
-              </p>
+            <div className="flex items-center justify-between p-5">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-wider text-brand-500">
+                  Routine · {result.routine.label}
+                </p>
+                <p className="mt-2 font-display text-xl font-bold uppercase leading-tight text-brand-900 group-hover:text-brand-600">
+                  {result.routine.heading}
+                </p>
+                <p className="mt-1 text-xs font-semibold text-neutral-500">
+                  {result.routine.time}
+                </p>
+              </div>
+              <span className="text-xs font-bold uppercase tracking-wider text-brand-500 group-hover:text-brand-700">
+                See it →
+              </span>
             </div>
-            <span className="text-xs font-bold uppercase tracking-wider text-brand-500 group-hover:text-brand-700">
-              See it →
-            </span>
+            <p className="border-t border-neutral-100 bg-neutral-50/60 px-5 py-3 text-xs leading-5 text-neutral-700">
+              <span className="font-bold uppercase tracking-wider text-brand-500">
+                First move:
+              </span>{" "}
+              {result.routine.action}
+            </p>
           </Link>
         ) : (
           <p className="mt-4 border border-dashed border-neutral-200 p-4 text-sm text-neutral-500">
@@ -298,7 +387,7 @@ export default function AssessmentResults({
           </div>
           <button
             type="button"
-            onClick={onDownloadPdf}
+            onClick={handlePdf}
             className="border border-brand-900 bg-white px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-brand-900 transition hover:bg-brand-900 hover:text-white"
           >
             Download PDF
@@ -307,7 +396,7 @@ export default function AssessmentResults({
 
         <button
           type="button"
-          onClick={onRestart}
+          onClick={handleRestart}
           className="mt-4 text-xs font-semibold uppercase tracking-wider text-neutral-500 underline underline-offset-4 hover:text-brand-700"
         >
           Restart the assessment →

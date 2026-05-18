@@ -14,9 +14,12 @@ import {
   symptomDisplay,
   symptomOrder,
   symptomToSections,
+  durationLabels,
+  type Duration,
   type SectionId,
   type Symptom,
 } from "@/lib/assessment-routing";
+import { trackAssessment } from "@/lib/analytics";
 
 // ── Types ────────────────────────────────────────────────────
 
@@ -179,6 +182,7 @@ interface PersistedState {
   showAll: boolean;
   checked: Record<string, boolean>;
   notSure: Record<string, boolean>;
+  durationBySection: Partial<Record<SectionId, Duration>>;
 }
 
 function saveState(s: PersistedState) {
@@ -208,6 +212,9 @@ export default function AssessmentPage() {
   const [showAll, setShowAll] = useState(false);
   const [checked, setChecked] = useState<Record<string, boolean>>({});
   const [notSure, setNotSure] = useState<Record<string, boolean>>({});
+  const [durationBySection, setDurationBySection] = useState<
+    Partial<Record<SectionId, Duration>>
+  >({});
   const [hydrated, setHydrated] = useState(false);
 
   // ── Restore on mount ──
@@ -220,6 +227,7 @@ export default function AssessmentPage() {
       setShowAll(saved.showAll);
       setChecked(saved.checked);
       setNotSure(saved.notSure);
+      setDurationBySection(saved.durationBySection ?? {});
     }
     setHydrated(true);
   }, []);
@@ -234,8 +242,18 @@ export default function AssessmentPage() {
       showAll,
       checked,
       notSure,
+      durationBySection,
     });
-  }, [phase, sectionIndex, selectedSymptoms, showAll, checked, notSure, hydrated]);
+  }, [
+    phase,
+    sectionIndex,
+    selectedSymptoms,
+    showAll,
+    checked,
+    notSure,
+    durationBySection,
+    hydrated,
+  ]);
 
   // ── Derived ──
   const visibleSteps: StepDef[] = useMemo(() => {
@@ -329,19 +347,38 @@ export default function AssessmentPage() {
     );
   }
 
+  function setDurationForCurrent(d: Duration) {
+    if (!currentStep) return;
+    setDurationBySection((prev) => ({ ...prev, [currentStep.sectionId]: d }));
+  }
+
   function startTriage() {
+    trackAssessment("assessment_started", {});
     setPhase("triage");
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   function startSections() {
     if (!showAll && selectedSymptoms.length === 0) return;
+    trackAssessment("assessment_triage_done", {
+      mode: showAll ? "show_all" : "filtered",
+      symptoms: selectedSymptoms.join(","),
+      symptom_count: showAll ? 0 : selectedSymptoms.length,
+    });
     setSectionIndex(0);
     setPhase("section");
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   function nextSection() {
+    if (currentStep) {
+      const flags = currentStep.items.filter((it) => checked[it.id]).length;
+      trackAssessment("assessment_section_done", {
+        section: currentStep.sectionId,
+        flags,
+        duration: durationBySection[currentStep.sectionId] ?? "skipped",
+      });
+    }
     if (sectionIndex + 1 < totalSections) {
       setSectionIndex((i) => i + 1);
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -369,6 +406,11 @@ export default function AssessmentPage() {
   }
 
   function skipCurrentSection() {
+    if (currentStep) {
+      trackAssessment("assessment_section_skip", {
+        section: currentStep.sectionId,
+      });
+    }
     nextSection();
   }
 
@@ -384,6 +426,7 @@ export default function AssessmentPage() {
     setShowAll(false);
     setChecked({});
     setNotSure({});
+    setDurationBySection({});
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -789,6 +832,54 @@ export default function AssessmentPage() {
                   })}
                 </div>
 
+                {/* Duration question — only shown when the user has
+                    flagged at least one item in this section. Drives
+                    severity-aware routing in lib/assessment-routing.ts. */}
+                {(() => {
+                  const flaggedInSection = currentStep.items.some(
+                    (it) => checked[it.id]
+                  );
+                  if (!flaggedInSection) return null;
+                  const current = durationBySection[currentStep.sectionId];
+                  const options: Duration[] = ["recent", "ongoing", "chronic"];
+                  return (
+                    <div className="mt-8 border-t border-neutral-200 pt-6">
+                      <p className="text-xs font-bold uppercase tracking-wider text-neutral-400">
+                        How long has this been going on?
+                      </p>
+                      <p className="mt-1 text-xs text-neutral-500">
+                        For the items you flagged in this section. Best guess
+                        is fine.
+                      </p>
+                      <div
+                        role="radiogroup"
+                        aria-label="Duration"
+                        className="mt-3 flex flex-wrap gap-2"
+                      >
+                        {options.map((d) => {
+                          const selected = current === d;
+                          return (
+                            <button
+                              key={d}
+                              type="button"
+                              role="radio"
+                              aria-checked={selected}
+                              onClick={() => setDurationForCurrent(d)}
+                              className={`px-4 py-2 text-xs font-bold uppercase tracking-wider transition ${
+                                selected
+                                  ? "bg-brand-900 text-white"
+                                  : "border border-neutral-300 bg-white text-neutral-700 hover:border-brand-500"
+                              }`}
+                            >
+                              {durationLabels[d]}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                })()}
+
                 {currentStep.note && (
                   <p className="mt-5 text-xs italic leading-6 text-neutral-400">
                     {currentStep.note}
@@ -838,6 +929,7 @@ export default function AssessmentPage() {
             <div className="mx-auto max-w-2xl">
               <AssessmentResults
                 flagsBySection={flagsBySection}
+                durationBySection={durationBySection}
                 totalFlags={totalFlags}
                 attemptedSections={attemptedSections}
                 notSureCount={notSureCount}
