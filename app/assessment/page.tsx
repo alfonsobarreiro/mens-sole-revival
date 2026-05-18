@@ -462,21 +462,27 @@ export default function AssessmentPage() {
   return (
     <SiteLayout>
       {/* ── Hero banner ── */}
-      <section className="bg-brand-900 py-12 md:py-16">
+      <section className="bg-brand-900 py-8 md:py-12">
         <Container>
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-accent-400">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-accent-400">
             5-Minute Self-Check
           </p>
           <h1 className={`${type.displaySection} text-white`}>
             The Men's Foot Health Assessment
           </h1>
-          <p className="mt-4 max-w-xl text-base leading-7 text-white/65">
-            Pick what brought you here, answer the questions for those
-            sections, and get a specific next step.
-          </p>
+          {/* Intro copy stays for the first two screens (intro + triage)
+              where the user hasn't started yet. Once the assessment is
+              in motion, the hero collapses to the H1 + progress so the
+              content area gets the real estate. */}
+          {(isIntro || isTriage) && (
+            <p className="mt-3 max-w-xl text-base leading-7 text-white/65">
+              Pick what brought you here, answer the questions for those
+              sections, and get a specific next step.
+            </p>
+          )}
 
           {isSectionPhase && totalSections > 0 && (
-            <div className="mt-8 max-w-md">
+            <div className="mt-6 max-w-md">
               <div className="mb-2 flex justify-between text-xs text-white/40">
                 <span>
                   Section {sectionIndex + 1} of {totalSections} ·{" "}
