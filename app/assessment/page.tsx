@@ -604,7 +604,11 @@ export default function AssessmentPage() {
                 if you select everything.
               </p>
 
-              <div className="mt-6 flex flex-wrap gap-3">
+              <p className="mt-5 text-xs font-bold uppercase tracking-wider text-neutral-500">
+                Select all that apply to you:
+              </p>
+
+              <div className="mt-3 flex flex-wrap gap-3">
                 {symptomOrder.map((s) => {
                   const selected = !showAll && selectedSymptoms.includes(s);
                   return (
