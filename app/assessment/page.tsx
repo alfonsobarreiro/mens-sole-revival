@@ -269,6 +269,21 @@ export default function AssessmentPage() {
   const totalSections = visibleSteps.length;
   const currentStep = visibleSteps[sectionIndex];
 
+  // Duration validation: if any item in the current section is flagged,
+  // the duration radio becomes required before the user can advance.
+  const flaggedInSection = currentStep
+    ? currentStep.items.some((it) => checked[it.id])
+    : false;
+  const durationMissing =
+    flaggedInSection && !durationBySection[currentStep!.sectionId];
+  const [attemptedAdvance, setAttemptedAdvance] = useState(false);
+
+  // Reset the validation flag whenever the user changes section so the
+  // error doesn't carry over into a fresh section.
+  useEffect(() => {
+    setAttemptedAdvance(false);
+  }, [sectionIndex]);
+
   const totalFlags = Object.entries(checked).filter(([, v]) => v).length;
   const notSureCount = Object.entries(notSure).filter(([, v]) => v).length;
 
@@ -873,18 +888,18 @@ export default function AssessmentPage() {
 
                 {/* Duration question — only shown when the user has
                     flagged at least one item in this section. Drives
-                    severity-aware routing in lib/assessment-routing.ts. */}
+                    severity-aware routing in lib/assessment-routing.ts.
+                    Required to advance once any item is flagged. */}
                 {(() => {
-                  const flaggedInSection = currentStep.items.some(
-                    (it) => checked[it.id]
-                  );
                   if (!flaggedInSection) return null;
                   const current = durationBySection[currentStep.sectionId];
+                  const showError = durationMissing && attemptedAdvance;
                   const options: Duration[] = ["recent", "ongoing", "chronic"];
                   return (
                     <div className="mt-8 border-t border-neutral-200 pt-6">
                       <p className="text-xs font-bold uppercase tracking-wider text-neutral-400">
-                        How long has this been going on?
+                        How long has this been going on?{" "}
+                        <span className="text-accent-600">*</span>
                       </p>
                       <p className="mt-1 text-xs text-neutral-500">
                         For the items you flagged in this section. Best guess
@@ -893,7 +908,11 @@ export default function AssessmentPage() {
                       <div
                         role="radiogroup"
                         aria-label="Duration"
-                        className="mt-3 flex flex-wrap gap-2"
+                        aria-required="true"
+                        aria-invalid={showError}
+                        className={`mt-3 flex flex-wrap gap-2 ${
+                          showError ? "rounded border border-red-300 p-2" : ""
+                        }`}
                       >
                         {options.map((d) => {
                           const selected = current === d;
@@ -903,7 +922,10 @@ export default function AssessmentPage() {
                               type="button"
                               role="radio"
                               aria-checked={selected}
-                              onClick={() => setDurationForCurrent(d)}
+                              onClick={() => {
+                                setDurationForCurrent(d);
+                                setAttemptedAdvance(false);
+                              }}
                               className={`px-4 py-2 text-xs font-bold uppercase tracking-wider transition ${
                                 selected
                                   ? "bg-brand-900 text-white"
@@ -915,6 +937,11 @@ export default function AssessmentPage() {
                           );
                         })}
                       </div>
+                      {showError && (
+                        <p className="mt-2 text-xs font-semibold text-red-600">
+                          Pick one before you continue. Best guess is fine.
+                        </p>
+                      )}
                     </div>
                   );
                 })()}
@@ -933,7 +960,14 @@ export default function AssessmentPage() {
                     ← Back
                   </button>
                   <button
-                    onClick={nextSection}
+                    onClick={() => {
+                      if (durationMissing) {
+                        setAttemptedAdvance(true);
+                        return;
+                      }
+                      setAttemptedAdvance(false);
+                      nextSection();
+                    }}
                     className="inline-flex items-center gap-2 bg-brand-900 px-7 py-3.5 text-sm font-bold uppercase tracking-wider text-white transition hover:bg-brand-700"
                   >
                     {sectionIndex + 1 === totalSections
