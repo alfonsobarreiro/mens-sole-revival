@@ -1,23 +1,28 @@
 /**
  * Generates a doctor-visit PDF for the Men's Sole Revival assessment.
  *
- * Layout mirrors the on-screen results page (components/AssessmentResults.tsx):
+ * Matches the live results page (components/AssessmentResults.tsx) for
+ * visual fidelity: same brand palette, same card structure, AND the
+ * three brand fonts embedded directly so typography reads identically.
+ *
+ *   - Barlow Condensed Bold → display headlines (font-display)
+ *   - DM Sans Regular / Medium / Bold → body, UI, eyebrows (default UI font)
+ *   - Lora Regular / Bold → wordmark in the logo lockup
+ *
+ * Fonts ship as static TTFs in /public/fonts/. They're fetched once per
+ * PDF generation, base64-encoded, and registered with jsPDF. Each font
+ * adds ~300 KB to the output, which is acceptable for a single-page
+ * artifact users save + print.
+ *
+ * Layout (top → bottom):
  *   1. Brand-900 hero band with vector lockup, eyebrow, title, date
- *   2. "Your results" headline + flag summary line + per-section card grid
+ *   2. "Your results" headline + flag summary + per-section card grid
  *   3. Optional clinic callout (when recommendsClinic is true)
  *   4. Block 1 — Read & do: 2-col article cards with thumbnail + category
- *      eyebrow + title + "First move:" footer; whole card is hyperlinked
+ *      + title + "First move:" footer; whole card is hyperlinked
  *   5. Block 2 — Routine to follow: single routine card
  *   6. Block 3 — Talk to a professional: prep bullets
- *   7. Footer: disclaimer + clickable URL
- *
- * Visual fidelity decisions:
- *  - Page background filled with neutral-50 (#F8F7F7) so the white cards
- *    pop the way they do on the live results screen.
- *  - Logo is rendered as vector text (jsPDF's Times Bold for the M,
- *    Times Roman for the wordmark) rather than a raster PNG. Lora isn't
- *    available without font embedding; Times is the closest built-in
- *    serif and renders crisply at any zoom / print DPI.
+ *   7. Footer disclaimer + clickable URL
  */
 
 import type { RoutineRef, ArticleMeta } from "@/lib/ecosystem";
@@ -68,6 +73,41 @@ const DURATION_LABEL: Record<Duration, string> = {
   chronic: "more than 6 months",
 };
 
+// CSS px → PDF pt conversion factor (web is 96 DPI, PDF is 72 DPI).
+const PX_TO_PT = 0.75;
+
+// Web type sizes → PDF pt (matches the recipes in components/typography.ts)
+const SIZE = {
+  xs:   12 * PX_TO_PT,  // 9pt   · text-xs
+  sm:   14 * PX_TO_PT,  // 10.5  · text-sm
+  base: 16 * PX_TO_PT,  // 12    · text-base
+  lg:   18 * PX_TO_PT,  // 13.5  · text-lg
+  xl:   20 * PX_TO_PT,  // 15    · text-xl · routine heading
+  "2xl":24 * PX_TO_PT,  // 18    · text-2xl · block headlines
+  "3xl":30 * PX_TO_PT,  // 22.5  · text-3xl · "Here's where you stand"
+  "4xl":36 * PX_TO_PT,  // 27    · text-4xl
+  "5xl":48 * PX_TO_PT,  // 36    · text-5xl
+  tiny: 10 * PX_TO_PT,  // 7.5   · text-[10px] · card category eyebrows
+};
+
+// ── Font loading ────────────────────────────────────────────────────────
+async function loadFont(url: string): Promise<string> {
+  const res = await fetch(url);
+  const buf = await res.arrayBuffer();
+  // ArrayBuffer → base64 (browser-safe).
+  let binary = "";
+  const bytes = new Uint8Array(buf);
+  const chunk = 0x8000;
+  for (let i = 0; i < bytes.length; i += chunk) {
+    binary += String.fromCharCode.apply(
+      null,
+      Array.from(bytes.subarray(i, i + chunk))
+    );
+  }
+  return btoa(binary);
+}
+
+// ── Image loading (for article thumbnails) ──────────────────────────────
 function loadImage(src: string, type: "png" | "jpeg" = "jpeg", maxDim?: number): Promise<string> {
   return new Promise((resolve, reject) => {
     const img = new Image();
@@ -103,14 +143,56 @@ export async function generateAssessmentPDF(data: AssessmentData) {
   const CW = W - M * 2;                          // 500
   let y = 0;
 
+  // ── Register brand fonts ──────────────────────────────────────────────
+  // Fetch all six TTFs in parallel, base64 them, register with jsPDF.
+  // Each registration gives doc.setFont(family, style) → that font.
+  // "DMSansMedium" is a separate family alias since jsPDF only has
+  // normal/bold/italic style slots.
+  const [
+    barlowBold,
+    dmRegular, dmMedium, dmBold,
+    loraRegular, loraBold,
+  ] = await Promise.all([
+    loadFont("/fonts/BarlowCondensed-Bold.ttf").catch(() => null),
+    loadFont("/fonts/DMSans-Regular.ttf").catch(() => null),
+    loadFont("/fonts/DMSans-Medium.ttf").catch(() => null),
+    loadFont("/fonts/DMSans-Bold.ttf").catch(() => null),
+    loadFont("/fonts/Lora-Regular.ttf").catch(() => null),
+    loadFont("/fonts/Lora-Bold.ttf").catch(() => null),
+  ]);
+
+  let fontsAvailable = false;
+  if (barlowBold && dmRegular && dmMedium && dmBold && loraRegular && loraBold) {
+    doc.addFileToVFS("BarlowCondensed-Bold.ttf", barlowBold);
+    doc.addFont("BarlowCondensed-Bold.ttf", "BarlowCondensed", "bold");
+
+    doc.addFileToVFS("DMSans-Regular.ttf", dmRegular);
+    doc.addFont("DMSans-Regular.ttf", "DMSans", "normal");
+    doc.addFileToVFS("DMSans-Bold.ttf", dmBold);
+    doc.addFont("DMSans-Bold.ttf", "DMSans", "bold");
+    doc.addFileToVFS("DMSans-Medium.ttf", dmMedium);
+    doc.addFont("DMSans-Medium.ttf", "DMSansMedium", "normal");
+
+    doc.addFileToVFS("Lora-Regular.ttf", loraRegular);
+    doc.addFont("Lora-Regular.ttf", "Lora", "normal");
+    doc.addFileToVFS("Lora-Bold.ttf", loraBold);
+    doc.addFont("Lora-Bold.ttf", "Lora", "bold");
+
+    fontsAvailable = true;
+  }
+
+  // Font shortcuts that fall back to system fonts if registration failed.
+  const F = {
+    display:    fontsAvailable ? "BarlowCondensed" : "helvetica",  // display headlines
+    body:       fontsAvailable ? "DMSans"          : "helvetica",  // body / UI
+    bodyMedium: fontsAvailable ? "DMSansMedium"    : "helvetica",  // labels
+    editorial:  fontsAvailable ? "Lora"            : "times",      // logo wordmark
+  };
+
+  // ── Drawing helpers ───────────────────────────────────────────────────
   function fill(x: number, yPos: number, w: number, h: number, color: string) {
     doc.setFillColor(color);
     doc.rect(x, yPos, w, h, "F");
-  }
-  function rectStroke(x: number, yPos: number, w: number, h: number, color: string) {
-    doc.setDrawColor(color);
-    doc.setLineWidth(0.5);
-    doc.rect(x, yPos, w, h, "S");
   }
   function rectFillAndStroke(x: number, yPos: number, w: number, h: number, fillColor: string, strokeColor: string) {
     doc.setFillColor(fillColor);
@@ -123,10 +205,22 @@ export async function generateAssessmentPDF(data: AssessmentData) {
     doc.setLineWidth(0.5);
     doc.line(x1, y1, x2, y1);
   }
-  function setText(size: number, color: string, weight: "normal" | "bold" = "normal", family: "helvetica" | "times" = "helvetica") {
-    doc.setFont(family, weight);
-    doc.setFontSize(size);
-    doc.setTextColor(color);
+  function text(
+    str: string | string[],
+    x: number,
+    yPos: number,
+    opts: {
+      size: number;
+      color: string;
+      font?: string;
+      weight?: "normal" | "bold";
+    },
+    drawOpts?: { align?: "left" | "right" | "center" }
+  ) {
+    doc.setFont(opts.font || F.body, opts.weight || "normal");
+    doc.setFontSize(opts.size);
+    doc.setTextColor(opts.color);
+    doc.text(str, x, yPos, drawOpts);
   }
   function paintPageBackground() {
     fill(0, 0, W, H, C.neutral50);
@@ -138,11 +232,15 @@ export async function generateAssessmentPDF(data: AssessmentData) {
       y = M;
     }
   }
+  function textWidth(str: string, size: number, font: string, weight: "normal" | "bold" = "normal") {
+    doc.setFont(font, weight);
+    doc.setFontSize(size);
+    return doc.getTextWidth(str);
+  }
 
-  // Paint the neutral-50 page background first so white cards pop.
   paintPageBackground();
 
-  // Preload article thumbnails in parallel
+  // ── Preload article thumbnails ────────────────────────────────────────
   const articleThumbs = await Promise.all(
     data.articles.map((a) =>
       loadImage(a.imageUrl, "jpeg", 240).catch(() => null)
@@ -150,53 +248,59 @@ export async function generateAssessmentPDF(data: AssessmentData) {
   );
 
   // ── Hero band ─────────────────────────────────────────────────────────
-  const HEADER_H = 144;
+  const HEADER_H = 152;
   fill(0, 0, W, HEADER_H, C.brand900);
   fill(0, HEADER_H, W, 3, C.accent500);
 
-  // Vector lockup: serif M + wordmark in Times (closest built-in serif to Lora)
-  setText(46, C.white, "bold", "times");
-  doc.text("M", M, 78);
-  const mW = doc.getTextWidth("M");
-  // Vertical rule between M and wordmark
-  fill(M + mW + 14, 42, 0.6, 36, C.white);
-  // Wordmark
-  setText(20, C.white, "normal", "times");
-  doc.text("Men's Sole Revival", M + mW + 28, 70);
+  // Logo · Lora-rendered M + wordmark (vector, crisp at any DPI)
+  text("M", M, 82, { size: 48, color: C.white, font: F.editorial, weight: "bold" });
+  const mWidth = textWidth("M", 48, F.editorial, "bold");
+  // Vertical rule between mark and wordmark
+  fill(M + mWidth + 14, 44, 0.6, 40, C.white);
+  text("Men's Sole Revival", M + mWidth + 28, 72, {
+    size: 20, color: C.white, font: F.editorial, weight: "normal",
+  });
 
-  // Eyebrow + title (below logo lockup)
-  setText(8, C.accent500, "bold");
-  doc.text("5-MINUTE SELF-CHECK", M, 108);
-
-  setText(20, C.white, "bold");
-  doc.text("The Men's Foot Health Assessment", M, 130);
+  // Eyebrow + title (below logo)
+  text("5-MINUTE SELF-CHECK", M, 114, {
+    size: SIZE.xs, color: C.accent500, font: F.body, weight: "bold",
+  });
+  text("The Men's Foot Health Assessment", M, 138, {
+    size: SIZE["2xl"], color: C.white, font: F.display, weight: "bold",
+  });
 
   // Date + clickable URL right-aligned
   const dateStr = new Date().toLocaleDateString("en-US", {
     year: "numeric", month: "long", day: "numeric",
   });
-  setText(9, C.neutral300);
-  const dateW = doc.getTextWidth(dateStr);
-  doc.text(dateStr, W - M - dateW, 50);
+  const dateW = textWidth(dateStr, SIZE.xs, F.body);
+  text(dateStr, W - M - dateW, 52, {
+    size: SIZE.xs, color: C.neutral300, font: F.body,
+  });
 
-  setText(9, C.accent500, "bold");
   const siteText = "menssolerevival.com";
-  const siteW = doc.getTextWidth(siteText);
-  doc.text(siteText, W - M - siteW, 72);
-  doc.link(W - M - siteW - 4, 60, siteW + 8, 16, { url: BASE_URL });
+  const siteW = textWidth(siteText, SIZE.xs, F.body, "bold");
+  text(siteText, W - M - siteW, 74, {
+    size: SIZE.xs, color: C.accent500, font: F.body, weight: "bold",
+  });
+  doc.link(W - M - siteW - 4, 62, siteW + 8, 16, { url: BASE_URL });
 
   y = HEADER_H + 40;
 
-  // ── YOUR RESULTS headline ─────────────────────────────────────────────
-  setText(9, C.accent600, "bold");
-  doc.text("YOUR RESULTS", M, y);
+  // ── "YOUR RESULTS" headline ───────────────────────────────────────────
+  text("YOUR RESULTS", M, y, {
+    size: SIZE.xs, color: C.accent600, font: F.body, weight: "bold",
+  });
   y += 26;
 
-  setText(22, C.brand900, "bold");
-  doc.text("Here's where you stand.", M, y);
-  y += 26;
+  text("Here's where you stand.", M, y, {
+    size: SIZE["3xl"], color: C.brand900, font: F.display, weight: "bold",
+  });
+  y += 28;
 
-  setText(11, C.neutral700);
+  doc.setFont(F.body, "normal");
+  doc.setFontSize(SIZE.sm);
+  doc.setTextColor(C.neutral700);
   const summary =
     `You flagged ${data.totalFlags} item${data.totalFlags === 1 ? "" : "s"} ` +
     `across the sections you took` +
@@ -205,9 +309,9 @@ export async function generateAssessmentPDF(data: AssessmentData) {
       : ".");
   const sumLines = doc.splitTextToSize(summary, CW) as string[];
   doc.text(sumLines, M, y);
-  y += sumLines.length * 15 + 20;
+  y += sumLines.length * 16 + 22;
 
-  // ── Per-section card grid (2-col) ─────────────────────────────────────
+  // ── Per-section card grid ─────────────────────────────────────────────
   if (data.sections.length > 0) {
     const colW = (CW - 14) / 2;
     const rowH = 56;
@@ -220,18 +324,19 @@ export async function generateAssessmentPDF(data: AssessmentData) {
       if (col === 0) pageBreakIf(rowH + 14);
       rectFillAndStroke(cx, cy, colW, rowH, C.white, C.neutral200);
 
-      setText(11, C.neutral700, "bold");
-      doc.text(s.title, cx + 16, cy + 24);
-
+      text(s.title, cx + 16, cy + 24, {
+        size: SIZE.sm, color: C.neutral700, font: F.bodyMedium,
+      });
       if (s.duration) {
-        setText(9, C.neutral500);
-        doc.text(`for ${DURATION_LABEL[s.duration]}`, cx + 16, cy + 40);
+        text(`for ${DURATION_LABEL[s.duration]}`, cx + 16, cy + 40, {
+          size: SIZE.xs, color: C.neutral500, font: F.body,
+        });
       }
-
-      setText(9, C.accent600, "bold");
       const countStr = `${s.count} FLAG${s.count === 1 ? "" : "S"}`;
-      const cw = doc.getTextWidth(countStr);
-      doc.text(countStr, cx + colW - 16 - cw, cy + 24);
+      const cw = textWidth(countStr, SIZE.xs, F.body, "bold");
+      text(countStr, cx + colW - 16 - cw, cy + 24, {
+        size: SIZE.xs, color: C.accent600, font: F.body, weight: "bold",
+      });
     }
     const rows = Math.ceil(data.sections.length / 2);
     y += rows * (rowH + 14) + 28;
@@ -243,38 +348,46 @@ export async function generateAssessmentPDF(data: AssessmentData) {
     const calloutBody = data.notSureCount >= 3
       ? "You marked several pain items as Not sure. That interpretive uncertainty is exactly what a 20-minute podiatrist consult is for."
       : "One or more sections came back severe enough that a podiatrist visit is the right next step.";
+
+    doc.setFont(F.body, "normal");
+    doc.setFontSize(SIZE.sm);
     const bodyLines = doc.splitTextToSize(calloutBody, CW - 44) as string[];
     const blockH = 30 + bodyLines.length * 16 + 22;
 
     fill(M, y, 4, blockH, C.accent500);
     fill(M + 4, y, CW - 4, blockH, C.accent50);
 
-    setText(8, C.accent700, "bold");
-    doc.text("WORTH A PROFESSIONAL VISIT", M + 20, y + 24);
-
-    setText(11, C.neutral700);
-    doc.text(bodyLines, M + 20, y + 44);
+    text("WORTH A PROFESSIONAL VISIT", M + 20, y + 24, {
+      size: SIZE.xs, color: C.accent700, font: F.body, weight: "bold",
+    });
+    doc.setFont(F.body, "normal");
+    doc.setFontSize(SIZE.sm);
+    doc.setTextColor(C.neutral700);
+    doc.text(bodyLines, M + 20, y + 46);
 
     y += blockH + 32;
   }
 
-  // ── Block 1 — Read & do (2-col article cards) ─────────────────────────
+  // ── Block 1: Read & do ───────────────────────────────────────────────
   if (data.articles.length > 0) {
-    pageBreakIf(90);
-    setText(9, C.accent600, "bold");
-    doc.text("BLOCK 1", M, y);
-    y += 22;
-    setText(18, C.brand900, "bold");
-    doc.text("Read & do.", M, y);
-    y += 22;
-    setText(10, C.neutral500);
-    doc.text("Each card is a guide plus the first concrete move from it.", M, y);
+    pageBreakIf(100);
+    text("BLOCK 1", M, y, {
+      size: SIZE.xs, color: C.accent600, font: F.body, weight: "bold",
+    });
     y += 24;
+    text("Read & do.", M, y, {
+      size: SIZE["2xl"], color: C.brand900, font: F.display, weight: "bold",
+    });
+    y += 24;
+    text("Each card is a guide plus the first concrete move from it.", M, y, {
+      size: SIZE.sm, color: C.neutral500, font: F.body,
+    });
+    y += 26;
 
     const colW = (CW - 14) / 2;
-    const cardH = 144;
-    const thumbW = 64;
-    const thumbH = 48;
+    const cardH = 152;
+    const thumbW = 68;
+    const thumbH = 52;
 
     for (let i = 0; i < data.articles.length; i++) {
       const a = data.articles[i];
@@ -299,24 +412,30 @@ export async function generateAssessmentPDF(data: AssessmentData) {
       const textX = cx + 14 + thumbW + 14;
       const textW = colW - (14 + thumbW + 14) - 14;
 
-      setText(8, C.accent600, "bold");
       const cat = `${a.category.toUpperCase()} · ${a.readTime.toUpperCase()} READ`;
-      doc.text(cat, textX, cy + 24);
+      text(cat, textX, cy + 24, {
+        size: SIZE.tiny, color: C.accent600, font: F.bodyMedium,
+      });
 
-      setText(11, C.brand900, "bold");
+      doc.setFont(F.body, "bold");
+      doc.setFontSize(SIZE.sm);
+      doc.setTextColor(C.brand900);
       const titleLines = doc.splitTextToSize(a.title, textW) as string[];
       doc.text(titleLines.slice(0, 3), textX, cy + 40);
 
       // Footer separator + first-move copy
-      const footerY = cy + 84;
+      const footerY = cy + 90;
       hline(cx, footerY, cx + colW, C.neutral200);
 
-      setText(8, C.brand500, "bold");
-      doc.text("FIRST MOVE:", cx + 14, footerY + 18);
+      text("FIRST MOVE:", cx + 14, footerY + 20, {
+        size: SIZE.xs, color: C.brand500, font: F.body, weight: "bold",
+      });
 
-      setText(10, C.neutral700);
+      doc.setFont(F.body, "normal");
+      doc.setFontSize(SIZE.xs);
+      doc.setTextColor(C.neutral700);
       const actionLines = doc.splitTextToSize(a.action, colW - 28) as string[];
-      doc.text(actionLines.slice(0, 3), cx + 14, footerY + 34);
+      doc.text(actionLines.slice(0, 3), cx + 14, footerY + 36);
 
       doc.link(cx, cy, colW, cardH, { url: `${BASE_URL}/guides/${a.slug}` });
     }
@@ -324,57 +443,69 @@ export async function generateAssessmentPDF(data: AssessmentData) {
     y += rows * (cardH + 14) + 32;
   }
 
-  // ── Block 2 — Routine to follow ───────────────────────────────────────
+  // ── Block 2: Routine to follow ────────────────────────────────────────
   if (data.routine) {
-    pageBreakIf(180);
-    setText(9, C.accent600, "bold");
-    doc.text("BLOCK 2", M, y);
-    y += 22;
-    setText(18, C.brand900, "bold");
-    doc.text("Routine to follow.", M, y);
-    y += 22;
-    setText(10, C.neutral500);
-    doc.text("One specific starting point, not a list.", M, y);
+    pageBreakIf(200);
+    text("BLOCK 2", M, y, {
+      size: SIZE.xs, color: C.accent600, font: F.body, weight: "bold",
+    });
     y += 24;
+    text("Routine to follow.", M, y, {
+      size: SIZE["2xl"], color: C.brand900, font: F.display, weight: "bold",
+    });
+    y += 24;
+    text("One specific starting point, not a list.", M, y, {
+      size: SIZE.sm, color: C.neutral500, font: F.body,
+    });
+    y += 26;
 
     const r = data.routine;
-    const cardH = 110;
+    const cardH = 116;
     rectFillAndStroke(M, y, CW, cardH, C.white, C.neutral200);
 
-    setText(8, C.brand500, "bold");
-    doc.text(`ROUTINE · ${r.label.toUpperCase()}`, M + 20, y + 24);
+    text(`ROUTINE · ${r.label.toUpperCase()}`, M + 20, y + 24, {
+      size: SIZE.xs, color: C.brand500, font: F.body, weight: "bold",
+    });
+    text(r.heading, M + 20, y + 50, {
+      size: SIZE.xl, color: C.brand900, font: F.display, weight: "bold",
+    });
+    text(r.time, M + 20, y + 66, {
+      size: SIZE.xs, color: C.neutral500, font: F.bodyMedium,
+    });
 
-    setText(14, C.brand900, "bold");
-    doc.text(r.heading, M + 20, y + 46);
-
-    setText(9, C.neutral500);
-    doc.text(r.time, M + 20, y + 62);
-
-    const footerY = y + 76;
+    const footerY = y + 80;
     hline(M, footerY, M + CW, C.neutral200);
-    setText(8, C.brand500, "bold");
-    doc.text("FIRST MOVE:", M + 20, footerY + 20);
-    setText(10, C.neutral700);
+    text("FIRST MOVE:", M + 20, footerY + 20, {
+      size: SIZE.xs, color: C.brand500, font: F.body, weight: "bold",
+    });
+    doc.setFont(F.body, "normal");
+    doc.setFontSize(SIZE.xs);
+    doc.setTextColor(C.neutral700);
     const actionLines = doc.splitTextToSize(r.action, CW - 40) as string[];
-    doc.text(actionLines.slice(0, 2), M + 20, footerY + 34);
+    doc.text(actionLines.slice(0, 2), M + 20, footerY + 36);
 
     y += cardH + 32;
   }
 
-  // ── Block 3 — Talk to a professional ──────────────────────────────────
-  pageBreakIf(90);
-  setText(9, C.accent600, "bold");
-  doc.text("BLOCK 3", M, y);
-  y += 22;
-  setText(18, C.brand900, "bold");
-  doc.text("Talk to a professional.", M, y);
-  y += 22;
-  setText(10, C.neutral500);
-  doc.text("Read these to your podiatrist. They cover what you came to say.", M, y);
+  // ── Block 3: Talk to a professional ───────────────────────────────────
+  pageBreakIf(100);
+  text("BLOCK 3", M, y, {
+    size: SIZE.xs, color: C.accent600, font: F.body, weight: "bold",
+  });
   y += 24;
+  text("Talk to a professional.", M, y, {
+    size: SIZE["2xl"], color: C.brand900, font: F.display, weight: "bold",
+  });
+  y += 24;
+  text("Read these to your podiatrist. They cover what you came to say.", M, y, {
+    size: SIZE.sm, color: C.neutral500, font: F.body,
+  });
+  y += 26;
 
   if (data.prepBullets.length > 0) {
     const lineH = 16;
+    doc.setFont(F.body, "normal");
+    doc.setFontSize(SIZE.sm);
     let totalLines = 0;
     const wrapped: string[][] = data.prepBullets.map((b) => {
       const lines = doc.splitTextToSize(b, CW - 40) as string[];
@@ -382,13 +513,15 @@ export async function generateAssessmentPDF(data: AssessmentData) {
       return lines;
     });
     const blockH = totalLines * lineH + (data.prepBullets.length - 1) * 14 + 32;
-    pageBreakIf(blockH + 12);
+    pageBreakIf(blockH + 14);
 
     fill(M, y, 3, blockH, C.brand500);
     rectFillAndStroke(M + 3, y, CW - 3, blockH, C.white, C.neutral200);
 
     let by = y + 22;
-    setText(11, C.neutral700);
+    doc.setFont(F.body, "normal");
+    doc.setFontSize(SIZE.sm);
+    doc.setTextColor(C.neutral700);
     for (let i = 0; i < wrapped.length; i++) {
       const lines = wrapped[i];
       doc.setFillColor(C.brand500);
@@ -397,38 +530,45 @@ export async function generateAssessmentPDF(data: AssessmentData) {
       by += lines.length * lineH;
       if (i < wrapped.length - 1) by += 14;
     }
-    y += blockH + 24;
+    y += blockH + 28;
   } else {
-    rectFillAndStroke(M, y, CW, 56, C.white, C.neutral200);
-    setText(11, C.neutral500);
+    rectFillAndStroke(M, y, CW, 60, C.white, C.neutral200);
+    doc.setFont(F.body, "normal");
+    doc.setFontSize(SIZE.sm);
+    doc.setTextColor(C.neutral500);
     const fb = doc.splitTextToSize(
       "Nothing in this self-check rises to the level of a podiatrist visit. Re-take in a few months if anything changes.",
       CW - 28
     );
-    doc.text(fb, M + 14, y + 22);
-    y += 56 + 24;
+    doc.text(fb, M + 14, y + 24);
+    y += 60 + 28;
   }
 
   // Find a podiatrist link
-  setText(9, C.accent600, "bold");
-  doc.text("FIND A PODIATRIST NEAR YOU →", M, y);
-  const apmaW = doc.getTextWidth("FIND A PODIATRIST NEAR YOU →");
+  text("FIND A PODIATRIST NEAR YOU →", M, y, {
+    size: SIZE.xs, color: C.accent600, font: F.body, weight: "bold",
+  });
+  const apmaW = textWidth("FIND A PODIATRIST NEAR YOU →", SIZE.xs, F.body, "bold");
   doc.link(M, y - 10, apmaW + 6, 14, { url: "https://www.apma.org/find-a-podiatrist" });
-  y += 32;
+  y += 34;
 
   // ── Footer ────────────────────────────────────────────────────────────
-  pageBreakIf(72);
+  pageBreakIf(76);
   hline(M, y, M + CW, C.neutral200);
   y += 22;
-  setText(9, C.neutral400);
-  doc.text("This self-check is educational. It is not medical advice or a diagnosis.", M, y);
+  text("This self-check is educational. It is not medical advice or a diagnosis.", M, y, {
+    size: SIZE.xs, color: C.neutral400, font: F.body,
+  });
   y += 14;
-  doc.text("Bring this with you, but trust the podiatrist's read of what's in front of them.", M, y);
-  y += 24;
+  text("Bring this with you, but trust the podiatrist's read of what's in front of them.", M, y, {
+    size: SIZE.xs, color: C.neutral400, font: F.body,
+  });
+  y += 26;
 
-  setText(10, C.accent600, "bold");
-  doc.text("menssolerevival.com", M, y);
-  const footerLinkW = doc.getTextWidth("menssolerevival.com");
+  text("menssolerevival.com", M, y, {
+    size: SIZE.sm, color: C.accent600, font: F.body, weight: "bold",
+  });
+  const footerLinkW = textWidth("menssolerevival.com", SIZE.sm, F.body, "bold");
   doc.link(M, y - 12, footerLinkW + 4, 16, { url: BASE_URL });
 
   doc.save("MSR-Foot-Health-Self-Check.pdf");
