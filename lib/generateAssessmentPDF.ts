@@ -1,386 +1,290 @@
 /**
- * Generates a personalized MSR Foot Health Assessment PDF
- * matching the results-page layout with hero image, score block,
- * section rows linking to guides, and recommendation.
+ * Generates a doctor-visit PDF for the Men's Sole Revival assessment.
+ *
+ * Per MSR-Assessment-Redesign.md §3.5, the PDF is reframed as a
+ * podiatrist-visit artifact — a single-page handout the user can read
+ * to their doctor. Layout:
+ *
+ *   1. Header band:  "Bring this to your podiatrist" + date
+ *   2. Context line: "Self-check completed [date]. X flags across N sections."
+ *   3. Block 1:      "Talk to your doctor about" — prep bullets (top of doc)
+ *   4. Block 2:      "What I flagged" — per-section checked items + duration
+ *   5. Block 3:      "What I'm doing in the meantime" — routine + articles
+ *   6. Footer:       Disclaimer + url
+ *
+ * The previous layout (centered "YOUR RESULTS" tile with giant flag
+ * count and a tier label) was the pre-redesign output. It's gone now.
  */
 
-interface SectionResult {
+import type { RoutineRef, ArticleMeta } from "@/lib/ecosystem";
+import type { Duration } from "@/lib/assessment-routing";
+
+export interface PDFSection {
   title: string;
   count: number;
   items: string[];
+  duration?: Duration;
   guideHref: string;
-  note?: string;
 }
 
-interface AssessmentData {
+export interface AssessmentData {
   totalFlags: number;
-  tier: string;
-  headline: string;
-  recommendation: string;
-  sections: SectionResult[];
+  notSureCount: number;
+  recommendsClinic: boolean;
+  sections: PDFSection[];
+  prepBullets: string[];
+  routine?: RoutineRef;
+  articles: ArticleMeta[];
 }
 
-// ── Brand tokens (matches globals.css) ──────────────────────
+// ── Brand tokens (mirrors globals.css MSR palette) ──────────────────────
 const C = {
   brand900: "#091016",
-  brand700: "#172A3A",
+  brand500: "#1C3F5E",
   accent500: "#C4703A",
-  accent400: "#BE7241",
-  neutral200: "#E5E7EB",
-  neutral400: "#9CA3AF",
-  neutral500: "#6B7280",
-  neutral700: "#374151",
-  neutral800: "#1F2937",
-  white: "#FFFFFF",
-  bgLight: "#F9FAFB",
-  border: "#E5E7EB",
-};
+  accent600: "#A35E32",
+  accent50:  "#F4F2F0",
+  neutral200:"#D6D3D1",
+  neutral300:"#B7B2AE",
+  neutral400:"#938C86",
+  neutral500:"#6B6560",
+  neutral700:"#403D3A",
+  neutral900:"#1D1C1B",
+  white:     "#FFFFFF",
+} as const;
 
 const BASE_URL = "https://www.menssolerevival.com";
 
-// ── Load image as base64 ────────────────────────────────────
-async function loadImageAsBase64(src: string): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.onload = () => {
-      const canvas = document.createElement("canvas");
-      canvas.width = img.naturalWidth;
-      canvas.height = img.naturalHeight;
-      const ctx = canvas.getContext("2d")!;
-      ctx.drawImage(img, 0, 0);
-      resolve(canvas.toDataURL("image/jpeg", 0.85));
-    };
-    img.onerror = reject;
-    img.src = src;
-  });
-}
+const DURATION_LABEL: Record<Duration, string> = {
+  recent:  "less than a month",
+  ongoing: "1 to 6 months",
+  chronic: "more than 6 months",
+};
+
+// ─────────────────────────────────────────────────────────────────────────
 
 export async function generateAssessmentPDF(data: AssessmentData) {
   const { default: jsPDF } = await import("jspdf");
   const doc = new jsPDF({ unit: "pt", format: "letter" });
-  const W = doc.internal.pageSize.getWidth(); // 612
-  const H = doc.internal.pageSize.getHeight(); // 792
-  const M = 48; // margin
-  const CW = W - M * 2; // content width
+  const W = doc.internal.pageSize.getWidth();   // 612
+  const H = doc.internal.pageSize.getHeight();  // 792
+  const M = 48;
+  const CW = W - M * 2;
   let y = 0;
 
-  // ── Helpers ───────────────────────────────────────────────
-  function checkPage(needed: number) {
+  function fill(x: number, yPos: number, w: number, h: number, color: string) {
+    doc.setFillColor(color);
+    doc.rect(x, yPos, w, h, "F");
+  }
+  function hline(x1: number, y1: number, x2: number, color: string) {
+    doc.setDrawColor(color);
+    doc.setLineWidth(0.5);
+    doc.line(x1, y1, x2, y1);
+  }
+  function pageBreakIf(needed: number) {
     if (y + needed > H - 60) {
       doc.addPage();
       y = M;
     }
   }
-
-  function drawRect(
-    x: number,
-    yPos: number,
-    w: number,
-    h: number,
-    fill: string
-  ) {
-    doc.setFillColor(fill);
-    doc.rect(x, yPos, w, h, "F");
+  function setText(size: number, color: string, weight: "normal" | "bold" = "normal") {
+    doc.setFont("helvetica", weight);
+    doc.setFontSize(size);
+    doc.setTextColor(color);
   }
 
-  function drawLine(
-    x1: number,
-    y1: number,
-    x2: number,
-    y2: number,
-    color: string
-  ) {
-    doc.setDrawColor(color);
-    doc.setLineWidth(0.5);
-    doc.line(x1, y1, x2, y2);
-  }
+  // ── Header band ───────────────────────────────────────────────────────
+  const HEADER_H = 96;
+  fill(0, 0, W, HEADER_H, C.brand900);
+  // Accent rule below header
+  fill(0, HEADER_H, W, 3, C.accent500);
 
-  // ── Hero header with image + gradient overlay ─────────────
-  const HEADER_H = 160;
+  setText(8, C.accent500, "bold");
+  doc.text("BRING THIS TO YOUR PODIATRIST", M, 36);
 
-  // Try to load the hero image
-  try {
-    const imgData = await loadImageAsBase64("/images/pexels-11873696.jpg");
-    // Place image full-bleed across header
-    // The image is landscape; we crop-to-fill the header area
-    doc.addImage(imgData, "JPEG", 0, 0, W, HEADER_H, undefined, "FAST");
-  } catch {
-    // Fallback: solid dark background if image fails
-    drawRect(0, 0, W, HEADER_H, C.brand900);
-  }
+  setText(20, C.white, "bold");
+  doc.text("Men's Foot Health Self-Check", M, 62);
 
-  // Gradient overlay: draw semi-transparent dark rectangles
-  // jsPDF doesn't support real gradients, so we simulate with bands
-  const bands = 20;
-  const bandH = HEADER_H / bands;
-  for (let i = 0; i < bands; i++) {
-    const opacity = 0.3 + (i / bands) * 0.55; // 0.3 at top → 0.85 at bottom
-    doc.setGState(new (doc as any).GState({ opacity }));
-    drawRect(0, i * bandH, W, bandH + 1, C.brand900);
-  }
-  // Reset opacity
-  doc.setGState(new (doc as any).GState({ opacity: 1 }));
-
-  // Brand name
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(9);
-  doc.setTextColor(C.accent500);
-  doc.text("MEN'S SOLE REVIVAL", M, 36);
-
-  // Title
-  doc.setFontSize(24);
-  doc.setTextColor(C.white);
-  doc.text("Your Foot Health Assessment", M, 64);
-
-  // Date
   const dateStr = new Date().toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
+    year: "numeric", month: "long", day: "numeric",
   });
-  doc.setFontSize(9);
-  doc.setTextColor(C.neutral400);
-  doc.text(dateStr, M, 84);
+  setText(9, C.neutral300);
+  doc.text(dateStr, M, 80);
 
-  // Accent stripe under header
-  drawRect(0, HEADER_H, W, 4, C.accent500);
+  // Site attribution on right of header
+  setText(8, C.neutral300);
+  const siteText = "menssolerevival.com";
+  const siteW = doc.getTextWidth(siteText);
+  doc.text(siteText, W - M - siteW, 36);
 
   y = HEADER_H + 28;
 
-  // ── "HERE'S WHERE YOU STAND" label ────────────────────────
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(8);
-  doc.setTextColor(C.neutral400);
-  doc.text("HERE'S WHERE YOU STAND", M, y);
-  y += 20;
+  // ── Quick context line ────────────────────────────────────────────────
+  setText(10, C.neutral700);
+  const attempted = data.sections.length;
+  const ctx = `${data.totalFlags} flagged item${data.totalFlags === 1 ? "" : "s"} across ${attempted} section${attempted === 1 ? "" : "s"}${
+    data.notSureCount > 0 ? `, with ${data.notSureCount} marked "Not sure"` : ""
+  }.`;
+  doc.text(ctx, M, y);
+  y += 14;
 
-  // ── Score block (centered, matches web layout) ────────────
-  const SCORE_H = 140;
-  drawRect(M, y, CW, SCORE_H, C.brand900);
-
-  // "YOUR RESULTS" label
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(8);
-  doc.setTextColor(C.accent400);
-  doc.text("YOUR RESULTS", W / 2, y + 24, { align: "center" });
-
-  // Big score number
-  doc.setFontSize(52);
-  doc.setTextColor(C.white);
-  doc.text(String(data.totalFlags), W / 2, y + 68, { align: "center" });
-
-  // "flags checked"
-  doc.setFontSize(10);
-  doc.setTextColor("#FFFFFF80");
-  doc.text(
-    data.totalFlags === 1 ? "flag" : "flags checked",
-    W / 2,
-    y + 82,
-    { align: "center" }
-  );
-
-  // Accent divider
-  drawRect(W / 2 - 24, y + 90, 48, 2, C.accent500);
-
-  // Tier
-  doc.setFontSize(8);
-  doc.setTextColor(C.accent500);
-  doc.text(data.tier.toUpperCase(), W / 2, y + 108, { align: "center" });
-
-  // Headline
-  doc.setFontSize(16);
-  doc.setTextColor(C.white);
-  const headlineLines = doc.splitTextToSize(data.headline, CW - 80);
-  const headlineY = y + 124;
-  doc.text(headlineLines, W / 2, headlineY, { align: "center" });
-
-  // Adjust score block height if headline wraps
-  const actualScoreH = headlineY + (headlineLines.length - 1) * 18 + 16 - y;
-  if (actualScoreH > SCORE_H) {
-    // Extend the dark block
-    drawRect(M, y + SCORE_H, CW, actualScoreH - SCORE_H, C.brand900);
+  if (data.recommendsClinic) {
+    setText(9, C.accent600, "bold");
+    doc.text("This self-check suggests a podiatrist visit is the right next step.", M, y);
+    y += 16;
   }
-  y += Math.max(SCORE_H, actualScoreH) + 20;
+  y += 8;
 
-  // ── Section breakdown (card rows with links) ──────────────
+  // ── Block 1: Talk to your doctor about ────────────────────────────────
+  setText(8, C.accent600, "bold");
+  doc.text("TALK TO YOUR DOCTOR ABOUT", M, y);
+  y += 14;
+
+  if (data.prepBullets.length > 0) {
+    const bullets = data.prepBullets;
+    // Compute block height: each bullet wraps to ~2 lines of 11pt text
+    const lineH = 14;
+    let totalLines = 0;
+    const wrapped: string[][] = bullets.map((b) => {
+      const lines = doc.splitTextToSize(b, CW - 32) as string[];
+      totalLines += lines.length;
+      return lines;
+    });
+    const blockH = totalLines * lineH + bullets.length * 8 + 16;
+    pageBreakIf(blockH);
+
+    // Left accent rule
+    fill(M, y, 3, blockH, C.accent500);
+    fill(M + 3, y, CW - 3, blockH, C.white);
+    doc.setDrawColor(C.neutral200);
+    doc.setLineWidth(0.5);
+    doc.rect(M + 3, y, CW - 3, blockH, "S");
+
+    let by = y + 12;
+    setText(11, C.neutral900);
+    for (const lines of wrapped) {
+      // Bullet
+      doc.setFillColor(C.accent500);
+      doc.circle(M + 18, by - 3, 1.6, "F");
+      doc.text(lines, M + 26, by);
+      by += lines.length * lineH + 8;
+    }
+    y += blockH + 16;
+  } else {
+    setText(10, C.neutral500);
+    const fb = doc.splitTextToSize(
+      "Nothing in this self-check rises to the level of a podiatrist conversation. This is a maintenance check.",
+      CW
+    );
+    doc.text(fb, M, y);
+    y += (fb as string[]).length * 13 + 16;
+  }
+
+  // ── Block 2: What I flagged ───────────────────────────────────────────
   const flaggedSections = data.sections.filter((s) => s.count > 0);
   if (flaggedSections.length > 0) {
-    checkPage(40 + flaggedSections.length * 36);
-
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(8);
-    doc.setTextColor(C.neutral400);
-    doc.text("FLAGS BY SECTION", M, y);
+    pageBreakIf(30);
+    setText(8, C.accent600, "bold");
+    doc.text("WHAT I FLAGGED", M, y);
     y += 14;
 
     for (const section of flaggedSections) {
-      checkPage(36);
-      const ROW_H = 32;
+      // Per-section header line: title + duration + count
+      const headerLineH = 18;
+      pageBreakIf(headerLineH + section.items.length * 14 + 16);
 
-      // Row background with border
-      drawRect(M, y, CW, ROW_H, C.white);
-      doc.setDrawColor(C.neutral200);
-      doc.setLineWidth(0.5);
-      doc.rect(M, y, CW, ROW_H, "S");
+      setText(11, C.brand900, "bold");
+      doc.text(section.title, M, y);
+      const titleW = doc.getTextWidth(section.title);
 
-      // Count badge
-      const badgeSize = 20;
-      const badgeX = M + 12;
-      const badgeY = y + (ROW_H - badgeSize) / 2;
-      drawRect(badgeX, badgeY, badgeSize, badgeSize, C.accent500);
-      doc.setFont("helvetica", "bold");
-      doc.setFontSize(9);
-      doc.setTextColor(C.white);
-      doc.text(String(section.count), badgeX + badgeSize / 2, badgeY + 14, {
-        align: "center",
-      });
+      if (section.duration) {
+        setText(9, C.neutral500);
+        doc.text(`— for ${DURATION_LABEL[section.duration]}`, M + titleW + 6, y);
+      }
 
-      // Section title
-      doc.setFontSize(10);
-      doc.setTextColor(C.neutral800);
-      doc.text(section.title, M + 42, y + ROW_H / 2 + 4);
+      // Count on right
+      setText(9, C.accent600, "bold");
+      const countStr = `${section.count} flag${section.count === 1 ? "" : "s"}`;
+      const countW = doc.getTextWidth(countStr);
+      doc.text(countStr.toUpperCase(), W - M - countW, y);
 
-      // "Read the guide →" link
-      const linkText = "Read the guide →";
-      doc.setFontSize(8);
-      doc.setTextColor(C.accent500);
-      const linkX = M + CW - 12;
-      doc.text(linkText, linkX, y + ROW_H / 2 + 3, { align: "right" });
+      y += headerLineH;
 
-      // Make the entire row a clickable link
-      const linkUrl = BASE_URL + section.guideHref;
-      doc.link(M, y, CW, ROW_H, { url: linkUrl });
-
-      y += ROW_H + 4;
-    }
-
-    // Helper text
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(8);
-    doc.setTextColor(C.neutral400);
-    doc.text("Each row links to the guide for that area.", M, y + 4);
-    y += 20;
-  }
-
-  // ── Recommendation block ──────────────────────────────────
-  checkPage(80);
-
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(10);
-  doc.setTextColor(C.neutral700);
-  const recoLines = doc.splitTextToSize(data.recommendation, CW - 36);
-  const recoH = recoLines.length * 14 + 28;
-
-  // White card with left accent border
-  drawRect(M, y, CW, recoH, C.white);
-  drawRect(M, y, 3, recoH, C.accent500);
-
-  doc.text(recoLines, M + 18, y + 18);
-  y += recoH + 20;
-
-  // ── Detailed breakdown (items per section) ────────────────
-  const sectionsWithFlags = data.sections.filter((s) => s.count > 0);
-  if (sectionsWithFlags.length > 0) {
-    checkPage(30);
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(8);
-    doc.setTextColor(C.neutral400);
-    doc.text("YOUR FLAGGED ITEMS", M, y);
-    y += 16;
-
-    for (const section of sectionsWithFlags) {
-      checkPage(section.items.length * 15 + 40);
-
-      // Section title
-      doc.setFont("helvetica", "bold");
-      doc.setFontSize(10);
-      doc.setTextColor(C.brand900);
-      doc.text(section.title, M, y + 4);
-
-      // Guide link next to title
-      doc.setFont("helvetica", "normal");
-      doc.setFontSize(8);
-      doc.setTextColor(C.accent500);
-      const titleWidth = doc.getTextWidth(section.title);
-      doc.text("  View guide →", M + titleWidth + 4, y + 4);
-      doc.link(
-        M + titleWidth + 4,
-        y - 6,
-        80,
-        14,
-        { url: BASE_URL + section.guideHref }
-      );
-
-      y += 18;
-
-      // Checked items
-      doc.setFont("helvetica", "normal");
-      doc.setFontSize(9);
+      // Item bullets
+      setText(10, C.neutral700);
       for (const item of section.items) {
-        checkPage(16);
-
-        // Orange checkmark
-        doc.setTextColor(C.accent500);
-        doc.text("✓", M + 8, y);
-
-        // Item text
-        doc.setTextColor(C.neutral700);
-        const itemLines = doc.splitTextToSize(item, CW - 36);
-        doc.text(itemLines, M + 24, y);
-        y += itemLines.length * 13;
+        const lines = doc.splitTextToSize(item, CW - 24) as string[];
+        pageBreakIf(lines.length * 13 + 4);
+        doc.setFillColor(C.accent500);
+        doc.circle(M + 10, y - 3, 1.4, "F");
+        doc.text(lines, M + 20, y);
+        y += lines.length * 13 + 2;
       }
 
       y += 8;
-      drawLine(M, y, M + CW, y, C.border);
+      hline(M, y, M + CW, C.neutral200);
       y += 12;
     }
   }
 
-  // ── Sections with no flags ────────────────────────────────
-  const cleanSections = data.sections.filter((s) => s.count === 0);
-  if (cleanSections.length > 0) {
-    checkPage(40);
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(8);
-    doc.setTextColor(C.neutral400);
-    doc.text("NO FLAGS", M, y);
+  // ── Block 3: What I'm doing in the meantime ───────────────────────────
+  const hasRoutine = Boolean(data.routine);
+  const hasArticles = data.articles.length > 0;
+  if (hasRoutine || hasArticles) {
+    pageBreakIf(40);
+    setText(8, C.accent600, "bold");
+    doc.text("WHAT I'M DOING IN THE MEANTIME", M, y);
     y += 14;
 
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(9);
-    doc.setTextColor(C.neutral500);
-    doc.text(cleanSections.map((s) => s.title).join("  ·  "), M, y);
-    y += 24;
+    if (hasRoutine && data.routine) {
+      const r = data.routine;
+      pageBreakIf(42);
+      setText(8, C.brand500, "bold");
+      doc.text(`ROUTINE · ${r.label.toUpperCase()}`, M, y);
+      y += 12;
+      setText(11, C.neutral900, "bold");
+      doc.text(r.heading, M, y);
+      y += 14;
+      setText(9, C.neutral500);
+      doc.text(r.time, M, y);
+      y += 14;
+      setText(10, C.neutral700);
+      const aLines = doc.splitTextToSize(r.action, CW) as string[];
+      doc.text(aLines, M, y);
+      y += aLines.length * 13 + 12;
+    }
+
+    if (hasArticles) {
+      pageBreakIf(16 + data.articles.length * 16);
+      setText(8, C.brand500, "bold");
+      doc.text("ARTICLES I'M READING", M, y);
+      y += 14;
+      setText(10, C.neutral700);
+      for (const a of data.articles) {
+        pageBreakIf(16);
+        // Bullet
+        doc.setFillColor(C.brand500);
+        doc.circle(M + 10, y - 3, 1.4, "F");
+        doc.text(a.title, M + 20, y);
+        y += 16;
+      }
+      y += 4;
+    }
   }
 
-  // ── Footer ────────────────────────────────────────────────
-  checkPage(70);
-  drawLine(M, y, M + CW, y, C.border);
-  y += 16;
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(8);
-  doc.setTextColor(C.neutral400);
-  doc.text(
-    "This assessment is educational — it is not medical advice.",
-    M,
-    y
-  );
+  // ── Footer ────────────────────────────────────────────────────────────
+  pageBreakIf(56);
+  hline(M, y, M + CW, C.neutral200);
+  y += 14;
+  setText(8, C.neutral400);
+  doc.text("This self-check is educational. It is not medical advice or a diagnosis.", M, y);
   y += 12;
-  doc.text(
-    "If you have pain, swelling, or infection, see a podiatrist.",
-    M,
-    y
-  );
-  y += 20;
+  doc.text("Bring this with you, but trust the podiatrist's read of what's in front of them.", M, y);
+  y += 18;
 
-  // Website link
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(9);
-  doc.setTextColor(C.accent500);
+  setText(9, C.accent600, "bold");
   doc.text("menssolerevival.com", M, y);
-  doc.link(M, y - 10, 120, 14, { url: BASE_URL });
+  doc.link(M, y - 10, 130, 14, { url: BASE_URL });
 
-  // ── Save ──────────────────────────────────────────────────
-  doc.save("MSR-Foot-Health-Assessment.pdf");
+  doc.save("MSR-Foot-Health-Self-Check.pdf");
 }

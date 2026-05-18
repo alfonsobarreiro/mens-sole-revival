@@ -11,6 +11,7 @@ import AssessmentSidebar, {
   type SidebarSection,
 } from "@/components/AssessmentSidebar";
 import {
+  composeResult,
   symptomDisplay,
   symptomOrder,
   symptomToSections,
@@ -431,25 +432,35 @@ export default function AssessmentPage() {
   }
 
   function downloadPdf() {
-    const sectionsForPdf = visibleSteps.map((s) => {
-      const flaggedItems = s.items
-        .filter((it) => checked[it.id])
-        .map((it) => it.text);
-      return {
-        title: s.title,
-        count: flaggedItems.length,
-        items: flaggedItems,
-        guideHref: s.guideHref,
-        note: s.note,
-      };
+    // The PDF is the doctor-visit artifact (spec §3.5): prep bullets on
+    // top, then flagged items per section, then routine + articles.
+    // Reuses the same composeResult() the on-screen results use.
+    const composed = composeResult({
+      flagsBySection,
+      durationBySection,
+      notSureCount,
     });
+    const sectionsForPdf = visibleSteps
+      .map((s) => {
+        const flaggedItems = s.items
+          .filter((it) => checked[it.id])
+          .map((it) => it.text);
+        return {
+          title: s.title,
+          count: flaggedItems.length,
+          items: flaggedItems,
+          duration: durationBySection[s.sectionId],
+          guideHref: s.guideHref,
+        };
+      });
     generateAssessmentPDF({
       totalFlags,
-      tier: "Self-check summary",
-      headline: "Bring this to your podiatrist",
-      recommendation:
-        "Read this with your doctor. The bullets above are what you came to say.",
+      notSureCount,
+      recommendsClinic: composed.recommendsClinic,
       sections: sectionsForPdf,
+      prepBullets: composed.prepBullets,
+      routine: composed.routine,
+      articles: composed.articles,
     });
   }
 
