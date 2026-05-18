@@ -16,7 +16,9 @@ interface AssessmentSidebarProps {
 
 /**
  * Vertical sidebar showing the user's section progress. Renders a
- * checkmark next to completed sections, an accent dot for the current
+ * green checkmark next to completed sections (per Cate's note —
+ * green reads as "done" universally, distinct from the cognac flag
+ * highlight used inside section items), an accent dot for the current
  * section, and neutral state for upcoming sections. Built for the
  * assessment redesign (see MSR-Assessment-Redesign.md §3.2).
  */
@@ -54,7 +56,7 @@ export default function AssessmentSidebar({
                 aria-hidden="true"
                 className={`flex h-5 w-5 flex-shrink-0 items-center justify-center text-xs font-bold ${
                   isDone
-                    ? "bg-accent-500 text-white"
+                    ? "bg-emerald-500 text-white"
                     : isCurrent
                     ? "border-2 border-accent-500 bg-white text-accent-600"
                     : "border border-neutral-300 bg-white text-neutral-300"
