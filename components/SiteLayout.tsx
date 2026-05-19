@@ -6,6 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import Container from "@/components/Container";
 import Button from "@/components/Button";
+import SearchTrigger from "@/components/SearchTrigger";
 
 const navLinks = [
   { label: "Guides", href: "/guides" },
@@ -71,15 +72,18 @@ export default function SiteLayout({
                 unoptimized
               />
             </Link>
-            <button
-              type="button"
-              onClick={() => setMenuOpen((o) => !o)}
-              aria-label={menuOpen ? "Close menu" : "Open menu"}
-              aria-expanded={menuOpen}
-              className="flex h-9 w-9 items-center justify-center rounded-md text-neutral-700 hover:bg-neutral-100 transition"
-            >
-              {menuOpen ? <CloseIcon /> : <HamburgerIcon />}
-            </button>
+            <div className="flex items-center gap-1">
+              <SearchTrigger variant="mobile" />
+              <button
+                type="button"
+                onClick={() => setMenuOpen((o) => !o)}
+                aria-label={menuOpen ? "Close menu" : "Open menu"}
+                aria-expanded={menuOpen}
+                className="flex h-9 w-9 items-center justify-center rounded-md text-neutral-700 hover:bg-neutral-100 transition"
+              >
+                {menuOpen ? <CloseIcon /> : <HamburgerIcon />}
+              </button>
+            </div>
           </div>
 
           {/* ── Desktop header: 3-col grid ── */}
@@ -115,8 +119,9 @@ export default function SiteLayout({
                 unoptimized
               />
             </Link>
-            {/* Right: CTA */}
-            <div className="flex items-center justify-end">
+            {/* Right: search + CTA */}
+            <div className="flex items-center justify-end gap-3">
+              <SearchTrigger variant="desktop" />
               <Button href="/assessment" size="sm">Take the Assessment</Button>
             </div>
           </div>
