@@ -12,7 +12,6 @@ const navLinks = [
   { label: "Guides", href: "/guides" },
   { label: "Product Reviews", href: "/reviews" },
   { label: "Routines", href: "/routines" },
-  { label: "Assessment", href: "/assessment" },
 ];
 
 export default function SiteLayout({
