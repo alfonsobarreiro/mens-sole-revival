@@ -96,6 +96,7 @@ Where the audit found gaps but the fix didn't ship in this batch.
 3. **Source attribution on article bodies.** Articles cite mechanisms (urea %, terbinafine) but don't always link to the supporting study. The assessment and homepage both do. Articles should match.
 4. **"Why we built this" page audit.** `/about` was not touched in this pass. It probably needs the same hero-microcopy and tone-audit treatment as the homepage.
 5. **PDF assessment results.** The current generator is client-side and the output is formatted as a tier+flags summary. Per `MSR-Assessment-Redesign.md` §3.5, this should become a "doctor visit" artifact with podiatrist-prep bullets at the top. Will land with the assessment redesign in code.
+6. **PDF typography family match.** The doctor-visit PDF currently uses helvetica + times as stand-ins for DM Sans + Lora + Barlow Condensed. Sizes, weights, and layout match the on-screen results page exactly, but the typefaces themselves do not. jsPDF's TTF parser can't read the modern Google Fonts TTFs (they ship cmap format 12; jsPDF needs format 0/4). Two paths to fix: (a) switch to pdf-lib (uses fontkit, handles modern TTFs cleanly) or (b) find a jsPDF-compatible TTF source. (a) is the durable answer.
 
 ---
 
