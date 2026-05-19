@@ -296,6 +296,20 @@ export default function AssessmentPage() {
     return out;
   }, [checked]);
 
+  // Per-section list of the user-visible text for every checked item.
+  // Mirrors flagsBySection but carries the strings so the results
+  // screen (and any print/PDF of it) can name what was flagged.
+  const itemsBySection: Partial<Record<SectionId, string[]>> = useMemo(() => {
+    const out: Partial<Record<SectionId, string[]>> = {};
+    for (const step of steps) {
+      const flagged = step.items
+        .filter((it) => checked[it.id])
+        .map((it) => it.text);
+      if (flagged.length > 0) out[step.sectionId] = flagged;
+    }
+    return out;
+  }, [checked]);
+
   const attemptedSections: SectionId[] = useMemo(
     () => visibleSteps.map((s) => s.sectionId),
     [visibleSteps]
@@ -1010,6 +1024,7 @@ export default function AssessmentPage() {
               <AssessmentResults
                 flagsBySection={flagsBySection}
                 durationBySection={durationBySection}
+                itemsBySection={itemsBySection}
                 totalFlags={totalFlags}
                 attemptedSections={attemptedSections}
                 notSureCount={notSureCount}

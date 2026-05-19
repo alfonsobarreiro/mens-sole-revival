@@ -10,6 +10,7 @@ import {
 } from "@/app/actions/assessment-email";
 import {
   composeResult,
+  durationLabels,
   sectionTitle,
   type Duration,
   type SectionId,
@@ -21,6 +22,11 @@ const initialEmail: AssessmentEmailState = { status: "idle" };
 interface AssessmentResultsProps {
   flagsBySection: Partial<Record<SectionId, number>>;
   durationBySection: Partial<Record<SectionId, Duration>>;
+  /** Per-section, the human-readable text of every item the user
+   * flagged. Surfaces in each section card so the user (and any
+   * print/PDF of the page) sees what specifically was checked, not
+   * just a count. */
+  itemsBySection: Partial<Record<SectionId, string[]>>;
   totalFlags: number;
   /** Section IDs the user worked through (used for the per-section
    * flag summary on top of the result blocks). */
@@ -48,6 +54,7 @@ export default function AssessmentResults({
   totalFlags,
   attemptedSections,
   notSureCount,
+  itemsBySection,
   onDownloadPdf,
   onRestart,
   onBackToLastSection,
@@ -125,28 +132,60 @@ export default function AssessmentResults({
           .
         </p>
         {attemptedSections.length > 0 && (
-          <ul className="mt-5 grid gap-2 sm:grid-cols-2">
+          <ul className="mt-5 space-y-3">
             {attemptedSections.map((sid) => {
               const count = flagsBySection[sid] ?? 0;
+              const items = itemsBySection[sid] ?? [];
+              const duration = durationBySection[sid];
               const bucket = result.bucketBySection[sid];
               return (
                 <li
                   key={sid}
-                  className="flex items-center justify-between border border-neutral-200 bg-white px-4 py-3"
+                  className="border border-neutral-200 bg-white px-4 py-3"
                 >
-                  <div className="flex flex-col">
-                    <span className="text-sm font-medium text-neutral-800">
-                      {sectionTitle[sid]}
-                    </span>
-                    {bucket === "high" && (
-                      <span className="text-[10px] font-semibold uppercase tracking-wider text-accent-600">
-                        Worth a podiatrist visit
+                  {/* Header row: section name + duration + count */}
+                  <div className="flex items-baseline justify-between gap-3">
+                    <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                      <span className="text-sm font-medium text-neutral-800">
+                        {sectionTitle[sid]}
                       </span>
-                    )}
+                      {duration && count > 0 && (
+                        <span className="text-xs text-neutral-500">
+                          for {durationLabels[duration]}
+                        </span>
+                      )}
+                      {bucket === "high" && (
+                        <span className="text-[10px] font-semibold uppercase tracking-wider text-accent-600">
+                          Worth a podiatrist visit
+                        </span>
+                      )}
+                    </div>
+                    <span
+                      className={`shrink-0 text-xs font-bold uppercase tracking-wider ${
+                        count > 0 ? "text-brand-500" : "text-neutral-400"
+                      }`}
+                    >
+                      {count} flag{count === 1 ? "" : "s"}
+                    </span>
                   </div>
-                  <span className="text-xs font-bold uppercase tracking-wider text-brand-500">
-                    {count} flag{count === 1 ? "" : "s"}
-                  </span>
+
+                  {/* Items list (only when count > 0) */}
+                  {items.length > 0 && (
+                    <ul className="mt-3 space-y-1.5 border-t border-neutral-100 pt-3">
+                      {items.map((it, i) => (
+                        <li
+                          key={i}
+                          className="flex items-start gap-2 text-sm leading-6 text-neutral-700"
+                        >
+                          <span
+                            aria-hidden="true"
+                            className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent-500"
+                          />
+                          <span>{it}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </li>
               );
             })}
