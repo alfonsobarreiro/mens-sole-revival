@@ -118,6 +118,26 @@ function loadImage(src: string, type: "png" | "jpeg" = "jpeg", maxDim?: number):
 // ─────────────────────────────────────────────────────────────────────────
 
 export async function generateAssessmentPDF(data: AssessmentData) {
+  // Pre-register brand fonts. Each module pushes a callback onto
+  // jsPDF.API.events; the next `new jsPDF()` invokes those callbacks
+  // and embeds the TTFs. Dynamic imports keep these ~2 MB of base64
+  // out of the main bundle — they only load when the PDF is generated.
+  let brandFontsAvailable = false;
+  try {
+    await Promise.all([
+      import("./pdfFonts/BarlowCondensed-Bold"),
+      import("./pdfFonts/DMSans-Regular"),
+      import("./pdfFonts/DMSans-Bold"),
+      import("./pdfFonts/DMSans-Medium"),
+      import("./pdfFonts/Lora-Regular"),
+      import("./pdfFonts/Lora-Bold"),
+    ]);
+    brandFontsAvailable = true;
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.warn("PDF: brand fonts failed to load, falling back to system fonts", err);
+  }
+
   const { default: jsPDF } = await import("jspdf");
   const doc = new jsPDF({ unit: "pt", format: "letter" });
   const W = doc.internal.pageSize.getWidth();   // 612
@@ -126,20 +146,51 @@ export async function generateAssessmentPDF(data: AssessmentData) {
   const CW = W - M * 2;                          // 500
   let y = 0;
 
-  // Font shortcuts. We previously embedded Lora / DM Sans / Barlow
-  // Condensed as TTFs via doc.addFileToVFS + doc.addFont, but that path
-  // is unreliable across jsPDF versions — the proper way to ship custom
-  // fonts is jsPDF's fontconverter tool (converts TTF → .js font
-  // module). Until that lands, we use system fonts that ALWAYS work
-  // and tune sizes/weights to mirror the on-screen recipes.
-  //   helvetica = DM Sans approximation (clean sans-serif UI font)
-  //   times     = Lora / Barlow Condensed approximation (serif display)
-  const F = {
-    display:    "helvetica",  // mirrors font-display (Barlow Condensed)
-    body:       "helvetica",  // mirrors body / UI (DM Sans)
-    bodyMedium: "helvetica",  // mirrors text-sm font-medium (DM Sans Medium)
-    editorial:  "times",      // mirrors editorial / logo wordmark (Lora)
-  };
+  // Font shortcuts. If the brand TTFs registered cleanly via the
+  // events.addFonts hook, we use them. Otherwise we fall back to
+  // jsPDF built-ins (helvetica + times) — the layout stays the same.
+  const F = brandFontsAvailable
+    ? {
+        display:    "BarlowCondensed",
+        body:       "DMSans",
+        bodyMedium: "DMSansMedium",
+        editorial:  "Lora",
+      }
+    : {
+        display:    "helvetica",
+        body:       "helvetica",
+        bodyMedium: "helvetica",
+        editorial:  "times",
+      };
+
+  // Verify each font actually got registered. addFonts events run on
+  // jsPDF instantiation; if any threw, the font isn't usable. Fall back
+  // per family if so.
+  if (brandFontsAvailable) {
+    const families = [
+      { name: "BarlowCondensed", style: "bold",   fallback: "helvetica" },
+      { name: "DMSans",          style: "normal", fallback: "helvetica" },
+      { name: "DMSans",          style: "bold",   fallback: "helvetica" },
+      { name: "DMSansMedium",    style: "normal", fallback: "helvetica" },
+      { name: "Lora",            style: "normal", fallback: "times"     },
+      { name: "Lora",            style: "bold",   fallback: "times"     },
+    ];
+    for (const f of families) {
+      try {
+        doc.setFont(f.name, f.style);
+      } catch {
+        // eslint-disable-next-line no-console
+        console.warn(`PDF: ${f.name} ${f.style} unusable, will fall back`);
+        // No per-family flip here; jsPDF would have thrown noisily —
+        // safest is to just use the system fallbacks for everything.
+        F.display = "helvetica";
+        F.body = "helvetica";
+        F.bodyMedium = "helvetica";
+        F.editorial = "times";
+        break;
+      }
+    }
+  }
 
   // ── Drawing helpers ───────────────────────────────────────────────────
   function fill(x: number, yPos: number, w: number, h: number, color: string) {
