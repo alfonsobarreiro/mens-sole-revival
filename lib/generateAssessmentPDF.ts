@@ -378,7 +378,10 @@ export async function generateAssessmentPDF(data: AssessmentData) {
 
   // ── Block 1: Read & do ───────────────────────────────────────────────
   if (data.articles.length > 0) {
-    pageBreakIf(100);
+    // Header (74) + at least one card row (152 + 14) so the headline
+    // never lands alone at the bottom of a page with cards orphaned to
+    // the next page.
+    pageBreakIf(240);
     text("BLOCK 1", M, y, {
       size: SIZE.xs, color: C.accent600, font: F.body, weight: "normal",
     });
@@ -498,7 +501,11 @@ export async function generateAssessmentPDF(data: AssessmentData) {
   }
 
   // ── Block 3: Talk to a professional ───────────────────────────────────
-  pageBreakIf(100);
+  // Header (74) + at least the empty-state card (60) so the headline
+  // never lands at the bottom of a page with content jumping to the
+  // next one (which is what caused the giant gap above Block 3 in the
+  // earlier iteration).
+  pageBreakIf(150);
   text("BLOCK 3", M, y, {
     size: SIZE.xs, color: C.accent600, font: F.body, weight: "normal",
   });
