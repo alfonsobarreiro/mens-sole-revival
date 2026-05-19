@@ -407,9 +407,9 @@ export async function generateAssessmentPDF(data: AssessmentData) {
     y += 26;
 
     const colW = (CW - 14) / 2;
-    const cardH = 144;     // 132 was too tight — the action text was
-                           // crowding the bottom border. 144 gives the
-                           // footer block ~20pt of breathing room.
+    const cardH = 162;     // sized for a 3-line action (some article
+                           // actions wrap past 2 lines) + ~24pt of
+                           // bottom padding below the last line.
     const thumbW = 60;
     const thumbH = 44;
 
@@ -460,9 +460,9 @@ export async function generateAssessmentPDF(data: AssessmentData) {
         doc.setFontSize(SIZE.xs);
         doc.setTextColor(C.neutral700);
         const actionLines = doc.splitTextToSize(a.action, colW - 28) as string[];
-        doc.text(actionLines.slice(0, 2), cx + 14, footerY + 32);
-        // Action ends at footerY + 32 + ~12 (1 line) or ~22 (2 lines).
-        // cardH=144 → bottom at y+144 → buffer of 12-22pt below text.
+        doc.text(actionLines.slice(0, 3), cx + 14, footerY + 32);
+        // Action baselines: line 1 y+110, line 2 y+120, line 3 y+130.
+        // Descender ~y+133; cardH=162 → bottom y+162 → 29pt buffer.
 
         doc.link(cx, y, colW, cardH, { url: `${BASE_URL}/guides/${a.slug}` });
       }
