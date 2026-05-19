@@ -285,34 +285,38 @@ export async function generateAssessmentPDF(data: AssessmentData) {
   y += sumLines.length * 16 + 22;
 
   // ── Per-section card grid ─────────────────────────────────────────────
+  // Row-by-row layout so page breaks land cleanly: each row checks for
+  // overflow up front, draws both columns at the SAME y, then advances.
   if (data.sections.length > 0) {
     const colW = (CW - 14) / 2;
     const rowH = 56;
-    for (let i = 0; i < data.sections.length; i++) {
-      const s = data.sections[i];
-      const col = i % 2;
-      const row = Math.floor(i / 2);
-      const cx = M + col * (colW + 14);
-      const cy = y + row * (rowH + 14);
-      if (col === 0) pageBreakIf(rowH + 14);
-      rectFillAndStroke(cx, cy, colW, rowH, C.white, C.neutral200);
+    const rowCount = Math.ceil(data.sections.length / 2);
+    for (let r = 0; r < rowCount; r++) {
+      pageBreakIf(rowH + 14);
+      for (let c = 0; c < 2; c++) {
+        const i = r * 2 + c;
+        if (i >= data.sections.length) break;
+        const s = data.sections[i];
+        const cx = M + c * (colW + 14);
+        rectFillAndStroke(cx, y, colW, rowH, C.white, C.neutral200);
 
-      text(s.title, cx + 16, cy + 24, {
-        size: SIZE.sm, color: C.neutral700, font: F.bodyMedium,
-      });
-      if (s.duration) {
-        text(`for ${DURATION_LABEL[s.duration]}`, cx + 16, cy + 40, {
-          size: SIZE.xs, color: C.neutral500, font: F.body,
+        text(s.title, cx + 16, y + 24, {
+          size: SIZE.sm, color: C.neutral700, font: F.bodyMedium,
+        });
+        if (s.duration) {
+          text(`for ${DURATION_LABEL[s.duration]}`, cx + 16, y + 40, {
+            size: SIZE.xs, color: C.neutral500, font: F.body,
+          });
+        }
+        const countStr = `${s.count} FLAG${s.count === 1 ? "" : "S"}`;
+        const cw = textWidth(countStr, SIZE.xs, F.body, "bold");
+        text(countStr, cx + colW - 16 - cw, y + 24, {
+          size: SIZE.xs, color: C.accent600, font: F.body, weight: "bold",
         });
       }
-      const countStr = `${s.count} FLAG${s.count === 1 ? "" : "S"}`;
-      const cw = textWidth(countStr, SIZE.xs, F.body, "bold");
-      text(countStr, cx + colW - 16 - cw, cy + 24, {
-        size: SIZE.xs, color: C.accent600, font: F.body, weight: "bold",
-      });
+      y += rowH + 14;
     }
-    const rows = Math.ceil(data.sections.length / 2);
-    y += rows * (rowH + 14) + 28;
+    y += 14; // inter-block spacing (the +14 already accounts for the last row gap)
   }
 
   // ── Optional clinic callout ───────────────────────────────────────────
@@ -362,58 +366,60 @@ export async function generateAssessmentPDF(data: AssessmentData) {
     const thumbW = 68;
     const thumbH = 52;
 
-    for (let i = 0; i < data.articles.length; i++) {
-      const a = data.articles[i];
-      const thumb = articleThumbs[i];
-      const col = i % 2;
-      const row = Math.floor(i / 2);
-      const cx = M + col * (colW + 14);
-      const cy = y + row * (cardH + 14);
+    // Row-by-row: page-break check at the top of each row, both columns
+    // draw at the same y, then advance.
+    const rowCount = Math.ceil(data.articles.length / 2);
+    for (let r = 0; r < rowCount; r++) {
+      pageBreakIf(cardH + 14);
+      for (let c = 0; c < 2; c++) {
+        const i = r * 2 + c;
+        if (i >= data.articles.length) break;
+        const a = data.articles[i];
+        const thumb = articleThumbs[i];
+        const cx = M + c * (colW + 14);
 
-      if (col === 0) pageBreakIf(cardH + 14);
+        rectFillAndStroke(cx, y, colW, cardH, C.white, C.neutral200);
 
-      rectFillAndStroke(cx, cy, colW, cardH, C.white, C.neutral200);
+        if (thumb) {
+          try {
+            doc.addImage(thumb, "JPEG", cx + 14, y + 14, thumbW, thumbH);
+          } catch {/* tolerate broken thumbs */}
+        } else {
+          fill(cx + 14, y + 14, thumbW, thumbH, C.neutral200);
+        }
 
-      if (thumb) {
-        try {
-          doc.addImage(thumb, "JPEG", cx + 14, cy + 14, thumbW, thumbH);
-        } catch {/* tolerate broken thumbs */}
-      } else {
-        fill(cx + 14, cy + 14, thumbW, thumbH, C.neutral200);
+        const textX = cx + 14 + thumbW + 14;
+        const textW = colW - (14 + thumbW + 14) - 14;
+
+        const cat = `${a.category.toUpperCase()} · ${a.readTime.toUpperCase()} READ`;
+        text(cat, textX, y + 24, {
+          size: SIZE.tiny, color: C.accent600, font: F.bodyMedium,
+        });
+
+        doc.setFont(F.body, "bold");
+        doc.setFontSize(SIZE.sm);
+        doc.setTextColor(C.brand900);
+        const titleLines = doc.splitTextToSize(a.title, textW) as string[];
+        doc.text(titleLines.slice(0, 3), textX, y + 40);
+
+        const footerY = y + 90;
+        hline(cx, footerY, cx + colW, C.neutral200);
+
+        text("FIRST MOVE:", cx + 14, footerY + 20, {
+          size: SIZE.xs, color: C.brand500, font: F.body, weight: "bold",
+        });
+
+        doc.setFont(F.body, "normal");
+        doc.setFontSize(SIZE.xs);
+        doc.setTextColor(C.neutral700);
+        const actionLines = doc.splitTextToSize(a.action, colW - 28) as string[];
+        doc.text(actionLines.slice(0, 3), cx + 14, footerY + 36);
+
+        doc.link(cx, y, colW, cardH, { url: `${BASE_URL}/guides/${a.slug}` });
       }
-
-      const textX = cx + 14 + thumbW + 14;
-      const textW = colW - (14 + thumbW + 14) - 14;
-
-      const cat = `${a.category.toUpperCase()} · ${a.readTime.toUpperCase()} READ`;
-      text(cat, textX, cy + 24, {
-        size: SIZE.tiny, color: C.accent600, font: F.bodyMedium,
-      });
-
-      doc.setFont(F.body, "bold");
-      doc.setFontSize(SIZE.sm);
-      doc.setTextColor(C.brand900);
-      const titleLines = doc.splitTextToSize(a.title, textW) as string[];
-      doc.text(titleLines.slice(0, 3), textX, cy + 40);
-
-      // Footer separator + first-move copy
-      const footerY = cy + 90;
-      hline(cx, footerY, cx + colW, C.neutral200);
-
-      text("FIRST MOVE:", cx + 14, footerY + 20, {
-        size: SIZE.xs, color: C.brand500, font: F.body, weight: "bold",
-      });
-
-      doc.setFont(F.body, "normal");
-      doc.setFontSize(SIZE.xs);
-      doc.setTextColor(C.neutral700);
-      const actionLines = doc.splitTextToSize(a.action, colW - 28) as string[];
-      doc.text(actionLines.slice(0, 3), cx + 14, footerY + 36);
-
-      doc.link(cx, cy, colW, cardH, { url: `${BASE_URL}/guides/${a.slug}` });
+      y += cardH + 14;
     }
-    const rows = Math.ceil(data.articles.length / 2);
-    y += rows * (cardH + 14) + 32;
+    y += 18; // inter-block spacing (row gap already added by the last +14)
   }
 
   // ── Block 2: Routine to follow ────────────────────────────────────────
