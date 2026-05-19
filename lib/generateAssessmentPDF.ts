@@ -289,74 +289,36 @@ export async function generateAssessmentPDF(data: AssessmentData) {
   doc.text(sumLines, M, y);
   y += sumLines.length * 16 + 22;
 
-  // ── Per-section card grid ─────────────────────────────────────────────
-  // Row-by-row layout so page breaks land cleanly: each row checks for
-  // overflow up front, draws both columns at the SAME y, then advances.
+  // ── Section cards — title + duration + count + flagged items ────────
+  // One full-width card per section the user worked through. Cards with
+  // flags list the specific items inline (this is the doctor's payload).
+  // Cards with zero flags still appear so the doctor sees the complete
+  // self-check coverage, just without an items list. Card height is
+  // computed dynamically; pageBreakIf runs per-card.
   if (data.sections.length > 0) {
-    const colW = (CW - 14) / 2;
-    const rowH = 56;
-    const rowCount = Math.ceil(data.sections.length / 2);
-    for (let r = 0; r < rowCount; r++) {
-      pageBreakIf(rowH + 14);
-      for (let c = 0; c < 2; c++) {
-        const i = r * 2 + c;
-        if (i >= data.sections.length) break;
-        const s = data.sections[i];
-        const cx = M + c * (colW + 14);
-        rectFillAndStroke(cx, y, colW, rowH, C.white, C.neutral200);
-
-        text(s.title, cx + 16, y + 24, {
-          size: SIZE.sm, color: C.neutral700, font: F.bodyMedium,
-        });
-        if (s.duration) {
-          text(`for ${DURATION_LABEL[s.duration]}`, cx + 16, y + 40, {
-            size: SIZE.xs, color: C.neutral500, font: F.body,
-          });
-        }
-        const countStr = `${s.count} FLAG${s.count === 1 ? "" : "S"}`;
-        const cw = textWidth(countStr, SIZE.xs, F.body, "normal");
-        text(countStr, cx + colW - 16 - cw, y + 24, {
-          size: SIZE.xs, color: C.accent600, font: F.body, weight: "normal",
-        });
-      }
-      y += rowH + 14;
-    }
-    y += 14; // inter-block spacing (the +14 already accounts for the last row gap)
-  }
-
-  // ── What I flagged · detailed list per section ────────────────────────
-  // The per-section grid above gives the doctor an at-a-glance count.
-  // This block names the specific items the patient checked so the
-  // visit can move past "tell me what's bothering you" and straight
-  // into "let me look at the nail you said was lifting away."
-  const flaggedSections = data.sections.filter((s) => s.count > 0);
-  if (flaggedSections.length > 0) {
-    pageBreakIf(50);
-    text("WHAT I FLAGGED", M, y, {
-      size: SIZE.xs, color: C.accent600, font: F.body, weight: "normal",
-    });
-    y += 24;
-
-    for (const s of flaggedSections) {
-      // Compute card height: header row + items
+    for (const s of data.sections) {
+      // Wrap items inside the section card width
       doc.setFont(F.body, "normal");
       doc.setFontSize(SIZE.sm);
       const wrapped: string[][] = s.items.map(
         (it) => doc.splitTextToSize(it, CW - 56) as string[]
       );
-      const itemsHeight = wrapped.reduce((sum, lines) => sum + lines.length * 15 + 6, 0);
-      const cardH = 32 + itemsHeight + 14;
+      const itemsHeight = wrapped.length > 0
+        ? wrapped.reduce((sum, lines) => sum + lines.length * 15 + 6, 0)
+        : 0;
+      // Header row 36pt + items + 14pt bottom padding (or 16pt total if no items)
+      const cardH = wrapped.length > 0 ? 36 + itemsHeight + 12 : 44;
 
       pageBreakIf(cardH + 14);
 
-      // Card background
+      // Card background + border
       rectFillAndStroke(M, y, CW, cardH, C.white, C.neutral200);
 
-      // Header row: section name + duration · count badge right-aligned
+      // Header row: title + (optional) duration + count badge
       text(s.title, M + 16, y + 22, {
         size: SIZE.sm, color: C.brand900, font: F.bodyMedium,
       });
-      if (s.duration) {
+      if (s.duration && s.count > 0) {
         const titleW = textWidth(s.title, SIZE.sm, F.bodyMedium, "normal");
         text(`for ${DURATION_LABEL[s.duration]}`, M + 16 + titleW + 8, y + 22, {
           size: SIZE.xs, color: C.neutral500, font: F.body,
@@ -364,26 +326,28 @@ export async function generateAssessmentPDF(data: AssessmentData) {
       }
       const countStr = `${s.count} FLAG${s.count === 1 ? "" : "S"}`;
       const cw = textWidth(countStr, SIZE.xs, F.body, "normal");
+      const countColor = s.count > 0 ? C.accent600 : C.neutral400;
       text(countStr, M + CW - 16 - cw, y + 22, {
-        size: SIZE.xs, color: C.accent600, font: F.body, weight: "normal",
+        size: SIZE.xs, color: countColor, font: F.body, weight: "normal",
       });
 
-      // Items list
-      let iy = y + 44;
-      doc.setFont(F.body, "normal");
-      doc.setFontSize(SIZE.sm);
-      doc.setTextColor(C.neutral700);
-      for (let idx = 0; idx < wrapped.length; idx++) {
-        const lines = wrapped[idx];
-        doc.setFillColor(C.accent500);
-        doc.circle(M + 22, iy - 3, 1.6, "F");
-        doc.text(lines, M + 32, iy);
-        iy += lines.length * 15 + 6;
+      // Items list (if any flags)
+      if (wrapped.length > 0) {
+        let iy = y + 46;
+        doc.setFont(F.body, "normal");
+        doc.setFontSize(SIZE.sm);
+        doc.setTextColor(C.neutral700);
+        for (const lines of wrapped) {
+          doc.setFillColor(C.accent500);
+          doc.circle(M + 22, iy - 3, 1.6, "F");
+          doc.text(lines, M + 32, iy);
+          iy += lines.length * 15 + 6;
+        }
       }
 
-      y += cardH + 14;
+      y += cardH + 12;
     }
-    y += 12; // trim before next block
+    y += 14; // inter-block spacing before clinic callout / Read & do
   }
 
   // ── Optional clinic callout ───────────────────────────────────────────
