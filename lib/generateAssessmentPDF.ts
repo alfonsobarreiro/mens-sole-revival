@@ -181,7 +181,12 @@ export async function generateAssessmentPDF(data: AssessmentData) {
     doc.text(str, x, yPos, drawOpts);
   }
   function paintPageBackground() {
-    fill(0, 0, W, H, C.neutral50);
+    // Use neutral-100 (#EEEDEC) instead of neutral-50 (#F8F7F7). On
+    // screen the live page's neutral-50 reads as "warm white" against
+    // pure-white cards; in PDF viewers (Adobe, Preview) the same hex
+    // value renders nearly identical to pure white, so the cards lose
+    // their visual lift. The slightly warmer neutral-100 holds up.
+    fill(0, 0, W, H, C.neutral100);
   }
   function pageBreakIf(needed: number) {
     if (y + needed > H - 96) {
@@ -221,8 +226,8 @@ export async function generateAssessmentPDF(data: AssessmentData) {
   fill(0, 0, W, NAV_H, C.white);
 
   // Logo lockup: serif M + thin rule + wordmark, all in editorial Times
-  text("M", M, 40, { size: 28, color: C.brand500, font: F.editorial, weight: "bold" });
-  const mWidth = textWidth("M", 28, F.editorial, "bold");
+  text("M", M, 40, { size: 28, color: C.brand500, font: F.editorial, weight: "normal" });
+  const mWidth = textWidth("M", 28, F.editorial, "normal");
   fill(M + mWidth + 10, 22, 0.5, 22, C.neutral300);
   text("Men's Sole Revival", M + mWidth + 22, 36, {
     size: 13, color: C.brand500, font: F.editorial, weight: "normal",
@@ -250,24 +255,24 @@ export async function generateAssessmentPDF(data: AssessmentData) {
 
   // Eyebrow — cognac, small uppercase
   text("5-MINUTE SELF-CHECK", M, HERO_TOP + 44, {
-    size: SIZE.xs, color: C.accent500, font: F.body, weight: "bold",
+    size: SIZE.xs, color: C.accent500, font: F.body, weight: "normal",
   });
 
   // Title — big uppercase, matches the page displaySection treatment
   text("THE MEN'S FOOT HEALTH ASSESSMENT", M, HERO_TOP + 88, {
-    size: SIZE["3xl"], color: C.white, font: F.display, weight: "bold",
+    size: SIZE["3xl"], color: C.white, font: F.display, weight: "normal",
   });
 
   y = HERO_TOP + HERO_H + 36;
 
   // ── "YOUR RESULTS" headline ───────────────────────────────────────────
   text("YOUR RESULTS", M, y, {
-    size: SIZE.xs, color: C.accent600, font: F.body, weight: "bold",
+    size: SIZE.xs, color: C.accent600, font: F.body, weight: "normal",
   });
   y += 26;
 
   text("Here's where you stand.", M, y, {
-    size: SIZE["3xl"], color: C.brand900, font: F.display, weight: "bold",
+    size: SIZE["3xl"], color: C.brand900, font: F.display, weight: "normal",
   });
   y += 28;
 
@@ -309,9 +314,9 @@ export async function generateAssessmentPDF(data: AssessmentData) {
           });
         }
         const countStr = `${s.count} FLAG${s.count === 1 ? "" : "S"}`;
-        const cw = textWidth(countStr, SIZE.xs, F.body, "bold");
+        const cw = textWidth(countStr, SIZE.xs, F.body, "normal");
         text(countStr, cx + colW - 16 - cw, y + 24, {
-          size: SIZE.xs, color: C.accent600, font: F.body, weight: "bold",
+          size: SIZE.xs, color: C.accent600, font: F.body, weight: "normal",
         });
       }
       y += rowH + 14;
@@ -335,7 +340,7 @@ export async function generateAssessmentPDF(data: AssessmentData) {
     fill(M + 4, y, CW - 4, blockH, C.accent50);
 
     text("WORTH A PROFESSIONAL VISIT", M + 20, y + 24, {
-      size: SIZE.xs, color: C.accent700, font: F.body, weight: "bold",
+      size: SIZE.xs, color: C.accent700, font: F.body, weight: "normal",
     });
     doc.setFont(F.body, "normal");
     doc.setFontSize(SIZE.sm);
@@ -349,11 +354,11 @@ export async function generateAssessmentPDF(data: AssessmentData) {
   if (data.articles.length > 0) {
     pageBreakIf(100);
     text("BLOCK 1", M, y, {
-      size: SIZE.xs, color: C.accent600, font: F.body, weight: "bold",
+      size: SIZE.xs, color: C.accent600, font: F.body, weight: "normal",
     });
     y += 24;
     text("Read & do.", M, y, {
-      size: SIZE["2xl"], color: C.brand900, font: F.display, weight: "bold",
+      size: SIZE["2xl"], color: C.brand900, font: F.display, weight: "normal",
     });
     y += 24;
     text("Each card is a guide plus the first concrete move from it.", M, y, {
@@ -396,7 +401,7 @@ export async function generateAssessmentPDF(data: AssessmentData) {
           size: SIZE.tiny, color: C.accent600, font: F.bodyMedium,
         });
 
-        doc.setFont(F.body, "bold");
+        doc.setFont(F.body, "normal");
         doc.setFontSize(SIZE.sm);
         doc.setTextColor(C.brand900);
         const titleLines = doc.splitTextToSize(a.title, textW) as string[];
@@ -406,7 +411,7 @@ export async function generateAssessmentPDF(data: AssessmentData) {
         hline(cx, footerY, cx + colW, C.neutral200);
 
         text("FIRST MOVE:", cx + 14, footerY + 20, {
-          size: SIZE.xs, color: C.brand500, font: F.body, weight: "bold",
+          size: SIZE.xs, color: C.brand500, font: F.body, weight: "normal",
         });
 
         doc.setFont(F.body, "normal");
@@ -426,11 +431,11 @@ export async function generateAssessmentPDF(data: AssessmentData) {
   if (data.routine) {
     pageBreakIf(200);
     text("BLOCK 2", M, y, {
-      size: SIZE.xs, color: C.accent600, font: F.body, weight: "bold",
+      size: SIZE.xs, color: C.accent600, font: F.body, weight: "normal",
     });
     y += 24;
     text("Routine to follow.", M, y, {
-      size: SIZE["2xl"], color: C.brand900, font: F.display, weight: "bold",
+      size: SIZE["2xl"], color: C.brand900, font: F.display, weight: "normal",
     });
     y += 24;
     text("One specific starting point, not a list.", M, y, {
@@ -443,10 +448,10 @@ export async function generateAssessmentPDF(data: AssessmentData) {
     rectFillAndStroke(M, y, CW, cardH, C.white, C.neutral200);
 
     text(`ROUTINE · ${r.label.toUpperCase()}`, M + 20, y + 24, {
-      size: SIZE.xs, color: C.brand500, font: F.body, weight: "bold",
+      size: SIZE.xs, color: C.brand500, font: F.body, weight: "normal",
     });
     text(r.heading, M + 20, y + 50, {
-      size: SIZE.xl, color: C.brand900, font: F.display, weight: "bold",
+      size: SIZE.xl, color: C.brand900, font: F.display, weight: "normal",
     });
     text(r.time, M + 20, y + 66, {
       size: SIZE.xs, color: C.neutral500, font: F.bodyMedium,
@@ -455,7 +460,7 @@ export async function generateAssessmentPDF(data: AssessmentData) {
     const footerY = y + 80;
     hline(M, footerY, M + CW, C.neutral200);
     text("FIRST MOVE:", M + 20, footerY + 20, {
-      size: SIZE.xs, color: C.brand500, font: F.body, weight: "bold",
+      size: SIZE.xs, color: C.brand500, font: F.body, weight: "normal",
     });
     doc.setFont(F.body, "normal");
     doc.setFontSize(SIZE.xs);
@@ -469,11 +474,11 @@ export async function generateAssessmentPDF(data: AssessmentData) {
   // ── Block 3: Talk to a professional ───────────────────────────────────
   pageBreakIf(100);
   text("BLOCK 3", M, y, {
-    size: SIZE.xs, color: C.accent600, font: F.body, weight: "bold",
+    size: SIZE.xs, color: C.accent600, font: F.body, weight: "normal",
   });
   y += 24;
   text("Talk to a professional.", M, y, {
-    size: SIZE["2xl"], color: C.brand900, font: F.display, weight: "bold",
+    size: SIZE["2xl"], color: C.brand900, font: F.display, weight: "normal",
   });
   y += 24;
   text("Read these to your podiatrist. They cover what you came to say.", M, y, {
@@ -525,9 +530,9 @@ export async function generateAssessmentPDF(data: AssessmentData) {
 
   // Find a podiatrist link
   text("FIND A PODIATRIST NEAR YOU →", M, y, {
-    size: SIZE.xs, color: C.accent600, font: F.body, weight: "bold",
+    size: SIZE.xs, color: C.accent600, font: F.body, weight: "normal",
   });
-  const apmaW = textWidth("FIND A PODIATRIST NEAR YOU →", SIZE.xs, F.body, "bold");
+  const apmaW = textWidth("FIND A PODIATRIST NEAR YOU →", SIZE.xs, F.body, "normal");
   doc.link(M, y - 10, apmaW + 6, 14, { url: "https://www.apma.org/find-a-podiatrist" });
   y += 34;
 
@@ -545,9 +550,9 @@ export async function generateAssessmentPDF(data: AssessmentData) {
   y += 26;
 
   text("menssolerevival.com", M, y, {
-    size: SIZE.sm, color: C.accent600, font: F.body, weight: "bold",
+    size: SIZE.sm, color: C.accent600, font: F.body, weight: "normal",
   });
-  const footerLinkW = textWidth("menssolerevival.com", SIZE.sm, F.body, "bold");
+  const footerLinkW = textWidth("menssolerevival.com", SIZE.sm, F.body, "normal");
   doc.link(M, y - 12, footerLinkW + 4, 16, { url: BASE_URL });
 
   doc.save("MSR-Foot-Health-Self-Check.pdf");
