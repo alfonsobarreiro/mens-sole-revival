@@ -205,45 +205,60 @@ export async function generateAssessmentPDF(data: AssessmentData) {
     )
   );
 
-  // ── Hero band ─────────────────────────────────────────────────────────
-  const HEADER_H = 152;
-  fill(0, 0, W, HEADER_H, C.brand900);
-  fill(0, HEADER_H, W, 3, C.accent500);
+  // ── Header structure (mirrors the on-screen page) ─────────────────────
+  //
+  //   1. NAV strip (white):    logo lockup left + date right
+  //   2. HERO band (brand-900): eyebrow + big uppercase title
+  //   3. Accent rule (cognac):  separates hero from content
+  //
+  // On the live page the logo is in the site nav above the hero, and
+  // the hero itself is just the eyebrow + title (THE MEN'S FOOT HEALTH
+  // ASSESSMENT). We replicate that two-band split here so the PDF
+  // reads as the same product.
 
-  // Logo · Lora-rendered M + wordmark (vector, crisp at any DPI)
-  text("M", M, 82, { size: 48, color: C.white, font: F.editorial, weight: "bold" });
-  const mWidth = textWidth("M", 48, F.editorial, "bold");
-  // Vertical rule between mark and wordmark
-  fill(M + mWidth + 14, 44, 0.6, 40, C.white);
-  text("Men's Sole Revival", M + mWidth + 28, 72, {
-    size: 20, color: C.white, font: F.editorial, weight: "normal",
+  // 1. NAV strip — white bg, logo lockup + date
+  const NAV_H = 56;
+  fill(0, 0, W, NAV_H, C.white);
+
+  // Logo lockup: serif M + thin rule + wordmark, all in editorial Times
+  text("M", M, 40, { size: 28, color: C.brand500, font: F.editorial, weight: "bold" });
+  const mWidth = textWidth("M", 28, F.editorial, "bold");
+  fill(M + mWidth + 10, 22, 0.5, 22, C.neutral300);
+  text("Men's Sole Revival", M + mWidth + 22, 36, {
+    size: 13, color: C.brand500, font: F.editorial, weight: "normal",
   });
 
-  // Eyebrow + title (below logo)
-  text("5-MINUTE SELF-CHECK", M, 114, {
-    size: SIZE.xs, color: C.accent500, font: F.body, weight: "bold",
-  });
-  text("The Men's Foot Health Assessment", M, 138, {
-    size: SIZE["2xl"], color: C.white, font: F.display, weight: "bold",
-  });
-
-  // Date + clickable URL right-aligned
+  // Date right-aligned
   const dateStr = new Date().toLocaleDateString("en-US", {
     year: "numeric", month: "long", day: "numeric",
   });
   const dateW = textWidth(dateStr, SIZE.xs, F.body);
-  text(dateStr, W - M - dateW, 52, {
-    size: SIZE.xs, color: C.neutral300, font: F.body,
+  text(dateStr, W - M - dateW, 36, {
+    size: SIZE.xs, color: C.neutral500, font: F.body,
   });
 
-  const siteText = "menssolerevival.com";
-  const siteW = textWidth(siteText, SIZE.xs, F.body, "bold");
-  text(siteText, W - M - siteW, 74, {
+  // Subtle divider line under the nav
+  hline(0, NAV_H, W, C.neutral200);
+
+  // 2. HERO band — brand-900, eyebrow + big uppercase title
+  const HERO_TOP = NAV_H;
+  const HERO_H = 130;
+  fill(0, HERO_TOP, W, HERO_H, C.brand900);
+
+  // Accent rule under hero (matches the live site)
+  fill(0, HERO_TOP + HERO_H, W, 3, C.accent500);
+
+  // Eyebrow — cognac, small uppercase
+  text("5-MINUTE SELF-CHECK", M, HERO_TOP + 44, {
     size: SIZE.xs, color: C.accent500, font: F.body, weight: "bold",
   });
-  doc.link(W - M - siteW - 4, 62, siteW + 8, 16, { url: BASE_URL });
 
-  y = HEADER_H + 40;
+  // Title — big uppercase, matches the page displaySection treatment
+  text("THE MEN'S FOOT HEALTH ASSESSMENT", M, HERO_TOP + 88, {
+    size: SIZE["3xl"], color: C.white, font: F.display, weight: "bold",
+  });
+
+  y = HERO_TOP + HERO_H + 36;
 
   // ── "YOUR RESULTS" headline ───────────────────────────────────────────
   text("YOUR RESULTS", M, y, {
