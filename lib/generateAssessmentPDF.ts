@@ -324,6 +324,68 @@ export async function generateAssessmentPDF(data: AssessmentData) {
     y += 14; // inter-block spacing (the +14 already accounts for the last row gap)
   }
 
+  // ── What I flagged · detailed list per section ────────────────────────
+  // The per-section grid above gives the doctor an at-a-glance count.
+  // This block names the specific items the patient checked so the
+  // visit can move past "tell me what's bothering you" and straight
+  // into "let me look at the nail you said was lifting away."
+  const flaggedSections = data.sections.filter((s) => s.count > 0);
+  if (flaggedSections.length > 0) {
+    pageBreakIf(50);
+    text("WHAT I FLAGGED", M, y, {
+      size: SIZE.xs, color: C.accent600, font: F.body, weight: "normal",
+    });
+    y += 24;
+
+    for (const s of flaggedSections) {
+      // Compute card height: header row + items
+      doc.setFont(F.body, "normal");
+      doc.setFontSize(SIZE.sm);
+      const wrapped: string[][] = s.items.map(
+        (it) => doc.splitTextToSize(it, CW - 56) as string[]
+      );
+      const itemsHeight = wrapped.reduce((sum, lines) => sum + lines.length * 15 + 6, 0);
+      const cardH = 32 + itemsHeight + 14;
+
+      pageBreakIf(cardH + 14);
+
+      // Card background
+      rectFillAndStroke(M, y, CW, cardH, C.white, C.neutral200);
+
+      // Header row: section name + duration · count badge right-aligned
+      text(s.title, M + 16, y + 22, {
+        size: SIZE.sm, color: C.brand900, font: F.bodyMedium,
+      });
+      if (s.duration) {
+        const titleW = textWidth(s.title, SIZE.sm, F.bodyMedium, "normal");
+        text(`for ${DURATION_LABEL[s.duration]}`, M + 16 + titleW + 8, y + 22, {
+          size: SIZE.xs, color: C.neutral500, font: F.body,
+        });
+      }
+      const countStr = `${s.count} FLAG${s.count === 1 ? "" : "S"}`;
+      const cw = textWidth(countStr, SIZE.xs, F.body, "normal");
+      text(countStr, M + CW - 16 - cw, y + 22, {
+        size: SIZE.xs, color: C.accent600, font: F.body, weight: "normal",
+      });
+
+      // Items list
+      let iy = y + 44;
+      doc.setFont(F.body, "normal");
+      doc.setFontSize(SIZE.sm);
+      doc.setTextColor(C.neutral700);
+      for (let idx = 0; idx < wrapped.length; idx++) {
+        const lines = wrapped[idx];
+        doc.setFillColor(C.accent500);
+        doc.circle(M + 22, iy - 3, 1.6, "F");
+        doc.text(lines, M + 32, iy);
+        iy += lines.length * 15 + 6;
+      }
+
+      y += cardH + 14;
+    }
+    y += 12; // trim before next block
+  }
+
   // ── Optional clinic callout ───────────────────────────────────────────
   if (data.recommendsClinic) {
     pageBreakIf(120);
