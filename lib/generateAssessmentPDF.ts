@@ -181,12 +181,11 @@ export async function generateAssessmentPDF(data: AssessmentData) {
     doc.text(str, x, yPos, drawOpts);
   }
   function paintPageBackground() {
-    // Use neutral-100 (#EEEDEC) instead of neutral-50 (#F8F7F7). On
-    // screen the live page's neutral-50 reads as "warm white" against
-    // pure-white cards; in PDF viewers (Adobe, Preview) the same hex
-    // value renders nearly identical to pure white, so the cards lose
-    // their visual lift. The slightly warmer neutral-100 holds up.
-    fill(0, 0, W, H, C.neutral100);
+    // Match the assessment results screen exactly — both pages run on
+    // neutral-50 (#F8F7F7). In some PDF viewers this reads very close
+    // to pure white, but visual parity with the live page wins over
+    // PDF-viewer contrast on this artifact.
+    fill(0, 0, W, H, C.neutral50);
   }
   function pageBreakIf(needed: number) {
     if (y + needed > H - 96) {
@@ -587,6 +586,60 @@ export async function generateAssessmentPDF(data: AssessmentData) {
   const apmaW = textWidth("FIND A PODIATRIST NEAR YOU →", SIZE.xs, F.body, "normal");
   doc.link(M, y - 10, apmaW + 6, 14, { url: "https://www.apma.org/find-a-podiatrist" });
   y += 34;
+
+  // ── Sources ───────────────────────────────────────────────────────────
+  // Mirrors the on-screen sources panel at the bottom of the results
+  // page (app/assessment/page.tsx). Each line is hyperlinked.
+  const SOURCES: { label: string; url: string }[] = [
+    { label: "APMA · Public Opinion Research on Foot Health and Care",
+      url: "https://www.apma.org/document-server/?cfp=/apmamain/assets/file/public/resources/todayspodiatristsurvey-9-30-10.pdf" },
+    { label: "NIH / NCBI · Plantar Fasciitis StatPearls",
+      url: "https://www.ncbi.nlm.nih.gov/books/NBK431073/" },
+    { label: "Gupta et al., Mycoses 2024 · Global Prevalence of Onychomycosis",
+      url: "https://onlinelibrary.wiley.com/doi/full/10.1111/myc.13725" },
+    { label: "PMC · Antifungal Selection for Onychomycosis",
+      url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC10922011/" },
+    { label: "PMC · Incorrectly Fitted Footwear, Foot Pain and Foot Disorders",
+      url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC6064070/" },
+    { label: "PMC · Global Prevalence and Incidence of Hallux Valgus (2023)",
+      url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC10510234/" },
+    { label: "AAFP · Common Foot Problems: OTC Treatments and Home Care",
+      url: "https://www.aafp.org/pubs/afp/issues/2018/0901/p298.html" },
+  ];
+
+  // Block sizing: 22pt header + (lines × 14pt) + 16pt bottom padding.
+  // Width-wrap every label first so we know the total height before
+  // we commit to a page break.
+  doc.setFont(F.body, "normal");
+  doc.setFontSize(SIZE.xs);
+  const wrappedSources: string[][] = SOURCES.map(
+    (s) => doc.splitTextToSize(s.label, CW - 28) as string[]
+  );
+  const sourcesLines = wrappedSources.reduce((sum, l) => sum + l.length, 0);
+  const sourcesBlockH = 22 + sourcesLines * 14 + 16;
+
+  pageBreakIf(sourcesBlockH + 16);
+
+  fill(M, y, CW, sourcesBlockH, C.neutral100);
+  text("SOURCES", M + 14, y + 18, {
+    size: SIZE.xs, color: C.neutral400, font: F.body, weight: "normal",
+  });
+
+  let sy = y + 36;
+  for (let i = 0; i < SOURCES.length; i++) {
+    const lines = wrappedSources[i];
+    text(lines, M + 14, sy, {
+      size: SIZE.xs, color: C.neutral500, font: F.body,
+    });
+    // Underline the first line of each source label so it reads as
+    // a link in the PDF, then attach the link annotation across the
+    // full wrapped block.
+    const firstLineW = textWidth(lines[0], SIZE.xs, F.body, "normal");
+    hline(M + 14, sy + 2, M + 14 + firstLineW, C.neutral400);
+    doc.link(M + 14, sy - 8, CW - 28, lines.length * 14, { url: SOURCES[i].url });
+    sy += lines.length * 14;
+  }
+  y += sourcesBlockH + 24;
 
   // ── Footer ────────────────────────────────────────────────────────────
   pageBreakIf(76);
