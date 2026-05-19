@@ -290,64 +290,75 @@ export async function generateAssessmentPDF(data: AssessmentData) {
   y += sumLines.length * 16 + 22;
 
   // ── Section cards — title + duration + count + flagged items ────────
-  // One full-width card per section the user worked through. Cards with
-  // flags list the specific items inline (this is the doctor's payload).
-  // Cards with zero flags still appear so the doctor sees the complete
-  // self-check coverage, just without an items list. Card height is
-  // computed dynamically; pageBreakIf runs per-card.
-  if (data.sections.length > 0) {
-    for (const s of data.sections) {
+  // PDF-only deviation from the web: only sections with at least one
+  // flag get a card. The doctor reading this needs the items the
+  // patient flagged; "Pain & Inflammation · 0 FLAGS" is filler that
+  // costs ~50pt of vertical space without adding information. Clean
+  // sections are summarised in one line at the bottom of the block.
+  const flaggedSections = data.sections.filter((s) => s.count > 0);
+  const cleanSections = data.sections.filter((s) => s.count === 0);
+  if (flaggedSections.length > 0) {
+    for (const s of flaggedSections) {
       // Wrap items inside the section card width
       doc.setFont(F.body, "normal");
       doc.setFontSize(SIZE.sm);
       const wrapped: string[][] = s.items.map(
         (it) => doc.splitTextToSize(it, CW - 56) as string[]
       );
-      const itemsHeight = wrapped.length > 0
-        ? wrapped.reduce((sum, lines) => sum + lines.length * 15 + 6, 0)
-        : 0;
-      // Header row 36pt + items + 14pt bottom padding (or 16pt total if no items)
-      const cardH = wrapped.length > 0 ? 36 + itemsHeight + 12 : 44;
+      const itemsHeight = wrapped.reduce(
+        (sum, lines) => sum + lines.length * 14 + 4,
+        0
+      );
+      // Tighter padding than v1: 32pt header row + items + 10pt bottom.
+      const cardH = 32 + itemsHeight + 10;
 
-      pageBreakIf(cardH + 14);
+      pageBreakIf(cardH + 12);
 
       // Card background + border
       rectFillAndStroke(M, y, CW, cardH, C.white, C.neutral200);
 
       // Header row: title + (optional) duration + count badge
-      text(s.title, M + 16, y + 22, {
+      text(s.title, M + 16, y + 20, {
         size: SIZE.sm, color: C.brand900, font: F.bodyMedium,
       });
-      if (s.duration && s.count > 0) {
+      if (s.duration) {
         const titleW = textWidth(s.title, SIZE.sm, F.bodyMedium, "normal");
-        text(`for ${DURATION_LABEL[s.duration]}`, M + 16 + titleW + 8, y + 22, {
+        text(`for ${DURATION_LABEL[s.duration]}`, M + 16 + titleW + 8, y + 20, {
           size: SIZE.xs, color: C.neutral500, font: F.body,
         });
       }
       const countStr = `${s.count} FLAG${s.count === 1 ? "" : "S"}`;
       const cw = textWidth(countStr, SIZE.xs, F.body, "normal");
-      const countColor = s.count > 0 ? C.accent600 : C.neutral400;
-      text(countStr, M + CW - 16 - cw, y + 22, {
-        size: SIZE.xs, color: countColor, font: F.body, weight: "normal",
+      text(countStr, M + CW - 16 - cw, y + 20, {
+        size: SIZE.xs, color: C.accent600, font: F.body, weight: "normal",
       });
 
-      // Items list (if any flags)
-      if (wrapped.length > 0) {
-        let iy = y + 46;
-        doc.setFont(F.body, "normal");
-        doc.setFontSize(SIZE.sm);
-        doc.setTextColor(C.neutral700);
-        for (const lines of wrapped) {
-          doc.setFillColor(C.accent500);
-          doc.circle(M + 22, iy - 3, 1.6, "F");
-          doc.text(lines, M + 32, iy);
-          iy += lines.length * 15 + 6;
-        }
+      // Items list
+      let iy = y + 42;
+      doc.setFont(F.body, "normal");
+      doc.setFontSize(SIZE.sm);
+      doc.setTextColor(C.neutral700);
+      for (const lines of wrapped) {
+        doc.setFillColor(C.accent500);
+        doc.circle(M + 22, iy - 3, 1.5, "F");
+        doc.text(lines, M + 32, iy);
+        iy += lines.length * 14 + 4;
       }
 
-      y += cardH + 12;
+      y += cardH + 10;
     }
-    y += 14; // inter-block spacing before clinic callout / Read & do
+  }
+
+  // Clean sections summarised inline (one line, no card box).
+  if (cleanSections.length > 0) {
+    const cleanLine = `No flags in: ${cleanSections.map((s) => s.title).join(", ")}.`;
+    text(cleanLine, M, y + 4, {
+      size: SIZE.xs, color: C.neutral500, font: F.body,
+    });
+    y += 22;
+  }
+  if (flaggedSections.length > 0 || cleanSections.length > 0) {
+    y += 10; // inter-block spacing before clinic callout / Read & do
   }
 
   // ── Optional clinic callout ───────────────────────────────────────────
@@ -396,9 +407,11 @@ export async function generateAssessmentPDF(data: AssessmentData) {
     y += 26;
 
     const colW = (CW - 14) / 2;
-    const cardH = 152;
-    const thumbW = 68;
-    const thumbH = 52;
+    const cardH = 144;     // 132 was too tight — the action text was
+                           // crowding the bottom border. 144 gives the
+                           // footer block ~20pt of breathing room.
+    const thumbW = 60;
+    const thumbH = 44;
 
     // Row-by-row: page-break check at the top of each row, both columns
     // draw at the same y, then advance.
@@ -434,12 +447,12 @@ export async function generateAssessmentPDF(data: AssessmentData) {
         doc.setFontSize(SIZE.sm);
         doc.setTextColor(C.brand900);
         const titleLines = doc.splitTextToSize(a.title, textW) as string[];
-        doc.text(titleLines.slice(0, 3), textX, y + 40);
+        doc.text(titleLines.slice(0, 2), textX, y + 38);
 
-        const footerY = y + 90;
+        const footerY = y + 78;
         hline(cx, footerY, cx + colW, C.neutral200);
 
-        text("FIRST MOVE:", cx + 14, footerY + 20, {
+        text("FIRST MOVE:", cx + 14, footerY + 16, {
           size: SIZE.xs, color: C.brand500, font: F.body, weight: "normal",
         });
 
@@ -447,13 +460,15 @@ export async function generateAssessmentPDF(data: AssessmentData) {
         doc.setFontSize(SIZE.xs);
         doc.setTextColor(C.neutral700);
         const actionLines = doc.splitTextToSize(a.action, colW - 28) as string[];
-        doc.text(actionLines.slice(0, 3), cx + 14, footerY + 36);
+        doc.text(actionLines.slice(0, 2), cx + 14, footerY + 32);
+        // Action ends at footerY + 32 + ~12 (1 line) or ~22 (2 lines).
+        // cardH=144 → bottom at y+144 → buffer of 12-22pt below text.
 
         doc.link(cx, y, colW, cardH, { url: `${BASE_URL}/guides/${a.slug}` });
       }
-      y += cardH + 14;
+      y += cardH + 12;
     }
-    y += 18; // inter-block spacing (row gap already added by the last +14)
+    y += 16; // inter-block spacing
   }
 
   // ── Block 2: Routine to follow ────────────────────────────────────────
@@ -473,20 +488,22 @@ export async function generateAssessmentPDF(data: AssessmentData) {
     y += 26;
 
     const r = data.routine;
-    const cardH = 116;
+    const cardH = 116;     // 102 was too tight — the FIRST MOVE row
+                           // landed right at the card border. 116 gives
+                           // the footer block ~14pt of breathing room.
     rectFillAndStroke(M, y, CW, cardH, C.white, C.neutral200);
 
-    text(`ROUTINE · ${r.label.toUpperCase()}`, M + 20, y + 24, {
+    text(`ROUTINE · ${r.label.toUpperCase()}`, M + 20, y + 20, {
       size: SIZE.xs, color: C.brand500, font: F.body, weight: "normal",
     });
-    text(r.heading, M + 20, y + 50, {
+    text(r.heading, M + 20, y + 44, {
       size: SIZE.xl, color: C.brand900, font: F.display, weight: "normal",
     });
-    text(r.time, M + 20, y + 66, {
+    text(r.time, M + 20, y + 60, {
       size: SIZE.xs, color: C.neutral500, font: F.bodyMedium,
     });
 
-    const footerY = y + 80;
+    const footerY = y + 78;
     hline(M, footerY, M + CW, C.neutral200);
     text("FIRST MOVE:", M + 20, footerY + 20, {
       size: SIZE.xs, color: C.brand500, font: F.body, weight: "normal",
@@ -494,10 +511,12 @@ export async function generateAssessmentPDF(data: AssessmentData) {
     doc.setFont(F.body, "normal");
     doc.setFontSize(SIZE.xs);
     doc.setTextColor(C.neutral700);
-    const actionLines = doc.splitTextToSize(r.action, CW - 40) as string[];
-    doc.text(actionLines.slice(0, 2), M + 20, footerY + 36);
+    const actionLines = doc.splitTextToSize(r.action, CW - 100) as string[];
+    doc.text(actionLines.slice(0, 1), M + 100, footerY + 20);
+    // Action baseline at footerY + 20 = y + 98, descender ~y + 101,
+    // cardH=116 → bottom y + 116 → 15pt buffer.
 
-    y += cardH + 32;
+    y += cardH + 22;
   }
 
   // ── Block 3: Talk to a professional ───────────────────────────────────
