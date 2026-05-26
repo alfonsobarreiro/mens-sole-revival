@@ -176,7 +176,7 @@ export default function SiteLayout({
                   unoptimized
                 />
                 <p className="mt-3 max-w-xs text-sm leading-6 text-white/60">
-                  Foot care, footwear, and the holistic habits that keep men
+                  Foot care, footwear, and the daily habits that keep men
                   moving well into their best decades.
                 </p>
               </div>

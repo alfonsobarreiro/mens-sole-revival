@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     template: "%s | Men's Sole Revival",
   },
   description:
-    "Foot care, footwear, and the holistic habits that keep men moving well into their best decades.",
+    "Foot care, footwear, and the daily habits that keep men moving well into their best decades.",
 };
 
 export default function RootLayout({

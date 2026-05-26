@@ -634,7 +634,7 @@ export default function Homepage2() {
                 Men&apos;s Sole Revival
               </p>
               <p style={{ fontFamily: body, marginTop: 12, maxWidth: 280, fontSize: 13, lineHeight: 1.7, color: "#93C5FD" }}>
-                Foot care, footwear, and the holistic habits that keep men moving well into their best decades.
+                Foot care, footwear, and the daily habits that keep men moving well into their best decades.
               </p>
             </div>
             <div style={{ display: "flex", gap: 60 }}>
