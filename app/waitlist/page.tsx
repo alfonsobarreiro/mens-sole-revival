@@ -18,7 +18,7 @@ function SuccessView() {
             <p className={type.overline}>Early Access</p>
             <h1 className={`mt-3 ${type.h1}`}>You're on the list.</h1>
             <p className={`mt-6 ${type.lead}`}>
-              We'll be in touch when your kit is ready. No spam, ever — just a
+              We'll be in touch when your kit is ready. No spam, ever. Just a
               note when something meaningful is ready for you.
             </p>
           </div>
@@ -48,7 +48,7 @@ function SuccessView() {
             <p className={type.h4}>Submission received.</p>
             <p className="mt-2 text-sm leading-6 text-neutral-600">
               We're working through the waitlist carefully. Expect to hear from
-              us within a few weeks — or sooner if your kit ships first.
+              us within a few weeks, or sooner if your kit ships first.
             </p>
           </div>
         </Container>
@@ -80,7 +80,7 @@ export default function WaitlistPage() {
             </h1>
             <p className={`mt-6 ${type.lead}`}>
               We're building this carefully. Join the waitlist and help shape
-              what gets built first. No spam, no pressure — just occasional
+              what gets built first. No spam, no pressure. Just occasional
               updates when things are ready.
             </p>
           </div>

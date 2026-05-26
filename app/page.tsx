@@ -331,7 +331,7 @@ export default function Home() {
             </h2>
             <p className="mt-5 max-w-md text-base leading-7 text-white/65">
               When your feet work well, everything else gets easier. Your knees,
-              your posture, your energy. This is the leverage most men overlook,
+              your posture, your energy. This is the edge most men overlook,
               and the reason we built this.
             </p>
             <Link

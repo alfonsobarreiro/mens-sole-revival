@@ -426,8 +426,8 @@ export default function Homepage2() {
               It compounds upward.
             </h2>
             <p style={{ fontFamily: body, marginTop: 20, maxWidth: 400, fontSize: 15, lineHeight: 1.8, color: c.textMuted }}>
-              When your feet work well, everything else gets easier — your knees, your posture,
-              your energy. This is the leverage most men overlook, and the reason we built this.
+              When your feet work well, everything else gets easier. Your knees, your posture,
+              your energy. This is the edge most men overlook, and the reason we built this.
             </p>
             <Link href="/about" style={{
               display: "inline-flex", alignItems: "center", gap: 6,
