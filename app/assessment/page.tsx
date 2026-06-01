@@ -528,27 +528,15 @@ export default function AssessmentPage() {
             </p>
           )}
 
-          {isSectionPhase && totalSections > 0 && (
-            <div className="mt-6 max-w-md">
-              <div className="mb-2 flex justify-between text-xs text-white/40">
-                <span>
-                  Section {sectionIndex + 1} of {totalSections} ·{" "}
-                  {currentStep?.title}
-                </span>
-                <span>{progress}%</span>
-              </div>
-              <div className="h-1 w-full bg-white/10">
-                <div
-                  className="h-1 bg-accent-500 transition-all duration-500"
-                  style={{ width: `${progress}%` }}
-                />
-              </div>
-              {minutesRemaining > 0 && (
-                <p className="mt-2 text-[11px] uppercase tracking-widest text-white/35">
-                  About {minutesRemaining} min left
-                </p>
-              )}
-            </div>
+          {/* Progress moved out of the hero into a sticky strip below it
+              (per Cate's review: "the actual progress tracking disappears
+              while scrolling"). The "minutes left" copy goes with it; the
+              sticky strip keeps Section X of Y, the section title, the bar,
+              and the percentage so users keep their bearings during the flow. */}
+          {isSectionPhase && totalSections > 0 && minutesRemaining > 0 && (
+            <p className="mt-4 text-[11px] uppercase tracking-widest text-white/35">
+              About {minutesRemaining} min left
+            </p>
           )}
 
           {/* Mid-flow restart affordance. Lives in the hero so it's reachable
@@ -570,6 +558,39 @@ export default function AssessmentPage() {
           )}
         </Container>
       </section>
+
+      {/* ── Sticky progress strip ──
+          Pins below the site header (top-16) so users always see where they
+          are in the flow. Per Cate's review: "make the progress bar itself
+          sticky, even if simplified, so users maintain constant awareness
+          of progression." At page top this sits flush against the dark hero
+          and reads as an extension of it; once the user scrolls into the
+          questions, it pins to the top of viewport. */}
+      {isSectionPhase && totalSections > 0 && (
+        <div className="sticky top-16 z-30 border-b border-white/10 bg-brand-900/95 backdrop-blur supports-[backdrop-filter]:bg-brand-900/85">
+          <Container>
+            <div className="flex items-center gap-3 py-3 sm:gap-4">
+              <p className="shrink-0 text-[10px] font-semibold uppercase tracking-widest text-white/70 sm:text-[11px]">
+                Section {sectionIndex + 1} of {totalSections}
+              </p>
+              {currentStep?.title && (
+                <p className="hidden truncate text-xs text-white/80 sm:block sm:flex-1">
+                  {currentStep.title}
+                </p>
+              )}
+              <div className="h-1 flex-1 bg-white/10 sm:max-w-xs">
+                <div
+                  className="h-1 bg-accent-500 transition-all duration-500"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+              <span className="shrink-0 text-[10px] font-semibold tabular-nums text-white/60 sm:text-[11px]">
+                {progress}%
+              </span>
+            </div>
+          </Container>
+        </div>
+      )}
 
       {/* ── Content ── */}
       <section className="min-h-[60vh] bg-neutral-50 py-14 md:py-20">
