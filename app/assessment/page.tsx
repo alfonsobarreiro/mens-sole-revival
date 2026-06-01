@@ -563,28 +563,29 @@ export default function AssessmentPage() {
           Pins below the site header (top-16) so users always see where they
           are in the flow. Per Cate's review: "make the progress bar itself
           sticky, even if simplified, so users maintain constant awareness
-          of progression." At page top this sits flush against the dark hero
-          and reads as an extension of it; once the user scrolls into the
-          questions, it pins to the top of viewport. */}
+          of progression." Visually distinct from the dark hero above it:
+          accent-color top edge, solid bg, drop shadow once pinned, slightly
+          thicker bar. So the strip reads as a discrete element rather than
+          an extension of the hero. */}
       {isSectionPhase && totalSections > 0 && (
-        <div className="sticky top-16 z-30 border-b border-white/10 bg-brand-900/95 backdrop-blur supports-[backdrop-filter]:bg-brand-900/85">
+        <div className="sticky top-16 z-30 border-t-2 border-accent-500 bg-brand-900 shadow-[0_10px_24px_-10px_rgba(0,0,0,0.55)]">
           <Container>
-            <div className="flex items-center gap-3 py-3 sm:gap-4">
-              <p className="shrink-0 text-[10px] font-semibold uppercase tracking-widest text-white/70 sm:text-[11px]">
+            <div className="flex items-center gap-3 py-3.5 sm:gap-4">
+              <p className="shrink-0 text-[10px] font-semibold uppercase tracking-widest text-white/85 sm:text-[11px]">
                 Section {sectionIndex + 1} of {totalSections}
               </p>
               {currentStep?.title && (
-                <p className="hidden truncate text-xs text-white/80 sm:block sm:flex-1">
+                <p className="hidden truncate text-xs font-medium text-white sm:block sm:flex-1">
                   {currentStep.title}
                 </p>
               )}
-              <div className="h-1 flex-1 bg-white/10 sm:max-w-xs">
+              <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/15 sm:max-w-xs">
                 <div
-                  className="h-1 bg-accent-500 transition-all duration-500"
+                  className="h-1.5 rounded-full bg-accent-500 transition-all duration-500"
                   style={{ width: `${progress}%` }}
                 />
               </div>
-              <span className="shrink-0 text-[10px] font-semibold tabular-nums text-white/60 sm:text-[11px]">
+              <span className="shrink-0 text-[10px] font-semibold tabular-nums text-white sm:text-[11px]">
                 {progress}%
               </span>
             </div>
