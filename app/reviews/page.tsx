@@ -89,7 +89,7 @@ function ReviewCard({ review }: { review: Review }) {
         )}
 
         {/* Rating + Price row */}
-        <div className="mt-5 flex items-center justify-between gap-3">
+        <div className="mt-5 flex items-center gap-3">
           {review.rating != null && (
             <div className="flex items-baseline gap-1">
               <span className="text-lg font-bold text-brand-900">{review.rating}</span>
@@ -99,8 +99,15 @@ function ReviewCard({ review }: { review: Review }) {
           {review.retailPriceUsd != null && (
             <span className="text-xs text-neutral-500">~${review.retailPriceUsd}</span>
           )}
-          <span className="ml-auto text-xs font-semibold text-brand-500 group-hover:text-brand-700">
-            Read review →
+        </div>
+
+        {/* Read Review CTA — promoted from inline text to filled primary
+            pill per Cate's review ("Read Review feels important enough that
+            it should visually behave more like a primary action"). */}
+        <div className="mt-4 flex justify-end">
+          <span className="inline-flex items-center gap-1.5 bg-brand-900 px-3 py-2 text-[11px] font-bold uppercase tracking-wider text-white transition group-hover:bg-brand-700">
+            Read Review
+            <span aria-hidden>→</span>
           </span>
         </div>
       </div>
