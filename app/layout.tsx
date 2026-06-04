@@ -2,7 +2,12 @@ import type { Metadata } from "next";
 import { Lora, DM_Sans, Barlow_Condensed } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/react";
+import Script from "next/script";
 import "./globals.css";
+
+// Microsoft Clarity — qualitative analytics (session replay, heatmaps).
+// Set NEXT_PUBLIC_CLARITY_PROJECT_ID on Vercel to enable. Inert when missing.
+const clarityId = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID;
 
 const lora = Lora({
   subsets: ["latin"],
@@ -48,6 +53,15 @@ export default function RootLayout({
         {children}
         <GoogleAnalytics gaId="G-QT90WR1MPD" />
         <Analytics />
+        {clarityId && (
+          <Script id="ms-clarity" strategy="afterInteractive">
+            {`(function(c,l,a,r,i,t,y){
+              c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+              t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+              y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "${clarityId}");`}
+          </Script>
+        )}
       </body>
     </html>
   );
