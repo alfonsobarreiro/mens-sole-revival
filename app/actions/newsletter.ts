@@ -3,9 +3,8 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // Newsletter signup Server Action — powered by Resend (https://resend.com)
 //
-// (Formerly the "kit waitlist." Reframed to a content/newsletter signup: kits
-// were replaced by the educational model, so this captures people who want new
-// guides + the occasional practical tip.)
+// Captures people who want new guides, reviews, and routines as they publish,
+// plus the occasional practical tip.
 //
 // Flow:
 //   1. Validate (only email required — name optional, lower friction).
@@ -19,16 +18,16 @@
 
 import { EMAIL_FROM } from "@/lib/site";
 
-export type WaitlistState = {
+export type NewsletterState = {
   status: "idle" | "success" | "error";
   message?: string;
   field?: "name" | "email"; // which field triggered a validation error
 };
 
-export async function submitWaitlist(
-  _prevState: WaitlistState,
+export async function submitNewsletter(
+  _prevState: NewsletterState,
   formData: FormData
-): Promise<WaitlistState> {
+): Promise<NewsletterState> {
   const name = (formData.get("name") as string | null)?.trim() ?? "";
   const email = (formData.get("email") as string | null)?.trim() ?? "";
 

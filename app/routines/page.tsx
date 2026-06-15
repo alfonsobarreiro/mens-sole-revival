@@ -162,7 +162,7 @@ export default function RoutinesPage() {
               </p>
             </div>
             <div className="mt-8 flex-shrink-0 md:ml-12 md:mt-0">
-              <Button href="/waitlist" size="lg">
+              <Button href="/newsletter" size="lg">
                 Subscribe
               </Button>
             </div>

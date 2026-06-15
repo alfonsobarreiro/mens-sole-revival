@@ -20,6 +20,8 @@ const nextConfig: NextConfig = {
       { source: "/learn", destination: "/guides", permanent: true },
       { source: "/blog", destination: "/guides", permanent: true },
       { source: "/blog/:slug", destination: "/guides/:slug", permanent: true },
+      // Waitlist reframed to the newsletter signup
+      { source: "/waitlist", destination: "/newsletter", permanent: true },
     ];
   },
   // IMPORTANT: ensure MDX is treated as React components

@@ -4,7 +4,7 @@
 // Assessment feedback Server Action.
 //
 // Lightweight capture for the "share assessment, collect responses" loop on
-// Cate's punch list. Mirrors app/actions/waitlist.ts: if RESEND_API_KEY is set
+// Cate's punch list. Mirrors app/actions/newsletter.ts: if RESEND_API_KEY is set
 // in the environment, fires an email to alfonso@barreiro.com; otherwise logs
 // locally and returns success so dev testing works.
 //

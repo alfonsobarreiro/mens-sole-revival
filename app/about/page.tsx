@@ -148,11 +148,12 @@ export default function AboutPage() {
           <div className="max-w-xl">
             <h2 className={`${type.displaySection} text-brand-900`}>Get the<br />guides.</h2>
             <p className={`mt-4 ${type.lead}`}>
-              We publish evidence-based foot-health guides for men over 40.
-              Subscribe and we'll send the new ones — no spam, unsubscribe anytime.
+              We publish evidence-based guides, reviews, and routines for men
+              over 40. Subscribe and we'll send the new ones — no spam,
+              unsubscribe anytime.
             </p>
             <div className="mt-8">
-              <Button href="/waitlist" size="lg">
+              <Button href="/newsletter" size="lg">
                 Subscribe
               </Button>
             </div>

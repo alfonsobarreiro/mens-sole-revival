@@ -8,7 +8,7 @@ export default function Card({
   tag,
   image,
   imageAlt,
-  cta = "Join waitlist →",
+  cta = "Learn more →",
 }: {
   title: string;
   desc: string;

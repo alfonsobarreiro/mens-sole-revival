@@ -4,7 +4,7 @@ import { useActionState } from "react";
 import Container from "@/components/Container";
 import SiteLayout from "@/components/SiteLayout";
 import { type } from "@/components/typography";
-import { submitWaitlist } from "@/app/actions/waitlist";
+import { submitNewsletter } from "@/app/actions/newsletter";
 
 const initialState = { status: "idle" as const };
 
@@ -18,8 +18,8 @@ function SuccessView() {
             <p className={type.overline}>Subscribed</p>
             <h1 className={`mt-3 ${type.h1}`}>You're in.</h1>
             <p className={`mt-6 ${type.lead}`}>
-              Check your inbox. We'll send new guides as they publish, plus the
-              occasional practical tip. Nothing else — and you can leave anytime.
+              Check your inbox. We'll send new guides, reviews, and routines as
+              they publish, plus the occasional practical tip. You can leave anytime.
             </p>
           </div>
         </Container>
@@ -47,8 +47,8 @@ function SuccessView() {
             </div>
             <p className={type.h4}>You're subscribed.</p>
             <p className="mt-2 text-sm leading-6 text-neutral-600">
-              A confirmation is on its way to your inbox. New guides land there
-              first.
+              A confirmation is on its way to your inbox. New guides, reviews,
+              and routines land there first.
             </p>
           </div>
         </Container>
@@ -58,9 +58,9 @@ function SuccessView() {
 }
 
 // ── Main page ────────────────────────────────────────────────────────────────
-export default function WaitlistPage() {
+export default function NewsletterPage() {
   const [state, formAction, isPending] = useActionState(
-    submitWaitlist,
+    submitNewsletter,
     initialState
   );
 
@@ -76,13 +76,13 @@ export default function WaitlistPage() {
           <div className="max-w-2xl">
             <p className={type.overline}>The Newsletter</p>
             <h1 className={`mt-3 ${type.h1}`}>
-              New guides, straight to your inbox.
+              New guides, reviews, and routines — in your inbox.
             </h1>
             <p className={`mt-6 ${type.lead}`}>
-              We publish evidence-based guides on what actually slows men down
-              after 40 — foot pain, fit, alignment, nails, skin. Subscribe and
-              we'll send the new ones, plus the occasional practical tip. No
-              spam. Unsubscribe anytime.
+              We publish evidence-based guides, product reviews, and daily
+              routines for men over 40 — foot pain, fit, alignment, nails, skin.
+              Subscribe and we'll send the new ones as they land, plus the
+              occasional practical tip. No spam. Unsubscribe anytime.
             </p>
           </div>
         </Container>

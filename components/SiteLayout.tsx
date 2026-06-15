@@ -207,7 +207,7 @@ export default function SiteLayout({
                   </p>
                   <ul className="mt-4 space-y-2">
                     {[
-                      { label: "Waitlist", href: "/waitlist" },
+                      { label: "Newsletter", href: "/newsletter" },
                       { label: "Contact", href: "mailto:alfonso@barreiro.com" },
                     ].map((l) => (
                       <li key={l.label}>

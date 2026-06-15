@@ -21,7 +21,7 @@ const routes = [
   ...staticReviews.map((r) => `/reviews/${r.slug}`),
   "/routines",
   "/kits",
-  "/waitlist",
+  "/newsletter",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
