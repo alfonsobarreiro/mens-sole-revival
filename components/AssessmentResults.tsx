@@ -403,6 +403,34 @@ export default function AssessmentResults({
               value={JSON.stringify(flagsForEmail)}
             />
             <input type="hidden" name="totalFlags" value={String(totalFlags)} />
+            {/* Structured payload so the emailed results can rebuild the full
+                recommendations (guides, routine, podiatrist prep) server-side,
+                matching the on-screen result page and the PDF. */}
+            <input
+              type="hidden"
+              name="flagsBySection"
+              value={JSON.stringify(flagsBySection)}
+            />
+            <input
+              type="hidden"
+              name="durationBySection"
+              value={JSON.stringify(durationBySection)}
+            />
+            <input
+              type="hidden"
+              name="itemsBySection"
+              value={JSON.stringify(itemsBySection)}
+            />
+            <input
+              type="hidden"
+              name="attemptedSections"
+              value={JSON.stringify(attemptedSections)}
+            />
+            <input
+              type="hidden"
+              name="notSureCount"
+              value={String(notSureCount)}
+            />
             <label className="block">
               <span className="text-xs font-semibold uppercase tracking-wider text-neutral-500">
                 Email address
