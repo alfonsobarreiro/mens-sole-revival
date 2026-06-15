@@ -15,11 +15,12 @@ function SuccessView() {
       <section className="border-b border-neutral-200 py-16 md:py-20">
         <Container>
           <div className="max-w-2xl">
-            <p className={type.overline}>Subscribed</p>
-            <h1 className={`mt-3 ${type.h1}`}>You're in.</h1>
+            <p className={type.overline}>Almost there</p>
+            <h1 className={`mt-3 ${type.h1}`}>Confirm your email.</h1>
             <p className={`mt-6 ${type.lead}`}>
-              Check your inbox. We'll send new guides, reviews, and routines as
-              they publish, plus the occasional practical tip. You can leave anytime.
+              We just sent you a confirmation link. Click it and you'll start
+              getting new guides, reviews, and routines. (No link yet? Check your
+              spam folder — it lands within a minute.)
             </p>
           </div>
         </Container>
@@ -45,10 +46,10 @@ function SuccessView() {
                 <polyline points="20 6 9 17 4 12" />
               </svg>
             </div>
-            <p className={type.h4}>You're subscribed.</p>
+            <p className={type.h4}>Check your inbox.</p>
             <p className="mt-2 text-sm leading-6 text-neutral-600">
-              A confirmation is on its way to your inbox. New guides, reviews,
-              and routines land there first.
+              Click the confirmation link we just emailed you to finish
+              subscribing. The link expires in 48 hours.
             </p>
           </div>
         </Container>

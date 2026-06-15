@@ -17,6 +17,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { EMAIL_FROM } from "@/lib/site";
+import { createConfirmToken, confirmUrl } from "@/lib/newsletter-token";
 
 export type NewsletterState = {
   status: "idle" | "success" | "error";
@@ -51,8 +52,9 @@ export async function submitNewsletter(
     return { status: "success" };
   }
 
-  // ── Add to the Resend Audience (the SAME unified list as the assessment) ───
-  // Fail soft: a list-add failure must not block the user's success state.
+  // ── Add to the Resend Audience as PENDING (double opt-in) ──────────────────
+  // unsubscribed:true until they click the confirmation link (see the confirm
+  // route). Same unified list as the assessment. Fail soft.
   const audienceId = process.env.RESEND_AUDIENCE_ID;
   if (audienceId) {
     try {
@@ -69,7 +71,7 @@ export async function submitNewsletter(
             email,
             ...(firstName ? { firstName } : {}),
             ...(rest.length ? { lastName: rest.join(" ") } : {}),
-            unsubscribed: false,
+            unsubscribed: true, // pending until they confirm via email
           }),
         }
       );
@@ -90,7 +92,11 @@ export async function submitNewsletter(
     );
   }
 
-  // ── Notify alfonso@ so signups are visible without log inspection ──────────
+  // ── Send the double opt-in confirmation email to the subscriber ────────────
+  // They aren't a real subscriber until they click this. alfonso@ is notified
+  // on confirmation (see app/newsletter/confirm), not here, so the notification
+  // always means a genuine, confirmed signup.
+  const url = confirmUrl(createConfirmToken(email));
   try {
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
@@ -100,23 +106,25 @@ export async function submitNewsletter(
       },
       body: JSON.stringify({
         from: EMAIL_FROM,
-        to: ["alfonso@barreiro.com"],
-        subject: `New newsletter signup — ${name || email}`,
+        to: [email],
+        subject: "Confirm your subscription — Men's Sole Revival",
         html: `
-          <div style="font-family:sans-serif;max-width:560px;color:#1a1a1a">
-            <h2 style="color:#1C3F5E;margin-bottom:16px">New newsletter signup</h2>
-            <table style="border-collapse:collapse;width:100%">
-              <tr>
-                <td style="padding:8px 12px;background:#f0f7ff;font-weight:600;width:140px;border-radius:4px 0 0 4px">Name</td>
-                <td style="padding:8px 12px;border-bottom:1px solid #e5e7eb">${escapeHtml(name) || "—"}</td>
-              </tr>
-              <tr>
-                <td style="padding:8px 12px;background:#f0f7ff;font-weight:600">Email</td>
-                <td style="padding:8px 12px">${escapeHtml(email)}</td>
-              </tr>
-            </table>
-            <p style="margin-top:24px;font-size:12px;color:#9ca3af">
-              Sent from menssolerevival.com · newsletter signup
+          <div style="font-family:sans-serif;max-width:520px;color:#1a1a1a">
+            <h2 style="color:#1C3F5E;margin-bottom:8px">One quick step</h2>
+            <p style="margin:0 0 20px 0;font-size:14px;line-height:1.6;color:#444">
+              ${escapeHtml(name) ? `Hi ${escapeHtml(name)} — ` : ""}confirm your email to start
+              getting new guides, reviews, and routines from Men's Sole Revival.
+            </p>
+            <a href="${url}" style="display:inline-block;background:#1C3F5E;color:#ffffff;text-decoration:none;padding:12px 22px;font-weight:600;font-size:14px;border-radius:4px">
+              Confirm subscription
+            </a>
+            <p style="margin:24px 0 0 0;font-size:12px;line-height:1.6;color:#888">
+              If the button doesn't work, paste this link into your browser:<br>
+              <a href="${url}" style="color:#1C3F5E;word-break:break-all">${url}</a>
+            </p>
+            <p style="margin:20px 0 0 0;font-size:12px;color:#aaa">
+              This link expires in 48 hours. If you didn't request this, ignore this
+              email — you won't be subscribed.
             </p>
           </div>
         `,
@@ -125,15 +133,20 @@ export async function submitNewsletter(
 
     if (!res.ok) {
       const body = await res.text();
-      console.error("Resend error", res.status, body);
-      // The list-add likely succeeded; don't fail the user over the notification.
+      console.error("Resend (confirmation email) error", res.status, body);
+      return {
+        status: "error",
+        message: "We couldn't send the confirmation email. Try again in a moment.",
+      };
     }
 
     return { status: "success" };
   } catch (err) {
     console.error("Newsletter action error:", err);
-    // Contact may already be on the list; treat as success to avoid double-submits.
-    return { status: "success" };
+    return {
+      status: "error",
+      message: "Network hiccup. Try again in a moment.",
+    };
   }
 }
 
