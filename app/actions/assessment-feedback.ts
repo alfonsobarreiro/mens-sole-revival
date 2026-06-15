@@ -14,6 +14,8 @@
 //   - totalFlags:   from the user's session (optional, anonymised context)
 // ─────────────────────────────────────────────────────────────────────────────
 
+import { EMAIL_FROM } from "@/lib/site";
+
 export type FeedbackState = {
   status: "idle" | "success" | "error";
   message?: string;
@@ -66,7 +68,7 @@ export async function submitAssessmentFeedback(
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "Men's Sole Revival <onboarding@resend.dev>",
+        from: EMAIL_FROM,
         to: ["alfonso@barreiro.com"],
         subject: `Assessment feedback — ${usefulnessLabel}`,
         html: `

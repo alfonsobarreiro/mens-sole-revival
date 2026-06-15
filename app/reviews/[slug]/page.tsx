@@ -5,7 +5,9 @@ import { notFound } from "next/navigation";
 import Container from "@/components/Container";
 import SiteLayout from "@/components/SiteLayout";
 import EcosystemFooter from "@/components/EcosystemFooter";
+import JsonLd from "@/components/JsonLd";
 import { reviewRelations } from "@/lib/ecosystem";
+import { SITE_NAME, SITE_URL } from "@/lib/site";
 import { type } from "@/components/typography";
 import { verdictConfig, categoryLabel, staticReviews, type Review } from "@/lib/reviews";
 
@@ -240,8 +242,36 @@ export default async function ReviewPage({
 
   const verdict = review.verdict ? verdictConfig[review.verdict] : null;
 
+  // Review structured data — drives rich-result stars in search, which lift
+  // affiliate CTR. ratingValue is on a 10-point scale (bestRating: 10).
+  const reviewSchema = {
+    "@context": "https://schema.org",
+    "@type": "Review",
+    itemReviewed: {
+      "@type": "Product",
+      name: review.productName,
+      ...(review.brand ? { brand: { "@type": "Brand", name: review.brand } } : {}),
+      ...(review.imageUrl ? { image: `${SITE_URL}${review.imageUrl}` } : {}),
+    },
+    ...(review.tagline ? { name: review.tagline } : {}),
+    ...(review.summary ? { reviewBody: review.summary } : {}),
+    ...(review.rating != null
+      ? {
+          reviewRating: {
+            "@type": "Rating",
+            ratingValue: review.rating,
+            bestRating: 10,
+            worstRating: 0,
+          },
+        }
+      : {}),
+    author: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+    publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+  };
+
   return (
     <SiteLayout>
+      <JsonLd schema={reviewSchema} />
 
       {/* ── Breadcrumb ── */}
       <div className="border-b border-neutral-100 py-3">

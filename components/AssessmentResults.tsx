@@ -394,8 +394,8 @@ export default function AssessmentResults({
             className="mt-3 grid gap-3 border border-neutral-200 bg-white p-5"
           >
             <p className="text-sm leading-6 text-neutral-700">
-              Email yourself a copy. We'll keep the results and (optionally)
-              check in at 30 and 90 days. No marketing.
+              Email yourself a copy. We'll save your results and send the
+              occasional foot-health guide worth your time. Unsubscribe anytime.
             </p>
             <input
               type="hidden"

@@ -3,6 +3,7 @@
 import SiteLayout from "@/components/SiteLayout";
 import ArticleLayout from "@/components/ArticleLayout";
 import EcosystemFooter from "@/components/EcosystemFooter";
+import GuideExtras from "@/components/GuideExtras";
 import { articleRelations } from "@/lib/ecosystem";
 import Article from "./article.mdx";
 
@@ -20,6 +21,7 @@ export default function Page() {
       >
         <Article />
       </ArticleLayout>
+      <GuideExtras slug="cracked-heels-what-actually-works" />
       <EcosystemFooter
         heading="Now do the thing."
         intro="The fix is a short nightly habit and the right cream. Here's the routine that takes five minutes, and the product that works."

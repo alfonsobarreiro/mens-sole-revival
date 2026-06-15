@@ -3,6 +3,7 @@
 import SiteLayout from "@/components/SiteLayout";
 import ArticleLayout from "@/components/ArticleLayout";
 import EcosystemFooter from "@/components/EcosystemFooter";
+import GuideExtras from "@/components/GuideExtras";
 import { articleRelations } from "@/lib/ecosystem";
 import Article from "./article.mdx";
 
@@ -20,6 +21,7 @@ export default function Page() {
       >
         <Article />
       </ArticleLayout>
+      <GuideExtras slug="what-your-dress-shoes-are-doing-to-your-feet" />
       <EcosystemFooter
         heading="What to do about it."
         intro="Most of the damage is reversible if you rebuild what the shoes shut down. A short strength routine, a smarter insole, and at least one pair of shoes built around foot anatomy."

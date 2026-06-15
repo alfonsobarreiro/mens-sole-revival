@@ -6,6 +6,7 @@ import { type } from "@/components/typography";
 export const metadata: Metadata = {
   title: "Design Critique — Homepage",
   description: "Internal design review of the Men's Sole Revival homepage. March 26, 2026.",
+  robots: { index: false, follow: false },
 };
 
 // ── Data ──────────────────────────────────────────────────────────────────────

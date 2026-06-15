@@ -3,12 +3,21 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // Assessment email-save Server Action.
 //
-// Per user decision (Phase 4 scope question): "Stub it (log + Sanity)" — the
-// UI is built fully, but the captured payload is logged server-side (and
-// optionally emailed to alfonso@ via Resend if RESEND_API_KEY is set). The
-// 30/90-day re-engagement cadence described in MSR-Assessment-Redesign.md
-// §3.7 is deferred until a real transactional email service decision lands.
+// Capture flow (in order):
+//   1. Validate + log the payload (always — keeps dev runs observable).
+//   2. Add the email to the Resend Audience (the LIST — this is the growth
+//      asset). Requires RESEND_API_KEY + RESEND_AUDIENCE_ID. `checkIn` maps to
+//      the contact's subscription: opted-in contacts can receive the 30/90-day
+//      re-engagement cadence + the occasional guide.
+//   3. Send the user a transactional copy of their results, and notify
+//      alfonso@. Requires RESEND_API_KEY.
+//
+// All network steps are env-gated and fail soft: a missing key degrades to
+// "logged only" and the user still sees a success state (the PDF download is
+// always available as a fallback).
 // ─────────────────────────────────────────────────────────────────────────────
+
+import { EMAIL_FROM } from "@/lib/site";
 
 export type AssessmentEmailState = {
   status: "idle" | "success" | "error";
@@ -59,10 +68,49 @@ export async function submitAssessmentEmail(
   // ── Send via Resend if configured ────────────────────────────────────────
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
-    // No transactional service wired yet. The capture is logged and the user
-    // sees a success state. The 30/90-day cadence will land with the service
-    // decision; until then, capture sits in logs.
+    // No service wired yet. The capture is logged and the user sees a success
+    // state. Set RESEND_API_KEY (+ RESEND_AUDIENCE_ID) to build the list.
     return { status: "success" };
+  }
+
+  // ── Add to the Resend Audience (the list / growth asset) ─────────────────
+  // Fail soft: a failed list-add must not block the user's results email.
+  const audienceId = process.env.RESEND_AUDIENCE_ID;
+  if (audienceId) {
+    try {
+      const contactRes = await fetch(
+        `https://api.resend.com/audiences/${audienceId}/contacts`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${apiKey}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            // checkIn opt-in governs the re-engagement cadence; unchecked
+            // contacts are added unsubscribed so they only get this one copy.
+            unsubscribed: !checkIn,
+          }),
+        }
+      );
+      if (!contactRes.ok) {
+        // 409 = already a contact; that's fine, not an error worth surfacing.
+        if (contactRes.status !== 409) {
+          console.error(
+            "Resend (audience) error",
+            contactRes.status,
+            await contactRes.text()
+          );
+        }
+      }
+    } catch (err) {
+      console.error("Resend audience add failed:", err);
+    }
+  } else {
+    console.warn(
+      "[Assessment email-save] RESEND_AUDIENCE_ID not set — captured email not added to a list."
+    );
   }
 
   const flagRows = flags
@@ -88,7 +136,7 @@ export async function submitAssessmentEmail(
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "Men's Sole Revival <onboarding@resend.dev>",
+        from: EMAIL_FROM,
         to: [email],
         subject: "Your foot-health self-check results",
         html: `
@@ -140,7 +188,7 @@ export async function submitAssessmentEmail(
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "Men's Sole Revival <onboarding@resend.dev>",
+        from: EMAIL_FROM,
         to: ["alfonso@barreiro.com"],
         subject: `Assessment capture — ${totalFlags} flags${checkIn ? " · check-in opted in" : ""}`,
         html: `

@@ -3,6 +3,7 @@
 import SiteLayout from "@/components/SiteLayout";
 import ArticleLayout from "@/components/ArticleLayout";
 import EcosystemFooter from "@/components/EcosystemFooter";
+import GuideExtras from "@/components/GuideExtras";
 import { articleRelations } from "@/lib/ecosystem";
 import Article from "./article.mdx";
 
@@ -20,6 +21,7 @@ export default function Page() {
       >
         <Article />
       </ArticleLayout>
+      <GuideExtras slug="why-toe-alignment-affects-knees-and-hips" />
       <EcosystemFooter
         heading="Start the upstream fix."
         intro="The morning stretch is what gives you back motion. The toe spreader and a wider toe box are how you keep it."

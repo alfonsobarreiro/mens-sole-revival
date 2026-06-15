@@ -9,11 +9,11 @@
 //  3. Add to .env.local:   RESEND_API_KEY=re_xxxxxxxxxxxx
 //  4. Add the same key to Vercel: Project → Settings → Environment Variables
 //
-// The "from" address uses Resend's shared testing domain (onboarding@resend.dev)
-// which works immediately without domain verification.
-// Once you verify your own domain in the Resend dashboard, change the from
-// address to something like:  hello@mensolerevival.com
+// The "from" address comes from EMAIL_FROM (lib/site.ts) — the verified
+// send.menssolerevival.com identity, overridable via the RESEND_FROM env var.
 // ─────────────────────────────────────────────────────────────────────────────
+
+import { EMAIL_FROM } from "@/lib/site";
 
 export type WaitlistState = {
   status: "idle" | "success" | "error";
@@ -71,8 +71,7 @@ export async function submitWaitlist(
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        // Change this to your verified sending domain once set up in Resend:
-        from: "Men's Sole Revival <onboarding@resend.dev>",
+        from: EMAIL_FROM,
         to: ["alfonso@barreiro.com"],
         subject: `New waitlist signup — ${name}`,
         html: `

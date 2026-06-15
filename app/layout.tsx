@@ -3,6 +3,8 @@ import { Lora, DM_Sans, Barlow_Condensed } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/react";
 import Script from "next/script";
+import JsonLd from "@/components/JsonLd";
+import { SITE_URL, organizationSchema, webSiteSchema } from "@/lib/site";
 import "./globals.css";
 
 // Microsoft Clarity — qualitative analytics (session replay, heatmaps).
@@ -34,6 +36,7 @@ const barlowCondensed = Barlow_Condensed({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Men's Sole Revival",
     template: "%s | Men's Sole Revival",
@@ -50,6 +53,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${lora.variable} ${dmSans.variable} ${barlowCondensed.variable}`}>
       <body className="min-h-screen bg-white antialiased" suppressHydrationWarning>
+        <JsonLd schema={[organizationSchema, webSiteSchema]} />
         {children}
         <GoogleAnalytics gaId="G-QT90WR1MPD" />
         <Analytics />

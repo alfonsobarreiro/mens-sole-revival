@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Container from "@/components/Container";
 import Button from "@/components/Button";
 import SiteLayout from "@/components/SiteLayout";
@@ -5,6 +6,22 @@ import TopicsSection from "@/components/TopicsSection";
 import Link from "next/link";
 import Image from "next/image";
 import { type } from "@/components/typography";
+
+export const metadata: Metadata = {
+  title: {
+    absolute: "Men's Foot Health: Evidence-Based Care for Men Over 40",
+  },
+  description:
+    "Why do your feet hurt after 40? Foot problems travel up to your knees, hips, and back. Free 5-minute self-assessment, evidence-based guides, and daily routines for men.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: "Men's Foot Health: Evidence-Based Care for Men Over 40",
+    description:
+      "Foot problems don't stay in your feet. Free 5-minute assessment, evidence-based guides, and routines for men over 40.",
+    url: "/",
+    type: "website",
+  },
+};
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
