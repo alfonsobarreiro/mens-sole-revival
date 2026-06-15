@@ -15,11 +15,11 @@ function SuccessView() {
       <section className="border-b border-neutral-200 py-16 md:py-20">
         <Container>
           <div className="max-w-2xl">
-            <p className={type.overline}>Early Access</p>
-            <h1 className={`mt-3 ${type.h1}`}>You're on the list.</h1>
+            <p className={type.overline}>Subscribed</p>
+            <h1 className={`mt-3 ${type.h1}`}>You're in.</h1>
             <p className={`mt-6 ${type.lead}`}>
-              We'll be in touch when your kit is ready. No spam, ever. Just a
-              note when something meaningful is ready for you.
+              Check your inbox. We'll send new guides as they publish, plus the
+              occasional practical tip. Nothing else — and you can leave anytime.
             </p>
           </div>
         </Container>
@@ -45,10 +45,10 @@ function SuccessView() {
                 <polyline points="20 6 9 17 4 12" />
               </svg>
             </div>
-            <p className={type.h4}>Submission received.</p>
+            <p className={type.h4}>You're subscribed.</p>
             <p className="mt-2 text-sm leading-6 text-neutral-600">
-              We're working through the waitlist carefully. Expect to hear from
-              us within a few weeks, or sooner if your kit ships first.
+              A confirmation is on its way to your inbox. New guides land there
+              first.
             </p>
           </div>
         </Container>
@@ -74,14 +74,15 @@ export default function WaitlistPage() {
       <section className="border-b border-neutral-200 py-16 md:py-20">
         <Container>
           <div className="max-w-2xl">
-            <p className={type.overline}>Early Access</p>
+            <p className={type.overline}>The Newsletter</p>
             <h1 className={`mt-3 ${type.h1}`}>
-              Be first when kits and guides launch.
+              New guides, straight to your inbox.
             </h1>
             <p className={`mt-6 ${type.lead}`}>
-              We're building this carefully. Join the waitlist and help shape
-              what gets built first. No spam, no pressure. Just occasional
-              updates when things are ready.
+              We publish evidence-based guides on what actually slows men down
+              after 40 — foot pain, fit, alignment, nails, skin. Subscribe and
+              we'll send the new ones, plus the occasional practical tip. No
+              spam. Unsubscribe anytime.
             </p>
           </div>
         </Container>
@@ -103,7 +104,8 @@ export default function WaitlistPage() {
               {/* Name */}
               <div>
                 <label htmlFor="name" className={`block mb-2 ${type.label}`}>
-                  Your name
+                  Your name{" "}
+                  <span className="font-normal text-neutral-400">(optional)</span>
                 </label>
                 <input
                   id="name"
@@ -144,27 +146,6 @@ export default function WaitlistPage() {
                 )}
               </div>
 
-              {/* Kit selector */}
-              <div>
-                <label htmlFor="kit" className={`block mb-2 ${type.label}`}>
-                  Which kit are you most interested in?{" "}
-                  <span className="font-normal text-neutral-400">(optional)</span>
-                </label>
-                <select
-                  id="kit"
-                  name="kit"
-                  className="w-full rounded border border-neutral-300 bg-white px-4 py-3 text-sm text-neutral-700 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100 transition"
-                >
-                  <option value="">Select a kit…</option>
-                  <option value="pain-recovery">Pain &amp; Recovery</option>
-                  <option value="fungus-care">Fungus &amp; Nail Care</option>
-                  <option value="alignment-mobility">Toe Alignment &amp; Mobility</option>
-                  <option value="dry-skin">Dry Skin &amp; Cracking</option>
-                  <option value="odor-hygiene">Odor &amp; Hygiene</option>
-                  <option value="footwear-fit">Footwear Fit</option>
-                </select>
-              </div>
-
               {/* Submit */}
               <button
                 type="submit"
@@ -191,10 +172,10 @@ export default function WaitlistPage() {
                         d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
                       />
                     </svg>
-                    Submitting…
+                    Subscribing…
                   </>
                 ) : (
-                  "Join the Waitlist"
+                  "Subscribe"
                 )}
               </button>
 
@@ -212,16 +193,16 @@ export default function WaitlistPage() {
           <div className="grid gap-6 md:grid-cols-3">
             {[
               {
-                heading: "No commerce yet",
-                body: "We're building this before we sell anything. Waitlist members get first access and a say in what ships.",
+                heading: "Evidence, not hype",
+                body: "Every guide is grounded in real research and what actually works. No miracle cures, no supplement pitches.",
               },
               {
-                heading: "Your input shapes the product",
-                body: "The kit you select tells us what to prioritize. We read every response.",
+                heading: "Occasional, not constant",
+                body: "We email when there's something worth reading — not on a schedule to hit a quota.",
               },
               {
-                heading: "Occasional updates only",
-                body: "We won't email you weekly. You'll hear from us when something meaningful is ready.",
+                heading: "Yours to leave",
+                body: "One click to unsubscribe, always. Your address stays private and never gets sold.",
               },
             ].map((item) => (
               <div key={item.heading}>

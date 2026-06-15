@@ -242,14 +242,14 @@ function LearnContent() {
             <div>
               <p className="font-display text-xl font-bold uppercase leading-tight text-brand-900">More guides coming soon.</p>
               <p className="mt-1 text-sm text-neutral-600">
-                Join the waitlist to get notified when new articles and topic series are published.
+                Subscribe to get new guides in your inbox, plus the occasional practical tip.
               </p>
             </div>
             <Link
               href="/waitlist"
               className="mt-4 inline-block flex-shrink-0 bg-brand-900 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-brand-700 md:mt-0 md:ml-8"
             >
-              Join the waitlist
+              Subscribe
             </Link>
           </div>
         </Container>

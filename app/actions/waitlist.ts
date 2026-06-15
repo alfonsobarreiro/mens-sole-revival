@@ -1,13 +1,17 @@
 "use server";
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Waitlist Server Action — powered by Resend (https://resend.com)
+// Newsletter signup Server Action — powered by Resend (https://resend.com)
 //
-// Setup (one-time):
-//  1. Sign up free at https://resend.com
-//  2. Create an API key under API Keys in the dashboard
-//  3. Add to .env.local:   RESEND_API_KEY=re_xxxxxxxxxxxx
-//  4. Add the same key to Vercel: Project → Settings → Environment Variables
+// (Formerly the "kit waitlist." Reframed to a content/newsletter signup: kits
+// were replaced by the educational model, so this captures people who want new
+// guides + the occasional practical tip.)
+//
+// Flow:
+//   1. Validate (only email required — name optional, lower friction).
+//   2. Add to the SAME Resend Audience the assessment uses (one unified list —
+//      RESEND_AUDIENCE_ID). Fail soft.
+//   3. Notify alfonso@ so signups are visible without log inspection.
 //
 // The "from" address comes from EMAIL_FROM (lib/site.ts) — the verified
 // send.menssolerevival.com identity, overridable via the RESEND_FROM env var.
@@ -27,13 +31,8 @@ export async function submitWaitlist(
 ): Promise<WaitlistState> {
   const name = (formData.get("name") as string | null)?.trim() ?? "";
   const email = (formData.get("email") as string | null)?.trim() ?? "";
-  const kit = (formData.get("kit") as string | null)?.trim() ?? "";
 
-  // ── Validation ────────────────────────────────────────────────────────────
-  if (!name) {
-    return { status: "error", message: "Please enter your name.", field: "name" };
-  }
-
+  // ── Validation — only email is required (name optional) ────────────────────
   const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   if (!email || !emailOk) {
     return {
@@ -43,26 +42,56 @@ export async function submitWaitlist(
     };
   }
 
-  // ── Send via Resend API ───────────────────────────────────────────────────
-  const apiKey = process.env.RESEND_API_KEY;
+  // ── Always log so dev runs capture data ────────────────────────────────────
+  console.log("[Newsletter signup]", { name, email, at: new Date().toISOString() });
 
+  // ── Send via Resend if configured ──────────────────────────────────────────
+  const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
-    // No key configured — log locally so dev testing still works
-    console.log("[Waitlist submission — no API key configured]", { name, email, kit });
+    // No key — logged only. Set RESEND_API_KEY (+ RESEND_AUDIENCE_ID) to build the list.
     return { status: "success" };
   }
 
-  const kitLabel = kit
-    ? {
-        "pain-recovery": "Pain & Recovery",
-        "fungus-care": "Fungus & Nail Care",
-        "alignment-mobility": "Toe Alignment & Mobility",
-        "dry-skin": "Dry Skin & Cracking",
-        "odor-hygiene": "Odor & Hygiene",
-        "footwear-fit": "Footwear Fit",
-      }[kit] ?? kit
-    : "Not specified";
+  // ── Add to the Resend Audience (the SAME unified list as the assessment) ───
+  // Fail soft: a list-add failure must not block the user's success state.
+  const audienceId = process.env.RESEND_AUDIENCE_ID;
+  if (audienceId) {
+    try {
+      const [firstName, ...rest] = name.split(/\s+/).filter(Boolean);
+      const contactRes = await fetch(
+        `https://api.resend.com/audiences/${audienceId}/contacts`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${apiKey}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            ...(firstName ? { firstName } : {}),
+            ...(rest.length ? { lastName: rest.join(" ") } : {}),
+            unsubscribed: false,
+          }),
+        }
+      );
+      // 409 = already a contact; not an error worth surfacing.
+      if (!contactRes.ok && contactRes.status !== 409) {
+        console.error(
+          "Resend (audience) error",
+          contactRes.status,
+          await contactRes.text()
+        );
+      }
+    } catch (err) {
+      console.error("Newsletter audience add failed:", err);
+    }
+  } else {
+    console.warn(
+      "[Newsletter signup] RESEND_AUDIENCE_ID not set — email not added to a list."
+    );
+  }
 
+  // ── Notify alfonso@ so signups are visible without log inspection ──────────
   try {
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
@@ -73,26 +102,22 @@ export async function submitWaitlist(
       body: JSON.stringify({
         from: EMAIL_FROM,
         to: ["alfonso@barreiro.com"],
-        subject: `New waitlist signup — ${name}`,
+        subject: `New newsletter signup — ${name || email}`,
         html: `
           <div style="font-family:sans-serif;max-width:560px;color:#1a1a1a">
-            <h2 style="color:#1C3F5E;margin-bottom:16px">New Waitlist Signup</h2>
+            <h2 style="color:#1C3F5E;margin-bottom:16px">New newsletter signup</h2>
             <table style="border-collapse:collapse;width:100%">
               <tr>
                 <td style="padding:8px 12px;background:#f0f7ff;font-weight:600;width:140px;border-radius:4px 0 0 4px">Name</td>
-                <td style="padding:8px 12px;border-bottom:1px solid #e5e7eb">${name}</td>
+                <td style="padding:8px 12px;border-bottom:1px solid #e5e7eb">${escapeHtml(name) || "—"}</td>
               </tr>
               <tr>
                 <td style="padding:8px 12px;background:#f0f7ff;font-weight:600">Email</td>
-                <td style="padding:8px 12px;border-bottom:1px solid #e5e7eb">${email}</td>
-              </tr>
-              <tr>
-                <td style="padding:8px 12px;background:#f0f7ff;font-weight:600">Kit Interest</td>
-                <td style="padding:8px 12px">${kitLabel}</td>
+                <td style="padding:8px 12px">${escapeHtml(email)}</td>
               </tr>
             </table>
             <p style="margin-top:24px;font-size:12px;color:#9ca3af">
-              Sent from mensolerevival.com
+              Sent from menssolerevival.com · newsletter signup
             </p>
           </div>
         `,
@@ -102,18 +127,22 @@ export async function submitWaitlist(
     if (!res.ok) {
       const body = await res.text();
       console.error("Resend error", res.status, body);
-      return {
-        status: "error",
-        message: "Something went wrong sending your submission. Please try again.",
-      };
+      // The list-add likely succeeded; don't fail the user over the notification.
     }
 
     return { status: "success" };
   } catch (err) {
-    console.error("Waitlist action error:", err);
-    return {
-      status: "error",
-      message: "Network error. Please check your connection and try again.",
-    };
+    console.error("Newsletter action error:", err);
+    // Contact may already be on the list; treat as success to avoid double-submits.
+    return { status: "success" };
   }
+}
+
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }

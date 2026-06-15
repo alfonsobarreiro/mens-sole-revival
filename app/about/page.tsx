@@ -146,14 +146,14 @@ export default function AboutPage() {
       <section className="border-t border-neutral-200 py-16 md:py-20">
         <Container>
           <div className="max-w-xl">
-            <h2 className={`${type.displaySection} text-brand-900`}>Join us as<br />we build.</h2>
+            <h2 className={`${type.displaySection} text-brand-900`}>Get the<br />guides.</h2>
             <p className={`mt-4 ${type.lead}`}>
-              Get on the list and help shape what gets built first.
-              No spam, no pressure — just updates when something worth reading is ready.
+              We publish evidence-based foot-health guides for men over 40.
+              Subscribe and we'll send the new ones — no spam, unsubscribe anytime.
             </p>
             <div className="mt-8">
               <Button href="/waitlist" size="lg">
-                Join the Waitlist
+                Subscribe
               </Button>
             </div>
           </div>

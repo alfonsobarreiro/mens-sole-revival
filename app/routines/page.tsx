@@ -157,13 +157,13 @@ export default function RoutinesPage() {
               </h2>
               <p className="mt-3 text-base leading-relaxed text-neutral-600">
                 Each routine above is becoming a full step-by-step guide with
-                timing, product recommendations, and what to watch for. Join the
-                waitlist to get notified when they publish.
+                timing, product recommendations, and what to watch for. Subscribe
+                and we'll send them as they publish.
               </p>
             </div>
             <div className="mt-8 flex-shrink-0 md:ml-12 md:mt-0">
               <Button href="/waitlist" size="lg">
-                Join the Waitlist
+                Subscribe
               </Button>
             </div>
           </div>
