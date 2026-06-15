@@ -18,6 +18,7 @@ import {
 // ── Category color (kept from the previous version) ───────────────────────────
 
 const categoryColor: Record<string, string> = {
+  "Foot Health":   "bg-brand-50 text-brand-700",
   "Footwear Fit":  "bg-brand-50 text-brand-700",
   "Alignment":     "bg-brand-50 text-brand-700",
   "Dry Skin":      "bg-amber-50 text-amber-700",

@@ -109,6 +109,17 @@ export type ArticleMeta = {
 };
 
 export const articles: Record<string, ArticleMeta> = {
+  "why-your-feet-hurt-after-40": {
+    slug: "why-your-feet-hurt-after-40",
+    title: "Why Your Feet Hurt After 40 (and What's Actually Going On)",
+    category: "Foot Health",
+    readTime: "7 min",
+    imageUrl: "/images/pexels-7787491.jpg",
+    excerpt:
+      "\"Age\" isn't a diagnosis. Four specific things change in your feet after 40 — and because your feet are the foundation, you feel them travel up to your knees, hips, and back. Here's what's actually going on.",
+    symptoms: ["pain", "alignment", "footwear"],
+    action: "Take the 5-minute self-check to find which pattern is driving your pain.",
+  },
   "what-your-dress-shoes-are-doing-to-your-feet": {
     slug: "what-your-dress-shoes-are-doing-to-your-feet",
     title: "What 30 Years in Dress Shoes Actually Does to Your Feet",
@@ -185,6 +196,10 @@ export const articleRelations: Record<
   string,
   { reviews: string[]; routine: keyof typeof routines }
 > = {
+  "why-your-feet-hurt-after-40": {
+    reviews: ["kuru-atom-sneakers", "superfeet-blue-insoles"],
+    routine: "daily",
+  },
   "what-your-dress-shoes-are-doing-to-your-feet": {
     reviews: ["kuru-atom-sneakers", "superfeet-blue-insoles"],
     routine: "strength",

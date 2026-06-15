@@ -25,6 +25,44 @@ export type GuideSeo = {
 };
 
 export const guideSeo: Record<string, GuideSeo> = {
+  "why-your-feet-hurt-after-40": {
+    metaTitle: "Why Do My Feet Hurt After 40? The Real Causes",
+    metaDescription:
+      "Foot pain after 40 isn't 'just age.' Four specific things change in your feet — and because they're your foundation, you feel it in your knees, hips, and back.",
+    datePublished: "2026-06-15",
+    faq: [
+      {
+        q: "Why do my feet suddenly hurt after 40?",
+        a: "Four specific things change: the fat pad that cushions your heel and forefoot thins and loses elasticity, tendons and ligaments stiffen (which is part of why plantar fasciitis peaks between 40 and 60), decades of narrow and elevated footwear catch up as toe drift, bunions, and a stiffer big toe, and recovery slows so small irritations linger. \"Age\" is a label for those addressable changes, not a diagnosis.",
+      },
+      {
+        q: "Can foot problems really cause knee, hip, or back pain?",
+        a: "Yes. Your foot is the base of the kinetic chain, so when it shifts the body compensates and that compensation travels up to the knee, hip, and lower back. A foot that collapses inward rotates the shin and changes how the knee tracks; a big toe that can't extend shortens your stride and offloads work onto the hip.",
+      },
+      {
+        q: "What's the first thing to do about foot pain after 40?",
+        a: "Find out which pattern is yours before you buy or change anything — a 5-minute self-check points you to the specific cause. Then fix the most upstream variable (footwear fit: get measured, both feet, end of day), build a short daily routine, and see a podiatrist for pain that wakes you, red or warm swelling, numbness, or any non-healing wound.",
+      },
+    ],
+    sources: [
+      {
+        label: "NIH / NCBI — Plantar Fasciitis (StatPearls)",
+        url: "https://www.ncbi.nlm.nih.gov/books/NBK431073/",
+      },
+      {
+        label: "PMC — Global Prevalence and Incidence of Hallux Valgus (2023)",
+        url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC10510234/",
+      },
+      {
+        label: "PMC — Incorrectly Fitted Footwear, Foot Pain and Foot Disorders",
+        url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC6064070/",
+      },
+      {
+        label: "AAFP — Common Foot Problems: OTC Treatments and Home Care",
+        url: "https://www.aafp.org/pubs/afp/issues/2018/0901/p298.html",
+      },
+    ],
+  },
   "cracked-heels-what-actually-works": {
     metaTitle: "Why Do My Heels Crack? The Real Fix",
     metaDescription:

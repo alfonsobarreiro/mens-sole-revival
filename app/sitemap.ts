@@ -17,6 +17,7 @@ const routes = [
   "/guides/toenail-fungus-what-works",
   "/guides/what-your-dress-shoes-are-doing-to-your-feet",
   "/guides/why-toe-alignment-affects-knees-and-hips",
+  "/guides/why-your-feet-hurt-after-40",
   "/reviews",
   ...staticReviews.map((r) => `/reviews/${r.slug}`),
   "/routines",

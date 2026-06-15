@@ -3,6 +3,7 @@ import Container from "@/components/Container";
 import Button from "@/components/Button";
 import SiteLayout from "@/components/SiteLayout";
 import TopicsSection from "@/components/TopicsSection";
+import HeroSlideshow from "@/components/HeroSlideshow";
 import Link from "next/link";
 import Image from "next/image";
 import { type } from "@/components/typography";
@@ -53,6 +54,15 @@ const routineHighlights = [
 ];
 
 const articles = [
+  {
+    slug: "why-your-feet-hurt-after-40",
+    title: "Why Your Feet Hurt After 40 (and What's Actually Going On)",
+    category: "Foot Health",
+    readTime: "7 min",
+    excerpt:
+      "\"Age\" isn't a diagnosis. Four specific things change in your feet after 40 — and because they're your foundation, you feel them in your knees, hips, and back.",
+    image: "/images/pexels-7787491.jpg",
+  },
   {
     slug: "what-your-dress-shoes-are-doing-to-your-feet",
     title: "What 30 Years in Dress Shoes Actually Does to Your Feet",
@@ -120,18 +130,6 @@ const stats = [
   },
 ];
 
-const marqueeItems = [
-  { label: "Nails",          href: "/guides?symptom=nails" },
-  { label: "Alignment",      href: "/guides?symptom=alignment" },
-  { label: "Skin",           href: "/guides?symptom=skin" },
-  { label: "Foot Health",    href: "/guides" },
-  { label: "Fit",            href: "/guides?symptom=footwear" },
-  { label: "Pain",           href: "/guides?symptom=pain" },
-  { label: "Evidence-Based", href: "/reviews" },
-  { label: "Men's Wellness", href: "/guides" },
-  { label: "Long Game",      href: "/about" },
-];
-
 // ── Page ────────────────────────────────────────────────────────────────────
 
 export default function Home() {
@@ -139,30 +137,34 @@ export default function Home() {
     <SiteLayout>
 
       {/* ── Hero ── */}
-      <section className="relative flex min-h-[90vh] flex-col overflow-hidden bg-brand-800">
+      <section className="relative flex min-h-[90vh] flex-col overflow-hidden bg-brand-900">
 
-        {/* Background photo — full bleed, full brightness */}
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/pexels-4909313.jpg"
-            alt=""
-            fill
-            className="object-cover object-center"
-            priority
-          />
-        </div>
+        {/* Background photos — slow crossfade (reduced-motion shows frame 1 only) */}
+        <HeroSlideshow
+          images={[
+            { src: "/images/pexels-4909313.jpg", position: "center" },
+            { src: "/images/pexels-17979558.jpg", position: "center right" },
+            { src: "/images/unsplash-forest-run.jpg", position: "center" },
+          ]}
+        />
 
-        {/* Directional gradient — softer this time, only enough to keep headline legible on the left */}
-        <div className="absolute inset-0 z-0 bg-gradient-to-r from-brand-900/65 via-brand-900/20 to-transparent" />
+        {/* Controlled dual scrim: vertical grounds the base (and the credibility
+            strip); directional keeps the headline legible on the left. Reads as
+            one premium scene and holds WCAG contrast for the copy. */}
+        <div className="absolute inset-0 z-0 bg-gradient-to-t from-brand-900 via-brand-900/30 to-transparent" />
+        <div className="absolute inset-0 z-0 bg-gradient-to-r from-brand-900/90 via-brand-900/45 to-brand-900/10" />
 
-        {/* Content — flex-1 centers it vertically */}
+        {/* Content */}
         <div className="relative z-10 flex flex-1 items-center">
           <Container>
             <div className="max-w-3xl py-24 md:py-32">
 
-              <p className="mb-6 text-xs font-semibold uppercase tracking-widest text-white">
-                For men over 40 who are finally paying attention.
-              </p>
+              <div className="mb-6 flex items-center gap-3">
+                <span aria-hidden="true" className="h-px w-10 bg-accent-400" />
+                <p className="text-xs font-semibold uppercase tracking-widest text-white/90">
+                  For men over 40 who are finally paying attention
+                </p>
+              </div>
 
               <h1 className={`${type.displayHero} text-white`}>
                 Fix your feet.<br />
@@ -170,11 +172,11 @@ export default function Home() {
                 everything else.
               </h1>
 
-              <p className="mt-8 max-w-xl text-lg leading-relaxed text-white/75">
+              <p className="mt-8 max-w-xl text-lg leading-relaxed text-white/85">
                 Foot problems don't stay in your feet. They change how your
                 knees load, how your hips move, and how your back feels by
-                evening. Most men don't notice until a decade of damage has
-                already passed.
+                evening — and most men don't notice until a decade of damage
+                has already passed.
               </p>
 
               <div className="mt-10 flex flex-wrap gap-3">
@@ -185,44 +187,57 @@ export default function Home() {
                   href="/guides"
                   variant="outline"
                   size="lg"
-                  className="border-white/50 text-white hover:bg-white/10 active:bg-white/20"
+                  className="border-white/70 text-white hover:bg-white/10 active:bg-white/20"
                 >
                   Browse Guides
                 </Button>
               </div>
 
-              <p className="mt-5 text-sm text-white/40">
-                5-minute self-check · find out where to start
+              <p className="mt-5 flex items-center gap-2 text-sm text-white/70">
+                <svg
+                  aria-hidden="true"
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="text-accent-400"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                5-minute self-check · no email needed to start
               </p>
             </div>
           </Container>
         </div>
 
-        {/* Marquee ticker — sits at the very bottom of the hero */}
-        <div className="relative z-10 overflow-hidden border-t border-white/10 bg-brand-900/70 py-3 backdrop-blur-sm">
-          <div className="flex items-center">
-            {/* Signifier label — pinned left, not part of the scroll */}
-            <div className="flex-shrink-0 border-r border-white/10 px-4">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-white/30">
-                Browse topics
-              </span>
+        {/* Credibility strip — proof above the fold, replacing the ticker */}
+        <div className="relative z-10 border-t border-white/10 bg-brand-900/80 backdrop-blur-sm">
+          <Container>
+            <div className="flex flex-col gap-2 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+              <p className="text-sm leading-6 text-white/80">
+                <span className="font-bold text-white">1 in 4</span> men over 40
+                live with chronic foot pain.{" "}
+                <a
+                  href="https://www.apma.org/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white/60 underline underline-offset-2 transition hover:text-white/90"
+                >
+                  APMA
+                </a>
+              </p>
+              <Link
+                href="/guides"
+                className="text-xs font-bold uppercase tracking-widest text-white/70 transition hover:text-white"
+              >
+                Browse the guides →
+              </Link>
             </div>
-            {/* Scrolling links */}
-            <div className="overflow-hidden flex-1">
-              <div className="flex animate-marquee whitespace-nowrap">
-                {[...marqueeItems, ...marqueeItems, ...marqueeItems].map((item, i) => (
-                  <Link
-                    key={i}
-                    href={item.href}
-                    className="mx-5 text-xs font-semibold uppercase tracking-widest text-white/50 hover:text-white/80 transition-colors duration-200 underline-offset-4 hover:underline"
-                  >
-                    {item.label}
-                    <span className="ml-5 text-accent-500">·</span>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </div>
+          </Container>
         </div>
       </section>
 
