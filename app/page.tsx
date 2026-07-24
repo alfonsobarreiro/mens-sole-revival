@@ -5,6 +5,7 @@ import SiteLayout from "@/components/SiteLayout";
 import TopicsSection from "@/components/TopicsSection";
 import HeroSlideshow from "@/components/HeroSlideshow";
 import AssessmentProofBlock from "@/components/AssessmentProofBlock";
+import InlineNewsletterForm from "@/components/InlineNewsletterForm";
 import Link from "next/link";
 import Image from "next/image";
 import { type } from "@/components/typography";
@@ -296,6 +297,18 @@ export default function Home() {
                 </a>
               </div>
             ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* ── Newsletter capture band — lead-magnet framed.
+           Sits after the two stat sections and before the content library,
+           so the reader has been given the problem (industry stats) and
+           the proof (MSR traction) before we ask for the email. ── */}
+      <section className="border-y border-neutral-200 bg-brand-900 py-16 md:py-20">
+        <Container>
+          <div className="mx-auto max-w-2xl">
+            <InlineNewsletterForm tone="dark" />
           </div>
         </Container>
       </section>

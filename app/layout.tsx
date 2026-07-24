@@ -4,6 +4,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/react";
 import Script from "next/script";
 import JsonLd from "@/components/JsonLd";
+import ExitIntentPopup from "@/components/ExitIntentPopup";
 import { SITE_URL, organizationSchema, webSiteSchema } from "@/lib/site";
 import "./globals.css";
 
@@ -55,6 +56,9 @@ export default function RootLayout({
       <body className="min-h-screen bg-white antialiased" suppressHydrationWarning>
         <JsonLd schema={[organizationSchema, webSiteSchema]} />
         {children}
+        {/* Exit-intent popup — client component, self-suppresses on
+            /newsletter, /assessment, and /foot-check routes. */}
+        <ExitIntentPopup />
         <GoogleAnalytics gaId="G-QT90WR1MPD" />
         <Analytics />
         {clarityId && (

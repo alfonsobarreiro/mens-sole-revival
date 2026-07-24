@@ -28,16 +28,16 @@ export default async function ConfirmedPage({
                 <p className={type.overline}>Confirmed</p>
                 <h1 className={`mt-3 ${type.h1}`}>You're in.</h1>
                 <p className={`mt-6 ${type.lead}`}>
-                  Your subscription is confirmed. New guides, reviews, and
-                  routines for men over 40 are headed to your inbox — plus the
-                  occasional practical tip. You can unsubscribe anytime.
+                  Your subscription is confirmed. Here's what we promised:
+                  the 5-minute foot check, ready to read, print, or take to
+                  your next doctor visit.
                 </p>
                 <div className="mt-8 flex flex-wrap gap-3">
                   <Link
-                    href="/guides"
-                    className="inline-block bg-brand-900 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-brand-700"
+                    href="/foot-check"
+                    className="inline-block bg-accent-500 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-accent-600"
                   >
-                    Browse the guides
+                    Open the foot check →
                   </Link>
                   <Link
                     href="/assessment"
@@ -46,6 +46,10 @@ export default async function ConfirmedPage({
                     Take the assessment
                   </Link>
                 </div>
+                <p className="mt-8 text-sm text-neutral-500">
+                  New guides, reviews, and routines will land in your inbox
+                  as they publish. Unsubscribe anytime with one click.
+                </p>
               </>
             ) : (
               <>

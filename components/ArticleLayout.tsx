@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
 import Container from "@/components/Container";
+import InlineNewsletterForm from "@/components/InlineNewsletterForm";
 import { type } from "@/components/typography";
 import { recipes } from "@/styles/recipes";
 import { tokens } from "@/styles/tokens";
@@ -70,6 +71,14 @@ export default function ArticleLayout({
         >
           {children}
         </article>
+
+        {/* End-of-article capture — highest-intent moment (they just
+            finished reading). Same InlineNewsletterForm used on home and
+            the exit popup, lead-magnet framing keeps the value exchange
+            honest at every touch point. */}
+        <div className="mx-auto mt-16 max-w-2xl border-t border-neutral-200 pt-12">
+          <InlineNewsletterForm />
+        </div>
       </div>
     </div>
   );

@@ -23,6 +23,7 @@ const routes = [
   "/routines",
   "/kits",
   "/newsletter",
+  "/foot-check",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

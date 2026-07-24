@@ -107,24 +107,29 @@ export async function submitNewsletter(
       body: JSON.stringify({
         from: EMAIL_FROM,
         to: [email],
-        subject: "Confirm your subscription — Men's Sole Revival",
+        subject: "Confirm to get the 5-minute foot check",
         html: `
           <div style="font-family:sans-serif;max-width:520px;color:#1a1a1a">
             <h2 style="color:#1C3F5E;margin-bottom:8px">One quick step</h2>
             <p style="margin:0 0 20px 0;font-size:14px;line-height:1.6;color:#444">
-              ${escapeHtml(name) ? `Hi ${escapeHtml(name)} — ` : ""}confirm your email to start
-              getting new guides, reviews, and routines from Men's Sole Revival.
+              ${escapeHtml(name) ? `Hi ${escapeHtml(name)}, ` : ""}confirm your email
+              and we'll send you the 5-minute foot check right away. Same questions
+              the assessment asks, printable, yours to keep.
             </p>
-            <a href="${url}" style="display:inline-block;background:#1C3F5E;color:#ffffff;text-decoration:none;padding:12px 22px;font-weight:600;font-size:14px;border-radius:4px">
-              Confirm subscription
+            <a href="${url}" style="display:inline-block;background:#CF5B48;color:#ffffff;text-decoration:none;padding:12px 22px;font-weight:600;font-size:14px;border-radius:4px">
+              Confirm and get the checklist
             </a>
             <p style="margin:24px 0 0 0;font-size:12px;line-height:1.6;color:#888">
               If the button doesn't work, paste this link into your browser:<br>
               <a href="${url}" style="color:#1C3F5E;word-break:break-all">${url}</a>
             </p>
+            <p style="margin:20px 0 0 0;font-size:12px;color:#888">
+              After you confirm, you'll also get new guides, reviews, and routines
+              from Men's Sole Revival as they publish. Unsubscribe anytime.
+            </p>
             <p style="margin:20px 0 0 0;font-size:12px;color:#aaa">
               This link expires in 48 hours. If you didn't request this, ignore this
-              email — you won't be subscribed.
+              email. You won't be subscribed.
             </p>
           </div>
         `,
