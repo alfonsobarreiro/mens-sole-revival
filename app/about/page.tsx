@@ -4,6 +4,7 @@ import Link from "next/link";
 import Container from "@/components/Container";
 import SiteLayout from "@/components/SiteLayout";
 import Button from "@/components/Button";
+import AssessmentProofBlock from "@/components/AssessmentProofBlock";
 import { type } from "@/components/typography";
 
 export const metadata: Metadata = {
@@ -102,12 +103,33 @@ export default function AboutPage() {
                 That's what this is.
               </p>
               <p className="text-sm text-neutral-500">
-                — Alfonso Barreiro, UX/UI Designer · Portland, OR
+                Alfonso Barreiro, UX/UI Designer · Portland, OR
               </p>
             </div>
           </div>
         </Container>
       </section>
+
+      {/* ── Mission callout — the site's own voice, not the founder's.
+           Dark rhythm break between the personal story and the operational
+           values below. Names what the site is and what it explicitly isn't. ── */}
+      <section className="bg-brand-900 py-16 md:py-24">
+        <Container>
+          <div className="mx-auto max-w-3xl">
+            <div className="mb-6 h-0.5 w-10 bg-accent-500" />
+            <p className="font-heading text-2xl italic leading-snug text-white md:text-3xl">
+              This site exists because I couldn't find one when I needed one.
+              Not a product catalog. Not a blog with 30 supplements to buy.
+              A place that starts with a 5-minute self-check and gives you a
+              real place to begin.
+            </p>
+          </div>
+        </Container>
+      </section>
+
+      {/* ── Assessment proof block — same component as home, reused so both
+           pages carry the same MSR-traction numbers in the same treatment. ── */}
+      <AssessmentProofBlock />
 
       {/* ── Values ── */}
       <section className="border-t border-neutral-200 bg-neutral-50 py-16 md:py-20">

@@ -4,6 +4,7 @@ import Button from "@/components/Button";
 import SiteLayout from "@/components/SiteLayout";
 import TopicsSection from "@/components/TopicsSection";
 import HeroSlideshow from "@/components/HeroSlideshow";
+import AssessmentProofBlock from "@/components/AssessmentProofBlock";
 import Link from "next/link";
 import Image from "next/image";
 import { type } from "@/components/typography";
@@ -162,24 +163,31 @@ export default function Home() {
               <div className="mb-6 flex items-center gap-3">
                 <span aria-hidden="true" className="h-px w-10 bg-accent-400" />
                 <p className="text-xs font-semibold uppercase tracking-widest text-white/90">
-                  For men over 40 who are finally paying attention
+                  For men who spent 30 years taking care of everyone else.
                 </p>
               </div>
 
               <h1 className={`${type.displayHero} text-white`}>
-                Fix your feet.<br />
-                Keep up with<br />
-                everything else.
+                Your turn.<br />
+                Start with<br />
+                your feet.
               </h1>
 
               <p className="mt-8 max-w-xl text-lg leading-relaxed text-white/85">
                 Foot problems don't stay in your feet. They change how your
                 knees load, how your hips move, and how your back feels by
-                evening — and most men don't notice until a decade of damage
-                has already passed.
+                evening. Most men don't notice until a decade of damage has
+                already passed.
               </p>
 
-              <div className="mt-10 flex flex-wrap gap-3">
+              {/* Mission line — self-compassion frame, italic, quiet.
+                  Sits between the body and the CTAs so it FRAMES the
+                  action rather than sitting under it as an afterthought. */}
+              <p className="mt-6 max-w-xl text-lg italic leading-relaxed text-accent-300">
+                The hardest step is the first one. This is that step.
+              </p>
+
+              <div className="mt-8 flex flex-wrap gap-3">
                 <Button href="/assessment" size="lg">
                   Take the Assessment
                 </Button>
@@ -214,32 +222,57 @@ export default function Home() {
           </Container>
         </div>
 
-        {/* Credibility strip — proof above the fold, replacing the ticker */}
+        {/* Credibility strip — proof above the fold. Shows what's already
+            happening on the site (78 men, 86% completion) instead of an
+            industry stat, so the first proof someone reads is MSR's own
+            traction, not APMA's. The 1-in-4 stat still lives in the Stats
+            section below the fold. */}
         <div className="relative z-10 border-t border-white/10 bg-brand-900/80 backdrop-blur-sm">
           <Container>
             <div className="flex flex-col gap-2 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
               <p className="text-sm leading-6 text-white/80">
-                <span className="font-bold text-white">1 in 4</span> men over 40
-                live with chronic foot pain.{" "}
-                <a
-                  href="https://www.apma.org/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-white/60 underline underline-offset-2 transition hover:text-white/90"
-                >
-                  APMA
-                </a>
+                <span className="font-bold text-white">78 men</span> have taken
+                the assessment.{" "}
+                <span className="font-bold text-white">86%</span> finish it.
               </p>
               <Link
-                href="/guides"
+                href="/assessment"
                 className="text-xs font-bold uppercase tracking-widest text-white/70 transition hover:text-white"
               >
-                Browse the guides →
+                Take the assessment →
               </Link>
             </div>
           </Container>
         </div>
       </section>
+
+      {/* ── Founder quote — first-person, self-compassion frame.
+           Sits directly under the hero so the founder voice lands before
+           any data does. Lora italic + accent bar keeps it editorial, not
+           marketing. No image, no CTA — this is the emotional pull only. ── */}
+      <section className="border-b border-neutral-200 bg-white py-16 md:py-24">
+        <Container>
+          <div className="mx-auto max-w-3xl">
+            <div className="mb-6 h-0.5 w-10 bg-accent-500" />
+            <blockquote className="font-heading text-2xl italic leading-snug text-brand-900 md:text-3xl">
+              I built this because I spent years avoiding my own feet. Not
+              because they weren't a problem. Because looking at them felt
+              harder than ignoring them. It was easier to help everyone else
+              than to think about myself. Every man I've talked to who's over
+              40 has some version of the same story. This is the site I wish
+              I'd found five years earlier.
+            </blockquote>
+            <p className="mt-6 text-sm font-semibold uppercase tracking-widest text-neutral-500">
+              Alfonso Barreiro · Founder
+            </p>
+          </div>
+        </Container>
+      </section>
+
+      {/* ── Assessment proof block — permanent stat display for MSR's own
+           traction. Reads before the industry-scale stats so the first
+           numbers on the page are what's already working on this site. ── */}
+      <AssessmentProofBlock />
 
       {/* ── Stats — large display numbers, no cards ── */}
       <section className="bg-neutral-50 py-14 md:py-20">

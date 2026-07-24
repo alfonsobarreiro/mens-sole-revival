@@ -244,6 +244,13 @@ export default async function ReviewPage({
 
   // Review structured data — drives rich-result stars in search, which lift
   // affiliate CTR. ratingValue is on a 10-point scale (bestRating: 10).
+  //
+  // The nested Product carries offers + aggregateRating so Google's Product
+  // snippet validator has one of the three required fields (offers, review,
+  // aggregateRating) and the review is eligible for the star + price rich
+  // result. Without these, GSC's Product-snippets tab throws "Either 'offers',
+  // 'review', or 'aggregateRating' should be specified" and no rich snippet
+  // is served.
   const reviewSchema = {
     "@context": "https://schema.org",
     "@type": "Review",
@@ -252,6 +259,29 @@ export default async function ReviewPage({
       name: review.productName,
       ...(review.brand ? { brand: { "@type": "Brand", name: review.brand } } : {}),
       ...(review.imageUrl ? { image: `${SITE_URL}${review.imageUrl}` } : {}),
+      ...(review.retailPriceUsd != null
+        ? {
+            offers: {
+              "@type": "Offer",
+              price: review.retailPriceUsd,
+              priceCurrency: "USD",
+              availability: "https://schema.org/InStock",
+              url: review.affiliateUrl ?? `${SITE_URL}/reviews/${review.slug}`,
+            },
+          }
+        : {}),
+      ...(review.rating != null
+        ? {
+            aggregateRating: {
+              "@type": "AggregateRating",
+              ratingValue: review.rating,
+              bestRating: 10,
+              worstRating: 0,
+              ratingCount: 1,
+              reviewCount: 1,
+            },
+          }
+        : {}),
     },
     ...(review.tagline ? { name: review.tagline } : {}),
     ...(review.summary ? { reviewBody: review.summary } : {}),
