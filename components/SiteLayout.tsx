@@ -235,7 +235,7 @@ export default function SiteLayout({
                 <div className="flex flex-wrap gap-3">
                   {/* Download resume */}
                   <a
-                    href="/Alfonso_Barreiro_Resume_April_2026.pdf"
+                    href="/Alfonso_Barreiro_Resume.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 rounded border border-white/25 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-white/80 transition hover:border-white/50 hover:bg-white/10 hover:text-white"
