@@ -468,6 +468,15 @@ export default function AssessmentResults({
               Your full results are on the way. If you opted in to the 30 and 90
               day check-ins, we'll nudge you when it's time to re-take.
             </p>
+            <p className="mt-3 text-sm leading-6 text-emerald-800/80">
+              Coming back later?{" "}
+              <a
+                href="/progress"
+                className="font-semibold text-emerald-900 underline underline-offset-4 hover:text-emerald-950"
+              >
+                Track your progress →
+              </a>
+            </p>
           </div>
 
           {/* PDF for doctor visit */}
