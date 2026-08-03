@@ -25,7 +25,7 @@ import InlineNewsletterForm from "@/components/InlineNewsletterForm";
 // ─────────────────────────────────────────────────────────────────────────────
 
 const STORAGE_KEY = "msr-exit-popup-suppressed";
-const SUPPRESS_DAYS = 30;
+const SUPPRESS_DAYS = 7;
 const MOBILE_DELAY_MS = 45_000;
 
 const SUPPRESS_PATHS = [
@@ -94,7 +94,11 @@ export default function ExitIntentPopup() {
     if (typeof window === "undefined") return;
 
     // Desktop exit-intent — mouse leaves through the top edge.
+    // Re-check suppression on every fire (belt to the disarm-on-close
+    // suspenders below) so a stale listener from before close() ran can
+    // never re-open the popup in the same session.
     const onMouseOut = (e: MouseEvent) => {
+      if (isSuppressed()) return;
       const to = (e.relatedTarget || (e as unknown as { toElement?: Node }).toElement) as Node | null;
       // toElement/relatedTarget null → cursor left the document entirely.
       if (to) return;
@@ -151,6 +155,13 @@ export default function ExitIntentPopup() {
   const close = () => {
     markSuppressed();
     setOpen(false);
+    // Disarm so the mouseout / mobile-inactivity listeners tear down.
+    // Without this, the effect that owns those listeners keeps running
+    // as long as `armed` is true, and the same session could re-fire
+    // the popup on the next mouse-to-top even though suppression is now
+    // set (the listener's suppression re-check would catch it too, but
+    // detaching is cheaper and cleaner).
+    setArmed(false);
   };
 
   if (!open) return null;
