@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import InlineNewsletterForm from "@/components/InlineNewsletterForm";
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -57,15 +58,25 @@ function markSuppressed() {
 }
 
 export default function ExitIntentPopup() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [armed, setArmed] = useState(false);
+
+  // Route suppression — recomputed on every SPA navigation via usePathname().
+  // The old version read window.location.pathname once on mount, which meant
+  // navigating to /assessment (or /newsletter, etc.) from another page kept
+  // the popup armed and it could fire on top of the very forms it duplicates.
+  const isSuppressedRoute = SUPPRESS_PATHS.some(
+    (p) => pathname === p || pathname.startsWith(`${p}/`)
+  );
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    // Route suppression — never mount on transactional / capture pages.
-    const path = window.location.pathname;
-    if (SUPPRESS_PATHS.some((p) => path === p || path.startsWith(`${p}/`))) {
+    // Landed on a suppressed route — close any open popup + disarm.
+    if (isSuppressedRoute) {
+      setOpen(false);
+      setArmed(false);
       return;
     }
 
@@ -76,7 +87,7 @@ export default function ExitIntentPopup() {
     const armTimer = window.setTimeout(() => setArmed(true), 2_000);
 
     return () => window.clearTimeout(armTimer);
-  }, []);
+  }, [pathname, isSuppressedRoute]);
 
   useEffect(() => {
     if (!armed) return;
