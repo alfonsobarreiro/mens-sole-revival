@@ -84,6 +84,15 @@ export default function AssessmentResults({
     initialEmail
   );
 
+  // ── Two-tier reveal ────────────────────────────────────────────────────
+  // Before email: total flag count + per-section headers (name + count +
+  // duration) are visible. The full personalized plan — item detail per
+  // section, severity flags, article list, routine, doctor-prep bullets,
+  // PDF — sits behind the email gate. Once submitted, everything unlocks
+  // in place. This is the honest brand version: the free tier is a real
+  // quick read, the gate is around the takeaway artifacts.
+  const revealed = emailState.status === "success";
+
   useEffect(() => {
     if (emailState.status === "success") {
       trackAssessment("assessment_email_save", { total_flags: totalFlags });
@@ -154,7 +163,7 @@ export default function AssessmentResults({
                           for {durationLabels[duration]}
                         </span>
                       )}
-                      {bucket === "high" && (
+                      {revealed && bucket === "high" && (
                         <span className="text-[10px] font-semibold uppercase tracking-wider text-accent-600">
                           Worth a podiatrist visit
                         </span>
@@ -169,8 +178,10 @@ export default function AssessmentResults({
                     </span>
                   </div>
 
-                  {/* Items list (only when count > 0) */}
-                  {items.length > 0 && (
+                  {/* Items list — Tier 2 (gated). Before reveal, the user
+                       sees the section name and flag count; after reveal,
+                       the specific items they flagged appear inline. */}
+                  {revealed && items.length > 0 && (
                     <ul className="mt-3 space-y-1.5 border-t border-neutral-100 pt-3">
                       {items.map((it, i) => (
                         <li
@@ -193,8 +204,8 @@ export default function AssessmentResults({
         )}
       </div>
 
-      {/* ── Clinic recommendation callout ─────────────────────────────── */}
-      {result.recommendsClinic && (
+      {/* ── Clinic recommendation callout — Tier 2 ────────────────────── */}
+      {revealed && result.recommendsClinic && (
         <section className="border-l-4 border-accent-500 bg-accent-50 px-5 py-5">
           <p className="text-xs font-bold uppercase tracking-widest text-accent-700">
             Worth a professional visit
@@ -215,7 +226,8 @@ export default function AssessmentResults({
         </section>
       )}
 
-      {/* ── Block 1: Articles to read ──────────────────────────────────── */}
+      {/* ── Block 1: Articles to read — Tier 2 ─────────────────────────── */}
+      {revealed && (
       <section>
         <p className="text-xs font-bold uppercase tracking-widest text-accent-600">
           Block 1
@@ -269,8 +281,10 @@ export default function AssessmentResults({
           </div>
         )}
       </section>
+      )}
 
-      {/* ── Block 2: Routine to follow ─────────────────────────────────── */}
+      {/* ── Block 2: Routine to follow — Tier 2 ────────────────────────── */}
+      {revealed && (
       <section>
         <p className="text-xs font-bold uppercase tracking-widest text-accent-600">
           Block 2
@@ -317,8 +331,10 @@ export default function AssessmentResults({
           </p>
         )}
       </section>
+      )}
 
-      {/* ── Block 3: Talk to a professional ────────────────────────────── */}
+      {/* ── Block 3: Talk to a professional — Tier 2 ───────────────────── */}
+      {revealed && (
       <section>
         <p className="text-xs font-bold uppercase tracking-widest text-accent-600">
           Block 3
@@ -352,15 +368,96 @@ export default function AssessmentResults({
           Find a podiatrist near you →
         </a>
       </section>
+      )}
 
-      {/* ── Save row ───────────────────────────────────────────────────── */}
-      <section className="border-t border-neutral-200 pt-8">
-        <p className="text-xs font-bold uppercase tracking-widest text-accent-600">
-          Save your results
-        </p>
+      {/* ── Gate card — Tier 1 close, unlocks Tier 2 ─────────────────────
+           Shown before email. Sits where the Tier 2 blocks would render,
+           so the user's next visual action is either fill the form or
+           back out. Copy names the honesty of the free tier and the
+           takeaway artifacts on the other side of the gate. */}
+      {!revealed && (
+        <section className="border-t border-neutral-200 pt-8">
+          <div className="border border-brand-200 bg-brand-900 p-6 md:p-8">
+            <p className="text-xs font-bold uppercase tracking-widest text-accent-400">
+              Unlock your full plan
+            </p>
+            <h3 className="mt-2 font-display text-2xl font-bold uppercase leading-tight text-white md:text-3xl">
+              You just did<br />the honest work.
+            </h3>
+            <p className="mt-4 text-sm leading-6 text-white/85">
+              Here's your quick read above. The full plan — the specific
+              guides for what you flagged, the routine that fits your
+              pattern, and the printable version to take to a doctor —
+              is one email away.
+            </p>
 
-        {emailState.status === "success" ? (
-          <div className="mt-3 border border-emerald-200 bg-emerald-50 p-6">
+            <form
+              action={emailAction}
+              className="mt-6 grid gap-3 rounded bg-white p-5"
+            >
+              {/* Structured payload — server rebuilds the results email,
+                   populates the Sanity submission, and updates the Resend
+                   audience. Keep the hidden field set intact. */}
+              <input type="hidden" name="flags" value={JSON.stringify(flagsForEmail)} />
+              <input type="hidden" name="totalFlags" value={String(totalFlags)} />
+              <input type="hidden" name="flagsBySection" value={JSON.stringify(flagsBySection)} />
+              <input type="hidden" name="durationBySection" value={JSON.stringify(durationBySection)} />
+              <input type="hidden" name="itemsBySection" value={JSON.stringify(itemsBySection)} />
+              <input type="hidden" name="attemptedSections" value={JSON.stringify(attemptedSections)} />
+              <input type="hidden" name="notSureCount" value={String(notSureCount)} />
+
+              <label className="block">
+                <span className="text-xs font-semibold uppercase tracking-wider text-neutral-500">
+                  Email address
+                </span>
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  placeholder="you@example.com"
+                  autoComplete="email"
+                  className="mt-1 w-full border border-neutral-300 px-3 py-2 text-sm text-neutral-800 focus:border-brand-500 focus:outline-none"
+                />
+              </label>
+
+              <label className="flex items-start gap-2 text-sm text-neutral-700">
+                <input
+                  type="checkbox"
+                  name="checkIn"
+                  defaultChecked
+                  className="mt-1 h-4 w-4 border-neutral-300 text-brand-900 focus:ring-brand-500"
+                />
+                <span>
+                  Check in with me at 30 and 90 days.{" "}
+                  <span className="text-neutral-400">(Recommended.)</span>
+                </span>
+              </label>
+
+              <div className="flex flex-wrap items-center gap-3">
+                <button
+                  type="submit"
+                  disabled={emailPending}
+                  className="bg-accent-500 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-accent-600 disabled:cursor-not-allowed disabled:bg-neutral-300"
+                >
+                  {emailPending ? "Sending..." : "Unlock my full plan"}
+                </button>
+                {emailState.status === "error" && emailState.message && (
+                  <p className="text-xs text-red-600">{emailState.message}</p>
+                )}
+              </div>
+
+              <p className="text-xs text-neutral-500">
+                One email. No spam. Unsubscribe anytime.
+              </p>
+            </form>
+          </div>
+        </section>
+      )}
+
+      {/* ── Success confirmation + PDF — Tier 2 close ──────────────────── */}
+      {revealed && (
+        <section className="border-t border-neutral-200 pt-8">
+          <div className="border border-emerald-200 bg-emerald-50 p-6">
             <p className="text-xs font-bold uppercase tracking-widest text-emerald-700">
               ✓ Sent
             </p>
@@ -368,128 +465,35 @@ export default function AssessmentResults({
               Check your inbox.
             </p>
             <p className="mt-2 text-sm leading-6 text-emerald-800/80">
-              Your results are on the way. If you opted in to the 30 and 90
+              Your full results are on the way. If you opted in to the 30 and 90
               day check-ins, we'll nudge you when it's time to re-take.
             </p>
-            <div className="mt-5 flex flex-wrap gap-3 border-t border-emerald-200 pt-5">
-              <button
-                type="button"
-                onClick={onRestart}
-                className="bg-brand-900 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-brand-700"
-              >
-                Take a fresh self-check
-              </button>
-              <button
-                type="button"
-                onClick={handlePdf}
-                className="border border-brand-900 bg-white px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-brand-900 transition hover:bg-brand-900 hover:text-white"
-              >
-                Download PDF for my doctor
-              </button>
-            </div>
           </div>
-        ) : (
-          <form
-            action={emailAction}
-            className="mt-3 grid gap-3 border border-neutral-200 bg-white p-5"
-          >
-            <p className="text-sm leading-6 text-neutral-700">
-              Email yourself a copy. We'll save your results and send the
-              occasional foot-health guide worth your time. Unsubscribe anytime.
-            </p>
-            <input
-              type="hidden"
-              name="flags"
-              value={JSON.stringify(flagsForEmail)}
-            />
-            <input type="hidden" name="totalFlags" value={String(totalFlags)} />
-            {/* Structured payload so the emailed results can rebuild the full
-                recommendations (guides, routine, podiatrist prep) server-side,
-                matching the on-screen result page and the PDF. */}
-            <input
-              type="hidden"
-              name="flagsBySection"
-              value={JSON.stringify(flagsBySection)}
-            />
-            <input
-              type="hidden"
-              name="durationBySection"
-              value={JSON.stringify(durationBySection)}
-            />
-            <input
-              type="hidden"
-              name="itemsBySection"
-              value={JSON.stringify(itemsBySection)}
-            />
-            <input
-              type="hidden"
-              name="attemptedSections"
-              value={JSON.stringify(attemptedSections)}
-            />
-            <input
-              type="hidden"
-              name="notSureCount"
-              value={String(notSureCount)}
-            />
-            <label className="block">
-              <span className="text-xs font-semibold uppercase tracking-wider text-neutral-500">
-                Email address
-              </span>
-              <input
-                type="email"
-                name="email"
-                required
-                placeholder="you@example.com"
-                className="mt-1 w-full border border-neutral-300 px-3 py-2 text-sm text-neutral-800 focus:border-brand-500 focus:outline-none"
-              />
-            </label>
-            <label className="flex items-start gap-2 text-sm text-neutral-700">
-              <input
-                type="checkbox"
-                name="checkIn"
-                defaultChecked
-                className="mt-1 h-4 w-4 border-neutral-300 text-brand-900 focus:ring-brand-500"
-              />
-              <span>
-                Check in with me at 30 and 90 days.{" "}
-                <span className="text-neutral-400">(Recommended.)</span>
-              </span>
-            </label>
-            <div className="flex flex-wrap items-center gap-3">
-              <button
-                type="submit"
-                disabled={emailPending}
-                className="bg-brand-900 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-brand-700 disabled:cursor-not-allowed disabled:bg-neutral-300"
-              >
-                {emailPending ? "Sending..." : "Send my results"}
-              </button>
-              {emailState.status === "error" && emailState.message && (
-                <p className="text-xs text-red-600">{emailState.message}</p>
-              )}
+
+          {/* PDF for doctor visit */}
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border border-neutral-200 bg-neutral-50 p-4">
+            <div>
+              <p className="text-sm font-semibold text-neutral-800">
+                Download PDF for your doctor.
+              </p>
+              <p className="mt-1 text-xs text-neutral-500">
+                Formatted as a print-ready summary for a podiatrist visit.
+              </p>
             </div>
-          </form>
-        )}
-
-        {/* PDF for doctor visit */}
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border border-neutral-200 bg-neutral-50 p-4">
-          <div>
-            <p className="text-sm font-semibold text-neutral-800">
-              Download PDF for your doctor.
-            </p>
-            <p className="mt-1 text-xs text-neutral-500">
-              Formatted as a print-ready summary for a podiatrist visit.
-            </p>
+            <button
+              type="button"
+              onClick={handlePdf}
+              className="border border-brand-900 bg-white px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-brand-900 transition hover:bg-brand-900 hover:text-white"
+            >
+              Download PDF
+            </button>
           </div>
-          <button
-            type="button"
-            onClick={handlePdf}
-            className="border border-brand-900 bg-white px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-brand-900 transition hover:bg-brand-900 hover:text-white"
-          >
-            Download PDF
-          </button>
-        </div>
+        </section>
+      )}
 
-        <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2">
+      {/* ── Always-visible edit / restart footer ───────────────────────── */}
+      <section className="border-t border-neutral-200 pt-6">
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
           <button
             type="button"
             onClick={onBackToLastSection}
