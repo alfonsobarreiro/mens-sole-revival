@@ -1,12 +1,16 @@
 import { cn } from "./cn";
 
-export type TagVariant = "default" | "accent" | "outline" | "muted";
+export type TagVariant = "default" | "accent" | "accent-kicker" | "outline" | "muted";
 
 const variants: Record<TagVariant, string> = {
-  default: "bg-neutral-100 text-ink border border-border-subtle",
-  accent:  "bg-accent-100 text-accent-800 border border-accent-200",
-  outline: "bg-transparent text-ink border border-ink",
-  muted:   "bg-transparent text-text-muted border border-border-subtle",
+  default:        "bg-neutral-100 text-ink border border-border-subtle",
+  accent:         "bg-accent-100 text-accent-800 border border-accent-200",
+  // Terracotta kicker exception (per Foundations Color, 2026-08-11):
+  // neutral-100 fill + accent-700 label is the ONLY non-link use of accent-700.
+  // Used for article/category kickers that need brand-tinted small text.
+  "accent-kicker": "bg-neutral-100 text-accent-700 border border-transparent",
+  outline:        "bg-transparent text-ink border border-ink",
+  muted:          "bg-neutral-200 text-neutral-700 border border-transparent",
 };
 
 export type TagProps = {

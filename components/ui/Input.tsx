@@ -31,6 +31,8 @@ export type FieldProps = {
   hideLabel?: boolean;
   containerClassName?: string;
   tone?: Tone;
+  /** Icon rendered inside the left of the input. Adds left padding automatically. */
+  prefix?: React.ReactNode;
 };
 
 // ────────────────────────────── Text input
@@ -40,7 +42,7 @@ export type InputProps = FieldProps &
   };
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
-  { label, hint, error, hideLabel, containerClassName, tone = "light", id, className, ...rest },
+  { label, hint, error, hideLabel, containerClassName, tone = "light", prefix, id, className, ...rest },
   ref,
 ) {
   const generatedId = useId();
@@ -61,14 +63,32 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       >
         {label}
       </label>
-      <input
-        ref={ref}
-        id={inputId}
-        aria-invalid={error ? true : undefined}
-        aria-describedby={cn(hintId, errorId) || undefined}
-        className={cn(fieldBase, toneStyles[tone], className)}
-        {...rest}
-      />
+      <div className="relative">
+        {prefix && (
+          <span
+            aria-hidden="true"
+            className={cn(
+              "pointer-events-none absolute left-4 top-1/2 -translate-y-1/2",
+              isDark ? "text-white/60" : "text-neutral-500",
+            )}
+          >
+            {prefix}
+          </span>
+        )}
+        <input
+          ref={ref}
+          id={inputId}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={cn(hintId, errorId) || undefined}
+          className={cn(
+            fieldBase,
+            toneStyles[tone],
+            prefix && "pl-12",
+            className,
+          )}
+          {...rest}
+        />
+      </div>
       {hint && !error && (
         <p id={hintId} className={cn("text-[0.75rem]", isDark ? "text-white/60" : "text-text-muted")}>
           {hint}

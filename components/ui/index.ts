@@ -16,4 +16,7 @@ export type { DialogProps } from "./Dialog";
 export { Tag } from "./Tag";
 export type { TagProps, TagVariant } from "./Tag";
 
+export { Chip } from "./Chip";
+export type { ChipProps } from "./Chip";
+
 export { cn } from "./cn";
