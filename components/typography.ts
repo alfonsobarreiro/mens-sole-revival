@@ -29,5 +29,7 @@ export const type = {
 
   // Eyebrow / kicker — use the CSS class `.eyebrow` in globals.css.
   // Token kept here for legacy inline callers.
-  overline:"text-xs font-medium tracking-[0.01em] text-neutral-500",
+  // Tracking is +5% (0.05em) per DS Foundations Typography table for
+  // Archivo small caps / eyebrows; underlying `.eyebrow` class matches.
+  overline:"text-xs font-medium tracking-[0.05em] text-neutral-500",
 };
