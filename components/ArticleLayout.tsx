@@ -28,32 +28,39 @@ export default function ArticleLayout({
     <div>
       {heroSrc && (
         <div className="relative flex h-[45vh] w-full flex-col overflow-hidden bg-ink">
-          {/* Full-bleed hero image, grayscale per DS imagery rule */}
+          {/* Full-bleed hero image with muted-LUT (DS Foundations Imagery). */}
           <Image
             src={heroSrc}
             alt={heroAlt}
             fill
-            className="object-cover object-center opacity-75 grayscale"
+            className="muted-photo object-cover object-center opacity-75"
             priority
           />
 
-          {/* Bottom-weighted scrim so the title stays readable while the top of
-              the image still breathes. */}
-          <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/30 to-transparent" />
+          {/* Dual scrim — DS text-on-photography rule (2026-08-13).
+              Vertical grounds the base, horizontal keeps the title-column
+              readable at the widest viewport. Min ink/20 everywhere text
+              can sit. */}
+          <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-ink/20" />
+          <div className="absolute inset-0 bg-gradient-to-r from-ink/95 via-ink/60 to-ink/30" />
 
-          {/* Text overlay — anchored bottom-left, DS-conformant type */}
+          {/* Text overlay — anchored bottom-left, DS-conformant type.
+              Classes inlined (not composed from type.* / .eyebrow) so the
+              baked-in colors don't override text-inverse — see DS
+              Foundations Imagery → "Text on photography" token-cascade
+              gotcha. */}
           {title && (
             <div className="absolute bottom-0 left-0 right-0 z-10">
               <Container>
-                <div className="pb-10 md:pb-14 max-w-3xl">
+                <div className="pb-12 md:pb-16 max-w-3xl">
+                  <h1 className={`${type.displaySection} text-inverse`}>
+                    {title}
+                  </h1>
                   {(category || readTime) && (
-                    <p className="eyebrow mb-4 !text-white/85">
+                    <p className="mt-4 text-xs font-medium tracking-[0.01em] text-inverse">
                       {[category, readTime && `${readTime} read`].filter(Boolean).join("  ·  ")}
                     </p>
                   )}
-                  <h1 className={`${type.displaySection} text-white leading-tight`}>
-                    {title}
-                  </h1>
                 </div>
               </Container>
             </div>
