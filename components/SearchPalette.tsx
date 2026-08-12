@@ -12,24 +12,34 @@ import {
 } from "@/lib/search-index";
 
 /**
- * SearchPalette — global ⌘K command palette.
+ * SearchPalette — global search modal.
  *
- * Renders nothing when closed. When open: full-bleed backdrop + centered
- * modal with input and grouped results. Keyboard:
- *   ⌘K / Ctrl+K · open  (handled by parent SearchTrigger)
+ * Empty state shows a curated "Start with" list instead of mono-font
+ * code samples. No keyboard-hint strip at the bottom, no ⌘K/Esc badges
+ * in the chrome — the shortcuts still work, they just don't advertise
+ * themselves. Sharp corners, ink accents, DS-conformant.
+ *
+ * Keyboard (still active):
+ *   ⌘K / Ctrl+K · open  (handled by SearchTrigger)
  *   ↑ ↓         · move selection
- *   Enter       · navigate to selected result
+ *   Enter       · navigate
  *   Esc / click outside · close
- *
- * Static index, no network call. Matches Cate's Principle #2: every
- * non-happy state is rendered — empty (no query), no-results, and
- * selected/hover/focus are all visually distinct.
  */
 
 type Props = {
   open: boolean;
   onClose: () => void;
 };
+
+// Curated starting points shown when the palette opens with no query.
+// The highest-intent entry points on the site.
+const START_HERE: SearchItem[] = [
+  { id: "assessment", group: "Assessment", title: "Take the assessment",                              subtitle: "Five sections, 30 questions, under five minutes.", href: "/assessment" },
+  { id: "why-hurt",   group: "Guides",     title: "Why your feet hurt after 40",                       subtitle: "The four things that change, and what to do about each.", href: "/guides/why-your-feet-hurt-after-40" },
+  { id: "dress",      group: "Guides",     title: "What 30 years in dress shoes does to your feet",   subtitle: "The narrow-toe-box compounding problem.",          href: "/guides/what-your-dress-shoes-are-doing-to-your-feet" },
+  { id: "toe",        group: "Guides",     title: "Your big toe controls more than you think",        subtitle: "40 to 60% of your push-off force lives here.",     href: "/guides/big-toe-and-your-whole-body" },
+  { id: "routines",   group: "Routines",   title: "The five-minute nightly routine",                  subtitle: "The habit that heads off most common problems.",   href: "/guides/5-minute-routine" },
+];
 
 export default function SearchPalette({ open, onClose }: Props) {
   const router = useRouter();
@@ -53,18 +63,19 @@ export default function SearchPalette({ open, onClose }: Props) {
       .filter((s) => s.items.length > 0);
   }, [results]);
 
-  // Flat order of items as the user sees them — what arrow keys traverse.
   const flatResults = useMemo(
     () => grouped.flatMap((s) => s.items),
     [grouped]
   );
 
-  // Reset state when opening, focus the input, lock body scroll.
+  // What arrow keys actually traverse — either curated start-here (empty
+  // query) or grouped search results.
+  const navList = query.trim().length === 0 ? START_HERE : flatResults;
+
   useEffect(() => {
     if (!open) return;
     setQuery("");
     setActiveIdx(0);
-    // Focus after the modal mounts.
     const t = setTimeout(() => inputRef.current?.focus(), 0);
     document.body.style.overflow = "hidden";
     return () => {
@@ -73,12 +84,10 @@ export default function SearchPalette({ open, onClose }: Props) {
     };
   }, [open]);
 
-  // Reset selection whenever the result set changes.
   useEffect(() => {
     setActiveIdx(0);
   }, [query]);
 
-  // Keep the active row scrolled into view as the user arrows.
   useEffect(() => {
     if (!open) return;
     const el = listRef.current?.querySelector<HTMLElement>(
@@ -99,7 +108,6 @@ export default function SearchPalette({ open, onClose }: Props) {
     [router, close]
   );
 
-  // Keyboard handlers while the palette is open.
   const onKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Escape") {
       e.preventDefault();
@@ -108,7 +116,7 @@ export default function SearchPalette({ open, onClose }: Props) {
     }
     if (e.key === "ArrowDown") {
       e.preventDefault();
-      setActiveIdx((i) => Math.min(i + 1, Math.max(flatResults.length - 1, 0)));
+      setActiveIdx((i) => Math.min(i + 1, Math.max(navList.length - 1, 0)));
       return;
     }
     if (e.key === "ArrowUp") {
@@ -118,15 +126,40 @@ export default function SearchPalette({ open, onClose }: Props) {
     }
     if (e.key === "Enter") {
       e.preventDefault();
-      const item = flatResults[activeIdx];
+      const item = navList[activeIdx];
       if (item) go(item);
     }
   };
 
   if (!open || typeof document === "undefined") return null;
 
-  // Portal to document.body so the fixed-position modal escapes the
-  // sticky header's containing block (backdrop-blur creates one in Chrome).
+  const renderRow = (item: SearchItem, idx: number) => {
+    const isActive = idx === activeIdx;
+    return (
+      <li key={item.id}>
+        <Link
+          href={item.href}
+          id={`search-result-${item.id}`}
+          data-idx={idx}
+          role="option"
+          aria-selected={isActive}
+          onMouseEnter={() => setActiveIdx(idx)}
+          onClick={(e) => { e.preventDefault(); go(item); }}
+          className={`block px-6 py-3 transition-colors ${
+            isActive
+              ? "bg-neutral-100 text-ink"
+              : "text-ink hover:bg-neutral-100"
+          }`}
+        >
+          <div className="text-sm font-medium leading-tight">{item.title}</div>
+          <div className="mt-1 text-sm leading-6 text-neutral-600">
+            {item.subtitle}
+          </div>
+        </Link>
+      </li>
+    );
+  };
+
   return createPortal(
     <div
       className="fixed top-0 right-0 bottom-0 left-0 z-50 flex h-screen w-screen items-start justify-center px-4 pt-[12vh] pb-4"
@@ -140,69 +173,57 @@ export default function SearchPalette({ open, onClose }: Props) {
         type="button"
         aria-label="Close search"
         onClick={close}
-        className="absolute inset-0 bg-neutral-900/40 backdrop-blur-sm"
+        className="absolute inset-0 bg-ink/60"
       />
 
-      {/* Panel */}
-      <div className="relative w-full max-w-[640px] overflow-hidden rounded-lg bg-white shadow-2xl ring-1 ring-neutral-200">
+      {/* Panel — sharp corners, ink border, no ring */}
+      <div className="relative w-full max-w-[640px] overflow-hidden border border-border-subtle bg-bg-elevated shadow-lg">
 
         {/* Input row */}
-        <div className="flex items-center gap-3 border-b border-neutral-200 px-4">
-          <SearchIcon className="h-4 w-4 text-neutral-400" />
+        <div className="flex items-center gap-3 border-b border-border-subtle px-6">
+          <SearchIcon className="h-4 w-4 text-neutral-500" />
           <input
             ref={inputRef}
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search guides, reviews, routines, assessment…"
-            className="flex-1 bg-transparent py-4 text-base text-neutral-900 placeholder:text-neutral-400 focus:outline-none"
+            placeholder="Search"
+            className="flex-1 bg-transparent py-5 text-base text-ink placeholder:text-neutral-500 focus:outline-none"
             aria-label="Search the site"
             aria-controls="search-results"
             aria-activedescendant={
-              flatResults[activeIdx]
-                ? `search-result-${flatResults[activeIdx].id}`
+              navList[activeIdx]
+                ? `search-result-${navList[activeIdx].id}`
                 : undefined
             }
             autoComplete="off"
             spellCheck={false}
           />
-          <kbd className="hidden rounded border border-neutral-200 bg-neutral-50 px-1.5 py-0.5 font-mono text-[10px] font-medium text-neutral-500 sm:inline-block">
-            Esc
-          </kbd>
         </div>
 
         {/* Results */}
         <div className="max-h-[60vh] overflow-y-auto">
 
-          {/* Empty state: no query yet */}
+          {/* Empty state — curated start-here list, DS-styled */}
           {query.trim().length === 0 && (
-            <div className="px-4 py-10 text-center">
-              <p className="text-sm text-neutral-500">
-                Search guides, product reviews, routines, and assessment sections.
+            <div className="py-4">
+              <p className="px-6 pb-3 text-xs font-medium tracking-[0.01em] text-neutral-500">
+                Start with
               </p>
-              <p className="mt-2 text-xs text-neutral-400">
-                Try <code className="font-mono text-neutral-500">pain</code>,
-                {" "}
-                <code className="font-mono text-neutral-500">nails</code>, or
-                {" "}
-                <code className="font-mono text-neutral-500">insoles</code>.
-              </p>
+              <ul ref={listRef} id="search-results" role="listbox">
+                {START_HERE.map((item, idx) => renderRow(item, idx))}
+              </ul>
             </div>
           )}
 
           {/* No results */}
           {query.trim().length > 0 && flatResults.length === 0 && (
-            <div className="px-4 py-10 text-center">
-              <p className="text-sm text-neutral-700">
-                Nothing found for{" "}
-                <span className="font-medium text-neutral-900">
-                  &ldquo;{query.trim()}&rdquo;
-                </span>
-                .
+            <div className="px-6 py-10">
+              <p className="text-base leading-6 text-ink">
+                Nothing found for &ldquo;{query.trim()}&rdquo;.
               </p>
-              <p className="mt-2 text-xs text-neutral-500">
-                Try a symptom like <em>pain</em> or <em>nails</em>, or a product
-                category like <em>insoles</em>.
+              <p className="mt-2 text-sm leading-6 text-neutral-600">
+                Try a symptom like pain or nails, or a product category like insoles.
               </p>
             </div>
           )}
@@ -212,44 +233,13 @@ export default function SearchPalette({ open, onClose }: Props) {
             <ul ref={listRef} id="search-results" role="listbox" className="py-2">
               {grouped.map((section) => (
                 <li key={section.group}>
-                  <div className="px-4 pt-3 pb-1 text-[10px] font-semibold uppercase tracking-widest text-neutral-400">
+                  <div className="px-6 pt-4 pb-2 text-xs font-medium tracking-[0.01em] text-neutral-500">
                     {section.group}
                   </div>
                   <ul>
                     {section.items.map((item) => {
                       const idx = flatResults.indexOf(item);
-                      const isActive = idx === activeIdx;
-                      return (
-                        <li key={item.id}>
-                          <Link
-                            href={item.href}
-                            id={`search-result-${item.id}`}
-                            data-idx={idx}
-                            role="option"
-                            aria-selected={isActive}
-                            onMouseEnter={() => setActiveIdx(idx)}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              go(item);
-                            }}
-                            className={`flex items-center justify-between gap-3 px-4 py-2.5 transition ${
-                              isActive
-                                ? "bg-brand-50 text-brand-700"
-                                : "text-neutral-700 hover:bg-neutral-50"
-                            }`}
-                          >
-                            <div className="min-w-0 flex-1">
-                              <div className="truncate text-sm font-medium">
-                                {item.title}
-                              </div>
-                              <div className={`truncate text-xs ${isActive ? "text-brand-600" : "text-neutral-500"}`}>
-                                {item.subtitle}
-                              </div>
-                            </div>
-                            <ArrowIcon className={`h-3.5 w-3.5 flex-none ${isActive ? "text-brand-500" : "text-neutral-300"}`} />
-                          </Link>
-                        </li>
-                      );
+                      return renderRow(item, idx);
                     })}
                   </ul>
                 </li>
@@ -257,36 +247,9 @@ export default function SearchPalette({ open, onClose }: Props) {
             </ul>
           )}
         </div>
-
-        {/* Footer hints */}
-        <div className="flex items-center justify-between gap-3 border-t border-neutral-200 bg-neutral-50 px-4 py-2 text-[11px] text-neutral-500">
-          <div className="flex items-center gap-3">
-            <span className="flex items-center gap-1">
-              <Kbd>↑</Kbd>
-              <Kbd>↓</Kbd>
-              <span className="ml-1">to navigate</span>
-            </span>
-            <span className="flex items-center gap-1">
-              <Kbd>↵</Kbd>
-              <span className="ml-1">to open</span>
-            </span>
-          </div>
-          <span className="flex items-center gap-1">
-            <Kbd>Esc</Kbd>
-            <span className="ml-1">to close</span>
-          </span>
-        </div>
       </div>
     </div>,
     document.body
-  );
-}
-
-function Kbd({ children }: { children: React.ReactNode }) {
-  return (
-    <kbd className="rounded border border-neutral-200 bg-white px-1.5 py-0.5 font-mono text-[10px] font-medium text-neutral-600">
-      {children}
-    </kbd>
   );
 }
 
@@ -295,14 +258,6 @@ function SearchIcon({ className }: { className?: string }) {
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <circle cx="11" cy="11" r="8" />
       <path d="m21 21-4.3-4.3" />
-    </svg>
-  );
-}
-
-function ArrowIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M9 18l6-6-6-6" />
     </svg>
   );
 }

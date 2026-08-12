@@ -7,147 +7,219 @@
 
 /* ============================================================
    DESIGN TOKENS — Men's Sole Revival
-   Architecture mirrors the Figma variable system:
-   Primitives → Semantic → Component
+   Source of truth: alfOS/Career/Product Design/MSR/Foundations — Color.md
+                    alfOS/Career/Product Design/MSR/Foundations — Typography.md
+   Mirrors the Figma variable system in file cAPu29rp3vKoYF4uqiyIyr.
+   Role tokens first, then ramps, then semantic aliases.
    ============================================================ */
 
 @theme {
 
   /* ----------------------------------------------------------
-     PRIMITIVES: Brand (Navy)
-     Anchors: brand-500 = #1C3F5E, brand-700 = #112840
+     ROLE TOKENS (the three that matter)
   ---------------------------------------------------------- */
-  --color-brand-50:  #F0F2F4;
-  --color-brand-100: #DFE6EC;
-  --color-brand-200: #BBCDDD;
-  --color-brand-300: #82A8CA;
-  --color-brand-400: #4183BE;
-  --color-brand-500: #1C3F5E;
-  --color-brand-600: #18344D;
-  --color-brand-700: #112840;
-  --color-brand-800: #0C1A26;
-  --color-brand-900: #091016;
+  --color-ground: #FAFAF7;   /* every page background */
+  --color-ink:    #0F283D;   /* all text + structural elements */
+  --color-accent: #CF5B48;   /* identity signal only */
 
   /* ----------------------------------------------------------
-     PRIMITIVES: Accent (Cognac)
-     Anchor: accent-500 = #C4703A, accent-700 = #8C4520
+     NEUTRAL RAMP (ground → ink, OKLCH-smooth, warm-drifted)
   ---------------------------------------------------------- */
-  --color-accent-50:  #F4F2F0;
-  --color-accent-100: #ECE4DF;
-  --color-accent-200: #DDC8BB;
-  --color-accent-300: #CA9E81;
-  --color-accent-400: #BE7241;
-  --color-accent-500: #C4703A;
-  --color-accent-600: #A35E32;
-  --color-accent-700: #8C4520;
-  --color-accent-800: #532F18;
-  --color-accent-900: #301D11;
+  --color-neutral-100: #F5F4EE;  /* elevated surface */
+  --color-neutral-200: #E8E7E0;  /* hairline dividers */
+  --color-neutral-300: #D3D2CB;  /* form input borders */
+  --color-neutral-400: #A9AAA6;  /* disabled state */
+  --color-neutral-500: #7C7F82;  /* captions, credits */
+  --color-neutral-600: #565B62;  /* secondary body text */
+  --color-neutral-700: #3B4450;  /* kickers, table headers */
+  --color-neutral-800: #1F2C3D;  /* pre-ink hover */
+  --color-neutral-900: #0F283D;  /* ink (alias) */
 
   /* ----------------------------------------------------------
-     PRIMITIVES: Neutral (Warm Gray)
-     Matches Wayfarer neutral scale
+     ACCENT RAMP (terracotta 100 → 900)
+     500 is base identity. 600 = CTA fill. 700 = link text.
+     DS locks the ramp at 100-900 — no accent-50 step.
   ---------------------------------------------------------- */
-  --color-neutral-50:  #F8F7F7;
-  --color-neutral-100: #EEEDEC;
-  --color-neutral-200: #D6D3D1;
-  --color-neutral-300: #B7B2AE;
-  --color-neutral-400: #938C86;
-  --color-neutral-500: #6B6560;
-  --color-neutral-600: #534F4B;
-  --color-neutral-700: #403D3A;
-  --color-neutral-800: #2D2B29;
-  --color-neutral-900: #1D1C1B;
+  --color-accent-100: #FBEEEA;
+  --color-accent-200: #F5D2C9;
+  --color-accent-300: #EBB0A0;
+  --color-accent-400: #DE8877;
+  --color-accent-500: #CF5B48;  /* base terracotta */
+  --color-accent-600: #B84C3A;  /* CTA fill — AA with white text */
+  --color-accent-700: #9C3D2D;  /* link text — AA on ground */
+  --color-accent-800: #7D3122;  /* link hover */
+  --color-accent-900: #5A2419;  /* deep, rare */
 
   /* ----------------------------------------------------------
-     SEMANTIC: Background
+     BRAND RAMP (kept for back-compat with pre-DS components;
+     realiased to the neutral/ink ramp so navy → ink cleanly)
   ---------------------------------------------------------- */
-  --color-bg-page:        #FFFFFF;
-  --color-bg-surface:     var(--color-neutral-50);
-  --color-bg-subtle:      var(--color-brand-50);
-  --color-bg-primary:     var(--color-brand-500);
-  --color-bg-primary-hover:  var(--color-brand-600);
-  --color-bg-primary-active: var(--color-brand-700);
-  --color-bg-accent:      var(--color-accent-500);
-  --color-bg-accent-subtle: var(--color-accent-50);
+  --color-brand-50:  #F5F4EE;
+  --color-brand-100: #E8E7E0;
+  --color-brand-200: #D3D2CB;
+  --color-brand-300: #A9AAA6;
+  --color-brand-400: #7C7F82;
+  --color-brand-500: #0F283D;  /* was #1C3F5E — now ink */
+  --color-brand-600: #0C1D2E;
+  --color-brand-700: #08131F;
+  --color-brand-800: #050A10;
+  --color-brand-900: #030509;
 
   /* ----------------------------------------------------------
-     SEMANTIC: Text
+     SEMANTIC — Backgrounds
   ---------------------------------------------------------- */
-  --color-text-heading:   var(--color-brand-900);
-  --color-text-body:      var(--color-neutral-700);
-  --color-text-muted:     var(--color-neutral-500);
-  --color-text-primary:   var(--color-brand-500);
+  --color-bg-page:           var(--color-ground);
+  --color-bg-surface:        var(--color-neutral-100);
+  --color-bg-subtle:         var(--color-neutral-100);
+  --color-bg-elevated:       var(--color-neutral-100);
+  --color-bg-primary:        var(--color-cta-fill);
+  --color-bg-primary-hover:  var(--color-cta-fill-hover);
+  --color-bg-primary-active: var(--color-accent-800);
+  --color-bg-accent:         var(--color-accent);
+  --color-bg-accent-subtle:  var(--color-accent-100);
+  --color-bg-inverse:        var(--color-ink);
+
+  /* ----------------------------------------------------------
+     SEMANTIC — Text
+  ---------------------------------------------------------- */
+  --color-text:            var(--color-ink);
+  --color-text-heading:    var(--color-ink);
+  --color-text-body:       var(--color-ink);
+  --color-text-muted:      var(--color-neutral-600);
+  --color-text-caption:    var(--color-neutral-500);
+  --color-text-disabled:   var(--color-neutral-400);
+  --color-text-primary:    var(--color-ink);
+  --color-text-inverse:    #FFFFFF;
   --color-text-on-primary: #FFFFFF;
-  --color-text-accent:    var(--color-accent-700);
-  --color-text-link:      var(--color-brand-500);
-  --color-text-link-hover: var(--color-brand-700);
+  /* Dark-surface text tiers — DS gap closed 2026-08-11.
+     Applied on ink surfaces (hero, newsletter band, footer, parallax) so
+     secondary/muted/caption on ink has token backing rather than raw
+     white-opacity utilities. */
+  --color-inverse:          #FFFFFF;                     /* primary text on ink */
+  --color-inverse-body:     rgb(255 255 255 / 0.80);     /* body copy on ink */
+  --color-inverse-muted:    rgb(255 255 255 / 0.60);     /* muted paragraph / footer body */
+  --color-inverse-caption:  rgb(255 255 255 / 0.50);     /* eyebrows, captions, copyright */
+  --color-inverse-hairline: rgb(255 255 255 / 0.10);     /* hairline dividers on ink */
+  --color-text-accent:     var(--color-accent-700);
+  --color-text-link:       var(--color-accent-700);
+  --color-text-link-hover: var(--color-accent-800);
 
   /* ----------------------------------------------------------
-     SEMANTIC: Border
+     SEMANTIC — Interactive (CTAs, links, focus)
   ---------------------------------------------------------- */
-  --color-border-default: var(--color-neutral-200);
-  --color-border-strong:  var(--color-neutral-300);
-  --color-border-primary: var(--color-brand-500);
-  --color-border-accent:  var(--color-accent-500);
+  --color-cta-fill:        var(--color-accent-600);
+  --color-cta-fill-hover:  var(--color-accent-700);
+  --color-cta-text:        #FFFFFF;
+  --color-link:            var(--color-accent-700);
+  --color-link-hover:      var(--color-accent-800);
+  --color-focus-ring:      var(--color-accent-500);
 
   /* ----------------------------------------------------------
-     TYPOGRAPHY
+     SEMANTIC — Borders + dividers
+  ---------------------------------------------------------- */
+  --color-divider:            var(--color-ink);
+  --color-border-subtle:      var(--color-neutral-200);
+  --color-border-default:     var(--color-neutral-200);
+  --color-border-strong:      var(--color-neutral-300);
+  --color-border-input:       var(--color-neutral-300);
+  --color-border-input-focus: var(--color-accent-600);
+  --color-border-primary:     var(--color-ink);
+  --color-border-accent:      var(--color-accent);
+  --color-surface:            var(--color-ground);
+  --color-surface-elevated:   var(--color-neutral-100);
+
+  /* ----------------------------------------------------------
+     SEMANTIC — Signals (states)
+     No green, blue, or purple by system rule.
+  ---------------------------------------------------------- */
+  --color-signal-success: var(--color-neutral-700);
+  --color-signal-error:   #B54444;
+  --color-signal-warning: var(--color-accent-500);
+  --color-signal-info:    var(--color-neutral-700);
+
+  /* ----------------------------------------------------------
+     TYPOGRAPHY — Families
+     Next.js font vars (--font-heading, --font-body)
+     are injected on <html> in layout.tsx and win over these fallbacks.
   ---------------------------------------------------------- */
   --font-heading: 'Lora', Georgia, serif;
-  --font-body:    'DM Sans', system-ui, sans-serif;
-  --font-display: 'Barlow Condensed', 'Impact', sans-serif;
+  --font-body:    'Archivo', system-ui, -apple-system, sans-serif;
+  --font-ui:      'Archivo', system-ui, -apple-system, sans-serif;
+
+  /* ----------------------------------------------------------
+     TYPOGRAPHY — Scale (DS locked, in rem for accessibility)
+  ---------------------------------------------------------- */
+  --text-display:            3.75rem;  /* 60px — hero display */
+  --text-h1:                 2.5rem;   /* 40px */
+  --text-h2:                 1.75rem;  /* 28px */
+  --text-h3:                 1.25rem;  /* 20px */
+  --text-h4:                 0.9375rem; /* 15px, DS scale step 5 */
+  --text-body:               0.9375rem;/* 15px — UI body */
+  --text-small:              0.75rem;  /* 12px — small caps, meta */
+  --text-caption:            0.75rem;  /* 12px */
+  --text-article-body:       1.0625rem;/* 17px — long-form reading */
+  --text-article-blockquote: 1.25rem;  /* 20px italic */
+
+  /* Line heights */
+  --leading-display: 1.05;
+  --leading-h1:      1.1;
+  --leading-h2:      1.15;
+  --leading-h3:      1.35;
+  --leading-heading: 1.15;
+  --leading-body:    1.5;
+  --leading-article: 1.6;
+
+  /* Tracking */
+  --tracking-display:   -0.01em;
+  --tracking-heading:   -0.01em;
+  --tracking-body:      0;
+  --tracking-small-caps: 0.05em;
+  --tracking-button:     0.03em;
 
   /* Marquee animation */
   --animate-marquee: marquee 30s linear infinite;
 
-  /* Type scale */
-  --text-display:    3.5rem;   /* 56px — hero */
-  --text-h1:         2.5rem;   /* 40px */
-  --text-h2:         1.75rem;  /* 28px */
-  --text-h3:         1.375rem; /* 22px */
-  --text-h4:         1.125rem; /* 18px */
-  --text-body:       1rem;     /* 16px */
-  --text-small:      0.875rem; /* 14px */
-  --text-caption:    0.75rem;  /* 12px */
-
-  /* Leading */
-  --leading-display: 1.15;
-  --leading-heading: 1.3;
-  --leading-body:    1.75;
-
   /* ----------------------------------------------------------
-     SPACING
+     SPACING — 4px base, keep DS steps + Tailwind-compatible aliases
   ---------------------------------------------------------- */
   --space-1:  0.25rem;  /* 4px  */
   --space-2:  0.5rem;   /* 8px  */
   --space-3:  0.75rem;  /* 12px */
   --space-4:  1rem;     /* 16px */
-  --space-5:  1.25rem;  /* 20px */
-  --space-6:  1.5rem;   /* 24px */
-  --space-8:  2rem;     /* 32px */
-  --space-10: 2.5rem;   /* 40px */
-  --space-12: 3rem;     /* 48px */
-  --space-16: 4rem;     /* 64px */
-  --space-20: 5rem;     /* 80px */
-  --space-24: 6rem;     /* 96px */
+  --space-5:  1.5rem;   /* 24px */
+  --space-6:  2rem;     /* 32px */
+  --space-7:  3rem;     /* 48px */
+  --space-8:  4rem;     /* 64px */
+  --space-9:  6rem;     /* 96px */
+  --space-10: 8rem;     /* 128px */
+  --space-12: 3rem;     /* Tailwind-compat alias */
+  --space-16: 4rem;     /* Tailwind-compat alias */
+  --space-20: 5rem;     /* Tailwind-compat alias */
+  --space-24: 6rem;     /* Tailwind-compat alias */
 
   /* ----------------------------------------------------------
-     RADIUS
+     RADIUS — 0 across the board per DS "no rounded rectangles"
   ---------------------------------------------------------- */
-  --radius-xs:   0.125rem; /* 2px  */
-  --radius-sm:   0.25rem;  /* 4px  */
-  --radius-md:   0.5rem;   /* 8px  */
-  --radius-lg:   0.75rem;  /* 12px */
-  --radius-xl:   1rem;     /* 16px */
-  --radius-2xl:  1.5rem;   /* 24px */
-  --radius-full: 9999px;
+  --radius-xs:   0;
+  --radius-sm:   0;
+  --radius-md:   0;
+  --radius-lg:   0;
+  --radius-xl:   0;
+  --radius-2xl:  0;
+  --radius-full: 9999px;  /* kept for legitimate pills only */
+
+  /* ----------------------------------------------------------
+     ELEVATION — three levels only
+  ---------------------------------------------------------- */
+  --shadow-sm: 0 1px 2px rgba(15, 40, 61, 0.05);
+  --shadow-md: 0 2px 8px rgba(15, 40, 61, 0.08);
+  --shadow-lg: 0 8px 24px rgba(15, 40, 61, 0.12);
 
 }
 
 /* ============================================================
    GLOBAL BASELINE
-   Base styles go inside @layer base so Tailwind utility
-   classes (text-white, text-brand-200, etc.) always win.
+   Base styles inside @layer base so utility classes win.
    ============================================================ */
 
 @layer base {
@@ -158,30 +230,178 @@
 
   body {
     font-family: var(--font-body);
-    color: var(--color-text-body);
+    font-size: var(--text-body);
+    line-height: var(--leading-body);
+    color: var(--color-text);
     background-color: var(--color-bg-page);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Default heading styles — overridable by any Tailwind utility */
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
     color: var(--color-text-heading);
     line-height: var(--leading-heading);
   }
 
-  a {
-    color: var(--color-text-link);
+  /* Ryan-noted (2026-08-11): unified Lora headings at Medium 500 —
+     wordmark included, no Bold exception. */
+  h1 {
+    font-size: var(--text-h1);
+    font-weight: 500;
+    line-height: var(--leading-h1);
+    letter-spacing: var(--tracking-heading);
+  }
+  h2 {
+    font-size: var(--text-h2);
+    font-weight: 500;
+    line-height: var(--leading-h2);
+    letter-spacing: var(--tracking-heading);
+  }
+  h3 {
+    font-size: var(--text-h3);
+    font-weight: 500;
+    line-height: var(--leading-h3);
+  }
+  h4 {
+    font-size: var(--text-h4);
+    font-weight: 500;
   }
 
+  a {
+    color: var(--color-link);
+  }
   a:hover {
-    color: var(--color-text-link-hover);
+    color: var(--color-link-hover);
+  }
+
+  /* Consistent focus ring per DS */
+  :focus-visible {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
   }
 }
 
-/* Logo on dark backgrounds — renders SVG fills as brand-200 (#BBCDDD).
-   Chain: normalize to black → invert to white → shift to cool blue-gray */
+/* ------------------------------------------------------------
+   Wordmark treatment — Lora Medium, mixed case, -1% track.
+   (2026-08-11 Alfonso override: was Bold 700, now Medium 500 —
+   Ryan-adjacent "less boldness" call; the wordmark reads more
+   considered at Medium and pairs quietly with body Archivo.)
+------------------------------------------------------------ */
+.wordmark {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  letter-spacing: var(--tracking-display);
+  line-height: var(--leading-display);
+}
+
+/* ------------------------------------------------------------
+   Article body scoping — 17px Archivo, comfortable reading
+------------------------------------------------------------ */
+.article-body {
+  font-family: var(--font-body);
+  font-size: var(--text-article-body);
+  line-height: var(--leading-article);
+  font-weight: 400;
+  color: var(--color-text);
+}
+.article-body strong { font-weight: 600; }
+.article-body em { font-style: italic; }
+.article-body blockquote {
+  font-size: var(--text-article-blockquote);
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* ------------------------------------------------------------
+   EDITORIAL DEVICES — the "not-Claude" typographic layer.
+   Ryan's rule (2026-08-11): all-caps reserved for ONE role at
+   most; numbering reserved for functional use. These devices
+   reach for weight/color/italic/small-caps instead of uppercase
+   as a first-line signal.
+------------------------------------------------------------ */
+
+/* Eyebrow — kicker label above section headings.
+   Mixed case, medium weight, muted color, slight tracking. */
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--text-small);       /* 12px */
+  font-weight: 500;
+  color: var(--color-text-muted);
+  letter-spacing: 0.01em;
+  text-transform: none;
+}
+
+/* Muted-photo LUT — DS Imagery rule (2026-08-11, replaced grayscale).
+   ~40% saturation retains skin-tone integrity + adds identity warmth
+   without landing in generic full-colour wellness territory. Applied
+   to every homepage photograph on light + dark surfaces. Greppable
+   as `muted-photo` — do not hand-roll `filter: saturate(...)` inline. */
+.muted-photo {
+  filter: saturate(0.4) brightness(0.98) contrast(1.02);
+}
+
+/* Editorial statement — Lora italic for inline emphasis inside
+   article body and standalone statement blocks. Adds warmth in-line. */
+.article-body em,
+.editorial-statement {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-weight: 500;
+}
+
+/* Small-caps opener — wrap the first 2–3 words of an article
+   paragraph in <span class="opener">…</span>. Signals "the argument
+   starts here" without shouting. */
+.article-body .opener,
+.opener {
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+}
+
+/* Justified article body with hyphenation — magazine typography.
+   Scoped to .article-body so UI copy stays left-aligned. */
+.article-body p {
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  hanging-punctuation: first last;
+}
+
+/* Old-style figures in article body — numerals sit with lowercase
+   letters (7, 8, 9 dip below baseline). Subtle bookish signal. */
+.article-body {
+  font-variant-numeric: oldstyle-nums proportional-nums;
+}
+
+/* Pull quote — Lora italic, hanging quotation mark, generous space. */
+.pullquote {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-weight: 500;
+  font-size: var(--text-h3);
+  line-height: var(--leading-h3);
+  color: var(--color-ink);
+  border-left: 2px solid var(--color-ink);
+  padding-left: var(--space-5);
+  margin-block: var(--space-6);
+  text-indent: -0.35em;   /* hangs the opening quote mark */
+}
+
+/* ------------------------------------------------------------
+   Parallax background — desktop only. Mobile Safari (and iOS in
+   general) drops background-attachment:fixed silently, leaving
+   sections background-blank. Guard the property behind hover:hover
+   + pointer:fine so touch devices scroll normally.
+------------------------------------------------------------ */
+@media (hover: hover) and (pointer: fine) {
+  .parallax-bg {
+    background-attachment: fixed;
+  }
+}
+
+/* Logo on dark backgrounds — renders SVG fills as neutral-200. */
 .logo-on-dark {
   filter: brightness(0) invert(83%) sepia(16%) saturate(580%) hue-rotate(180deg) brightness(104%) contrast(92%);
 }
@@ -193,14 +413,23 @@
   }
 }
 
+/* ============================================================
+   shadcn/ui compatibility layer — DO NOT REMOVE.
+   These tokens back the shadcn primitives that already ship
+   in components/ui. Left in the OKLCH form shadcn expects.
+   ============================================================ */
+
 @theme inline {
-  --radius-sm:  calc(var(--radius) - 4px);
-  --radius-md:  calc(var(--radius) - 2px);
-  --radius-lg:  var(--radius);
-  --radius-xl:  calc(var(--radius) + 4px);
-  --radius-2xl:  calc(var(--radius) + 8px);
-  --radius-3xl:  calc(var(--radius) + 12px);
-  --radius-4xl:  calc(var(--radius) + 16px);
+  /* MSR DS: radius 0 across the board — the shadcn compat layer used
+     calc(var(--radius) + Npx) which resolved to real positive radii for
+     xl/2xl/3xl/4xl even with --radius:0. Zeroed to enforce the DS. */
+  --radius-sm:  0;
+  --radius-md:  0;
+  --radius-lg:  0;
+  --radius-xl:  0;
+  --radius-2xl: 0;
+  --radius-3xl: 0;
+  --radius-4xl: 0;
   --color-background:  var(--background);
   --color-foreground:  var(--foreground);
   --color-card:  var(--card);
@@ -236,73 +465,73 @@
 }
 
 :root {
-  --radius:  0.625rem;
-  --background:  oklch(1 0 0);
-  --foreground:  oklch(0.145 0 0);
+  --radius:  0;
+  --background:  oklch(0.985 0.003 90);  /* ground #FAFAF7 */
+  --foreground:  oklch(0.235 0.033 250); /* ink #0F283D */
   --card:  oklch(1 0 0);
-  --card-foreground:  oklch(0.145 0 0);
+  --card-foreground:  oklch(0.235 0.033 250);
   --popover:  oklch(1 0 0);
-  --popover-foreground:  oklch(0.145 0 0);
-  --primary:  oklch(0.205 0 0);
-  --primary-foreground:  oklch(0.985 0 0);
-  --secondary:  oklch(0.97 0 0);
-  --secondary-foreground:  oklch(0.205 0 0);
-  --muted:  oklch(0.97 0 0);
-  --muted-foreground:  oklch(0.556 0 0);
-  --accent:  oklch(0.97 0 0);
-  --accent-foreground:  oklch(0.205 0 0);
-  --destructive:  oklch(0.577 0.245 27.325);
-  --border:  oklch(0.922 0 0);
-  --input:  oklch(0.922 0 0);
-  --ring:  oklch(0.708 0 0);
-  --chart-1:  oklch(0.646 0.222 41.116);
-  --chart-2:  oklch(0.6 0.118 184.704);
-  --chart-3:  oklch(0.398 0.07 227.392);
-  --chart-4:  oklch(0.828 0.189 84.429);
-  --chart-5:  oklch(0.769 0.188 70.08);
-  --sidebar:  oklch(0.985 0 0);
-  --sidebar-foreground:  oklch(0.145 0 0);
-  --sidebar-primary:  oklch(0.205 0 0);
-  --sidebar-primary-foreground:  oklch(0.985 0 0);
-  --sidebar-accent:  oklch(0.97 0 0);
-  --sidebar-accent-foreground:  oklch(0.205 0 0);
-  --sidebar-border:  oklch(0.922 0 0);
-  --sidebar-ring:  oklch(0.708 0 0);
+  --popover-foreground:  oklch(0.235 0.033 250);
+  --primary:  oklch(0.55 0.16 30);        /* accent-600 CTA */
+  --primary-foreground:  oklch(1 0 0);
+  --secondary:  oklch(0.965 0.007 90);
+  --secondary-foreground:  oklch(0.235 0.033 250);
+  --muted:  oklch(0.965 0.007 90);
+  --muted-foreground:  oklch(0.44 0.02 250);
+  --accent:  oklch(0.65 0.18 30);         /* accent-500 identity */
+  --accent-foreground:  oklch(1 0 0);
+  --destructive:  oklch(0.55 0.19 20);
+  --border:  oklch(0.9 0.005 90);
+  --input:  oklch(0.85 0.006 90);
+  --ring:  oklch(0.65 0.18 30);           /* accent-500 focus ring */
+  --chart-1:  oklch(0.65 0.18 30);
+  --chart-2:  oklch(0.55 0.16 30);
+  --chart-3:  oklch(0.44 0.02 250);
+  --chart-4:  oklch(0.235 0.033 250);
+  --chart-5:  oklch(0.75 0.008 90);
+  --sidebar:  oklch(0.985 0.003 90);
+  --sidebar-foreground:  oklch(0.235 0.033 250);
+  --sidebar-primary:  oklch(0.55 0.16 30);
+  --sidebar-primary-foreground:  oklch(1 0 0);
+  --sidebar-accent:  oklch(0.965 0.007 90);
+  --sidebar-accent-foreground:  oklch(0.235 0.033 250);
+  --sidebar-border:  oklch(0.9 0.005 90);
+  --sidebar-ring:  oklch(0.65 0.18 30);
 
 }
 
 .dark {
-  --background:  oklch(0.145 0 0);
-  --foreground:  oklch(0.985 0 0);
-  --card:  oklch(0.205 0 0);
-  --card-foreground:  oklch(0.985 0 0);
-  --popover:  oklch(0.205 0 0);
-  --popover-foreground:  oklch(0.985 0 0);
-  --primary:  oklch(0.922 0 0);
-  --primary-foreground:  oklch(0.205 0 0);
-  --secondary:  oklch(0.269 0 0);
-  --secondary-foreground:  oklch(0.985 0 0);
-  --muted:  oklch(0.269 0 0);
-  --muted-foreground:  oklch(0.708 0 0);
-  --accent:  oklch(0.269 0 0);
-  --accent-foreground:  oklch(0.985 0 0);
-  --destructive:  oklch(0.704 0.191 22.216);
+  --background:  oklch(0.235 0.033 250);  /* ink */
+  --foreground:  oklch(0.985 0.003 90);   /* ground */
+  --card:  oklch(0.28 0.028 250);
+  --card-foreground:  oklch(0.985 0.003 90);
+  --popover:  oklch(0.28 0.028 250);
+  --popover-foreground:  oklch(0.985 0.003 90);
+  --primary:  oklch(0.65 0.18 30);
+  --primary-foreground:  oklch(0.235 0.033 250);
+  --secondary:  oklch(0.32 0.024 250);
+  --secondary-foreground:  oklch(0.985 0.003 90);
+  --muted:  oklch(0.32 0.024 250);
+  --muted-foreground:  oklch(0.75 0.008 90);
+  --accent:  oklch(0.65 0.18 30);
+  --accent-foreground:  oklch(0.985 0.003 90);
+  --destructive:  oklch(0.65 0.19 20);
   --border:  oklch(1 0 0 / 10%);
   --input:  oklch(1 0 0 / 15%);
-  --ring:  oklch(0.556 0 0);
-  --chart-1:  oklch(0.488 0.243 264.376);
-  --chart-2:  oklch(0.696 0.17 162.48);
-  --chart-3:  oklch(0.769 0.188 70.08);
-  --chart-4:  oklch(0.627 0.265 303.9);
-  --chart-5:  oklch(0.645 0.246 16.439);
-  --sidebar:  oklch(0.205 0 0);
-  --sidebar-foreground:  oklch(0.985 0 0);
-  --sidebar-primary:  oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground:  oklch(0.985 0 0);
-  --sidebar-accent:  oklch(0.269 0 0);
-  --sidebar-accent-foreground:  oklch(0.985 0 0);
+  --ring:  oklch(0.65 0.18 30);
+  --chart-1:  oklch(0.65 0.18 30);
+  --chart-2:  oklch(0.55 0.16 30);
+  --chart-3:  oklch(0.75 0.008 90);
+  --chart-4:  oklch(0.985 0.003 90);
+  --chart-5:  oklch(0.44 0.02 250);
+  --sidebar:  oklch(0.28 0.028 250);
+  --sidebar-foreground:  oklch(0.985 0.003 90);
+  --sidebar-primary:  oklch(0.65 0.18 30);
+  --sidebar-primary-foreground:  oklch(0.985 0.003 90);
+  --sidebar-accent:  oklch(0.32 0.024 250);
+  --sidebar-accent-foreground:  oklch(0.985 0.003 90);
   --sidebar-border:  oklch(1 0 0 / 10%);
-  --sidebar-ring:  oklch(0.556 0 0);
+  --sidebar-ring:  oklch(0.65 0.18 30);
 
 }
 

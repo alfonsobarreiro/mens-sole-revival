@@ -3,31 +3,36 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import Container from "@/components/Container";
+import { Button, IconButton } from "@/components/ui";
+import { type } from "@/components/typography";
 
+// Copy rewritten 2026-08-11 per AI-tells sweep + Alfonso's no-em-dash rule.
+// Rewrite log lives in alfOS: [[AI tells — 50 patterns to hunt]].
 const topics = [
   {
     label: "Pain",
     href: "/routines",
     leftImage: "/images/pexels-15098712.jpg",
-    tagline: "Your body is sending a signal.",
+    tagline: "Heel pain rarely resolves on its own.",
     description:
-      "Plantar fasciitis, heel spurs, arch strain — foot pain rarely disappears on its own. Learn how to identify the source, reduce inflammation, and build the resilience to move without hesitation.",
+      "Plantar fasciitis, heel spurs, and arch strain hold for months and years without treatment. Identifying the source and loading the tissue correctly is the difference between a six-week recovery and a five-year problem.",
   },
   {
     label: "Nails",
     href: "/guides/toenail-fungus-what-works",
     leftImage: "/images/pexels-9767780.jpg",
-    tagline: "Small details, big confidence.",
+    tagline: "Fungal infection needs a 12-week protocol.",
     description:
-      "Thick, discolored, or ingrown nails are more common than you think — and more treatable. A consistent trimming habit and the right antifungal protocol can restore clean, healthy nails in weeks.",
+      "Thick, discolored, or ingrown nails are more common than most men admit, and more treatable. Physical debridement plus a topical antifungal used for the full 12 weeks (not just until it looks better) is the fix path that actually works.",
   },
   {
     label: "Alignment",
     href: "/guides/why-toe-alignment-affects-knees-and-hips",
     leftImage: "/images/pexels-33360918.jpg",
-    tagline: "Your toes set the foundation.",
+    tagline: "Your big toe drives 40–60% of push-off.",
     description:
-      "Bunions, hammer toes, and crowded toe boxes all trace back to how your foot contacts the ground. Simple daily spreader exercises and footwear awareness can reverse years of drift.",
+      "Bunions, hammer toes, and crowded toe boxes all trace back to how your foot contacts the ground. Daily spreader work and wide toe-box footwear can slow or reverse years of drift.",
   },
   {
     label: "Routine",
@@ -35,23 +40,23 @@ const topics = [
     leftImage: "/images/pexels-4909313.jpg",
     tagline: "Five minutes. Every day.",
     description:
-      "The men who take care of their feet do it consistently — not occasionally. Washing, drying, moisturizing, inspecting: a simple morning or evening ritual that prevents 90% of common foot problems.",
+      "A two-minute check done every night after the shower: wash, dry, moisturize, inspect. Same time every day is what turns it into a habit that heads off most of the routine problems men over 40 develop.",
   },
   {
     label: "Fit",
     href: "/guides/what-your-dress-shoes-are-doing-to-your-feet",
     leftImage: "/images/pexels-8729236.jpg",
-    tagline: "The wrong shoe is a slow injury.",
+    tagline: "Most men wear the wrong size for 20+ years.",
     description:
-      "Most men wear shoes half a size too small and twice as narrow as their feet need. Understanding your foot shape — length, width, arch — changes how you buy footwear for the rest of your life.",
+      "63–72% of adults wear shoes that don't fit, and the number climbs after 40 because feet keep changing. Getting your length and width measured, both feet at day's end, is the highest-leverage fix on this site.",
   },
   {
     label: "Skin",
     href: "/guides/cracked-heels-what-actually-works",
     leftImage: "/images/pexels-11873696.jpg",
-    tagline: "Cracks heal. Calluses soften.",
+    tagline: "Cracks close in 2–3 weeks with a nightly routine.",
     description:
-      "Heel fissures and rough skin aren't just cosmetic — deep cracks can split and become painful entry points for infection. A targeted moisturizing routine with the right emollients makes a visible difference in days.",
+      "Heels don't have oil glands, so rough skin and cracks are a moisture-loss problem. Nightly urea cream on damp feet in a sock shifts it. Pumice comes second, not first.",
   },
 ];
 
@@ -99,34 +104,42 @@ export default function TopicsSection() {
 
   return (
     <>
-      <section className="py-8 md:py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2" style={{ minHeight: "580px" }}>
+      <section className="py-16 md:py-24">
+        <Container>
+          <div className="mb-12">
+            <h2 className={`${type.displaySection} text-ink`}>
+              The topics.
+            </h2>
+            <p className="mt-4 max-w-xl text-[0.9375rem] leading-[1.5] text-neutral-600">
+              Six areas of foot health that men over 40 actually deal with.
+              Hover or tap to see what each one covers.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2" style={{ minHeight: "512px" }}>
 
           {/* Left: stacked words + active description */}
-          <div className="flex flex-col justify-center px-10 py-12 lg:px-16">
+          <div className="flex flex-col justify-center px-8 py-12 lg:px-16">
 
             {/* Stacked word list */}
-            <div className="mb-10">
+            <div className="mb-12">
               {topics.map((topic, i) => (
                 <Link
                   key={i}
                   href={topic.href}
                   onMouseEnter={() => setActiveIndex(i)}
                   onClick={(e) => handleTopicClick(e, i)}
-                  className={`flex items-center gap-2 font-display font-bold uppercase tracking-tight leading-none py-0.5 transition-colors duration-300 ${
+                  className={`flex items-center gap-2 ${type.displayHero} py-1 transition-colors duration-300 ${
                     isActive(i)
-                      ? "text-brand-900"
-                      : "text-neutral-300 hover:text-neutral-600"
+                      ? "text-ink"
+                      : "text-neutral-500 hover:text-neutral-700"
                   }`}
-                  style={{ fontSize: "clamp(2rem, 3.5vw, 3.5rem)" }}
                 >
                   {topic.label}
                   {/* Tap indicator — mobile only */}
                   <span
-                    className={`md:hidden text-accent-500 transition-opacity duration-300 ${
+                    className={`md:hidden text-neutral-500 text-sm transition-opacity duration-300 ${
                       isActive(i) ? "opacity-100" : "opacity-40"
                     }`}
-                    style={{ fontSize: "0.65em" }}
                     aria-hidden="true"
                   >
                     ›
@@ -135,27 +148,22 @@ export default function TopicsSection() {
               ))}
             </div>
 
-            {/* Active description — stacked via absolute to avoid layout shift */}
-            <div className="relative hidden md:block" style={{ minHeight: "11rem" }}>
+            {/* Active description — stacked via absolute to avoid layout shift.
+                No translate animation (bounce removed); opacity swap only. */}
+            <div className="relative hidden md:block" style={{ minHeight: "12rem" }}>
               {topics.map((topic, i) => (
                 <div
                   key={i}
-                  className={`absolute inset-0 transition-all duration-500 ${
-                    i === activeIndex ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none"
+                  className={`absolute inset-0 transition-opacity duration-200 ${
+                    i === activeIndex ? "opacity-100" : "opacity-0 pointer-events-none"
                   }`}
                 >
-                  <span className="block font-body text-xs tracking-[0.2em] uppercase text-neutral-400 mb-3">
-                    {String(i + 1).padStart(2, "0")} / {String(topics.length).padStart(2, "0")}
-                  </span>
-                  <p className="font-heading text-accent-600 text-sm tracking-wide italic leading-snug mb-2">
-                    {topic.tagline}
-                  </p>
-                  <p className="font-body text-neutral-600 text-base leading-snug mb-5">
-                    {topic.description}
+                  <p className="font-body text-[0.9375rem] leading-[1.5] text-neutral-600 mb-6">
+                    {topic.description} {topic.tagline}
                   </p>
                   <Link
                     href={topic.href}
-                    className="inline-flex items-center gap-2 font-body text-xs tracking-[0.15em] uppercase text-accent-600 hover:text-brand-900 transition-colors duration-200 group"
+                    className="inline-flex items-center gap-2 text-[0.9375rem] font-medium text-link underline underline-offset-4 hover:text-link-hover transition-colors duration-200 group"
                   >
                     Explore this topic
                     <span className="transition-transform duration-200 group-hover:translate-x-1">→</span>
@@ -165,14 +173,14 @@ export default function TopicsSection() {
             </div>
 
             {/* Mobile hint */}
-            <p className="md:hidden mt-6 font-body text-xs text-neutral-400 tracking-[0.12em] uppercase">
+            <p className="md:hidden mt-6 font-body text-xs text-neutral-500">
               Tap a topic to learn more
             </p>
           </div>
 
           {/* Right: crossfading image — inset from all edges for breathing room */}
-          <div className="relative hidden md:block" style={{ minHeight: "580px" }}>
-            <div className="absolute inset-8 overflow-hidden bg-brand-900">
+          <div className="relative hidden md:block" style={{ minHeight: "512px" }}>
+            <div className="absolute inset-8 overflow-hidden bg-ink">
               {topics.map((topic, i) => (
                 <div
                   key={i}
@@ -180,14 +188,15 @@ export default function TopicsSection() {
                     i === activeIndex ? "opacity-100" : "opacity-0"
                   }`}
                 >
-                  <Image src={topic.leftImage} alt="" fill className="object-cover object-center" />
-                  <div className="absolute inset-0 bg-brand-900/10" />
+                  <Image src={topic.leftImage} alt="" fill className="muted-photo object-cover object-center" />
+                  <div className="absolute inset-0 bg-ink/10" />
                 </div>
               ))}
             </div>
           </div>
 
-        </div>
+          </div>
+        </Container>
       </section>
 
       {/* ── Mobile bottom sheet ────────────────────────────────── */}
@@ -196,66 +205,55 @@ export default function TopicsSection() {
       <div
         aria-hidden="true"
         onClick={() => setPanelOpen(false)}
-        className={`fixed inset-0 z-40 bg-brand-900/60 md:hidden transition-opacity duration-300 ${
+        className={`fixed inset-0 z-40 bg-ink/60 md:hidden transition-opacity duration-300 ${
           panelOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       />
 
-      {/* Sheet */}
+      {/* Sheet — sharp corners per DS radius=0 rule */}
       <div
         role="dialog"
         aria-modal="true"
         aria-label={t.label}
-        className={`fixed bottom-0 left-0 right-0 z-50 md:hidden bg-accent-50 rounded-t-2xl shadow-2xl
+        className={`fixed bottom-0 left-0 right-0 z-50 md:hidden bg-bg-elevated shadow-2xl
           transition-transform duration-300 ease-out
           ${panelOpen ? "translate-y-0" : "translate-y-full"}`}
         style={{ maxHeight: "78vh" }}
       >
         {/* Drag handle */}
         <div className="flex justify-center pt-3 pb-1">
-          <div className="w-10 h-1 rounded-full bg-neutral-300" />
+          <div className="w-12 h-1 rounded-full bg-neutral-300" />
         </div>
 
-        {/* Cognac rule */}
-        <div className="mx-6 mt-3 h-[2px] bg-accent-500" />
+        {/* DS 2px ink divider */}
+        <div className="mx-6 mt-3 h-[2px] bg-ink" />
 
         {/* Scrollable content */}
-        <div className="overflow-y-auto px-6 pt-5 pb-10" style={{ maxHeight: "calc(78vh - 48px)" }}>
+        <div className="overflow-y-auto px-6 pt-6 pb-8" style={{ maxHeight: "calc(78vh - 48px)" }}>
 
-          {/* Index + close row */}
-          <div className="flex items-center justify-between mb-5">
-            <span className="font-body text-xs tracking-[0.2em] uppercase text-neutral-400">
-              {String(panelIndex + 1).padStart(2, "0")} / {String(topics.length).padStart(2, "0")}
-            </span>
-            <button
+          {/* Close row */}
+          <div className="flex items-center justify-end mb-6">
+            <IconButton
               onClick={() => setPanelOpen(false)}
               aria-label="Close"
-              className="w-8 h-8 flex items-center justify-center rounded-full bg-neutral-200 hover:bg-neutral-300 transition-colors text-neutral-600 text-sm font-body"
+              size="sm"
             >
               ✕
-            </button>
+            </IconButton>
           </div>
 
           {/* Editorial content */}
-          <p className="font-heading text-accent-600 text-sm tracking-wide italic leading-snug mb-3">
-            {t.tagline}
-          </p>
-          <h3 className="font-display font-bold uppercase text-brand-900 leading-tight tracking-tight text-3xl mb-4">
+          <h3 className={`${type.h3} text-ink mb-4`}>
             {t.label}
           </h3>
-          <p className="font-body text-neutral-600 text-base leading-snug mb-8">
-            {t.description}
+          <p className="font-body text-[0.9375rem] leading-[1.5] text-neutral-600 mb-8">
+            {t.description} {t.tagline}
           </p>
 
-          {/* CTA */}
-          <Link
-            href={t.href}
-            onClick={() => setPanelOpen(false)}
-            className="inline-flex items-center gap-2 bg-brand-900 text-white font-body text-xs tracking-[0.15em] uppercase px-5 py-3 rounded-full hover:bg-brand-800 transition-colors"
-          >
-            Explore this topic
-            <span>→</span>
-          </Link>
+          {/* CTA — DS Button primitive */}
+          <Button href={t.href} size="md" onClick={() => setPanelOpen(false)}>
+            Explore this topic →
+          </Button>
         </div>
       </div>
     </>

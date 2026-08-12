@@ -80,6 +80,17 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 
     Callout,
 
+    // Small-caps opener for the first 2–3 words of an article paragraph.
+    // Use inside .article-body: <Opener>Most men over 40</Opener> walk on…
+    Opener: ({ children }: { children: ReactNode }) => (
+      <span className="opener">{children}</span>
+    ),
+
+    // Editorial pull statement — Lora italic block, hanging quote.
+    Pullquote: ({ children }: { children: ReactNode }) => (
+      <blockquote className="pullquote">{children}</blockquote>
+    ),
+
     InlineCard: ({
       title,
       meta,

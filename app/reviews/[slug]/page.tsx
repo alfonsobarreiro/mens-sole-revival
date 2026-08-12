@@ -221,7 +221,7 @@ function RatingBar({ rating }: { rating: number }) {
           style={{ width: `${pct}%` }}
         />
       </div>
-      <span className="text-sm font-bold text-brand-900 tabular-nums">
+      <span className="text-sm font-medium text-ink tabular-nums">
         {rating}<span className="text-xs font-normal text-neutral-400">/10</span>
       </span>
     </div>
@@ -307,7 +307,7 @@ export default async function ReviewPage({
       <div className="border-b border-neutral-100 py-3">
         <Container>
           <nav className="flex items-center gap-2 text-xs text-neutral-400">
-            <Link href="/reviews" className="hover:text-brand-600 transition">Reviews</Link>
+            <Link href="/reviews" className="hover:text-link transition">Reviews</Link>
             <span>›</span>
             <span className="text-neutral-600">{review.productName}</span>
           </nav>
@@ -342,13 +342,13 @@ export default async function ReviewPage({
 
               {/* Category */}
               {review.category && (
-                <span className="mb-4 inline-block self-start bg-neutral-100 px-2 py-0.5 text-xs font-semibold uppercase tracking-wider text-neutral-500">
+                <span className="mb-4 inline-block self-start bg-neutral-100 px-2.5 py-1 text-xs font-medium text-neutral-600">
                   {categoryLabel(review.category)}
                 </span>
               )}
 
-              <p className="text-sm font-semibold uppercase tracking-wider text-accent-600">{review.brand}</p>
-              <h1 className={`mt-1 ${type.displaySection} text-brand-900`}>{review.productName}</h1>
+              <p className="eyebrow !text-accent-700">{review.brand}</p>
+              <h1 className={`mt-1 ${type.displaySection} text-ink`}>{review.productName}</h1>
 
               {review.tagline && (
                 <p className="mt-3 text-lg leading-relaxed text-neutral-600">{review.tagline}</p>
@@ -358,14 +358,14 @@ export default async function ReviewPage({
               <div className="mt-6 space-y-4">
                 {verdict && (
                   <div className={`inline-flex items-center gap-2 border ${verdict.border} ${verdict.bg} px-4 py-2`}>
-                    <span className={`text-sm font-bold uppercase tracking-wider ${verdict.text}`}>
+                    <span className={`text-sm font-medium ${verdict.text}`}>
                       {verdict.label}
                     </span>
                   </div>
                 )}
                 {review.rating != null && (
                   <div>
-                    <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-neutral-500">Rating</p>
+                    <p className="eyebrow mb-2">Rating</p>
                     <RatingBar rating={review.rating} />
                   </div>
                 )}
@@ -374,7 +374,7 @@ export default async function ReviewPage({
               {/* Price */}
               {review.retailPriceUsd != null && (
                 <p className="mt-4 text-sm text-neutral-500">
-                  Retails for approximately <span className="font-semibold text-brand-900">${review.retailPriceUsd}</span>
+                  Retails for approximately <span className="font-medium text-ink">${review.retailPriceUsd}</span>
                 </p>
               )}
 
@@ -385,19 +385,19 @@ export default async function ReviewPage({
                 </div>
               )}
 
-              {/* Affiliate CTA */}
+              {/* Affiliate CTA — DS primary button */}
               {review.affiliateUrl && (
                 <div className="mt-6">
                   <a
                     href={review.affiliateUrl}
                     target="_blank"
                     rel="noopener noreferrer sponsored"
-                    className="inline-flex items-center gap-2 border border-brand-900 bg-brand-900 px-6 py-3 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-brand-700"
+                    className="inline-flex items-center gap-2 bg-cta-fill px-6 py-3 text-sm font-medium tracking-[0.01em] text-cta-text transition hover:bg-cta-fill-hover"
                   >
-                    {review.affiliateLabel ?? "View Product"} ↗
+                    {review.affiliateLabel ?? "View product"} ↗
                   </a>
-                  <p className="mt-2 text-xs text-neutral-400">
-                    Affiliate link — we may earn a commission at no extra cost to you.
+                  <p className="mt-2 text-xs text-neutral-500">
+                    Affiliate link. We may earn a commission at no extra cost to you.
                   </p>
                 </div>
               )}
@@ -414,11 +414,11 @@ export default async function ReviewPage({
 
               {review.pros?.length && (
                 <div>
-                  <p className={`${type.overline} mb-4 text-neutral-500`}>Pros</p>
+                  <p className="eyebrow mb-4">Pros</p>
                   <ul className="space-y-3">
                     {review.pros.map((pro, i) => (
                       <li key={i} className="flex items-start gap-3">
-                        <span className="mt-0.5 text-emerald-600 shrink-0">✓</span>
+                        <span className="mt-0.5 text-ink shrink-0">✓</span>
                         <span className="text-sm leading-6 text-neutral-700">{pro}</span>
                       </li>
                     ))}
@@ -428,7 +428,7 @@ export default async function ReviewPage({
 
               {review.cons?.length && (
                 <div className="md:border-l md:border-neutral-200 md:pl-10">
-                  <p className={`${type.overline} mb-4 text-neutral-500`}>Cons</p>
+                  <p className="eyebrow mb-4">Cons</p>
                   <ul className="space-y-3">
                     {review.cons.map((con, i) => (
                       <li key={i} className="flex items-start gap-3">
@@ -452,14 +452,14 @@ export default async function ReviewPage({
 
               {review.whyItWorks && (
                 <div>
-                  <p className={`${type.overline} mb-4 text-neutral-500`}>Why It Works</p>
+                  <p className="eyebrow mb-4">Why it works</p>
                   <p className="text-sm leading-7 text-neutral-700">{review.whyItWorks}</p>
                 </div>
               )}
 
               {review.whoItsFor && (
                 <div className="md:border-l md:border-neutral-200 md:pl-10">
-                  <p className={`${type.overline} mb-4 text-neutral-500`}>Who It's For</p>
+                  <p className="eyebrow mb-4">Who it&apos;s for</p>
                   <p className="text-sm leading-7 text-neutral-700">{review.whoItsFor}</p>
                 </div>
               )}
@@ -484,18 +484,18 @@ export default async function ReviewPage({
           <div className="flex items-center justify-between">
             <Link
               href="/reviews"
-              className="text-sm font-semibold text-brand-600 hover:text-brand-900 transition"
+              className="text-sm font-medium text-link underline underline-offset-4 hover:text-link-hover transition"
             >
-              ← Back to Reviews
+              ← Back to reviews
             </Link>
             {review.affiliateUrl && (
               <a
                 href={review.affiliateUrl}
                 target="_blank"
                 rel="noopener noreferrer sponsored"
-                className="text-sm font-semibold text-brand-500 hover:text-brand-700 transition"
+                className="text-sm font-medium text-link underline underline-offset-4 hover:text-link-hover transition"
               >
-                {review.affiliateLabel ?? "View Product"} ↗
+                {review.affiliateLabel ?? "View product"} ↗
               </a>
             )}
           </div>

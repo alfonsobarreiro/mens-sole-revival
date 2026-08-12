@@ -57,24 +57,25 @@ export default function SearchTrigger({
   return (
     <>
       {variant === "desktop" ? (
+        // Plain nav-item treatment — icon + "Search", no italic, no border box,
+        // no keyboard-hint pill. Matches the neighbouring nav links.
+        // Keyboard shortcut still works, it just doesn't advertise itself.
         <button
           type="button"
           onClick={() => setOpen(true)}
-          aria-label="Open search"
-          className="group flex items-center gap-2 rounded-md border border-neutral-200 bg-white px-2.5 py-1.5 text-xs text-neutral-500 transition hover:border-neutral-300 hover:text-neutral-700"
+          aria-label="Search the site"
+          title={isMac ? "Search  (⌘K)" : "Search  (Ctrl K)"}
+          className="flex items-center gap-1.5 text-sm font-medium text-neutral-600 transition hover:text-ink"
         >
-          <SearchIcon className="h-3.5 w-3.5" />
-          <span className="hidden lg:inline">Search</span>
-          <kbd className="ml-1 hidden rounded border border-neutral-200 bg-neutral-50 px-1 py-0.5 font-mono text-[10px] font-medium text-neutral-500 lg:inline">
-            {isMac ? "⌘K" : "Ctrl K"}
-          </kbd>
+          <SearchIcon className="h-4 w-4" />
+          <span>Search</span>
         </button>
       ) : (
         <button
           type="button"
           onClick={() => setOpen(true)}
-          aria-label="Open search"
-          className="flex h-9 w-9 items-center justify-center rounded-md text-neutral-700 transition hover:bg-neutral-100"
+          aria-label="Search the site"
+          className="flex h-10 w-10 items-center justify-center text-ink transition hover:text-accent-700"
         >
           <SearchIcon className="h-5 w-5" />
         </button>

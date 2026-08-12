@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Lora, DM_Sans, Barlow_Condensed } from "next/font/google";
+import { Lora, Archivo, Barlow_Condensed } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/react";
 import Script from "next/script";
@@ -12,23 +12,25 @@ import "./globals.css";
 // Set NEXT_PUBLIC_CLARITY_PROJECT_ID on Vercel to enable. Inert when missing.
 const clarityId = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID;
 
+// DS: Lora carries headings + wordmark, Archivo carries everything else.
+// Kept Barlow Condensed as --font-display for back-compat with components
+// that still reference it; new components should use --font-heading (Lora).
 const lora = Lora({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
   variable: "--font-heading",
   display: "swap",
 });
 
-const dmSans = DM_Sans({
+const archivo = Archivo({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
   variable: "--font-body",
   display: "swap",
 });
 
-// Display typeface — used ONLY for large architectural section labels and hero headlines.
-// Barlow Condensed ExtraBold gives the bold editorial punch of Vivobarefoot-style type
-// without displacing Lora (warmth/editorial) or DM Sans (UI/clarity).
 const barlowCondensed = Barlow_Condensed({
   subsets: ["latin"],
   weight: ["700", "800"],
@@ -52,8 +54,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${lora.variable} ${dmSans.variable} ${barlowCondensed.variable}`}>
-      <body className="min-h-screen bg-white antialiased" suppressHydrationWarning>
+    <html lang="en" className={`${lora.variable} ${archivo.variable} ${barlowCondensed.variable}`}>
+      <body className="min-h-screen bg-bg-page antialiased" suppressHydrationWarning>
         <JsonLd schema={[organizationSchema, webSiteSchema]} />
         {children}
         {/* Exit-intent popup — client component, self-suppresses on

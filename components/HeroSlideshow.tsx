@@ -45,7 +45,7 @@ export default function HeroSlideshow({
           priority={i === 0}
           sizes="100vw"
           style={{ objectPosition: img.position ?? "center" }}
-          className={`object-cover transition-opacity duration-[1500ms] ease-in-out ${
+          className={`muted-photo object-cover transition-opacity duration-[1500ms] ease-in-out ${
             i === active ? "opacity-100" : "opacity-0"
           }`}
         />

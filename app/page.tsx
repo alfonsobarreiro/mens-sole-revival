@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import Container from "@/components/Container";
-import Button from "@/components/Button";
+import { Button } from "@/components/ui";
 import SiteLayout from "@/components/SiteLayout";
 import TopicsSection from "@/components/TopicsSection";
 import HeroSlideshow from "@/components/HeroSlideshow";
-import AssessmentProofBlock from "@/components/AssessmentProofBlock";
 import InlineNewsletterForm from "@/components/InlineNewsletterForm";
 import Link from "next/link";
 import Image from "next/image";
@@ -15,7 +14,7 @@ export const metadata: Metadata = {
     absolute: "Men's Foot Health: Evidence-Based Care for Men Over 40",
   },
   description:
-    "Why do your feet hurt after 40? Foot problems travel up to your knees, hips, and back. Free 5-minute self-assessment, evidence-based guides, and daily routines for men.",
+    "Foot problems after 40 travel up to your knees, hips and back. Free 5-minute self-assessment, evidence-based guides and daily routines for men.",
   alternates: { canonical: "/" },
   openGraph: {
     title: "Men's Foot Health: Evidence-Based Care for Men Over 40",
@@ -32,7 +31,7 @@ const routineHighlights = [
   {
     label: "Daily",
     title: "The nightly 5 minutes.",
-    desc: "Wash, dry, inspect, moisturize. Done before your phone goes to the charger. This is the foundation.",
+    desc: "Wash, dry, inspect, moisturize. Done before your phone goes to the charger.",
     time: "5 min / every night",
     href: "/routines",
     image: "/images/pexels-4909313.jpg",
@@ -48,7 +47,7 @@ const routineHighlights = [
   {
     label: "Recovery",
     title: "Lacrosse ball work.",
-    desc: "Roll the arch, hold on the sore spot, let it release. Three minutes per foot. Combine with the stretch.",
+    desc: "Roll the arch, then hold on the sore spot until it releases. Three minutes per foot; pair with the stretch.",
     time: "6 min / as needed",
     href: "/routines",
     image: "/images/pexels-8729018.jpg",
@@ -62,20 +61,20 @@ const articles = [
     category: "Foot Health",
     readTime: "7 min",
     excerpt:
-      "\"Age\" isn't a diagnosis. Four specific things change in your feet after 40 — and because they're your foundation, you feel them in your knees, hips, and back.",
+      "\"Age\" isn't a diagnosis. Four specific things change in your feet after 40. Because your feet are the foundation, you feel it travel up.",
     image: "/images/pexels-7787491.jpg",
   },
   {
     slug: "what-your-dress-shoes-are-doing-to-your-feet",
-    title: "What 30 Years in Dress Shoes Actually Does to Your Feet",
+    title: "What 30 Years in Dress Shoes Does to Your Feet",
     category: "Footwear Fit",
     readTime: "7 min",
-    excerpt: "Most men don't connect the shoes they wore for decades to the foot problems they have now. Here's the chain of cause and effect.",
+    excerpt: "Decades of narrow toe boxes compress the forefoot, weaken the arch, and offload force to the knee. The chain of cause and effect runs upward.",
     image: "/images/pexels-12031206.jpg",
   },
   {
     slug: "big-toe-and-your-whole-body",
-    title: "Your Big Toe Controls More of Your Body Than You Think",
+    title: "Your Big Toe Drives 40–60% of Every Step",
     category: "Toe Alignment",
     readTime: "6 min",
     excerpt: "The big toe is responsible for 40–60% of your push-off force. Most men have spent decades restricting it, and wondering why their knee hurts.",
@@ -86,7 +85,7 @@ const articles = [
     title: "Cracked Heels: The Fix That Isn't a Pumice Stone",
     category: "Dry Skin",
     readTime: "5 min",
-    excerpt: "Scrubbing dry, cracked heel skin is the wrong starting point. Here's what's actually happening, and the routine that addresses it.",
+    excerpt: "Scrubbing dry, cracked heel skin is the wrong starting point. The mechanism is moisture loss, and the routine that addresses it starts with urea cream on damp feet.",
     image: "/images/pexels-29145634.jpg",
   },
   {
@@ -94,7 +93,7 @@ const articles = [
     title: "Toenail Fungus: What Actually Works (and What's a Scam)",
     category: "Nail Care",
     readTime: "8 min",
-    excerpt: "The evidence on OTC treatments, prescription options, and home remedies, ranked by how well they actually work.",
+    excerpt: "OTC and prescription options ranked by how well they actually work. Plus which of the home remedies do anything at all.",
     image: "/images/pexels-5960467.jpg",
   },
   {
@@ -102,15 +101,15 @@ const articles = [
     title: "Why Toe Alignment Affects Your Knees and Hips",
     category: "Toe Alignment",
     readTime: "5 min",
-    excerpt: "When your big toe can't extend and stabilize, your knee, hip, and lower back pick up the slack every single step. Here's how it travels up the chain.",
+    excerpt: "When your big toe can't extend and stabilize, your knee and lower back pick up the slack every single step. The compensation runs upward until something else gives.",
     image: "/images/pexels-13065922.jpg",
   },
   {
     slug: "5-minute-routine",
-    title: "A 5-Minute Daily Foot-Care Routine You Can Actually Stick To",
+    title: "A 5-Minute Daily Foot-Care Routine You'll Stick To",
     category: "Daily Routine",
     readTime: "4 min",
-    excerpt: "Consistency beats intensity. A five-minute habit done after your shower produces dramatically better long-term outcomes than anything more ambitious you'll quit.",
+    excerpt: "A five-minute habit done after your shower outperforms any more ambitious routine you'll quit inside a month.",
     image: "/images/pexels-7205913.jpg",
   },
 ];
@@ -118,7 +117,7 @@ const articles = [
 const stats = [
   {
     value: "1 in 4",
-    label: "men over 40 experience chronic foot pain",
+    label: "men over 40 live with chronic foot pain",
     context: "That's probably someone in your household.",
     source: "American Podiatric Medical Association",
     sourceUrl: "https://www.apma.org/",
@@ -126,9 +125,23 @@ const stats = [
   {
     value: "63–72%",
     label: "of adults wear shoes that don't fit them correctly",
-    context: "The most upstream variable. And the most fixable.",
+    context: "The most upstream variable, and the most fixable.",
     source: "PMC · Incorrectly Fitted Footwear, Systematic Review",
     sourceUrl: "https://pmc.ncbi.nlm.nih.gov/articles/PMC6064070/",
+  },
+  {
+    value: "1 in 10",
+    label: "adults will develop plantar fasciitis in their lifetime",
+    context: "It peaks between 40 and 60. That's you.",
+    source: "NIH · StatPearls, Plantar Fasciitis",
+    sourceUrl: "https://www.ncbi.nlm.nih.gov/books/NBK431073/",
+  },
+  {
+    value: "26",
+    label: "bones and 33 joints in each foot",
+    context: "A quarter of your skeleton lives below your ankles.",
+    source: "American Podiatric Medical Association",
+    sourceUrl: "https://www.apma.org/learn/foot-health/",
   },
 ];
 
@@ -139,7 +152,7 @@ export default function Home() {
     <SiteLayout>
 
       {/* ── Hero ── */}
-      <section className="relative flex min-h-[90vh] flex-col overflow-hidden bg-brand-900">
+      <section className="relative flex min-h-[90vh] flex-col overflow-hidden bg-ink">
 
         {/* Background photos — slow crossfade (reduced-motion shows frame 1 only) */}
         <HeroSlideshow
@@ -153,20 +166,14 @@ export default function Home() {
         {/* Controlled dual scrim: vertical grounds the base (and the credibility
             strip); directional keeps the headline legible on the left. Reads as
             one premium scene and holds WCAG contrast for the copy. */}
-        <div className="absolute inset-0 z-0 bg-gradient-to-t from-brand-900 via-brand-900/30 to-transparent" />
-        <div className="absolute inset-0 z-0 bg-gradient-to-r from-brand-900/90 via-brand-900/45 to-brand-900/10" />
+        <div className="absolute inset-0 z-0 bg-gradient-to-t from-ink via-ink/30 to-transparent" />
+        <div className="absolute inset-0 z-0 bg-gradient-to-r from-ink/90 via-ink/45 to-ink/10" />
 
-        {/* Content */}
+        {/* Content — H1 + tightened body + single CTA. No decorative
+            anchor rule (was reading as an em-dash bookend). */}
         <div className="relative z-10 flex flex-1 items-center">
           <Container>
             <div className="max-w-3xl py-24 md:py-32">
-
-              <div className="mb-6 flex items-center gap-3">
-                <span aria-hidden="true" className="h-px w-10 bg-accent-400" />
-                <p className="text-xs font-semibold uppercase tracking-widest text-white/90">
-                  For men who spent 30 years taking care of everyone else.
-                </p>
-              </div>
 
               <h1 className={`${type.displayHero} text-white`}>
                 Your turn.<br />
@@ -174,124 +181,51 @@ export default function Home() {
                 your feet.
               </h1>
 
-              <p className="mt-8 max-w-xl text-lg leading-relaxed text-white/85">
-                Foot problems don't stay in your feet. They change how your
-                knees load, how your hips move, and how your back feels by
-                evening. Most men don't notice until a decade of damage has
-                already passed.
+              <p className="mt-8 max-w-2xl text-[0.9375rem] leading-[1.5] text-inverse-body">
+                Foot problems don&apos;t stay in your feet. They change how your knees load and how your hips move. By evening you feel it in your back. Most men don&apos;t notice until a decade of damage has passed.
               </p>
 
-              {/* Mission line — self-compassion frame, italic, quiet.
-                  Sits between the body and the CTAs so it FRAMES the
-                  action rather than sitting under it as an afterthought. */}
-              <p className="mt-6 max-w-xl text-lg italic leading-relaxed text-accent-300">
-                The hardest step is the first one. This is that step.
-              </p>
-
-              <div className="mt-8 flex flex-wrap gap-3">
+              <div className="mt-8">
                 <Button href="/assessment" size="lg">
-                  Take the Assessment
-                </Button>
-                <Button
-                  href="/guides"
-                  variant="outline"
-                  size="lg"
-                  className="border-white/70 text-white hover:bg-white/10 active:bg-white/20"
-                >
-                  Browse Guides
+                  Take the assessment
                 </Button>
               </div>
 
-              <p className="mt-5 flex items-center gap-2 text-sm text-white/70">
-                <svg
-                  aria-hidden="true"
-                  width="15"
-                  height="15"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="text-accent-400"
-                >
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                5-minute self-check · no email needed to start
-              </p>
-            </div>
-          </Container>
-        </div>
-
-        {/* Credibility strip — proof above the fold. Shows what's already
-            happening on the site (78 men, 86% completion) instead of an
-            industry stat, so the first proof someone reads is MSR's own
-            traction, not APMA's. The 1-in-4 stat still lives in the Stats
-            section below the fold. */}
-        <div className="relative z-10 border-t border-white/10 bg-brand-900/80 backdrop-blur-sm">
-          <Container>
-            <div className="flex flex-col gap-2 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-              <p className="text-sm leading-6 text-white/80">
-                <span className="font-bold text-white">78 men</span> have taken
-                the assessment.{" "}
-                <span className="font-bold text-white">86%</span> finish it.
-              </p>
-              <Link
-                href="/assessment"
-                className="text-xs font-bold uppercase tracking-widest text-white/70 transition hover:text-white"
-              >
-                Take the assessment →
-              </Link>
             </div>
           </Container>
         </div>
       </section>
 
-      {/* ── Founder quote — first-person, self-compassion frame.
-           Sits directly under the hero so the founder voice lands before
-           any data does. Lora italic + accent bar keeps it editorial, not
-           marketing. No image, no CTA — this is the emotional pull only. ── */}
-      <section className="border-b border-neutral-200 bg-white py-16 md:py-24">
+
+      {/* ── Stats — men and their feet, in numbers ── */}
+      <section className="bg-neutral-100 py-16 md:py-24">
         <Container>
-          <div className="mx-auto max-w-3xl">
-            <div className="mb-6 h-0.5 w-10 bg-accent-500" />
-            <blockquote className="font-heading text-2xl italic leading-snug text-brand-900 md:text-3xl">
-              I built this because I spent years avoiding my own feet. Not
-              because they weren't a problem. Because looking at them felt
-              harder than ignoring them. It was easier to help everyone else
-              than to think about myself. Every man I've talked to who's over
-              40 has some version of the same story. This is the site I wish
-              I'd found five years earlier.
-            </blockquote>
-            <p className="mt-6 text-sm font-semibold uppercase tracking-widest text-neutral-500">
-              Alfonso Barreiro · Founder
+          <div className="mb-12 max-w-2xl">
+            <h2 className={`${type.displaySection} text-ink`}>
+              Men and their feet.
+            </h2>
+            <p className="mt-4 text-[0.9375rem] leading-[1.5] text-neutral-600">
+              The size of the problem, in numbers. Every stat below is
+              cited to a primary source you can check.
             </p>
           </div>
-        </Container>
-      </section>
-
-      {/* ── Assessment proof block — permanent stat display for MSR's own
-           traction. Reads before the industry-scale stats so the first
-           numbers on the page are what's already working on this site. ── */}
-      <AssessmentProofBlock />
-
-      {/* ── Stats — large display numbers, no cards ── */}
-      <section className="bg-neutral-50 py-14 md:py-20">
-        <Container>
-          <p className={`${type.overline} mb-10 text-neutral-600`}>The numbers most men ignore</p>
-          <div className="grid grid-cols-1 divide-y divide-neutral-100 md:grid-cols-2 md:divide-x md:divide-y-0">
+          <div className="grid grid-cols-1 gap-y-8 md:grid-cols-2 md:gap-x-12 md:gap-y-16">
             {stats.map((s) => (
-              <div key={s.value} className="py-8 md:py-0 md:px-10 first:md:pl-0">
-                <span className={`${type.displaySection} block text-brand-900`}>
+              <div key={s.value}>
+                <span className={`${type.displaySection} block text-ink`}>
                   {s.value}
                 </span>
-                <span className="mt-2 block text-sm leading-6 text-neutral-500">{s.label}</span>
-                <span className="mt-2 block text-xs font-semibold text-accent-600">{s.context}</span>
+                <span className="mt-3 block text-[0.9375rem] leading-[1.5] text-neutral-600">
+                  {s.label}
+                </span>
+                <span className="mt-2 block text-[0.9375rem] leading-[1.5] text-neutral-600">
+                  {s.context}
+                </span>
                 <a
                   href={s.sourceUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-3 inline-block text-xs text-neutral-400 underline underline-offset-2 hover:text-neutral-600 transition"
+                  className="mt-3 inline-block text-[0.75rem] text-link hover:text-link-hover transition"
                 >
                   Source: {s.source}
                 </a>
@@ -305,9 +239,9 @@ export default function Home() {
            Sits after the two stat sections and before the content library,
            so the reader has been given the problem (industry stats) and
            the proof (MSR traction) before we ask for the email. ── */}
-      <section className="border-y border-neutral-200 bg-brand-900 py-16 md:py-20">
+      <section className="border-y border-neutral-200 bg-ink py-16 md:py-24">
         <Container>
-          <div className="mx-auto max-w-2xl">
+          <div className="max-w-2xl">
             <InlineNewsletterForm tone="dark" />
           </div>
         </Container>
@@ -316,42 +250,50 @@ export default function Home() {
       {/* ── From the Library — featured left sticky + 3 articles right ── */}
       {/* NOTE: no overflow-hidden on this section — it breaks position:sticky */}
       <section>
+        <Container>
         <div className="grid grid-cols-1 md:grid-cols-2">
 
           {/* LEFT — sticky panel: fills viewport, heading top, article bottom */}
           <div>
-            <div className="md:sticky md:top-0 md:flex md:min-h-screen md:flex-col md:justify-between p-8 md:p-10 lg:p-14">
+            <div className="md:sticky md:top-0 md:flex md:min-h-screen md:flex-col md:justify-between py-8 pr-8 md:py-12 md:pr-12 lg:py-16 lg:pr-16">
 
-              {/* Top: section heading + CTA */}
+              {/* Top: section heading + description + CTA */}
               <div>
-                <p className={`${type.displayHero} text-brand-900 leading-none`}>
-                  FROM<br />THE<br />GUIDES.
+                <h2 className={`${type.displayHero} text-ink leading-[1.05]`}>
+                  The library.
+                </h2>
+                <p className="mt-6 max-w-md text-[0.9375rem] leading-[1.5] text-neutral-600">
+                  Long-form guides on the foot problems men over 40 actually
+                  develop. Each one traces the mechanism, then cites the
+                  research behind the fix.
                 </p>
-                <Link
+                <Button
                   href="/guides"
-                  className="mt-6 inline-flex items-center gap-2 border border-brand-900 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-brand-900 transition hover:bg-brand-900 hover:text-white"
+                  variant="secondary"
+                  size="md"
+                  className="mt-6"
                 >
                   View all guides
-                </Link>
+                </Button>
               </div>
 
               {/* Bottom: featured article */}
-              <Link href={`/guides/${articles[0].slug}`} className="group mt-10 block md:mt-0">
+              <Link href={`/guides/${articles[0].slug}`} className="group mt-12 block md:mt-0">
                 <div className="relative overflow-hidden" style={{ aspectRatio: "3/2" }}>
                   <Image
                     src={articles[0].image}
                     alt={articles[0].title}
                     fill
-                    className="object-cover transition duration-700 group-hover:scale-105"
+                    className="muted-photo object-cover transition duration-700 group-hover:scale-105"
                   />
                 </div>
-                <p className="mt-4 text-xs font-semibold uppercase tracking-wider text-accent-600">
-                  {articles[0].category} · {articles[0].readTime} read
+                <p className="mt-4 text-xs font-medium text-accent-700">
+                  {articles[0].category}  ·  {articles[0].readTime} read
                 </p>
-                <h3 className="mt-2 font-display text-2xl font-bold uppercase leading-tight text-brand-900 transition group-hover:text-brand-600 md:text-3xl">
+                <h3 className={`mt-2 ${type.h2} text-ink transition group-hover:text-accent-700`}>
                   {articles[0].title}
                 </h3>
-                <p className="mt-2 text-sm leading-6 text-neutral-500">
+                <p className="mt-2 text-[0.9375rem] leading-[1.5] text-neutral-600">
                   {articles[0].excerpt}
                 </p>
               </Link>
@@ -365,58 +307,57 @@ export default function Home() {
               <Link
                 key={a.slug}
                 href={`/guides/${a.slug}`}
-                className="group flex gap-5 p-8 transition hover:bg-neutral-50/60 md:p-10"
+                className="group flex gap-6 py-8 pl-8 transition hover:bg-neutral-100/60 md:py-12 md:pl-12"
               >
-                <div className="relative h-24 w-32 flex-shrink-0 overflow-hidden md:h-28 md:w-36">
+                <div className="relative h-24 w-32 flex-shrink-0 overflow-hidden md:h-32 md:w-32">
                   <Image
                     src={a.image}
                     alt={a.title}
                     fill
-                    className="object-cover transition duration-500 group-hover:scale-105"
+                    className="muted-photo object-cover transition duration-500 group-hover:scale-105"
                   />
                 </div>
                 <div className="flex flex-col justify-center">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-accent-600">
-                    {a.category} · {a.readTime} read
+                  <p className="text-xs font-medium text-accent-700">
+                    {a.category}  ·  {a.readTime} read
                   </p>
-                  <h3 className="mt-1 font-display text-xl font-bold uppercase leading-tight text-brand-900 transition group-hover:text-brand-600 md:text-2xl">
+                  <h3 className={`mt-1 ${type.h3} text-ink transition group-hover:text-accent-700`}>
                     {a.title}
                   </h3>
-                  <p className="mt-2 text-sm leading-6 text-neutral-500">{a.excerpt}</p>
+                  <p className="mt-2 text-[0.9375rem] leading-[1.5] text-neutral-600">{a.excerpt}</p>
                 </div>
               </Link>
             ))}
           </div>
 
         </div>
+        </Container>
       </section>
 
       {/* ── Why it matters — single editorial split panel ── */}
-      <section className="flex min-h-[420px] flex-col md:flex-row md:min-h-[500px]">
+      <section className="flex min-h-[416px] flex-col md:flex-row md:min-h-[512px]">
         <div className="relative h-64 w-full md:h-auto md:w-1/2">
           <Image
             src="/images/pexels-34806666.jpg"
             alt=""
             fill
-            className="object-cover"
+            className="muted-photo object-cover"
           />
         </div>
-        <div className="flex w-full items-center bg-brand-900 px-8 py-14 md:w-1/2 md:px-14 lg:px-20">
+        <div className="flex w-full items-center bg-ink px-8 py-16 md:w-1/2 md:px-12 lg:px-24">
           <div>
-            <div className="mb-5 h-0.5 w-8 bg-accent-500" />
-            <h2 className={`${type.displaySection} text-white leading-tight`}>
-              IT COMPOUNDS<br />UPWARD.
+            <h2 className={`${type.displaySection} text-white`}>
+              It travels<br />up the body.
             </h2>
-            <p className="mt-5 max-w-md text-base leading-7 text-white/65">
-              When your feet work well, everything else gets easier. Your knees,
-              your posture, your energy. This is the edge most men overlook,
-              and the reason we built this.
+            <p className="mt-6 max-w-md text-[0.9375rem] leading-[1.5] text-inverse-body">
+              When your feet work well, your knees load evenly and your hips
+              stop compensating. Most men have never felt that baseline.
             </p>
             <Link
               href="/about"
-              className="mt-8 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent-400 transition hover:text-accent-300"
+              className="mt-8 inline-flex items-center gap-2 text-[0.9375rem] font-medium text-accent-300 transition hover:text-white"
             >
-              Why we built this →
+              Why I built this →
             </Link>
           </div>
         </div>
@@ -426,21 +367,23 @@ export default function Home() {
       <TopicsSection />
 
       {/* ── Routines — what to actually do ── */}
-      <section className="bg-neutral-50 py-16 md:py-24">
+      <section className="bg-neutral-100 py-16 md:py-24">
         <Container>
-          <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
-              <p className={`${type.displaySection} text-brand-900`}>
+              <p className="eyebrow mb-3">Practice</p>
+              <h2 className={`${type.displaySection} text-ink`}>
                 The routines.
-              </p>
-              <p className="mt-3 max-w-xl text-base leading-7 text-neutral-500">
-                Not a program. A set of small consistent actions that compound
-                over months. Start with one. Add the next.
+              </h2>
+              <p className="mt-3 max-w-xl text-[0.9375rem] leading-[1.5] text-neutral-600">
+                Not a program. Small daily loads on the plantar tissue, repeated
+                for months, produce the tissue adaptation. Start with one.
+                Add the next.
               </p>
             </div>
             <Link
               href="/routines"
-              className="hidden text-sm font-semibold text-brand-500 underline underline-offset-4 hover:text-brand-700 md:block"
+              className="hidden text-[0.9375rem] font-medium text-link hover:text-link-hover md:block"
             >
               View all routines →
             </Link>
@@ -451,27 +394,27 @@ export default function Home() {
               <Link
                 key={r.title}
                 href={r.href}
-                className="group flex flex-col overflow-hidden border border-neutral-200 bg-white shadow-sm transition hover:border-brand-300 hover:shadow-md"
+                className="group flex flex-col overflow-hidden border border-neutral-200 bg-bg-elevated transition hover:border-neutral-300"
               >
                 <div className="relative aspect-[4/3] w-full overflow-hidden">
                   <Image
                     src={r.image}
                     alt={r.title}
                     fill
-                    className="object-cover transition duration-500 group-hover:scale-105"
+                    className="object-cover muted-photo transition duration-500 group-hover:scale-105"
                   />
                   <div className="absolute bottom-3 left-3">
-                    <span className="bg-white/90 px-3 py-1 text-xs font-bold uppercase tracking-wider text-brand-900 backdrop-blur-sm">
+                    <span className="bg-bg-elevated/95 px-3 py-1 text-xs font-medium text-ink backdrop-blur-sm">
                       {r.label}
                     </span>
                   </div>
                 </div>
-                <div className="flex flex-1 flex-col p-5">
-                  <h3 className="font-display text-lg font-bold uppercase leading-tight text-neutral-900 transition group-hover:text-brand-700">
+                <div className="flex flex-1 flex-col p-6">
+                  <h3 className={`${type.h3} text-ink transition group-hover:text-accent-700`}>
                     {r.title}
                   </h3>
-                  <p className="mt-2 flex-1 text-sm leading-6 text-neutral-500">{r.desc}</p>
-                  <p className="mt-4 text-xs font-semibold text-neutral-400">{r.time}</p>
+                  <p className="mt-2 flex-1 text-[0.9375rem] leading-[1.5] text-neutral-600">{r.desc}</p>
+                  <p className="mt-4 text-xs font-medium text-neutral-500">{r.time}</p>
                 </div>
               </Link>
             ))}
@@ -479,42 +422,35 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* ── Parallax CTA ── */}
-      <section
-        className="relative overflow-hidden py-28 md:py-44"
-        style={{
-          backgroundImage:
-            "url('/images/pexels-7787491.jpg')",
-          backgroundAttachment: "fixed",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
+      {/* ── Parallax CTA — desktop-only parallax via @media (hover: hover).
+           Mobile Safari drops background-attachment: fixed silently, so we
+           apply it via the .parallax-bg utility that guards the property. ── */}
+      <section className="relative overflow-hidden py-24 md:py-32">
+        {/* Background — muted-photo class so the LUT is greppable, and
+            isolated from the section so it doesn't desaturate the CTA button */}
+        <div
+          className="parallax-bg muted-photo absolute inset-0"
+          style={{
+            backgroundImage: "url('/images/pexels-7787491.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
         {/* Dark overlay */}
-        <div className="absolute inset-0 bg-brand-900/80" />
+        <div className="absolute inset-0 bg-ink/80" />
 
         <Container className="relative z-10">
-          <div className="flex flex-col items-center gap-8 text-center">
-            <p className={`${type.displayHero} text-white leading-none`}>
-              START HERE.
+          <div className="mx-auto flex max-w-2xl flex-col items-center gap-8 text-center">
+            <h2 className={`${type.displayHero} text-white`}>
+              Start here.
+            </h2>
+            <p className="max-w-lg text-[0.9375rem] leading-[1.5] text-inverse-body">
+              30 questions, under five minutes. You&apos;ll know which of the
+              six concerns to address first.
             </p>
-            <p className="max-w-lg text-lg leading-relaxed text-brand-200">
-              Five sections. 30 questions. Under five minutes. You'll know
-              exactly where you stand and where to start.
-            </p>
-            <div className="flex flex-wrap justify-center gap-3">
-              <Button href="/assessment" size="lg">
-                Take the Assessment
-              </Button>
-              <Button
-                href="/about"
-                variant="outline"
-                size="lg"
-                className="border-white/50 text-white hover:bg-white/10 active:bg-white/20"
-              >
-                Our story
-              </Button>
-            </div>
+            <Button href="/assessment" size="lg">
+              Take the assessment
+            </Button>
           </div>
         </Container>
       </section>

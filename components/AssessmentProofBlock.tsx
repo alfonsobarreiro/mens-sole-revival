@@ -3,68 +3,55 @@ import Container from "@/components/Container";
 import { type } from "@/components/typography";
 
 // AssessmentProofBlock — permanent stat display for the site's own traction.
-//
-// Placement:
-//   - Home: below the founder quote, above the industry-stat section.
-//   - About: below the mission callout, above the values section.
-//
-// Copy discipline: numbers are big, sub-labels give context so 78 doesn't
-// read as thin evidence — "since April 2026" frames it as ongoing traction,
-// not a one-time count. Section eyebrow ("WHAT'S ALREADY HAPPENING") names
-// this as proof of MSR, distinct from the industry-scale problem stats.
-//
-// Numbers are hardcoded for now. Later, if GA4 Reporting API is wired,
-// this becomes the auto-update surface — the component contract stays.
+// Two-column layout: heading + description on the left, stat numbers stacked
+// on the right. Numbers are hardcoded for now; wire GA4 later if useful.
 const STATS = [
-  {
-    value: "78",
-    label: "men have taken the assessment",
-    context: "since April 2026",
-  },
-  {
-    value: "86%",
-    label: "finish the assessment",
-    context: "started → results",
-  },
-  {
-    value: "4m 30s",
-    label: "average time to complete",
-    context: "honest self-check, not a drop-off",
-  },
+  { value: "78",     label: "men have taken the assessment", context: "since April 2026" },
+  { value: "86%",    label: "finish the assessment",         context: "started → results" },
+  { value: "4m 30s", label: "average time to complete",      context: "honest self-check, not a drop-off" },
 ];
 
 export default function AssessmentProofBlock() {
   return (
-    <section className="bg-neutral-50 py-14 md:py-20">
+    <section className="bg-neutral-50 py-16 md:py-24">
       <Container>
-        <p className={`${type.overline} mb-10 text-accent-600`}>
-          What's already happening
-        </p>
-        <div className="grid grid-cols-1 divide-y divide-neutral-100 md:grid-cols-3 md:divide-x md:divide-y-0">
-          {STATS.map((s) => (
-            <div
-              key={s.value}
-              className="py-8 md:py-0 md:px-10 first:md:pl-0 last:md:pr-0"
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-16">
+
+          {/* LEFT — heading + description */}
+          <div>
+            <h2 className={`${type.displaySection} text-ink`}>
+              What&rsquo;s already happening.
+            </h2>
+            <p className="mt-6 max-w-md text-base leading-7 text-neutral-600">
+              The assessment has been live since April 2026. Real men are
+              taking it, finishing it, and using the results to have a better
+              conversation with a doctor or start a routine that fits them.
+            </p>
+            <Link
+              href="/assessment"
+              className="mt-6 inline-block text-sm font-medium text-link underline underline-offset-4 transition hover:text-link-hover"
             >
-              <span className={`${type.displaySection} block text-brand-900`}>
-                {s.value}
-              </span>
-              <span className="mt-2 block text-sm leading-6 text-neutral-500">
-                {s.label}
-              </span>
-              <span className="mt-2 block text-xs font-semibold text-accent-600">
-                {s.context}
-              </span>
-            </div>
-          ))}
-        </div>
-        <div className="mt-10">
-          <Link
-            href="/assessment"
-            className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-brand-900 underline underline-offset-4 transition hover:text-brand-600"
-          >
-            See the assessment →
-          </Link>
+              See the assessment →
+            </Link>
+          </div>
+
+          {/* RIGHT — stat stack */}
+          <div className="flex flex-col divide-y divide-neutral-200 border-t border-b border-neutral-200">
+            {STATS.map((s) => (
+              <div key={s.value} className="py-6 flex flex-col gap-1">
+                <span className="font-heading text-4xl font-medium leading-none text-ink md:text-5xl">
+                  {s.value}
+                </span>
+                <span className="mt-2 text-base leading-6 text-neutral-600">
+                  {s.label}
+                </span>
+                <span className="text-xs font-medium text-accent-700">
+                  {s.context}
+                </span>
+              </div>
+            ))}
+          </div>
+
         </div>
       </Container>
     </section>

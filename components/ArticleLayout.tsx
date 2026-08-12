@@ -27,34 +27,30 @@ export default function ArticleLayout({
   return (
     <div>
       {heroSrc && (
-        <div className="relative flex h-[45vh] w-full flex-col overflow-hidden bg-brand-900">
-          {/* Full-bleed hero image */}
+        <div className="relative flex h-[45vh] w-full flex-col overflow-hidden bg-ink">
+          {/* Full-bleed hero image, grayscale per DS imagery rule */}
           <Image
             src={heroSrc}
             alt={heroAlt}
             fill
-            className="object-cover object-center opacity-75"
+            className="object-cover object-center opacity-75 grayscale"
             priority
           />
 
-          {/* Gradient — bottom-heavy so text is readable, top shows the image */}
-          <div className="absolute inset-0 bg-gradient-to-t from-brand-900/90 via-brand-900/30 to-transparent" />
+          {/* Bottom-weighted scrim so the title stays readable while the top of
+              the image still breathes. */}
+          <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/30 to-transparent" />
 
-          {/* Text overlay — anchored to bottom-left */}
+          {/* Text overlay — anchored bottom-left, DS-conformant type */}
           {title && (
             <div className="absolute bottom-0 left-0 right-0 z-10">
               <Container>
                 <div className="pb-10 md:pb-14 max-w-3xl">
-                  <div className="flex flex-wrap items-center gap-3 mb-4">
-                    {category && (
-                      <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
-                        {category}
-                      </span>
-                    )}
-                    {readTime && (
-                      <span className="text-xs text-brand-300">{readTime} read</span>
-                    )}
-                  </div>
+                  {(category || readTime) && (
+                    <p className="eyebrow mb-4 !text-white/85">
+                      {[category, readTime && `${readTime} read`].filter(Boolean).join("  ·  ")}
+                    </p>
+                  )}
                   <h1 className={`${type.displaySection} text-white leading-tight`}>
                     {title}
                   </h1>
