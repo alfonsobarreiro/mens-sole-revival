@@ -186,21 +186,31 @@ export default function SiteLayout({
                   Foot care and footwear for men who want to keep moving after 40.
                 </p>
               </div>
+              {/* Footer link discipline — DS rule:
+                  · Links = text-inverse-body (80% white). Hover promotes to text-inverse
+                    with underline. Accent is reserved for the ONE action, never for stacked link lists.
+                  · Column labels = uppercase eyebrow, muted (text-inverse-caption).
+                  · Row density = space-y-1 + leading-6 — tight enough that the column reads
+                    as one block, not five orphaned links.
+                  · Taxonomy = Explore (destinations) vs Company (about the org). */}
               <div className="flex gap-16">
                 <div>
-                  <p className="text-xs font-medium tracking-[0.01em] text-inverse-caption">
+                  <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-inverse-caption">
                     Explore
                   </p>
-                  <ul className="mt-4 space-y-2">
+                  <ul className="mt-4 space-y-1">
                     {[
                       { label: "Assessment", href: "/assessment" },
                       { label: "Guides", href: "/guides" },
                       { label: "Product Reviews", href: "/reviews" },
                       { label: "Routines", href: "/routines" },
-                      { label: "About", href: "/about" },
+                      { label: "Newsletter", href: "/newsletter" },
                     ].map((l) => (
                       <li key={l.href}>
-                        <Link href={l.href} className="text-[0.9375rem] text-accent-300 transition hover:text-inverse">
+                        <Link
+                          href={l.href}
+                          className="text-[0.9375rem] leading-6 text-inverse-body transition hover:text-inverse hover:underline underline-offset-4"
+                        >
                           {l.label}
                         </Link>
                       </li>
@@ -208,16 +218,19 @@ export default function SiteLayout({
                   </ul>
                 </div>
                 <div>
-                  <p className="text-xs font-medium tracking-[0.01em] text-inverse-caption">
+                  <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-inverse-caption">
                     Company
                   </p>
-                  <ul className="mt-4 space-y-2">
+                  <ul className="mt-4 space-y-1">
                     {[
-                      { label: "Newsletter", href: "/newsletter" },
+                      { label: "About", href: "/about" },
                       { label: "Contact", href: "mailto:alfonso@barreiro.com" },
                     ].map((l) => (
                       <li key={l.label}>
-                        <Link href={l.href} className="text-[0.9375rem] text-accent-300 transition hover:text-inverse">
+                        <Link
+                          href={l.href}
+                          className="text-[0.9375rem] leading-6 text-inverse-body transition hover:text-inverse hover:underline underline-offset-4"
+                        >
                           {l.label}
                         </Link>
                       </li>
