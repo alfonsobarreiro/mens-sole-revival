@@ -27,9 +27,12 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <h3 className={cx(tokens.text.h3, className)} {...props} />
     ),
 
+    // MDX <p> inherits from .article-body p in globals.css (17px + 1.6 leading
+    // + ink). Only font-family is pinned inline — everything else comes from
+    // the scope so utility classes don't override the article-body treatment.
     p: ({ className, ...props }) => (
       <p
-        className={cx(tokens.text.body, tokens.color.body, className)}
+        className={cx(tokens.font.body, className)}
         {...props}
       />
     ),
@@ -60,17 +63,43 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <hr className={cx(recipes.hr, className)} {...props} />
     ),
 
+    // Raw markdown images (`![alt](src)`) route through here too, so both
+    // MDX <Img /> and raw ![]() get muted-photo + figure treatment.
+    img: ({ src, alt, ...rest }: ComponentProps<'img'>) => (
+      <figure className="my-8">
+        <div
+          className={cx(
+            "overflow-hidden border",
+            tokens.color.border,
+            tokens.color.surface,
+          )}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={src}
+            alt={alt ?? ""}
+            className="muted-photo w-full"
+            {...rest}
+          />
+        </div>
+      </figure>
+    ),
+
     Img: ({ caption, className, alt, ...imageProps }: ImgProps) => (
       <figure className="my-8">
         <div
           className={cx(
-            "overflow-hidden rounded-xl border",
+            "overflow-hidden border",
             tokens.color.border,
-            tokens.color.bg,
+            tokens.color.surface,
             className,
           )}
         >
-          <Image alt={alt ?? ""} {...imageProps} />
+          <Image
+            alt={alt ?? ""}
+            className="muted-photo"
+            {...imageProps}
+          />
         </div>
         {caption ? (
           <figcaption className={recipes.caption}>{caption}</figcaption>

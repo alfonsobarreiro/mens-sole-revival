@@ -14,7 +14,7 @@ export default function Page() {
     <SiteLayout>
       <ArticleLayout
         heroSrc="/images/pexels-35206081.jpg"
-        heroAlt="Man walking barefoot — toe alignment and its effect on knees and hips"
+        heroAlt="Man walking barefoot, toe alignment and its effect on knees and hips"
         title="Why Toe Alignment Affects Your Knees and Hips"
         category="Alignment"
         readTime="6 min"

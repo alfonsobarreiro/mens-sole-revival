@@ -14,7 +14,7 @@ export default function Page() {
     <SiteLayout>
       <ArticleLayout
         heroSrc="/images/pexels-5960467.jpg"
-        heroAlt="Close-up of a man's foot — toenail fungus care guide"
+        heroAlt="Close-up of a man's foot, toenail fungus care guide"
         title="Toenail Fungus: What Actually Works (and What's a Scam)"
         category="Nail Care"
         readTime="8 min"

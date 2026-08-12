@@ -14,7 +14,7 @@ export default function Page() {
     <SiteLayout>
       <ArticleLayout
         heroSrc="/images/pexels-11873696.jpg"
-        heroAlt="Man stretching barefoot — toe alignment and mobility"
+        heroAlt="Man stretching barefoot, toe alignment and mobility"
         title="Your Big Toe Controls More of Your Body Than You Think"
         category="Toe Alignment"
         readTime="6 min"

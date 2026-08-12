@@ -16,7 +16,7 @@ import {
   type Symptom,
 } from "@/lib/ecosystem";
 
-// Every category chip renders via DS Tag variant="accent-kicker" — the
+// Every category chip renders via DS Tag variant="accent-kicker", the
 // documented terracotta-kicker exception (accent-700 label on neutral-100).
 
 // ── Page ─────────────────────────────────────────────────────────────────────
@@ -71,7 +71,7 @@ function LearnContent() {
             priority
           />
         </div>
-        {/* Dual scrim — matches homepage pattern. Vertical grounds the base,
+        {/* Dual scrim, matches homepage pattern. Vertical grounds the base,
             horizontal keeps left-aligned text on ink through 100% width. The
             right side never goes below ink/30 so tail-of-line text stays legible. */}
         <div className="absolute inset-0 z-0 bg-gradient-to-t from-ink via-ink/40 to-ink/20" />
@@ -101,7 +101,7 @@ function LearnContent() {
       {/* ── Filter bar: search + symptom chips ── */}
       <section className="py-16 md:py-24">
         <Container>
-          {/* Search input — DS Input with icon prefix */}
+          {/* Search input. DS Input with icon prefix */}
           <div className="mb-6">
             <Input
               id="learn-search"
@@ -120,7 +120,7 @@ function LearnContent() {
             />
           </div>
 
-          {/* Symptom chips — DS Chip primitive */}
+          {/* Symptom chips. DS Chip primitive */}
           <div className="mb-8 flex flex-wrap gap-2">
             <Chip
               active={active === "all"}
@@ -141,7 +141,7 @@ function LearnContent() {
             ))}
           </div>
 
-          {/* Result count — mixed case, .eyebrow class */}
+          {/* Result count, mixed case, .eyebrow class */}
           <p className="eyebrow mb-4">
             {filtered.length === articleList.length
               ? `${articleList.length} guides`
@@ -149,7 +149,7 @@ function LearnContent() {
             {query && ` matching "${query}"`}
           </p>
 
-          {/* Grid — DS Card composition, wrapped in Link */}
+          {/* Grid. DS Card composition, wrapped in Link */}
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {filtered.map((a) => (
               <Link
@@ -222,7 +222,7 @@ function LearnContent() {
             )}
           </div>
 
-          {/* Subscribe callout — DS Card variant="surface" */}
+          {/* Subscribe callout. DS Card variant="surface" */}
           <Card variant="surface" className="mt-12">
             <CardBody className="md:flex md:items-center md:justify-between !px-6 !py-6">
               <p className={`${type.body} text-neutral-600`}>

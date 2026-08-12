@@ -8,38 +8,38 @@ export const recipes = {
    * Applied once in ArticleLayout
    * Controls rhythm + default typography behavior
    */
+  // Activates the DS `.article-body` scope (17px/1.6, small-caps opener,
+  // oldstyle numerals, Lora italic blockquote). Paragraph/heading spacing
+  // snapped to DS 8-multiples. Blockquote styling deferred to .article-body.
   articleSurface: [
+    "article-body",
     "space-y-6",
     tokens.color.body,
 
-    // headings
+    // headings — all margins on DS 8-multiple scale
     "[&_h1]:mt-12 [&_h1]:mb-4",
-    "[&_h2]:mt-10 [&_h2]:mb-3",
+    "[&_h2]:mt-12 [&_h2]:mb-4",
     "[&_h3]:mt-8 [&_h3]:mb-2",
 
-    // paragraphs + lists
-    "[&_p]:leading-7",
+    // lists
     "[&_ul]:my-4 [&_ol]:my-4",
     "[&_li]:my-2",
 
-    // block elements
-    "[&_hr]:my-10",
-
-    // blockquote (if you use it later)
-    "[&_blockquote]:border-l-2 [&_blockquote]:pl-4 [&_blockquote]:italic",
+    // hr — DS 8-multiple
+    "[&_hr]:my-12",
 
     // tables
     "[&_table]:my-8",
   ].join(" "),
 
   /**
-   * Links (shared UI + MDX)
+   * Links (shared UI + MDX) — DS text-link tokens
    */
   link: [
     "font-medium",
-    tokens.color.fg,
+    "text-link",
     "underline underline-offset-4 decoration-neutral-300",
-    "hover:decoration-brand-700 hover:opacity-90",
+    "hover:text-link-hover hover:decoration-link-hover",
   ].join(" "),
 
   /**
@@ -48,9 +48,9 @@ export const recipes = {
   caption: [tokens.text.small, tokens.color.muted].join(" "),
 
   /**
-   * Horizontal rule
+   * Horizontal rule — DS 8-multiple, border-subtle token
    */
-  hr: "my-10 border-t border-neutral-200",
+  hr: "my-12 border-t border-border-subtle",
 
   /**
    * ======================
@@ -103,33 +103,30 @@ export const recipes = {
    * ======================
    */
 
+  // Radius zeroed per DS. Padding snapped to p-6. shadow-sm + ring dropped —
+  // one-hue DS uses colour, not elevation, for callout weight.
   callout: (variant: CalloutVariant) => {
     const base = [
       "not-prose",
       "my-8",
-      "rounded-xl",
       "border",
-      "p-5",
-      "shadow-sm",
-      "ring-1",
-      "ring-inset",
+      "p-6",
     ].join(" ");
 
     const variants: Record<CalloutVariant, string> = {
+      // Info tier lives in the neutral ramp (no blue in DS).
       info: [
         tokens.color.surfaceInfo,
-        "border-blue-200",
-        tokens.color.ringInfo,
+        "border-border-subtle",
       ].join(" "),
+      // Warn tier lives on the terracotta ramp (no amber in DS).
       warn: [
         tokens.color.surfaceWarn,
-        "border-amber-200",
-        tokens.color.ringWarn,
+        "border-accent-200",
       ].join(" "),
       steps: [
         tokens.color.surface,
         tokens.color.border,
-        "ring-neutral-200",
       ].join(" "),
     };
 
@@ -137,7 +134,8 @@ export const recipes = {
   },
 
   calloutHeader: "flex items-start justify-between gap-4",
-  calloutTitle: ["font-semibold", tokens.color.fg].join(" "),
+  // Medium 500 per DS heading weight lock.
+  calloutTitle: ["font-medium", tokens.color.fg].join(" "),
   calloutBody: ["mt-2", tokens.color.body].join(" "),
 
   calloutList: "mt-3 space-y-2",
@@ -162,17 +160,18 @@ export const recipes = {
    */
 
   inlineCard: {
+    // Radius zeroed, padding p-6 (DS 8-multiple).
     base: [
       "not-prose",
-      "rounded-xl",
       "border",
       tokens.color.border,
       tokens.color.surface,
-      "p-5",
+      "p-6",
     ].join(" "),
 
-    title: ["text-sm font-semibold", tokens.color.fg].join(" "),
-    body: ["mt-2 text-sm leading-6", tokens.color.body].join(" "),
-    meta: ["mt-3 text-xs", tokens.color.muted].join(" "),
+    // Title Medium 500 at 15px per DS heading/label weight + scale.
+    title: ["text-[0.9375rem] font-medium", tokens.color.fg].join(" "),
+    body: ["mt-2 text-[0.9375rem] leading-[1.5]", tokens.color.body].join(" "),
+    meta: ["mt-3 text-[0.75rem] leading-[1.5]", tokens.color.muted].join(" "),
   },
 } as const;
