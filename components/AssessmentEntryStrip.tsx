@@ -24,10 +24,7 @@ export default function AssessmentEntryStrip() {
       <Container>
         <div className="py-8 md:flex md:items-center md:justify-between md:gap-12 md:py-12">
           <div className="max-w-2xl">
-            <p className="eyebrow text-accent-700">
-              Start here · 5-min self-check
-            </p>
-            <h2 className={`mt-2 ${type.displaySection} text-ink`}>
+            <h2 className={`${type.displaySection} text-ink`}>
               Not sure where to start?
             </h2>
             <p className="mt-2 max-w-xl text-[0.9375rem] leading-[1.5] text-neutral-600">

@@ -82,10 +82,9 @@ function LearnContent() {
             <div className="max-w-3xl">
               {/* Photography rule (Foundations Imagery, 2026-08-13): every text
                   tier collapses to text-inverse on photo. Inline the
-                  typography classes so the .eyebrow / type.lead baked-in
-                  colors don't override text-inverse. */}
-              <p className="text-xs font-medium tracking-[0.01em] text-inverse">Learn</p>
-              <h1 className={`mt-3 ${type.displayHero} text-inverse`}>
+                  typography classes so the type.lead baked-in colour doesn't
+                  override text-inverse. */}
+              <h1 className={`${type.displayHero} text-inverse`}>
                 The knowledge base.
               </h1>
               <p className="mt-6 max-w-xl font-body text-[1.0625rem] leading-[1.5] text-inverse">
