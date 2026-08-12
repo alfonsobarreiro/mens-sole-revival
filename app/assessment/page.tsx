@@ -77,7 +77,7 @@ const steps: StepDef[] = [
     section: "02",
     title: "Skin & Heels",
     subtitle:
-      "Your heels have no oil glands. Cracking isn't a hygiene failure. It's biology. But it is fixable.",
+      "Your heels have no oil glands, so cracking is a moisture and load problem. A daily emollient after your shower usually solves it in 2 to 3 weeks.",
     callLabel: "Look for:",
     guideHref: "/guides?symptom=skin",
     items: [
@@ -101,7 +101,7 @@ const steps: StepDef[] = [
     sectionId: "pain-inflammation",
     section: "03",
     title: "Pain & Inflammation",
-    subtitle: "Foot pain is information. Where it hurts tells you what's causing it.",
+    subtitle: "Where the pain sits usually tells you what is causing it. Match the pattern below to the section it points to.",
     callLabel: "Check all that apply (Yes / No / Not sure):",
     guideHref: "/routines",
     items: [
@@ -149,7 +149,7 @@ const steps: StepDef[] = [
     sectionId: "footwear-fit",
     section: "05",
     title: "Footwear Fit",
-    subtitle: "The most upstream variable. Most foot problems trace back here.",
+    subtitle: "Shoe fit drives a large share of the problems in the sections above. Worth checking even if the fit feels fine.",
     callLabel: "Quick fit check:",
     guideHref: "/guides?symptom=footwear",
     items: [
@@ -495,7 +495,7 @@ export default function AssessmentPage() {
       // eslint-disable-next-line no-console
       console.error("[PDF download] failed:", err);
       alert(
-        "Sorry — the PDF download hit an error. Try again, or use the Email option to send yourself a copy. (Error logged to the browser console.)"
+        "Sorry, the PDF download hit an error. Try again, or use the Email option to send yourself a copy. (Error logged to the browser console.)"
       );
     }
   }
@@ -509,39 +509,29 @@ export default function AssessmentPage() {
   return (
     <SiteLayout>
       {/* ── Hero banner ── */}
-      <section className="bg-brand-900 py-8 md:py-12">
+      <section className="bg-ink py-16 md:py-24">
         <Container>
-          <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-accent-400">
+          {/* Inline classes (not type.overline) so the baked-in text-neutral-500
+              doesn't override text-accent-300 — DS token-cascade gotcha. */}
+          <p className="mb-2 text-xs font-medium uppercase tracking-[0.05em] text-accent-300">
             5-Minute Self-Check
           </p>
-          <h1 className={`${type.displaySection} text-white`}>
+          <h1 className={`${type.h1} text-inverse`}>
             The Men's Foot Health Assessment
           </h1>
-          {/* Intro copy stays for the first two screens (intro + triage)
-              where the user hasn't started yet. Once the assessment is
-              in motion, the hero collapses to the H1 + progress so the
-              content area gets the real estate. */}
           {(isIntro || isTriage) && (
-            <p className="mt-3 max-w-xl text-base leading-7 text-white/65">
+            <p className="mt-4 max-w-xl text-[1.0625rem] leading-[1.5] text-inverse-body">
               Pick what brought you here, answer the questions for those
               sections, and get a specific next step.
             </p>
           )}
 
-          {/* Progress moved out of the hero into a sticky strip below it
-              (per Cate's review: "the actual progress tracking disappears
-              while scrolling"). The "minutes left" copy goes with it; the
-              sticky strip keeps Section X of Y, the section title, the bar,
-              and the percentage so users keep their bearings during the flow. */}
           {isSectionPhase && totalSections > 0 && minutesRemaining > 0 && (
-            <p className="mt-4 text-[11px] uppercase tracking-widest text-white/35">
+            <p className="mt-4 text-xs font-medium uppercase tracking-[0.05em] text-inverse-caption">
               About {minutesRemaining} min left
             </p>
           )}
 
-          {/* Mid-flow restart affordance. Lives in the hero so it's reachable
-              from any phase past the intro without scrolling. Confirms before
-              wiping the session so a stray click doesn't lose progress. */}
           {!isIntro && (
             <button
               type="button"
@@ -551,7 +541,7 @@ export default function AssessmentPage() {
                 );
                 if (ok) restart();
               }}
-              className="mt-6 text-[11px] font-semibold uppercase tracking-widest text-white/40 underline underline-offset-4 transition hover:text-white/70"
+              className="mt-6 text-xs font-medium uppercase tracking-[0.05em] text-inverse-caption underline underline-offset-4 transition hover:text-inverse-body"
             >
               Restart from the beginning
             </button>
@@ -568,24 +558,26 @@ export default function AssessmentPage() {
           thicker bar. So the strip reads as a discrete element rather than
           an extension of the hero. */}
       {isSectionPhase && totalSections > 0 && (
-        <div className="sticky top-16 z-30 border-t-2 border-accent-500 bg-brand-900 shadow-[0_10px_24px_-10px_rgba(0,0,0,0.55)]">
+        <div className="sticky top-16 z-30 border-t border-inverse-hairline bg-ink shadow-lg">
           <Container>
-            <div className="flex items-center gap-3 py-3.5 sm:gap-4">
-              <p className="shrink-0 text-[10px] font-semibold uppercase tracking-widest text-white/85 sm:text-[11px]">
+            <div className="flex items-center gap-3 py-3 sm:gap-4">
+              <p className="shrink-0 text-xs font-medium uppercase tracking-[0.05em] text-inverse-body">
                 Section {sectionIndex + 1} of {totalSections}
               </p>
               {currentStep?.title && (
-                <p className="hidden truncate text-xs font-medium text-white sm:block sm:flex-1">
+                <p className="hidden truncate text-xs font-medium text-inverse sm:block sm:flex-1">
                   {currentStep.title}
                 </p>
               )}
-              <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/15 sm:max-w-xs">
+              {/* Rating-bar shape: sharp per DS radius = 0. Track = inverse-hairline;
+                  fill = cta-fill (accent-500 is identity-only, not a UI meter fill). */}
+              <div className="h-2 flex-1 overflow-hidden bg-inverse-hairline sm:max-w-xs">
                 <div
-                  className="h-1.5 rounded-full bg-accent-500 transition-all duration-500"
+                  className="h-2 bg-cta-fill transition-all duration-500"
                   style={{ width: `${progress}%` }}
                 />
               </div>
-              <span className="shrink-0 text-[10px] font-semibold tabular-nums text-white sm:text-[11px]">
+              <span className="shrink-0 text-xs font-medium tabular-nums text-inverse">
                 {progress}%
               </span>
             </div>
@@ -594,22 +586,22 @@ export default function AssessmentPage() {
       )}
 
       {/* ── Content ── */}
-      <section className="min-h-[60vh] bg-neutral-50 py-14 md:py-20">
+      <section className="min-h-[60vh] bg-neutral-100 py-16 md:py-24">
         <Container>
-          {/* ── INTRO ── */}
+          {/* ── INTRO ── One left rail: max-w-2xl LEFT-aligned inside Container. */}
           {isIntro && (
-            <div className="mx-auto max-w-2xl">
-              {/* Warning box with exit path */}
-              <div className="mb-8 border border-accent-500/30 bg-accent-500/5 p-5">
-                <p className="text-xs font-bold uppercase tracking-wider text-accent-600">
+            <div className="max-w-2xl">
+              {/* Warning box — DS accent-callout pair (accent-100 fill + accent-200 border). */}
+              <div className="mb-8 border border-accent-200 bg-accent-100 p-6">
+                <p className="text-xs font-medium uppercase tracking-[0.05em] text-accent-700">
                   See a doctor if:
                 </p>
-                <p className="mt-2 text-sm leading-6 text-neutral-600">
+                <p className={`mt-2 ${type.body} text-neutral-600`}>
                   Open wounds not healing · Severe swelling or redness ·
                   Numbness or tingling · Diabetes + any foot wound · Suspected
                   fracture · Intense sudden pain
                 </p>
-                <p className="mt-3 text-xs text-neutral-400">
+                <p className={`mt-3 ${type.small} text-neutral-500`}>
                   This assessment is for non-emergency self-awareness only. It
                   is not a medical diagnosis.
                 </p>
@@ -617,31 +609,31 @@ export default function AssessmentPage() {
                   href="https://www.apma.org/find-a-podiatrist"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-accent-600 underline underline-offset-2 hover:text-accent-700 transition"
+                  className={`mt-3 inline-flex items-center gap-2 ${type.small} font-medium text-link underline underline-offset-4 hover:text-link-hover transition`}
                 >
                   Find a podiatrist near you →
                 </a>
               </div>
 
-              {/* Stat row */}
-              <div className="mb-10 grid grid-cols-3 divide-x divide-neutral-200 border border-neutral-200 bg-white">
+              {/* Stat row — bg-neutral-100 (DS elevated surface on ground). */}
+              <div className="mb-10 grid grid-cols-3 divide-x divide-neutral-200 border border-neutral-200 bg-neutral-100">
                 {[
                   { value: "77%", label: "of men have foot pain annually", source: "APMA", sourceUrl: "https://www.apma.org/" },
                   { value: "1 in 3", label: "ever seek help for it", source: "APMA", sourceUrl: "https://www.apma.org/" },
                   { value: "63–72%", label: "wear the wrong shoe size", source: "PMC", sourceUrl: "https://pmc.ncbi.nlm.nih.gov/articles/PMC6064070/" },
                 ].map((s) => (
-                  <div key={s.value} className="p-5 text-center">
-                    <span className="block font-display text-3xl font-bold text-brand-900">
+                  <div key={s.value} className="p-6 text-center">
+                    <span className={`block ${type.h1} text-ink`}>
                       {s.value}
                     </span>
-                    <span className="mt-1 block text-xs leading-5 text-neutral-500">
+                    <span className={`mt-1 block ${type.small} text-neutral-500`}>
                       {s.label}
                     </span>
                     <a
                       href={s.sourceUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-2 inline-block text-xs text-neutral-400 underline underline-offset-2 hover:text-neutral-600"
+                      className={`mt-2 inline-block ${type.small} text-neutral-500 underline underline-offset-4 hover:text-neutral-700`}
                     >
                       {s.source}
                     </a>
@@ -649,16 +641,17 @@ export default function AssessmentPage() {
                 ))}
               </div>
 
-              <p className="mb-3 text-sm leading-7 text-neutral-600">
+              <p className={`mb-3 ${type.body} text-neutral-600`}>
                 Five possible sections, about three minutes if you pick a few,
                 about five if you take all of them. You'll end with specific
                 articles to read, a routine to try, and a list of bullets you
                 can bring to a podiatrist.
               </p>
 
+              {/* DS primary CTA — cta-fill/cta-text tokens, +3% tracking, Medium 500. */}
               <button
                 onClick={startTriage}
-                className="mt-6 inline-flex items-center gap-2 bg-brand-900 px-8 py-4 text-sm font-bold uppercase tracking-wider text-white transition hover:bg-brand-700"
+                className="mt-6 inline-flex h-12 items-center gap-2 bg-cta-fill px-8 text-[0.9375rem] font-medium tracking-[0.03em] text-cta-text transition hover:bg-cta-fill-hover"
               >
                 Start the assessment →
               </button>
@@ -667,20 +660,20 @@ export default function AssessmentPage() {
 
           {/* ── TRIAGE (Step 0) ── */}
           {isTriage && (
-            <div className="mx-auto max-w-2xl">
-              <p className="text-xs font-bold uppercase tracking-widest text-accent-600">
+            <div className="max-w-2xl">
+              <p className="text-xs font-medium uppercase tracking-[0.05em] text-accent-700">
                 Step 0 · Pick what applies
               </p>
-              <h2 className="mt-2 font-display text-3xl font-bold uppercase leading-tight text-brand-900">
+              <h2 className={`mt-2 ${type.h1} text-ink`}>
                 Where's the trouble?
               </h2>
-              <p className="mt-3 text-sm leading-7 text-neutral-600">
+              <p className={`mt-4 ${type.body} text-neutral-600`}>
                 Pick what brought you here. We'll only show you the sections
                 that apply. About three minutes if you pick a few, about five
                 if you select everything.
               </p>
 
-              <p className="mt-5 text-xs font-bold uppercase tracking-wider text-neutral-500">
+              <p className="mt-6 text-xs font-medium uppercase tracking-[0.05em] text-neutral-500">
                 Select all that apply to you:
               </p>
 
@@ -694,10 +687,10 @@ export default function AssessmentPage() {
                       role="checkbox"
                       aria-checked={selected}
                       onClick={() => selectSymptom(s)}
-                      className={`px-5 py-3 text-sm font-bold uppercase tracking-wider transition ${
+                      className={`px-5 h-11 text-[0.9375rem] font-medium transition ${
                         selected
-                          ? "bg-brand-900 text-white"
-                          : "border border-neutral-300 bg-white text-neutral-700 hover:border-brand-500"
+                          ? "bg-ink text-inverse"
+                          : "border border-neutral-300 bg-neutral-100 text-ink hover:border-ink"
                       }`}
                     >
                       {symptomDisplay[s]}
@@ -712,38 +705,36 @@ export default function AssessmentPage() {
                   setShowAll(true);
                   setSelectedSymptoms([]);
                 }}
-                className={`mt-5 inline-block text-xs font-semibold uppercase tracking-wider underline underline-offset-4 transition ${
-                  showAll
-                    ? "text-brand-900"
-                    : "text-neutral-500 hover:text-brand-700"
+                className={`mt-6 inline-block ${type.small} font-medium underline underline-offset-4 transition ${
+                  showAll ? "text-ink" : "text-neutral-500 hover:text-link"
                 }`}
               >
                 {showAll ? "✓ Showing everything" : "Not sure, show me everything"}
               </button>
 
-              <div className="mt-10 flex items-center justify-between border-t border-neutral-200 pt-6">
+              <div className="mt-8 flex items-center justify-between border-t border-neutral-200 pt-6">
                 <button
                   onClick={() => setPhase("intro")}
-                  className="text-sm font-semibold text-neutral-400 hover:text-neutral-600 transition"
+                  className={`${type.body} font-medium text-neutral-500 hover:text-ink transition`}
                 >
                   ← Back
                 </button>
                 <button
                   onClick={startSections}
                   disabled={!showAll && selectedSymptoms.length === 0}
-                  className="inline-flex items-center gap-2 bg-brand-900 px-7 py-3.5 text-sm font-bold uppercase tracking-wider text-white transition hover:bg-brand-700 disabled:cursor-not-allowed disabled:bg-neutral-300"
+                  className="inline-flex h-12 items-center gap-2 bg-cta-fill px-8 text-[0.9375rem] font-medium tracking-[0.03em] text-cta-text transition hover:bg-cta-fill-hover disabled:cursor-not-allowed disabled:bg-neutral-300 disabled:text-neutral-500"
                 >
                   Start the assessment →
                 </button>
               </div>
 
-              <p className="mt-5 text-xs text-neutral-400">
+              <p className={`mt-6 ${type.small} text-neutral-500`}>
                 Don't use this for an active medical issue.{" "}
                 <a
                   href="https://www.apma.org/find-a-podiatrist"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="underline underline-offset-2 hover:text-neutral-600"
+                  className="underline underline-offset-4 hover:text-link transition"
                 >
                   Find a podiatrist
                 </a>{" "}
@@ -766,31 +757,31 @@ export default function AssessmentPage() {
               {/* Section body */}
               <div className="min-w-0">
                 <div className="mb-6">
-                  <p className="mb-1 text-xs font-bold uppercase tracking-widest text-accent-500">
+                  <p className="mb-1 text-xs font-medium uppercase tracking-[0.05em] text-accent-700">
                     Section {currentStep.section}
                   </p>
-                  <h2 className={`${type.displaySection} text-brand-900`}>
+                  <h2 className={`${type.h2} text-ink`}>
                     {currentStep.title}
                   </h2>
-                  <p className="mt-3 text-sm leading-7 text-neutral-500">
+                  <p className={`mt-3 ${type.body} text-neutral-600`}>
                     {currentStep.subtitle}
                   </p>
                 </div>
 
                 {currentStep.stat && (
-                  <div className="mb-6 flex gap-4 border-l-2 border-accent-500 bg-white p-4 shadow-sm">
-                    <span className="font-display text-2xl font-bold text-accent-500 leading-none">
+                  <div className="mb-6 flex gap-4 border-l-2 border-ink bg-neutral-100 p-4 shadow-sm">
+                    <span className={`${type.h2} text-ink leading-none`}>
                       {currentStep.stat.value}
                     </span>
                     <div>
-                      <p className="text-sm leading-6 text-neutral-700">
+                      <p className={`${type.body} text-ink`}>
                         {currentStep.stat.label}
                       </p>
                       <a
                         href={currentStep.stat.sourceUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-xs text-neutral-400 underline underline-offset-2 hover:text-neutral-600"
+                        className={`${type.small} text-neutral-500 underline underline-offset-4 hover:text-neutral-700`}
                       >
                         Source: {currentStep.stat.source}
                       </a>
@@ -798,7 +789,7 @@ export default function AssessmentPage() {
                   </div>
                 )}
 
-                <p className="mb-3 text-xs font-bold uppercase tracking-wider text-neutral-400">
+                <p className="mb-3 text-xs font-medium uppercase tracking-[0.05em] text-neutral-500">
                   {currentStep.callLabel}
                 </p>
 
@@ -816,20 +807,20 @@ export default function AssessmentPage() {
                           key={item.id}
                           className={`flex cursor-pointer items-start gap-4 border p-4 transition ${
                             isChecked
-                              ? "border-accent-400 bg-accent-500/5"
-                              : "border-neutral-200 bg-white hover:border-neutral-300"
+                              ? "border-accent-200 bg-accent-100"
+                              : "border-neutral-200 bg-neutral-100 hover:border-ink"
                           }`}
                         >
                           <div
-                            className={`mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center border transition ${
+                            className={`mt-1 flex h-5 w-5 flex-shrink-0 items-center justify-center border transition ${
                               isChecked
-                                ? "border-accent-500 bg-accent-500"
+                                ? "border-ink bg-ink"
                                 : "border-neutral-300"
                             }`}
                           >
                             {isChecked && (
                               <svg
-                                className="h-3 w-3 text-white"
+                                className="h-3 w-3 text-inverse"
                                 fill="none"
                                 viewBox="0 0 24 24"
                                 stroke="currentColor"
@@ -850,7 +841,7 @@ export default function AssessmentPage() {
                             onChange={() => toggleCheck(item.id)}
                             aria-label={item.text}
                           />
-                          <span className="text-sm leading-6 text-neutral-700">
+                          <span className={`${type.body} text-ink`}>
                             {item.text}
                           </span>
                         </label>
@@ -863,13 +854,13 @@ export default function AssessmentPage() {
                         key={item.id}
                         className={`border p-4 transition ${
                           isChecked
-                            ? "border-accent-400 bg-accent-500/5"
+                            ? "border-accent-200 bg-accent-100"
                             : isNotSure
-                            ? "border-neutral-300 bg-neutral-50"
-                            : "border-neutral-200 bg-white"
+                            ? "border-neutral-300 bg-neutral-100"
+                            : "border-neutral-200 bg-neutral-100"
                         }`}
                       >
-                        <p className="text-sm leading-6 text-neutral-700">
+                        <p className={`${type.body} text-ink`}>
                           {item.text}
                         </p>
                         <div
@@ -884,10 +875,10 @@ export default function AssessmentPage() {
                             onClick={() => {
                               if (!isChecked) toggleCheck(item.id);
                             }}
-                            className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider transition ${
+                            className={`h-9 px-4 text-xs font-medium uppercase tracking-[0.03em] transition ${
                               isChecked
-                                ? "bg-accent-500 text-white"
-                                : "border border-neutral-300 bg-white text-neutral-700 hover:border-accent-500"
+                                ? "bg-ink text-inverse"
+                                : "border border-neutral-300 bg-neutral-100 text-ink hover:border-ink"
                             }`}
                           >
                             Yes
@@ -900,10 +891,10 @@ export default function AssessmentPage() {
                               if (isChecked) toggleCheck(item.id);
                               if (isNotSure) toggleNotSure(item.id);
                             }}
-                            className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider transition ${
+                            className={`h-9 px-4 text-xs font-medium uppercase tracking-[0.03em] transition ${
                               !isChecked && !isNotSure
-                                ? "bg-brand-900 text-white"
-                                : "border border-neutral-300 bg-white text-neutral-700 hover:border-brand-500"
+                                ? "border border-ink bg-neutral-100 text-ink"
+                                : "border border-neutral-300 bg-neutral-100 text-ink hover:border-ink"
                             }`}
                           >
                             No
@@ -915,10 +906,10 @@ export default function AssessmentPage() {
                             onClick={() => {
                               if (!isNotSure) toggleNotSure(item.id);
                             }}
-                            className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider transition ${
+                            className={`h-9 px-4 text-xs font-medium uppercase tracking-[0.03em] transition ${
                               isNotSure
-                                ? "bg-neutral-400 text-white"
-                                : "border border-neutral-300 bg-white text-neutral-700 hover:border-neutral-500"
+                                ? "bg-neutral-500 text-inverse"
+                                : "border border-neutral-300 bg-neutral-100 text-ink hover:border-neutral-500"
                             }`}
                           >
                             Not sure
@@ -940,11 +931,11 @@ export default function AssessmentPage() {
                   const options: Duration[] = ["recent", "ongoing", "chronic"];
                   return (
                     <div className="mt-8 border-t border-neutral-200 pt-6">
-                      <p className="text-xs font-bold uppercase tracking-wider text-neutral-400">
+                      <p className="text-xs font-medium uppercase tracking-[0.05em] text-neutral-500">
                         How long has this been going on?{" "}
-                        <span className="text-accent-600">*</span>
+                        <span className="text-accent-700">*</span>
                       </p>
-                      <p className="mt-1 text-xs text-neutral-500">
+                      <p className={`mt-1 ${type.small} text-neutral-500`}>
                         For the items you flagged in this section. Best guess
                         is fine.
                       </p>
@@ -954,7 +945,7 @@ export default function AssessmentPage() {
                         aria-required="true"
                         aria-invalid={showError}
                         className={`mt-3 flex flex-wrap gap-2 ${
-                          showError ? "rounded border border-red-300 p-2" : ""
+                          showError ? "border border-signal-error p-2" : ""
                         }`}
                       >
                         {options.map((d) => {
@@ -969,10 +960,10 @@ export default function AssessmentPage() {
                                 setDurationForCurrent(d);
                                 setAttemptedAdvance(false);
                               }}
-                              className={`px-4 py-2 text-xs font-bold uppercase tracking-wider transition ${
+                              className={`h-9 px-4 text-xs font-medium uppercase tracking-[0.03em] transition ${
                                 selected
-                                  ? "bg-brand-900 text-white"
-                                  : "border border-neutral-300 bg-white text-neutral-700 hover:border-brand-500"
+                                  ? "bg-ink text-inverse"
+                                  : "border border-neutral-300 bg-neutral-100 text-ink hover:border-ink"
                               }`}
                             >
                               {durationLabels[d]}
@@ -981,7 +972,7 @@ export default function AssessmentPage() {
                         })}
                       </div>
                       {showError && (
-                        <p className="mt-2 text-xs font-semibold text-red-600">
+                        <p className={`mt-2 ${type.small} font-medium text-signal-error`}>
                           Pick one before you continue. Best guess is fine.
                         </p>
                       )}
@@ -990,15 +981,15 @@ export default function AssessmentPage() {
                 })()}
 
                 {currentStep.note && (
-                  <p className="mt-5 text-xs italic leading-6 text-neutral-400">
+                  <p className={`mt-6 ${type.small} italic text-neutral-500`}>
                     {currentStep.note}
                   </p>
                 )}
 
-                <div className="mt-10 flex items-center justify-between">
+                <div className="mt-8 flex items-center justify-between">
                   <button
                     onClick={prevSection}
-                    className="text-sm font-semibold text-neutral-400 hover:text-neutral-600 transition"
+                    className={`${type.body} font-medium text-neutral-500 hover:text-ink transition`}
                   >
                     ← Back
                   </button>
@@ -1011,7 +1002,7 @@ export default function AssessmentPage() {
                       setAttemptedAdvance(false);
                       nextSection();
                     }}
-                    className="inline-flex items-center gap-2 bg-brand-900 px-7 py-3.5 text-sm font-bold uppercase tracking-wider text-white transition hover:bg-brand-700"
+                    className="inline-flex h-12 items-center gap-2 bg-cta-fill px-8 text-[0.9375rem] font-medium tracking-[0.03em] text-cta-text transition hover:bg-cta-fill-hover"
                   >
                     {sectionIndex + 1 === totalSections
                       ? "See my results →"
@@ -1024,25 +1015,25 @@ export default function AssessmentPage() {
 
           {/* ── ACKNOWLEDGMENT ── */}
           {isAck && (
-            <div className="mx-auto max-w-xl text-center">
-              <p className="text-xs font-bold uppercase tracking-widest text-accent-600">
+            <div className="max-w-xl">
+              <p className="text-xs font-medium uppercase tracking-[0.05em] text-accent-700">
                 One moment
               </p>
-              <p className="mt-3 font-display text-3xl font-bold uppercase leading-tight text-brand-900">
-                Got it. Here's where you stand.
+              <p className={`mt-3 ${type.h1} text-ink`}>
+                Compiling your results.
               </p>
               <div
                 aria-hidden="true"
-                className="mx-auto mt-6 h-1 w-32 overflow-hidden bg-neutral-200"
+                className="mt-6 h-1 w-32 overflow-hidden bg-neutral-200"
               >
-                <div className="h-1 w-full bg-accent-500 motion-safe:animate-pulse" />
+                <div className="h-1 w-full bg-cta-fill motion-safe:animate-pulse" />
               </div>
             </div>
           )}
 
           {/* ── RESULTS ── */}
           {isResults && (
-            <div className="mx-auto max-w-2xl">
+            <div className="max-w-2xl">
               <AssessmentResults
                 flagsBySection={flagsBySection}
                 durationBySection={durationBySection}
@@ -1061,16 +1052,16 @@ export default function AssessmentPage() {
               />
 
               {/* Feedback form (Item 6) */}
-              <div className="mt-12 border border-neutral-200 bg-white shadow-sm">
+              <div className="mt-12 border border-neutral-200 bg-neutral-100 shadow-sm">
                 <AssessmentFeedback totalFlags={totalFlags} />
               </div>
 
-              {/* Sources */}
-              <div className="mt-8 rounded bg-neutral-100 p-5">
-                <p className="mb-3 text-xs font-bold uppercase tracking-wider text-neutral-400">
+              {/* Sources — DS radius = 0, DS spacing 24. */}
+              <div className="mt-8 bg-neutral-100 p-6">
+                <p className="mb-3 text-xs font-medium uppercase tracking-[0.05em] text-neutral-500">
                   Sources
                 </p>
-                <ul className="space-y-1.5">
+                <ul className="space-y-2">
                   {[
                     { label: "APMA · Public Opinion Research on Foot Health and Care", url: "https://www.apma.org/document-server/?cfp=/apmamain/assets/file/public/resources/todayspodiatristsurvey-9-30-10.pdf" },
                     { label: "NIH / NCBI · Plantar Fasciitis StatPearls", url: "https://www.ncbi.nlm.nih.gov/books/NBK431073/" },
@@ -1085,7 +1076,7 @@ export default function AssessmentPage() {
                         href={s.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-xs text-neutral-500 underline underline-offset-2 hover:text-neutral-700"
+                        className={`${type.small} text-neutral-500 underline underline-offset-4 hover:text-neutral-700`}
                       >
                         {s.label}
                       </a>
