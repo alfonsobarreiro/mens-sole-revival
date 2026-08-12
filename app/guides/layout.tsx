@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Foot-Health Guides for Men Over 40",
   description:
-    "Evidence-based guides on foot pain, toenail fungus, cracked heels, toe alignment, and footwear fit — organized by symptom. Start with what's bothering you.",
+    "Evidence-based guides on foot pain, toenail fungus, cracked heels, toe alignment, and footwear fit, organized by symptom. Start with what's bothering you.",
   alternates: { canonical: "/guides" },
   openGraph: {
     title: "Foot-Health Guides for Men Over 40",

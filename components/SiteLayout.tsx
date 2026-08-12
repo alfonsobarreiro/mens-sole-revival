@@ -145,7 +145,7 @@ export default function SiteLayout({
                       className={`-mx-2 px-3 py-3 text-[0.9375rem] font-medium transition ${
                         isActive
                           ? "text-ink bg-neutral-100"
-                          : "text-neutral-700 hover:text-ink hover:bg-neutral-100"
+                          : "text-neutral-600 hover:text-ink hover:bg-neutral-100"
                       }`}
                     >
                       {label}
@@ -200,7 +200,7 @@ export default function SiteLayout({
                       { label: "About", href: "/about" },
                     ].map((l) => (
                       <li key={l.href}>
-                        <Link href={l.href} className="text-[0.9375rem] text-accent-300 transition hover:text-white">
+                        <Link href={l.href} className="text-[0.9375rem] text-accent-300 transition hover:text-inverse">
                           {l.label}
                         </Link>
                       </li>
@@ -217,7 +217,7 @@ export default function SiteLayout({
                       { label: "Contact", href: "mailto:alfonso@barreiro.com" },
                     ].map((l) => (
                       <li key={l.label}>
-                        <Link href={l.href} className="text-[0.9375rem] text-accent-300 transition hover:text-white">
+                        <Link href={l.href} className="text-[0.9375rem] text-accent-300 transition hover:text-inverse">
                           {l.label}
                         </Link>
                       </li>

@@ -7,6 +7,7 @@ import Image from "next/image";
 import Container from "@/components/Container";
 import SiteLayout from "@/components/SiteLayout";
 import AssessmentEntryStrip from "@/components/AssessmentEntryStrip";
+import { Button } from "@/components/ui";
 import { type } from "@/components/typography";
 import {
   articleList,
@@ -15,16 +16,12 @@ import {
   type Symptom,
 } from "@/lib/ecosystem";
 
-// ── Category color (kept from the previous version) ───────────────────────────
+// ── Category chip color — unified per DS ─────────────────────────────────────
+// Every category renders bg-neutral-100 + text-accent-700 (documented terracotta
+// kicker exception). Previously used tailwind amber/teal + accent-50 (removed
+// from ramp) + brand-50/700 (legacy off-ramp) — all off-DS.
 
-const categoryColor: Record<string, string> = {
-  "Foot Health":   "bg-brand-50 text-brand-700",
-  "Footwear Fit":  "bg-brand-50 text-brand-700",
-  "Alignment":     "bg-brand-50 text-brand-700",
-  "Dry Skin":      "bg-amber-50 text-amber-700",
-  "Nail Care":     "bg-teal-50 text-teal-700",
-  "Daily Routine": "bg-accent-50 text-accent-700",
-};
+const CATEGORY_CHIP = "bg-neutral-100 text-accent-700";
 
 // ── Page ─────────────────────────────────────────────────────────────────────
 
@@ -68,28 +65,28 @@ function LearnContent() {
   return (
     <SiteLayout>
       {/* ── Hero ── */}
-      <section className="relative flex h-[45vh] flex-col overflow-hidden bg-brand-900">
+      <section className="relative flex flex-col overflow-hidden bg-ink py-24 md:py-32">
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/pexels-10904211.jpg"
             alt=""
             fill
-            className="object-cover object-center opacity-70"
+            className="muted-photo object-cover object-center"
             priority
           />
         </div>
-        <div className="absolute inset-0 z-0 bg-gradient-to-r from-brand-900/90 via-brand-900/50 to-transparent" />
+        <div className="absolute inset-0 z-0 bg-gradient-to-r from-ink/90 via-ink/50 to-transparent" />
 
         <div className="relative z-10 flex flex-1 items-end">
           <Container>
-            <div className="max-w-3xl pb-12 md:pb-16">
-              <p className={`${type.overline} text-accent-400`}>Learn</p>
-              <h1 className={`mt-3 ${type.displaySection} text-white`}>
-                The knowledge<br />base.
+            <div className="max-w-3xl">
+              <p className="eyebrow text-inverse-caption">Learn</p>
+              <h1 className={`mt-3 ${type.displayHero} text-inverse`}>
+                The knowledge base.
               </h1>
-              <p className="mt-5 max-w-xl text-base leading-relaxed text-brand-200">
+              <p className={`mt-6 max-w-xl ${type.lead} text-inverse-body`}>
                 Guides organized by symptom. Start with what's bothering you
-                most. Every article links to the next logical step.
+                most; every guide links to the next one to read.
               </p>
             </div>
           </Container>
@@ -99,7 +96,7 @@ function LearnContent() {
       <AssessmentEntryStrip />
 
       {/* ── Filter bar: search + symptom chips ── */}
-      <section className="py-10 md:py-14">
+      <section className="py-16 md:py-24">
         <Container>
           {/* Search input */}
           <div className="mb-6">
@@ -109,7 +106,7 @@ function LearnContent() {
             <div className="relative">
               <span
                 aria-hidden="true"
-                className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400"
+                className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="11" cy="11" r="8" />
@@ -122,20 +119,20 @@ function LearnContent() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search by symptom or topic. Try: heel, fungus, knee, fit."
-                className="w-full border border-neutral-300 bg-white py-3 pl-12 pr-4 text-sm leading-6 text-neutral-800 placeholder:text-neutral-400 focus:border-brand-500 focus:outline-none"
+                className="w-full border border-border-input bg-bg-elevated py-3 pl-12 pr-4 text-[0.9375rem] leading-[1.5] text-ink placeholder:text-neutral-500 focus:border-accent-600 focus:outline-none focus:ring-2 focus:ring-accent-600/40"
               />
             </div>
           </div>
 
-          {/* Symptom chips */}
+          {/* Symptom chips — mixed case, DS tokens */}
           <div className="mb-8 flex flex-wrap gap-2">
             <button
               type="button"
               onClick={() => setActive("all")}
-              className={`px-4 py-2 text-xs font-bold uppercase tracking-wider transition ${
+              className={`px-4 py-2 text-xs font-medium tracking-[0.01em] transition ${
                 active === "all"
-                  ? "bg-brand-900 text-white"
-                  : "border border-neutral-300 bg-white text-neutral-700 hover:border-brand-500"
+                  ? "bg-ink text-inverse"
+                  : "border border-neutral-300 bg-bg-elevated text-neutral-600 hover:border-ink hover:text-ink"
               }`}
             >
               All
@@ -148,10 +145,10 @@ function LearnContent() {
                 key={s}
                 type="button"
                 onClick={() => setActive(s)}
-                className={`px-4 py-2 text-xs font-bold uppercase tracking-wider transition ${
+                className={`px-4 py-2 text-xs font-medium tracking-[0.01em] transition ${
                   active === s
-                    ? "bg-brand-900 text-white"
-                    : "border border-neutral-300 bg-white text-neutral-700 hover:border-brand-500"
+                    ? "bg-ink text-inverse"
+                    : "border border-neutral-300 bg-bg-elevated text-neutral-600 hover:border-ink hover:text-ink"
                 }`}
               >
                 {symptomLabels[s]}
@@ -162,8 +159,8 @@ function LearnContent() {
             ))}
           </div>
 
-          {/* Result count */}
-          <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-neutral-500">
+          {/* Result count — mixed case, .eyebrow class */}
+          <p className="eyebrow mb-4">
             {filtered.length === articleList.length
               ? `${articleList.length} guides`
               : `${filtered.length} of ${articleList.length} guides`}
@@ -171,50 +168,50 @@ function LearnContent() {
           </p>
 
           {/* Grid */}
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {filtered.map((a) => (
               <Link
                 key={a.slug}
                 href={`/guides/${a.slug}`}
-                className="group flex flex-col overflow-hidden border border-neutral-200 bg-white shadow-sm transition hover:border-brand-300 hover:shadow-md"
+                className="group flex flex-col overflow-hidden border border-neutral-200 bg-bg-elevated transition hover:border-ink"
               >
                 <div className="relative aspect-[4/3] w-full overflow-hidden">
                   <Image
                     src={a.imageUrl}
                     alt={a.title}
                     fill
-                    className="object-cover transition duration-500 group-hover:scale-105"
+                    className="muted-photo object-cover transition duration-500 group-hover:scale-105"
                   />
                   <div className="absolute bottom-3 left-3">
-                    <span className={`px-3 py-1 text-xs font-bold uppercase tracking-wider backdrop-blur-sm ${categoryColor[a.category] ?? "bg-white/90 text-brand-900"}`}>
+                    <span className={`px-3 py-1 text-xs font-medium tracking-[0.01em] backdrop-blur-sm ${CATEGORY_CHIP}`}>
                       {a.category}
                     </span>
                   </div>
                 </div>
 
-                <div className="flex flex-1 flex-col p-4 md:p-5">
-                  <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-neutral-400">
+                <div className="flex flex-1 flex-col p-4 md:p-6">
+                  <p className="eyebrow mb-2 text-accent-700">
                     {a.readTime} read
                   </p>
-                  <h2 className="font-display text-lg font-bold uppercase leading-tight text-neutral-900 transition group-hover:text-brand-700 md:text-xl">
+                  <h2 className={`${type.h3} text-ink transition group-hover:text-accent-700`}>
                     {a.title}
                   </h2>
-                  <p className="mt-2 flex-1 text-sm leading-6 text-neutral-500">
+                  <p className="mt-2 flex-1 text-[0.9375rem] leading-[1.5] text-neutral-600">
                     {a.excerpt}
                   </p>
                   {a.symptoms.length > 0 && (
-                    <div className="mt-4 flex flex-wrap gap-1.5">
+                    <div className="mt-4 flex flex-wrap gap-2">
                       {a.symptoms.map((s) => (
                         <span
                           key={s}
-                          className="bg-neutral-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-neutral-500"
+                          className="bg-neutral-200 px-2 py-1 text-xs font-medium tracking-[0.01em] text-neutral-700"
                         >
                           {symptomLabels[s]}
                         </span>
                       ))}
                     </div>
                   )}
-                  <p className="mt-4 text-xs font-bold uppercase tracking-wider text-brand-500 group-hover:text-brand-700">
+                  <p className="mt-4 text-[0.9375rem] font-medium text-link group-hover:text-link-hover">
                     Read guide →
                   </p>
                 </div>
@@ -223,7 +220,7 @@ function LearnContent() {
 
             {filtered.length === 0 && (
               <div className="col-span-full border border-dashed border-neutral-200 py-16 text-center">
-                <p className="text-sm text-neutral-500">
+                <p className="text-[0.9375rem] leading-[1.5] text-neutral-600">
                   No guides match{query ? ` "${query}"` : ""} yet.
                 </p>
                 <button
@@ -231,7 +228,7 @@ function LearnContent() {
                     setActive("all");
                     setQuery("");
                   }}
-                  className="mt-3 text-xs font-bold uppercase tracking-wider text-brand-500 underline underline-offset-4"
+                  className="mt-3 text-[0.9375rem] font-medium text-link underline underline-offset-4 hover:text-link-hover"
                 >
                   Clear filters
                 </button>
@@ -239,19 +236,16 @@ function LearnContent() {
             )}
           </div>
 
-          <div className="mt-12 border border-neutral-200 bg-neutral-50 p-6 md:flex md:items-center md:justify-between">
+          <div className="mt-12 border border-neutral-200 bg-neutral-100 p-6 md:flex md:items-center md:justify-between">
             <div>
-              <p className="font-display text-xl font-bold uppercase leading-tight text-brand-900">More guides coming soon.</p>
-              <p className="mt-1 text-sm text-neutral-600">
-                Subscribe to get new guides, reviews, and routines in your inbox.
+              <p className={`${type.h3} text-ink`}>A new guide every other Tuesday.</p>
+              <p className={`mt-1 ${type.body} text-neutral-600`}>
+                New guides land in your inbox as they publish.
               </p>
             </div>
-            <Link
-              href="/newsletter"
-              className="mt-4 inline-block flex-shrink-0 bg-brand-900 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-brand-700 md:mt-0 md:ml-8"
-            >
-              Subscribe
-            </Link>
+            <div className="mt-4 flex-shrink-0 md:mt-0 md:ml-8">
+              <Button href="/newsletter" size="sm">Subscribe</Button>
+            </div>
           </div>
         </Container>
       </section>

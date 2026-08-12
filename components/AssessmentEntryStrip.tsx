@@ -1,40 +1,45 @@
-import Link from "next/link";
 import Container from "@/components/Container";
+import { Button } from "@/components/ui";
+import { type } from "@/components/typography";
 
 /**
  * Surfaces the assessment as the anchor entry point on section index pages
  * (Learn, Routines, Reviews). Sits just under the section hero.
  *
  * Uses the standard `<Container>` (max-w-6xl, px-6) to align with the rest
- * of the site -- footer, hero, stats, etc. Previously used max-w-7xl, which
- * Cate flagged in review as the source of "Start Here / 5 Minute Self-Check"
- * feeling spatially disconnected from neighboring sections.
+ * of the site (footer, hero, stats). Previously used max-w-7xl, which Cate
+ * flagged as making "Start Here / 5 Minute Self-Check" feel spatially
+ * disconnected from neighboring sections.
+ *
+ * DS conformance (2026-08-13):
+ *  - bg-brand-50 → bg-neutral-100
+ *  - Legacy font-display + font-bold + uppercase heading → type.displaySection
+ *  - Eyebrow: uppercase/bold/wider → .eyebrow (mixed case, Medium 500, +0.01em)
+ *  - Rule-of-three triad + aphorism dropped from body copy
+ *  - Hand-rolled brand-900 button → DS <Button>
  */
 export default function AssessmentEntryStrip() {
   return (
-    <section className="border-y border-neutral-200 bg-brand-50">
+    <section className="border-y border-neutral-200 bg-neutral-100">
       <Container>
-        <div className="py-8 md:flex md:items-center md:justify-between md:gap-10 md:py-10">
+        <div className="py-8 md:flex md:items-center md:justify-between md:gap-12 md:py-12">
           <div className="max-w-2xl">
-            <p className="text-xs font-bold uppercase tracking-widest text-accent-600">
+            <p className="eyebrow text-accent-700">
               Start here · 5-min self-check
             </p>
-            <h2 className="mt-2 font-display text-2xl font-bold uppercase leading-tight text-brand-900 md:text-3xl">
+            <h2 className={`mt-2 ${type.displaySection} text-ink`}>
               Not sure where to start?
             </h2>
-            <p className="mt-2 max-w-xl text-sm leading-6 text-neutral-600 md:text-base">
-              The self-check is the way in. Pick what brought you here, answer
-              the questions for those sections, and get a specific next step:
-              what to read, what to do, and what to ask a podiatrist.
+            <p className="mt-2 max-w-xl text-[0.9375rem] leading-[1.5] text-neutral-600">
+              Pick what brought you here, answer the questions for those
+              sections, and get a specific next step: what to read and what
+              to ask your podiatrist.
             </p>
           </div>
           <div className="mt-6 flex-shrink-0 md:mt-0">
-            <Link
-              href="/assessment"
-              className="inline-block bg-brand-900 px-6 py-3 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-brand-700"
-            >
+            <Button href="/assessment" size="lg">
               Take the assessment →
-            </Link>
+            </Button>
           </div>
         </div>
       </Container>
