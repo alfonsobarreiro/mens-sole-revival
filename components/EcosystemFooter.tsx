@@ -48,7 +48,7 @@ export default function EcosystemFooter({
   if (!hasContent) return null;
 
   return (
-    <section className="border-t border-neutral-200 bg-neutral-50 py-14 md:py-20">
+    <section className="border-t border-neutral-200 bg-neutral-100 py-14 md:py-20">
       <Container>
         <div className="mb-8 max-w-2xl">
           <p className="text-xs font-bold uppercase tracking-widest text-accent-600">

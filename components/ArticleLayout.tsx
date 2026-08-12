@@ -2,9 +2,16 @@ import type { ReactNode } from "react";
 import Image from "next/image";
 import Container from "@/components/Container";
 import InlineNewsletterForm from "@/components/InlineNewsletterForm";
+import { Tag } from "@/components/ui/Tag";
 import { type } from "@/components/typography";
 import { recipes } from "@/styles/recipes";
 import { tokens } from "@/styles/tokens";
+
+// DS Foundations Layout — "one left rail":
+// article prose lives INSIDE Container (max-w-6xl) and is LEFT-ALIGNED,
+// never mx-auto-centered. This preserves a single left edge across the
+// hero title, article body, GuideExtras, and EcosystemFooter — the
+// horizontal grid rhythm the DS commits to.
 
 interface ArticleLayoutProps {
   children: ReactNode;
@@ -57,9 +64,14 @@ export default function ArticleLayout({
                     {title}
                   </h1>
                   {(category || readTime) && (
-                    <p className="mt-4 text-xs font-medium tracking-[0.01em] text-inverse">
-                      {[category, readTime && `${readTime} read`].filter(Boolean).join("  ·  ")}
-                    </p>
+                    <div className="mt-4 flex items-center gap-3">
+                      {category && <Tag variant="on-photo">{category}</Tag>}
+                      {readTime && (
+                        <span className="text-xs font-medium tracking-[0.01em] text-inverse">
+                          {readTime} read
+                        </span>
+                      )}
+                    </div>
                   )}
                 </div>
               </Container>
@@ -68,20 +80,22 @@ export default function ArticleLayout({
         </div>
       )}
 
-      <div className={`${tokens.layout.pageX} ${tokens.layout.pageY}`}>
-        <article
-          className={`${recipes.articleSurface} mx-auto ${tokens.layout.article} ${title ? "[&>h1:first-child]:hidden" : ""}`}
-        >
-          {children}
-        </article>
+      <div className={tokens.layout.pageY}>
+        <Container>
+          <article
+            className={`${recipes.articleSurface} ${tokens.layout.article} ${title ? "[&>h1:first-child]:hidden" : ""}`}
+          >
+            {children}
+          </article>
 
-        {/* End-of-article capture — highest-intent moment (they just
-            finished reading). Same InlineNewsletterForm used on home and
-            the exit popup, lead-magnet framing keeps the value exchange
-            honest at every touch point. */}
-        <div className="mx-auto mt-16 max-w-2xl border-t border-neutral-200 pt-12">
-          <InlineNewsletterForm />
-        </div>
+          {/* End-of-article capture — highest-intent moment (they just
+              finished reading). Same InlineNewsletterForm used on home and
+              the exit popup, lead-magnet framing keeps the value exchange
+              honest at every touch point. */}
+          <div className={`mt-16 border-t border-neutral-200 pt-12 ${tokens.layout.article}`}>
+            <InlineNewsletterForm />
+          </div>
+        </Container>
       </div>
     </div>
   );

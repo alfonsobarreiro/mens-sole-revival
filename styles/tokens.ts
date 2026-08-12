@@ -39,12 +39,14 @@ export const tokens = {
   // Layout
   // pageY promoted from py-12 to DS standard section rhythm (py-16 md:py-24).
   // article prose column narrowed from max-w-3xl to max-w-2xl per DS.
+  // article is LEFT-ALIGNED inside Container (no mx-auto, no px-6) — see
+  // Foundations Layout "one left rail" rule.
   layout: {
     pageX:         "px-6",
     pageY:         "py-16 md:py-24",
     sectionY:      "py-16 md:py-24",
     container:     "mx-auto w-full max-w-6xl px-6",
-    article:       "mx-auto w-full max-w-2xl px-6",
+    article:       "w-full max-w-2xl",
     figure:        "w-full my-8",
     // Radius zeroed per DS (no rounded-*); border-subtle uses the semantic alias.
     figureMedia:   "w-full overflow-hidden border border-border-subtle",

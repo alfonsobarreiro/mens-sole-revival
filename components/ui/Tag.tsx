@@ -1,6 +1,6 @@
 import { cn } from "./cn";
 
-export type TagVariant = "default" | "accent" | "accent-kicker" | "outline" | "muted";
+export type TagVariant = "default" | "accent" | "accent-kicker" | "outline" | "muted" | "on-photo";
 
 const variants: Record<TagVariant, string> = {
   default:        "bg-neutral-100 text-ink border border-border-subtle",
@@ -11,6 +11,9 @@ const variants: Record<TagVariant, string> = {
   "accent-kicker": "bg-neutral-100 text-accent-700 border border-transparent",
   outline:        "bg-transparent text-ink border border-ink",
   muted:          "bg-neutral-200 text-neutral-700 border border-transparent",
+  // Article hero meta on photography — translucent white on ink scrim.
+  // Category = pill, read time = plain caption after (DS Foundations Imagery).
+  "on-photo":     "bg-white/15 text-inverse border border-white/25 backdrop-blur-sm",
 };
 
 export type TagProps = {

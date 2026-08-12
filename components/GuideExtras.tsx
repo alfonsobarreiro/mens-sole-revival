@@ -12,9 +12,10 @@ export default function GuideExtras({ slug }: { slug: string }) {
   if (!seo) return null;
 
   return (
-    <section className="border-t border-neutral-200 bg-neutral-50 py-12 md:py-16">
+    <section className="border-t border-neutral-200 bg-neutral-100 py-12 md:py-16">
       <Container>
-        <div className="mx-auto max-w-2xl">
+        {/* DS "one left rail" — max-w-2xl left-aligned inside Container. */}
+        <div className="max-w-2xl">
           {/* Common questions */}
           <p className="text-xs font-bold uppercase tracking-widest text-accent-600">
             Common questions
