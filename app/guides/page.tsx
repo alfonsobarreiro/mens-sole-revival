@@ -71,16 +71,24 @@ function LearnContent() {
             priority
           />
         </div>
-        <div className="absolute inset-0 z-0 bg-gradient-to-r from-ink/90 via-ink/50 to-transparent" />
+        {/* Dual scrim — matches homepage pattern. Vertical grounds the base,
+            horizontal keeps left-aligned text on ink through 100% width. The
+            right side never goes below ink/30 so tail-of-line text stays legible. */}
+        <div className="absolute inset-0 z-0 bg-gradient-to-t from-ink via-ink/40 to-ink/20" />
+        <div className="absolute inset-0 z-0 bg-gradient-to-r from-ink/95 via-ink/60 to-ink/30" />
 
         <div className="relative z-10 flex flex-1 items-end">
           <Container>
             <div className="max-w-3xl">
-              <p className="eyebrow text-inverse-caption">Learn</p>
+              {/* Photography rule (Foundations Imagery, 2026-08-13): every text
+                  tier collapses to text-inverse on photo. Inline the
+                  typography classes so the .eyebrow / type.lead baked-in
+                  colors don't override text-inverse. */}
+              <p className="text-xs font-medium tracking-[0.01em] text-inverse">Learn</p>
               <h1 className={`mt-3 ${type.displayHero} text-inverse`}>
                 The knowledge base.
               </h1>
-              <p className={`mt-6 max-w-xl ${type.lead} text-inverse-body`}>
+              <p className="mt-6 max-w-xl font-body text-[1.0625rem] leading-[1.5] text-inverse">
                 Guides organized by symptom. Start with what's bothering you
                 most; every guide links to the next one to read.
               </p>
