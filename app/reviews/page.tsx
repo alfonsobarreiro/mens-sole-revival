@@ -4,9 +4,12 @@ import Link from "next/link";
 import Container from "@/components/Container";
 import SiteLayout from "@/components/SiteLayout";
 import AssessmentEntryStrip from "@/components/AssessmentEntryStrip";
+import { Card } from "@/components/ui/Card";
+import { Tag } from "@/components/ui/Tag";
 import { type } from "@/components/typography";
 import {
   verdictConfig,
+  verdictToTagVariant,
   categoryLabel,
   staticReviews,
   type Review,
@@ -15,7 +18,7 @@ import {
 export const metadata: Metadata = {
   title: "Reviews · Men's Sole Revival",
   description:
-    "Honest, evidence-based product reviews for men's foot health. We test the gear, break down the science, and tell you what's actually worth buying.",
+    "Honest, evidence-based product reviews for men's foot health. Every review starts with the mechanism, then the test, then a verdict.",
 };
 
 // ── Data fetching ─────────────────────────────────────────────────────────────
@@ -36,6 +39,9 @@ async function getReviews(): Promise<Review[]> {
 }
 
 // ── Review card ───────────────────────────────────────────────────────────────
+// Routes through DS Card + Tag primitives. The whole card is a single Link,
+// so the previous "Read Review →" pseudo-button is dropped (redundant chrome
+// nested inside a Link is an a11y smell).
 
 function ReviewCard({ review }: { review: Review }) {
   const verdict = review.verdict ? verdictConfig[review.verdict] : null;
@@ -43,74 +49,84 @@ function ReviewCard({ review }: { review: Review }) {
   return (
     <Link
       href={`/reviews/${review.slug}`}
-      className="group flex flex-col border border-neutral-200 bg-white transition hover:border-brand-300 hover:shadow-md"
+      className="group block transition"
     >
-      {/* Image */}
-      <div className="relative overflow-hidden" style={{ aspectRatio: "4/3" }}>
-        {review.imageUrl ? (
-          <Image
-            src={review.imageUrl}
-            alt={review.productName}
-            fill
-            className="object-cover transition duration-500 group-hover:scale-105"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          />
-        ) : (
-          <div className="absolute inset-0 flex items-center justify-center bg-neutral-100">
-            <span className="text-xs font-semibold uppercase tracking-wider text-neutral-400">No image</span>
-          </div>
-        )}
-
-        {/* Verdict badge */}
-        {verdict && (
-          <span className={`absolute top-3 left-3 ${verdict.color} px-3 py-1 text-xs font-bold uppercase tracking-wider text-white`}>
-            {verdict.label}
-          </span>
-        )}
-      </div>
-
-      {/* Body */}
-      <div className="flex flex-1 flex-col p-6">
-        {/* Category */}
-        {review.category && (
-          <span className="mb-3 inline-block self-start bg-neutral-100 px-2 py-0.5 text-xs font-semibold uppercase tracking-wider text-neutral-500">
-            {categoryLabel(review.category)}
-          </span>
-        )}
-
-        {/* Brand + Product */}
-        <p className="text-xs font-semibold uppercase tracking-wider text-accent-600">{review.brand}</p>
-        <h2 className="mt-1 font-display text-xl font-bold uppercase leading-tight text-brand-900 transition group-hover:text-brand-600 md:text-2xl">
-          {review.productName}
-        </h2>
-
-        {review.tagline && (
-          <p className="mt-2 flex-1 text-sm leading-6 text-neutral-600">{review.tagline}</p>
-        )}
-
-        {/* Rating + Price row */}
-        <div className="mt-5 flex items-center gap-3">
-          {review.rating != null && (
-            <div className="flex items-baseline gap-1">
-              <span className="text-lg font-bold text-brand-900">{review.rating}</span>
-              <span className="text-xs text-neutral-400">/10</span>
+      <Card
+        variant="elevated"
+        className="flex flex-col overflow-hidden transition group-hover:border-ink"
+      >
+        {/* Image — muted-photo per DS Foundations Imagery */}
+        <div className="relative overflow-hidden" style={{ aspectRatio: "4/3" }}>
+          {review.imageUrl ? (
+            <Image
+              src={review.imageUrl}
+              alt={review.productName}
+              fill
+              className="muted-photo object-cover transition duration-500 group-hover:scale-105"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center bg-neutral-100">
+              <span className={`${type.small} text-neutral-400`}>No image</span>
             </div>
           )}
-          {review.retailPriceUsd != null && (
-            <span className="text-xs text-neutral-500">~${review.retailPriceUsd}</span>
+
+          {/* Verdict badge — DS Tag with weight-based verdict variant */}
+          {review.verdict && verdict && (
+            <Tag
+              variant={verdictToTagVariant(review.verdict)}
+              className="absolute top-3 left-3"
+            >
+              {verdict.label}
+            </Tag>
           )}
         </div>
 
-        {/* Read Review CTA — promoted from inline text to filled primary
-            pill per Cate's review ("Read Review feels important enough that
-            it should visually behave more like a primary action"). */}
-        <div className="mt-4 flex justify-end">
-          <span className="inline-flex items-center gap-1.5 bg-brand-900 px-3 py-2 text-[11px] font-bold uppercase tracking-wider text-white transition group-hover:bg-brand-700">
-            Read Review
-            <span aria-hidden>→</span>
-          </span>
+        {/* Body */}
+        <div className="flex flex-1 flex-col p-6">
+          {/* Category chip — DS Tag muted */}
+          {review.category && (
+            <Tag variant="muted" className="mb-3 self-start">
+              {categoryLabel(review.category)}
+            </Tag>
+          )}
+
+          {/* Brand kicker — DS Tag accent-kicker (sanctioned accent-700 use) */}
+          <Tag variant="accent-kicker" className="self-start !px-0">
+            {review.brand}
+          </Tag>
+
+          {/* Product name — Lora Medium 500 mixed case, on DS scale */}
+          <h2
+            className={`mt-1 ${type.h3} text-ink transition group-hover:text-accent-700`}
+          >
+            {review.productName}
+          </h2>
+
+          {review.tagline && (
+            <p className={`${type.body} mt-2 flex-1 text-neutral-600`}>
+              {review.tagline}
+            </p>
+          )}
+
+          {/* Rating + price */}
+          <div className="mt-4 flex items-baseline gap-3">
+            {review.rating != null && (
+              <div className="flex items-baseline gap-1">
+                <span className="font-heading text-[1.25rem] font-medium text-ink tabular-nums">
+                  {review.rating}
+                </span>
+                <span className={`${type.small} text-neutral-500`}>/10</span>
+              </div>
+            )}
+            {review.retailPriceUsd != null && (
+              <span className={`${type.small} text-neutral-500`}>
+                ~${review.retailPriceUsd}
+              </span>
+            )}
+          </div>
         </div>
-      </div>
+      </Card>
     </Link>
   );
 }
@@ -121,35 +137,40 @@ export default async function ReviewsPage() {
   const reviews = await getReviews();
 
   const recommended = reviews.filter((r) => r.verdict === "recommended");
-  const others      = reviews.filter((r) => r.verdict !== "recommended");
+  const others = reviews.filter((r) => r.verdict !== "recommended");
 
   return (
     <SiteLayout>
-
-      {/* ── Hero ── */}
-      <section className="relative flex h-[45vh] flex-col overflow-hidden bg-brand-900">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/pexels-8729236.jpg"
-            alt=""
-            fill
-            className="object-cover object-center opacity-70"
-            priority
-          />
-        </div>
-        <div className="absolute inset-0 z-0 bg-gradient-to-r from-brand-900/90 via-brand-900/50 to-transparent" />
+      {/* ── Hero ────────────────────────────────────────────────────────────
+          Full-bleed photo with the DS dual-scrim (vertical grounding +
+          horizontal text-edge protection), muted-photo LUT, and ink tokens
+          (no legacy brand-*). Copy rewritten in Alfonso's voice — states
+          the mechanic (what we do), not the aphorism ("We test it / You
+          decide" was AI-tell rule-of-two). */}
+      <section className="relative flex h-[45vh] flex-col overflow-hidden bg-ink">
+        <Image
+          src="/images/pexels-8729236.jpg"
+          alt=""
+          fill
+          className="muted-photo object-cover object-center"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-ink/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/95 via-ink/60 to-ink/30" />
 
         <div className="relative z-10 flex flex-1 items-end">
           <Container>
-            <div className="max-w-3xl pb-12 md:pb-16">
-              <p className={`${type.overline} text-accent-400`}>Product Reviews</p>
-              <h1 className={`mt-3 ${type.displaySection} text-white`}>
-                We test it.<br />You decide.
+            <div className="max-w-3xl pb-16 md:pb-24">
+              {/* Inline classes (not composed from type.overline) so the
+                  baked-in text-neutral-500 doesn't override text-accent-300 —
+                  DS Foundations Imagery token-cascade gotcha. */}
+              <p className="text-xs font-medium tracking-[0.01em] text-accent-300">Product Reviews</p>
+              <h1 className={`mt-3 ${type.displayHero} text-inverse`}>
+                Honest reviews of the tools men over 40 actually ask about.
               </h1>
-              <p className="mt-5 max-w-xl text-base leading-relaxed text-brand-200">
-                Honest, evidence-based reviews of the tools, creams, insoles, and
-                footwear men over 40 actually ask about. No sponsored content,
-                no vague "works for me" verdicts.
+              <p className="mt-6 max-w-xl text-[1.0625rem] leading-[1.5] text-inverse">
+                No sponsored content, no vague "works for me" verdicts. Every
+                review starts with the mechanism, then the test, then a call.
               </p>
             </div>
           </Container>
@@ -160,7 +181,7 @@ export default async function ReviewsPage() {
 
       {/* ── Recommended ── */}
       {recommended.length > 0 && (
-        <section className="py-12 md:py-16">
+        <section className="py-16 md:py-24">
           <Container>
             <p className={`${type.overline} mb-6 text-neutral-500`}>Recommended</p>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -172,9 +193,13 @@ export default async function ReviewsPage() {
         </section>
       )}
 
-      {/* ── Conditional + Skip ── */}
+      {/* ── Worth knowing ── */}
       {others.length > 0 && (
-        <section className={`py-12 md:py-16 ${recommended.length > 0 ? "border-t border-neutral-200 bg-neutral-50" : ""}`}>
+        <section
+          className={`py-16 md:py-24 ${
+            recommended.length > 0 ? "border-t border-neutral-200 bg-neutral-100" : ""
+          }`}
+        >
           <Container>
             <p className={`${type.overline} mb-6 text-neutral-500`}>Worth Knowing</p>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -186,26 +211,31 @@ export default async function ReviewsPage() {
         </section>
       )}
 
-      {/* ── About the reviews ── */}
-      <section className="border-t border-neutral-200 py-14">
+      {/* ── How we review ────────────────────────────────────────────────────
+          Copy rewritten from AI-tell aphorism triads ("Evidence first.
+          Opinion second." / "No product escapes a clear call.") into
+          declarative sentences that describe the mechanic. */}
+      <section className="border-t border-neutral-200 py-16 md:py-24">
         <Container>
           <div className="max-w-2xl">
             <p className={`${type.overline} mb-4 text-neutral-500`}>How we review</p>
-            <h2 className={`${type.displaySm} text-brand-900`}>Evidence first. Opinion second.</h2>
-            <p className="mt-4 text-sm leading-7 text-neutral-600">
-              Every review starts with the mechanism: how the product is supposed to work,
-              and what the evidence actually says. Then we test it. Verdict categories are
-              Recommended, Conditional (works, but with caveats), and Skip. No product
-              escapes a clear call.
+            <h2 className={`${type.h2} text-ink`}>
+              Mechanism, test, verdict.
+            </h2>
+            <p className={`${type.lead} mt-4 text-neutral-600`}>
+              Every review starts with how the product is supposed to work
+              and what the evidence actually says. Then we test it. Verdict
+              categories are Recommended, Conditional (works, but with
+              caveats), and Skip. Every review lands on one.
             </p>
-            <p className="mt-3 text-sm leading-7 text-neutral-600">
-              If there's an affiliate link, it's labeled. It doesn't change the verdict.
-              We don't review products we wouldn't actually recommend.
+            <p className={`${type.body} mt-3 text-neutral-600`}>
+              Affiliate links are labeled when present. They do not change
+              the verdict. Products we would not recommend do not get a
+              review.
             </p>
           </div>
         </Container>
       </section>
-
     </SiteLayout>
   );
 }

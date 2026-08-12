@@ -1,6 +1,15 @@
 import { cn } from "./cn";
 
-export type TagVariant = "default" | "accent" | "accent-kicker" | "outline" | "muted" | "on-photo";
+export type TagVariant =
+  | "default"
+  | "accent"
+  | "accent-kicker"
+  | "outline"
+  | "muted"
+  | "on-photo"
+  | "verdict-recommended"
+  | "verdict-conditional"
+  | "verdict-skip";
 
 const variants: Record<TagVariant, string> = {
   default:        "bg-neutral-100 text-ink border border-border-subtle",
@@ -14,6 +23,15 @@ const variants: Record<TagVariant, string> = {
   // Article hero meta on photography — translucent white on ink scrim.
   // Category = pill, read time = plain caption after (DS Foundations Imagery).
   "on-photo":     "bg-white/15 text-inverse border border-white/25 backdrop-blur-sm",
+  // Review verdicts — weight-based hierarchy (DS has no success/warn/danger
+  // tokens; using terracotta/neutral/ink instead of raw green/amber/red keeps
+  // us on the sanctioned Foundations Color palette).
+  //   recommended → solid ink (strongest positive weight)
+  //   conditional → outline neutral (medium weight, "check this")
+  //   skip        → accent-callout (accent-100 fill; semantic warning without red)
+  "verdict-recommended": "bg-ink text-inverse border border-ink",
+  "verdict-conditional": "bg-transparent text-ink border border-ink",
+  "verdict-skip":        "bg-accent-100 text-accent-800 border border-accent-200",
 };
 
 export type TagProps = {

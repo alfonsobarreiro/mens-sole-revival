@@ -19,11 +19,25 @@ export interface Review {
   imageUrl?: string;
 }
 
+// Verdict metadata — label only. Presentation is delegated to the DS Tag
+// primitive via verdictToTagVariant() so verdicts stay on the sanctioned
+// Foundations Color palette (no raw emerald/amber/red palette leaks).
 export const verdictConfig = {
-  recommended: { label: "Recommended", color: "bg-emerald-600", text: "text-emerald-700", bg: "bg-emerald-50", border: "border-emerald-200" },
-  conditional: { label: "Conditional",  color: "bg-amber-500",   text: "text-amber-700",   bg: "bg-amber-50",   border: "border-amber-200"   },
-  skip:        { label: "Skip",         color: "bg-red-500",     text: "text-red-700",     bg: "bg-red-50",     border: "border-red-200"     },
+  recommended: { label: "Recommended" },
+  conditional: { label: "Conditional" },
+  skip:        { label: "Skip" },
 } as const;
+
+export type VerdictKey = keyof typeof verdictConfig;
+
+// Maps a verdict key to the DS Tag variant that renders it. Weight-based
+// hierarchy: solid ink → outline → accent-callout (DS Foundations Color
+// has no success/warn/danger tokens).
+export function verdictToTagVariant(
+  key: VerdictKey,
+): "verdict-recommended" | "verdict-conditional" | "verdict-skip" {
+  return `verdict-${key}` as const;
+}
 
 export function categoryLabel(cat?: string): string {
   const map: Record<string, string> = {
@@ -84,7 +98,7 @@ export const staticReviews: Review[] = [
     category: "powder",
     verdict: "conditional",
     rating: 6.5,
-    tagline: "Classic for a reason — but the formula trade-offs are worth understanding before you reach for it.",
+    tagline: "Classic for a reason, but the formula trade-offs are worth understanding before you reach for it.",
     retailPriceUsd: 9,
     publishedAt: "2026-03-15",
     imageUrl: "/images/pexels-11873696.jpg",
@@ -96,7 +110,7 @@ export const staticReviews: Review[] = [
     category: "alignment",
     verdict: "conditional",
     rating: 7,
-    tagline: "Legitimate tool for toe alignment — but the wearing schedule matters as much as the product.",
+    tagline: "Legitimate tool for toe alignment, but the wearing schedule matters as much as the product.",
     retailPriceUsd: 30,
     publishedAt: "2026-03-18",
     imageUrl: "/images/pexels-35206081.jpg",
@@ -108,7 +122,7 @@ export const staticReviews: Review[] = [
     category: "footwear",
     verdict: "recommended",
     rating: 8,
-    tagline: "The rare casual shoe actually designed around foot anatomy — not fashion.",
+    tagline: "The rare casual shoe designed around foot anatomy rather than fashion.",
     retailPriceUsd: 145,
     publishedAt: "2026-03-22",
     imageUrl: "/images/pexels-12031206.jpg",

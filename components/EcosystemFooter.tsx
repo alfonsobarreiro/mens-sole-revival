@@ -1,6 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import Container from "@/components/Container";
+import { Card } from "@/components/ui/Card";
+import { Tag } from "@/components/ui/Tag";
+import { type } from "@/components/typography";
 import { staticReviews } from "@/lib/reviews";
 import { articles, routines, type RoutineRef } from "@/lib/ecosystem";
 
@@ -19,9 +22,9 @@ interface EcosystemFooterProps {
 
 /**
  * Cross-links articles, reviews, and routines at the bottom of any
- * content page. The same block ships under articles, reviews, and
- * (eventually) the assessment results, so a man reading any one piece
- * sees the next two specific moves.
+ * content page. Same block ships under articles, reviews, and (eventually)
+ * assessment results — so DS conformance here cascades to every content
+ * page on the site.
  */
 export default function EcosystemFooter({
   heading = "Continue with...",
@@ -48,41 +51,47 @@ export default function EcosystemFooter({
   if (!hasContent) return null;
 
   return (
-    <section className="border-t border-neutral-200 bg-neutral-100 py-14 md:py-20">
+    <section className="border-t border-neutral-200 bg-neutral-100 py-16 md:py-24">
       <Container>
+        {/* Header — DS "one left rail" (max-w-2xl left-aligned, no mx-auto). */}
         <div className="mb-8 max-w-2xl">
-          <p className="text-xs font-bold uppercase tracking-widest text-accent-600">
+          {/* Inline classes so the baked-in text-neutral-500 in type.overline
+              doesn't override text-accent-700 — DS token-cascade gotcha. */}
+          <p className="text-xs font-medium tracking-[0.01em] text-accent-700">
             Continue
           </p>
-          <h2 className="mt-2 font-display text-2xl font-bold uppercase leading-tight text-brand-900 md:text-3xl">
-            {heading}
-          </h2>
+          <h2 className={`mt-2 ${type.h2} text-ink`}>{heading}</h2>
           {intro && (
-            <p className="mt-3 text-sm leading-6 text-neutral-600 md:text-base">
-              {intro}
-            </p>
+            <p className={`mt-3 ${type.lead} text-neutral-600`}>{intro}</p>
           )}
         </div>
 
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-3">
           {/* Routine card */}
           {routine && (
             <Link
               href={`/routines#${routine.anchor}`}
-              className="group flex flex-col border border-neutral-200 bg-white p-6 shadow-sm transition hover:border-brand-300 hover:shadow-md"
+              className="group block transition"
             >
-              <p className="text-xs font-bold uppercase tracking-widest text-brand-500">
-                Routine · {routine.label}
-              </p>
-              <h3 className="mt-3 font-display text-xl font-bold uppercase leading-tight text-brand-900 transition group-hover:text-brand-600">
-                {routine.heading}
-              </h3>
-              <p className="mt-auto pt-5 text-xs font-semibold text-neutral-500">
-                {routine.time}
-              </p>
-              <p className="mt-3 text-xs font-bold uppercase tracking-wider text-brand-500 group-hover:text-brand-700">
-                See the routine →
-              </p>
+              <Card
+                variant="elevated"
+                className="flex h-full flex-col p-6 transition group-hover:border-ink"
+              >
+                <Tag variant="accent-kicker" className="self-start !px-0">
+                  Routine · {routine.label}
+                </Tag>
+                <h3
+                  className={`mt-3 ${type.h3} text-ink transition group-hover:text-accent-700`}
+                >
+                  {routine.heading}
+                </h3>
+                <p className={`mt-auto pt-6 ${type.small} text-neutral-500`}>
+                  {routine.time}
+                </p>
+                <p className="mt-3 text-xs font-medium tracking-[0.01em] text-accent-700 transition group-hover:underline underline-offset-4">
+                  See the routine →
+                </p>
+              </Card>
             </Link>
           )}
 
@@ -91,27 +100,34 @@ export default function EcosystemFooter({
             <Link
               key={a.slug}
               href={`/guides/${a.slug}`}
-              className="group flex flex-col overflow-hidden border border-neutral-200 bg-white shadow-sm transition hover:border-brand-300 hover:shadow-md"
+              className="group block transition"
             >
-              <div className="relative aspect-[4/3] w-full overflow-hidden">
-                <Image
-                  src={a.imageUrl}
-                  alt={a.title}
-                  fill
-                  className="object-cover transition duration-500 group-hover:scale-105"
-                />
-              </div>
-              <div className="flex flex-1 flex-col p-5">
-                <p className="text-xs font-semibold uppercase tracking-wider text-accent-600">
-                  Guide · {a.category}
-                </p>
-                <h3 className="mt-2 font-display text-lg font-bold uppercase leading-tight text-brand-900 transition group-hover:text-brand-600">
-                  {a.title}
-                </h3>
-                <p className="mt-auto pt-4 text-xs font-semibold text-neutral-400">
-                  {a.readTime} read
-                </p>
-              </div>
+              <Card
+                variant="elevated"
+                className="flex h-full flex-col overflow-hidden transition group-hover:border-ink"
+              >
+                <div className="relative aspect-[4/3] w-full overflow-hidden">
+                  <Image
+                    src={a.imageUrl}
+                    alt={a.title}
+                    fill
+                    className="muted-photo object-cover transition duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="flex flex-1 flex-col p-6">
+                  <Tag variant="accent-kicker" className="self-start !px-0">
+                    Guide · {a.category}
+                  </Tag>
+                  <h3
+                    className={`mt-2 ${type.h3} text-ink transition group-hover:text-accent-700`}
+                  >
+                    {a.title}
+                  </h3>
+                  <p className={`mt-auto pt-4 ${type.small} text-neutral-500`}>
+                    {a.readTime} read
+                  </p>
+                </div>
+              </Card>
             </Link>
           ))}
 
@@ -120,29 +136,36 @@ export default function EcosystemFooter({
             <Link
               key={r.slug}
               href={`/reviews/${r.slug}`}
-              className="group flex flex-col overflow-hidden border border-neutral-200 bg-white shadow-sm transition hover:border-brand-300 hover:shadow-md"
+              className="group block transition"
             >
-              <div className="relative aspect-[4/3] w-full overflow-hidden">
-                {r.imageUrl && (
-                  <Image
-                    src={r.imageUrl}
-                    alt={r.productName}
-                    fill
-                    className="object-cover transition duration-500 group-hover:scale-105"
-                  />
-                )}
-              </div>
-              <div className="flex flex-1 flex-col p-5">
-                <p className="text-xs font-semibold uppercase tracking-wider text-accent-600">
-                  Reviewed · {r.brand}
-                </p>
-                <h3 className="mt-2 font-display text-lg font-bold uppercase leading-tight text-brand-900 transition group-hover:text-brand-600">
-                  {r.productName}
-                </h3>
-                <p className="mt-auto pt-4 text-xs font-semibold text-neutral-400">
-                  {r.rating != null ? `${r.rating}/10` : "See the verdict"}
-                </p>
-              </div>
+              <Card
+                variant="elevated"
+                className="flex h-full flex-col overflow-hidden transition group-hover:border-ink"
+              >
+                <div className="relative aspect-[4/3] w-full overflow-hidden">
+                  {r.imageUrl && (
+                    <Image
+                      src={r.imageUrl}
+                      alt={r.productName}
+                      fill
+                      className="muted-photo object-cover transition duration-500 group-hover:scale-105"
+                    />
+                  )}
+                </div>
+                <div className="flex flex-1 flex-col p-6">
+                  <Tag variant="accent-kicker" className="self-start !px-0">
+                    Reviewed · {r.brand}
+                  </Tag>
+                  <h3
+                    className={`mt-2 ${type.h3} text-ink transition group-hover:text-accent-700`}
+                  >
+                    {r.productName}
+                  </h3>
+                  <p className={`mt-auto pt-4 ${type.small} text-neutral-500`}>
+                    {r.rating != null ? `${r.rating}/10` : "See the verdict"}
+                  </p>
+                </div>
+              </Card>
             </Link>
           ))}
         </div>
