@@ -226,12 +226,9 @@ function LearnContent() {
           {/* Subscribe callout — DS Card variant="surface" */}
           <Card variant="surface" className="mt-12">
             <CardBody className="md:flex md:items-center md:justify-between !px-6 !py-6">
-              <div>
-                <p className={`${type.h3} text-ink`}>A new guide every other Tuesday.</p>
-                <p className={`mt-1 ${type.body} text-neutral-600`}>
-                  New guides land in your inbox as they publish.
-                </p>
-              </div>
+              <p className={`${type.body} text-neutral-600`}>
+                New guides land in your inbox as they publish.
+              </p>
               <div className="mt-4 flex-shrink-0 md:mt-0 md:ml-8">
                 <Button href="/newsletter" size="sm">Subscribe</Button>
               </div>
