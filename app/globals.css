@@ -322,13 +322,16 @@
 ------------------------------------------------------------ */
 
 /* Eyebrow — kicker label above section headings.
-   Mixed case, medium weight, muted color, slight tracking. */
+   DS lock (2026-08-14): Medium 500 (restraint call — Semibold 600 spec dropped
+   to unify UI weight ceiling), +5% tracking (Foundations Typography), muted color.
+   Uppercase applied at call-site since the role is a niche affordance — see
+   MSR Guardrails: use eyebrows sparingly. */
 .eyebrow {
   font-family: var(--font-body);
   font-size: var(--text-small);       /* 12px */
   font-weight: 500;
   color: var(--color-text-muted);
-  letter-spacing: 0.01em;
+  letter-spacing: 0.05em;
   text-transform: none;
 }
 
