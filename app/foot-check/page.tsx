@@ -160,8 +160,7 @@ export default function FootCheckPage() {
       <section className="border-b border-neutral-200 bg-neutral-50 py-10 print:hidden">
         <Container>
           <div className="max-w-3xl">
-            <p className={`${type.overline} text-neutral-500`}>How to use it</p>
-            <p className="mt-3 text-sm leading-7 text-neutral-700">
+            <p className="text-sm leading-7 text-neutral-700">
               Read each item. Mark the ones that apply to you. When you finish
               a section, read the short interpretation line. It tells you
               whether this section is worth acting on now, or a routine will

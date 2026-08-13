@@ -155,8 +155,7 @@ export default function DoctorPrepPage() {
       <section className="border-b border-neutral-200 bg-neutral-50 py-10 print:hidden">
         <Container>
           <div className="max-w-3xl">
-            <p className={`${type.overline} text-neutral-500`}>How to use it</p>
-            <p className="mt-3 text-sm leading-7 text-neutral-700">
+            <p className="text-sm leading-7 text-neutral-700">
               Read through the checklist. Mark the items that apply to your
               situation. Print the page and bring it to your appointment. The
               boxes give you something to reference during the visit so you don't
@@ -206,8 +205,7 @@ export default function DoctorPrepPage() {
       <section className="border-t border-neutral-200 bg-neutral-50 py-14 md:py-20 print:hidden">
         <Container>
           <div className="mx-auto max-w-3xl">
-            <p className={`${type.overline} text-neutral-500`}>Related</p>
-            <h2 className={`mt-3 ${type.h2} text-brand-900`}>
+            <h2 className={`${type.h2} text-brand-900`}>
               While you're here.
             </h2>
             <div className="mt-6 grid gap-4 md:grid-cols-2">

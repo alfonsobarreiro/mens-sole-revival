@@ -36,8 +36,7 @@ export default function AboutPage() {
         <div className="relative z-10 flex flex-1 items-end">
           <Container>
             <div className="max-w-3xl pb-12 md:pb-16">
-              <p className={`${type.overline} text-accent-400`}>About</p>
-              <h1 className={`mt-3 ${type.displaySection} text-white`}>
+              <h1 className={`${type.displaySection} text-white`}>
                 Built for the men<br />finally paying attention.
               </h1>
               <p className="mt-5 max-w-xl text-base leading-relaxed text-brand-200">
@@ -135,8 +134,7 @@ export default function AboutPage() {
       <section className="border-t border-neutral-200 bg-neutral-50 py-16 md:py-20">
         <Container>
           <div className="max-w-xl">
-            <p className={`${type.overline} text-neutral-500`}>How we work</p>
-            <h2 className={`mt-3 ${type.displaySection} text-brand-900`}>What we believe.</h2>
+            <h2 className={`${type.displaySection} text-brand-900`}>What we believe.</h2>
           </div>
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             {[

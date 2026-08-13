@@ -371,7 +371,6 @@ export default function Home() {
         <Container>
           <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
-              <p className="eyebrow mb-3">Practice</p>
               <h2 className={`${type.displaySection} text-ink`}>
                 The routines.
               </h2>

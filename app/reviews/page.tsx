@@ -218,7 +218,6 @@ export default async function ReviewsPage() {
       <section className="border-t border-neutral-200 py-16 md:py-24">
         <Container>
           <div className="max-w-2xl">
-            <p className={`${type.overline} mb-4 text-neutral-500`}>How we review</p>
             <h2 className={`${type.h2} text-ink`}>
               Mechanism, test, verdict.
             </h2>

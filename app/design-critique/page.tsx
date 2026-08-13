@@ -145,8 +145,7 @@ export default function DesignCritiquePage() {
       <section className="border-b border-neutral-200 bg-brand-900 py-14 md:py-20">
         <Container>
           <div className="max-w-3xl">
-            <p className={`${type.overline} text-accent-400`}>Internal · Design Review</p>
-            <h1 className={`mt-3 ${type.displaySection} text-white`}>
+            <h1 className={`${type.displaySection} text-white`}>
               Homepage Critique
             </h1>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-brand-300">

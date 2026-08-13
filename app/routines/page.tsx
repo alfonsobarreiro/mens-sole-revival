@@ -172,10 +172,7 @@ export default function RoutinesPage() {
         <Container>
           <div className="md:flex md:items-center md:justify-between">
             <div className="max-w-xl">
-              <p className={`${type.overline} mb-2 text-neutral-500`}>
-                Coming soon
-              </p>
-              <h2 className={`mt-2 ${type.h2} text-ink`}>
+              <h2 className={`${type.h2} text-ink`}>
                 Full routine guides.
               </h2>
               <p className={`${type.lead} mt-3 text-neutral-600`}>

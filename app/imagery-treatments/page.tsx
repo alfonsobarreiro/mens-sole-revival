@@ -79,7 +79,6 @@ export default function ImageryTreatmentsPage() {
 
           {/* ── Header ── */}
           <header className="max-w-3xl">
-            <p className="eyebrow mb-3">Design tool · not shipped</p>
             <h1 className={`${type.h1} text-ink`}>
               Imagery treatments.
             </h1>
