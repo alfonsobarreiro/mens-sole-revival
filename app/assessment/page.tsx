@@ -511,9 +511,9 @@ export default function AssessmentPage() {
       {/* ── Hero banner ── */}
       <section className="bg-ink py-16 md:py-24">
         <Container>
-          {/* Inline classes (not type.overline) so the baked-in text-neutral-500
-              doesn't override text-accent-300 — DS token-cascade gotcha. */}
-          <p className="mb-2 text-xs font-medium uppercase tracking-[0.05em] text-accent-300">
+          {/* Muted eyebrow (not terracotta) — save the one accent moment for
+              the primary CTA below. DS restraint default: one accent per screen. */}
+          <p className="mb-2 text-xs font-medium uppercase tracking-[0.05em] text-inverse-caption">
             5-Minute Self-Check
           </p>
           <h1 className={`${type.h1} text-inverse`}>
@@ -588,73 +588,36 @@ export default function AssessmentPage() {
       {/* ── Content ── */}
       <section className="min-h-[60vh] bg-neutral-100 py-16 md:py-24">
         <Container>
-          {/* ── INTRO ── One left rail: max-w-2xl LEFT-aligned inside Container. */}
+          {/* ── INTRO ── Restraint-first: one primary action + one caveat.
+              Killed the accent callout box, the decorative stat row, and
+              the redundant "five possible sections" paragraph — the hero
+              already sets expectations. */}
           {isIntro && (
             <div className="max-w-2xl">
-              {/* Warning box — DS accent-callout pair (accent-100 fill + accent-200 border). */}
-              <div className="mb-8 border border-accent-200 bg-accent-100 p-6">
-                <p className="text-xs font-medium uppercase tracking-[0.05em] text-accent-700">
-                  See a doctor if:
-                </p>
-                <p className={`mt-2 ${type.body} text-neutral-600`}>
-                  Open wounds not healing · Severe swelling or redness ·
-                  Numbness or tingling · Diabetes + any foot wound · Suspected
-                  fracture · Intense sudden pain
-                </p>
-                <p className={`mt-3 ${type.small} text-neutral-500`}>
-                  This assessment is for non-emergency self-awareness only. It
-                  is not a medical diagnosis.
-                </p>
+              {/* DS primary CTA — the one accent moment on this screen. */}
+              <button
+                onClick={startTriage}
+                className="inline-flex h-12 items-center gap-2 bg-cta-fill px-8 text-[0.9375rem] font-medium tracking-[0.03em] text-cta-text transition hover:bg-cta-fill-hover"
+              >
+                Start the assessment →
+              </button>
+
+              {/* Fine-print caveat — folds the "See a doctor if" list into
+                  one sentence with an inline link. No box, no eyebrow, no
+                  duplicate accent. */}
+              <p className={`mt-6 ${type.small} text-neutral-500 max-w-lg`}>
+                Not medical advice. For active pain, non-healing wounds,
+                sudden numbness, or diabetic foot injuries,{" "}
                 <a
                   href="https://www.apma.org/find-a-podiatrist"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`mt-3 inline-flex items-center gap-2 ${type.small} font-medium text-link underline underline-offset-4 hover:text-link-hover transition`}
+                  className="text-link underline underline-offset-4 hover:text-link-hover transition"
                 >
-                  Find a podiatrist near you →
+                  see a podiatrist directly
                 </a>
-              </div>
-
-              {/* Stat row — bg-neutral-100 (DS elevated surface on ground). */}
-              <div className="mb-10 grid grid-cols-3 divide-x divide-neutral-200 border border-neutral-200 bg-neutral-100">
-                {[
-                  { value: "77%", label: "of men have foot pain annually", source: "APMA", sourceUrl: "https://www.apma.org/" },
-                  { value: "1 in 3", label: "ever seek help for it", source: "APMA", sourceUrl: "https://www.apma.org/" },
-                  { value: "63–72%", label: "wear the wrong shoe size", source: "PMC", sourceUrl: "https://pmc.ncbi.nlm.nih.gov/articles/PMC6064070/" },
-                ].map((s) => (
-                  <div key={s.value} className="p-6 text-center">
-                    <span className={`block ${type.h1} text-ink`}>
-                      {s.value}
-                    </span>
-                    <span className={`mt-1 block ${type.small} text-neutral-500`}>
-                      {s.label}
-                    </span>
-                    <a
-                      href={s.sourceUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`mt-2 inline-block ${type.small} text-neutral-500 underline underline-offset-4 hover:text-neutral-700`}
-                    >
-                      {s.source}
-                    </a>
-                  </div>
-                ))}
-              </div>
-
-              <p className={`mb-3 ${type.body} text-neutral-600`}>
-                Five possible sections, about three minutes if you pick a few,
-                about five if you take all of them. You'll end with specific
-                articles to read, a routine to try, and a list of bullets you
-                can bring to a podiatrist.
+                .
               </p>
-
-              {/* DS primary CTA — cta-fill/cta-text tokens, +3% tracking, Medium 500. */}
-              <button
-                onClick={startTriage}
-                className="mt-6 inline-flex h-12 items-center gap-2 bg-cta-fill px-8 text-[0.9375rem] font-medium tracking-[0.03em] text-cta-text transition hover:bg-cta-fill-hover"
-              >
-                Start the assessment →
-              </button>
             </div>
           )}
 
