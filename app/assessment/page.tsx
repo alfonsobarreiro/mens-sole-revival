@@ -511,11 +511,7 @@ export default function AssessmentPage() {
       {/* ── Hero banner ── */}
       <section className="bg-ink py-16 md:py-24">
         <Container>
-          {/* Muted eyebrow (not terracotta) — save the one accent moment for
-              the primary CTA below. DS restraint default: one accent per screen. */}
-          <p className="mb-2 text-xs font-medium uppercase tracking-[0.05em] text-inverse-caption">
-            5-Minute Self-Check
-          </p>
+          {/* No eyebrow — the H1 is self-explanatory. DS restraint default. */}
           <h1 className={`${type.h1} text-inverse`}>
             The Men's Foot Health Assessment
           </h1>
@@ -527,11 +523,13 @@ export default function AssessmentPage() {
           )}
 
           {isSectionPhase && totalSections > 0 && minutesRemaining > 0 && (
-            <p className="mt-4 text-xs font-medium uppercase tracking-[0.05em] text-inverse-caption">
+            <p className="mt-4 text-xs font-medium uppercase tracking-[0.05em] text-inverse-body">
               About {minutesRemaining} min left
             </p>
           )}
 
+          {/* Restart affordance — inverse-body (80% white) for legibility on
+              ink. inverse-caption (50%) was too muted to read. */}
           {!isIntro && (
             <button
               type="button"
@@ -541,7 +539,7 @@ export default function AssessmentPage() {
                 );
                 if (ok) restart();
               }}
-              className="mt-6 text-xs font-medium uppercase tracking-[0.05em] text-inverse-caption underline underline-offset-4 transition hover:text-inverse-body"
+              className="mt-6 text-xs font-medium uppercase tracking-[0.05em] text-inverse-body underline underline-offset-4 transition hover:text-inverse"
             >
               Restart from the beginning
             </button>
