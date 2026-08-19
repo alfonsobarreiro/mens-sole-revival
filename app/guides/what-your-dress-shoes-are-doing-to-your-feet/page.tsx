@@ -26,6 +26,7 @@ export default function Page() {
         heading="What to do about it."
         intro="Most of the damage is reversible if you rebuild what the shoes shut down. A short strength routine, a smarter insole, and at least one pair of shoes built around foot anatomy."
         routineKey={rel.routine}
+        articleSlugs={rel.relatedArticles}
         reviewSlugs={rel.reviews}
       />
     </SiteLayout>

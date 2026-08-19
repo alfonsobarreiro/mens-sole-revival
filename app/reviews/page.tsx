@@ -4,9 +4,11 @@ import Link from "next/link";
 import Container from "@/components/Container";
 import SiteLayout from "@/components/SiteLayout";
 import AssessmentEntryStrip from "@/components/AssessmentEntryStrip";
+import JsonLd from "@/components/JsonLd";
 import { Card } from "@/components/ui/Card";
 import { Tag } from "@/components/ui/Tag";
 import { type } from "@/components/typography";
+import { buildBreadcrumb, buildItemList } from "@/lib/breadcrumb";
 import {
   verdictConfig,
   verdictToTagVariant,
@@ -147,8 +149,22 @@ export default async function ReviewsPage() {
   const recommended = reviews.filter((r) => r.verdict === "recommended");
   const others = reviews.filter((r) => r.verdict !== "recommended");
 
+  // SEO Bundle 4: BreadcrumbList + ItemList — hub eligibility + SERP trails.
+  const schema = [
+    buildBreadcrumb([{ name: "Reviews", path: "/reviews" }]),
+    buildItemList(
+      "Honest Reviews of Men's Foot-Care Products",
+      reviews.map((r) => ({
+        name: r.productName,
+        path: `/reviews/${r.slug}`,
+        description: r.tagline,
+      })),
+    ),
+  ];
+
   return (
     <SiteLayout>
+      <JsonLd schema={schema} />
       {/* ── Hero ────────────────────────────────────────────────────────────
           Full-bleed photo with the DS dual-scrim (vertical grounding +
           horizontal text-edge protection), muted-photo LUT, and ink tokens

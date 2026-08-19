@@ -12,6 +12,7 @@
 import type { Metadata } from "next";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import { articles } from "@/lib/ecosystem";
+import { buildBreadcrumb } from "@/lib/breadcrumb";
 
 export type GuideFaq = { q: string; a: string };
 export type GuideSource = { label: string; url: string };
@@ -319,5 +320,11 @@ export function buildGuideSchema(slug: string) {
     })),
   };
 
-  return [article, faqPage];
+  // SEO Bundle 4: BreadcrumbList for guide leaf. Trail: Home → Guides → {this article}
+  const breadcrumb = buildBreadcrumb([
+    { name: "Guides", path: "/guides" },
+    { name: seo.metaTitle, path: `/guides/${slug}` },
+  ]);
+
+  return [article, faqPage, breadcrumb];
 }

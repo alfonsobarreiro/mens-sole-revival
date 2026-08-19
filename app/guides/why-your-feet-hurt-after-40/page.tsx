@@ -26,6 +26,7 @@ export default function Page() {
         heading="Find your starting point."
         intro="The pain traces to one pattern more than the others. The 5-minute self-check tells you which, then points you to the routine and the guide that fit it."
         routineKey={rel.routine}
+        articleSlugs={rel.relatedArticles}
         reviewSlugs={rel.reviews}
       />
     </SiteLayout>

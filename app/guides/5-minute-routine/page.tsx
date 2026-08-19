@@ -26,6 +26,7 @@ export default function Page() {
         heading="The two products that make this work."
         intro="A good cream after the wash is the difference between dry and cracked. A powder before socks is the difference between fungus-prone and not."
         routineKey={rel.routine}
+        articleSlugs={rel.relatedArticles}
         reviewSlugs={rel.reviews}
       />
     </SiteLayout>

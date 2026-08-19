@@ -3,7 +3,13 @@ import Link from "next/link";
 import Container from "@/components/Container";
 import SiteLayout from "@/components/SiteLayout";
 import InlineNewsletterForm from "@/components/InlineNewsletterForm";
+import JsonLd from "@/components/JsonLd";
 import { type } from "@/components/typography";
+import { buildBreadcrumb } from "@/lib/breadcrumb";
+
+const doctorPrepBreadcrumb = buildBreadcrumb([
+  { name: "Doctor prep", path: "/doctor-prep" },
+]);
 
 export const metadata: Metadata = {
   title: "Doctor Visit Prep: What to Tell Your Podiatrist",
@@ -117,6 +123,7 @@ const TOTAL_ITEMS = ALL_SECTIONS.reduce((n, s) => n + s.items.length, 0);
 export default function DoctorPrepPage() {
   return (
     <SiteLayout>
+      <JsonLd schema={doctorPrepBreadcrumb} />
       {/* ── Hero ── */}
       <section className="border-b border-neutral-200 bg-brand-900 py-16 md:py-20">
         <Container>

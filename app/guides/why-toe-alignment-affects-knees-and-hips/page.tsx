@@ -26,6 +26,7 @@ export default function Page() {
         heading="Start the upstream fix."
         intro="The morning stretch is what gives you back motion. The toe spreader and a wider toe box are how you keep it."
         routineKey={rel.routine}
+        articleSlugs={rel.relatedArticles}
         reviewSlugs={rel.reviews}
       />
     </SiteLayout>

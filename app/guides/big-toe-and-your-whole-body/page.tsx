@@ -26,6 +26,7 @@ export default function Page() {
         heading="The two ways to give it back."
         intro="A daily strength habit is the slow fix. A toe spreader is the assist while you build it. Footwear that doesn't crush is the third leg of the stool."
         routineKey={rel.routine}
+        articleSlugs={rel.relatedArticles}
         reviewSlugs={rel.reviews}
       />
     </SiteLayout>

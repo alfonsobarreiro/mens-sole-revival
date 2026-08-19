@@ -3,7 +3,9 @@ import Image from "next/image";
 import Container from "@/components/Container";
 import SiteLayout from "@/components/SiteLayout";
 import AssessmentProofBlock from "@/components/AssessmentProofBlock";
+import JsonLd from "@/components/JsonLd";
 import { Button } from "@/components/ui/Button";
+import { buildBreadcrumb } from "@/lib/breadcrumb";
 import { Card } from "@/components/ui/Card";
 import { type } from "@/components/typography";
 
@@ -39,9 +41,12 @@ const values = [
   },
 ];
 
+const aboutBreadcrumb = buildBreadcrumb([{ name: "About", path: "/about" }]);
+
 export default function AboutPage() {
   return (
     <SiteLayout>
+      <JsonLd schema={aboutBreadcrumb} />
       {/* ── Hero ────────────────────────────────────────────────────────────
           Full-bleed photo with DS dual scrim (vertical grounding + horizontal
           text-edge, both ink-token — no stop below ink/30 in the text zone),

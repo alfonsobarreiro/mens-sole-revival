@@ -3,7 +3,13 @@ import Link from "next/link";
 import Container from "@/components/Container";
 import SiteLayout from "@/components/SiteLayout";
 import InlineNewsletterForm from "@/components/InlineNewsletterForm";
+import JsonLd from "@/components/JsonLd";
 import { type } from "@/components/typography";
+import { buildBreadcrumb } from "@/lib/breadcrumb";
+
+const footCheckBreadcrumb = buildBreadcrumb([
+  { name: "Foot check", path: "/foot-check" },
+]);
 
 export const metadata: Metadata = {
   title: "The 5-Minute Foot Check for Men Over 40",
@@ -123,6 +129,7 @@ const TOTAL_ITEMS = CHECKLIST.reduce((n, s) => n + s.items.length, 0);
 export default function FootCheckPage() {
   return (
     <SiteLayout>
+      <JsonLd schema={footCheckBreadcrumb} />
       {/* ── Hero ── */}
       <section className="border-b border-neutral-200 bg-brand-900 py-16 md:py-20">
         <Container>

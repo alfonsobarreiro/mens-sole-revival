@@ -191,38 +191,80 @@ export const articles: Record<string, ArticleMeta> = {
 /** Convenience: array form for list iteration. */
 export const articleList: ArticleMeta[] = Object.values(articles);
 
-/** Article slug → its ecosystem links. */
+/** Article slug → its ecosystem links.
+ *  SEO Bundle 5 (2026-08-14): added relatedArticles field. Pillar
+ *  (why-your-feet-hurt-after-40) had ZERO inbound internal links before;
+ *  now referenced from every other guide. Every guide links to 3 siblings. */
 export const articleRelations: Record<
   string,
-  { reviews: string[]; routine: keyof typeof routines }
+  {
+    reviews: string[];
+    routine: keyof typeof routines;
+    relatedArticles: string[];
+  }
 > = {
   "why-your-feet-hurt-after-40": {
     reviews: ["kuru-atom-sneakers", "superfeet-blue-insoles"],
     routine: "daily",
+    relatedArticles: [
+      "what-your-dress-shoes-are-doing-to-your-feet",
+      "cracked-heels-what-actually-works",
+      "toenail-fungus-what-works",
+    ],
   },
   "what-your-dress-shoes-are-doing-to-your-feet": {
     reviews: ["kuru-atom-sneakers", "superfeet-blue-insoles"],
     routine: "strength",
+    relatedArticles: [
+      "why-your-feet-hurt-after-40",
+      "big-toe-and-your-whole-body",
+      "5-minute-routine",
+    ],
   },
   "big-toe-and-your-whole-body": {
     reviews: ["yoga-toes-gem-separators", "kuru-atom-sneakers"],
     routine: "strength",
+    relatedArticles: [
+      "why-toe-alignment-affects-knees-and-hips",
+      "what-your-dress-shoes-are-doing-to-your-feet",
+      "why-your-feet-hurt-after-40",
+    ],
   },
   "cracked-heels-what-actually-works": {
     reviews: ["gehwol-fusskraft-soft-feet-cream"],
     routine: "weekly",
+    relatedArticles: [
+      "why-your-feet-hurt-after-40",
+      "5-minute-routine",
+      "toenail-fungus-what-works",
+    ],
   },
   "toenail-fungus-what-works": {
     reviews: ["lamisil-at-antifungal-cream", "gold-bond-medicated-foot-powder"],
     routine: "treatment",
+    relatedArticles: [
+      "why-your-feet-hurt-after-40",
+      "cracked-heels-what-actually-works",
+      "5-minute-routine",
+    ],
   },
   "why-toe-alignment-affects-knees-and-hips": {
     reviews: ["yoga-toes-gem-separators", "kuru-atom-sneakers"],
     routine: "movement",
+    relatedArticles: [
+      "big-toe-and-your-whole-body",
+      "what-your-dress-shoes-are-doing-to-your-feet",
+      "why-your-feet-hurt-after-40",
+    ],
   },
   "5-minute-routine": {
     reviews: ["gehwol-fusskraft-soft-feet-cream", "gold-bond-medicated-foot-powder"],
     routine: "daily",
+    relatedArticles: [
+      "why-your-feet-hurt-after-40",
+      "cracked-heels-what-actually-works",
+      "toenail-fungus-what-works",
+    ],
   },
 };
 

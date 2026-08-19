@@ -3,10 +3,12 @@ import Image from "next/image";
 import Container from "@/components/Container";
 import SiteLayout from "@/components/SiteLayout";
 import AssessmentEntryStrip from "@/components/AssessmentEntryStrip";
+import JsonLd from "@/components/JsonLd";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Tag } from "@/components/ui/Tag";
 import { type } from "@/components/typography";
+import { buildBreadcrumb, buildItemList } from "@/lib/breadcrumb";
 
 export const metadata: Metadata = {
   title: { absolute: "Daily Foot-Care Routines for Men Over 40" },
@@ -90,9 +92,22 @@ const categories = [
 
 // ── Page ─────────────────────────────────────────────────────────────────────
 
+const routinesSchema = [
+  buildBreadcrumb([{ name: "Routines", path: "/routines" }]),
+  buildItemList(
+    "Daily Foot-Care Routines for Men Over 40",
+    categories.map((r) => ({
+      name: r.heading,
+      path: `/routines#${r.anchor}`,
+      description: `${r.label} · ${r.time} · ${r.frequency}`,
+    })),
+  ),
+];
+
 export default function RoutinesPage() {
   return (
     <SiteLayout>
+      <JsonLd schema={routinesSchema} />
       {/* ── Hero ────────────────────────────────────────────────────────────
           Full-bleed photo with DS dual scrim (vertical grounding +
           horizontal text-edge protection), muted-photo LUT, and ink

@@ -26,6 +26,7 @@ export default function Page() {
         heading="The protocol, not just the product."
         intro="Recurrence kills most fungus treatments before they finish. Pair the antifungal with a twice-daily routine and a powder for the in-between."
         routineKey={rel.routine}
+        articleSlugs={rel.relatedArticles}
         reviewSlugs={rel.reviews}
       />
     </SiteLayout>

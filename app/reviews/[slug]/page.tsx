@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { Tag } from "@/components/ui/Tag";
 import { reviewRelations } from "@/lib/ecosystem";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
+import { buildBreadcrumb } from "@/lib/breadcrumb";
 import { type } from "@/components/typography";
 import {
   verdictConfig,
@@ -325,9 +326,15 @@ export default async function ReviewPage({
     dateModified: modifiedAt,
   };
 
+  // SEO Bundle 4: add BreadcrumbList — Home → Reviews → {this product}.
+  const breadcrumb = buildBreadcrumb([
+    { name: "Reviews", path: "/reviews" },
+    { name: review.productName, path: `/reviews/${review.slug}` },
+  ]);
+
   return (
     <SiteLayout>
-      <JsonLd schema={reviewSchema} />
+      <JsonLd schema={[reviewSchema, breadcrumb]} />
 
       {/* ── Breadcrumb ── */}
       <div className="border-b border-neutral-200 py-3">

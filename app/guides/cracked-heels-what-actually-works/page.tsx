@@ -26,6 +26,7 @@ export default function Page() {
         heading="Now do the thing."
         intro="The fix is a short nightly habit and the right cream. Here's the routine that takes five minutes, and the product that works."
         routineKey={rel.routine}
+        articleSlugs={rel.relatedArticles}
         reviewSlugs={rel.reviews}
       />
     </SiteLayout>
