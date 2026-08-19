@@ -211,9 +211,26 @@ export async function generateMetadata({
   const { slug } = await params;
   const review = await getReview(slug);
   if (!review) return { title: "Review Not Found" };
+  const tagline = review.tagline ?? "";
+  const description = tagline.length >= 120
+    ? tagline
+    : `${tagline}${tagline ? " " : ""}Evidence-based review from Men's Sole Revival.`;
   return {
-    title: `${review.productName} Review — Men's Sole Revival`,
-    description: review.tagline,
+    title: { absolute: `${review.productName} Review: ${tagline || review.brand}` },
+    description,
+    alternates: { canonical: `/reviews/${slug}` },
+    openGraph: {
+      title: `${review.productName} Review`,
+      description,
+      url: `/reviews/${slug}`,
+      type: "article",
+      ...(review.imageUrl ? { images: [{ url: `${SITE_URL}${review.imageUrl}` }] } : {}),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${review.productName} Review`,
+      description,
+    },
   };
 }
 
@@ -254,18 +271,28 @@ export default async function ReviewPage({
   const verdict = review.verdict ? verdictConfig[review.verdict] : null;
 
   // Review structured data — drives rich-result stars in search, which lift
-  // affiliate CTR. ratingValue is on a 10-point scale (bestRating: 10).
+  // affiliate CTR.
   //
-  // The nested Product carries offers + aggregateRating so Google's Product
-  // snippet validator has one of the three required fields (offers, review,
-  // aggregateRating) and the review is eligible for the star + price rich
-  // result.
+  // SEO Bundle 2 fixes (2026-08-14):
+  //  · Removed the fabricated AggregateRating (a single editorial review
+  //    cannot back an aggregate — Google flags as fake ratings; documented
+  //    spam-flag trigger).
+  //  · Review.author is now Person (Alfonso), not Organization — required
+  //    for Review rich-result eligibility.
+  //  · Rating scale converted 0-10 → 1-5 (Google's canonical scale; worstRating
+  //    of 0 is invalid).
+  //  · Added Product.description + datePublished/dateModified on the Review.
+  const ratingOn5 = review.rating != null ? Math.round((review.rating / 2) * 10) / 10 : null;
+  const publishedAt = review.publishedAt ?? "2026-08-13";
+  const modifiedAt = "2026-08-14"; // Bundle 2 fix landing date; bump when review copy changes.
+
   const reviewSchema = {
     "@context": "https://schema.org",
     "@type": "Review",
     itemReviewed: {
       "@type": "Product",
       name: review.productName,
+      description: review.summary ?? review.tagline ?? review.productName,
       ...(review.brand ? { brand: { "@type": "Brand", name: review.brand } } : {}),
       ...(review.imageUrl ? { image: `${SITE_URL}${review.imageUrl}` } : {}),
       ...(review.retailPriceUsd != null
@@ -279,33 +306,23 @@ export default async function ReviewPage({
             },
           }
         : {}),
-      ...(review.rating != null
-        ? {
-            aggregateRating: {
-              "@type": "AggregateRating",
-              ratingValue: review.rating,
-              bestRating: 10,
-              worstRating: 0,
-              ratingCount: 1,
-              reviewCount: 1,
-            },
-          }
-        : {}),
     },
     ...(review.tagline ? { name: review.tagline } : {}),
     ...(review.summary ? { reviewBody: review.summary } : {}),
-    ...(review.rating != null
+    ...(ratingOn5 != null
       ? {
           reviewRating: {
             "@type": "Rating",
-            ratingValue: review.rating,
-            bestRating: 10,
-            worstRating: 0,
+            ratingValue: ratingOn5,
+            bestRating: 5,
+            worstRating: 1,
           },
         }
       : {}),
-    author: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+    author: { "@type": "Person", name: "Alfonso Barreiro", url: `${SITE_URL}/about` },
     publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+    datePublished: publishedAt,
+    dateModified: modifiedAt,
   };
 
   return (

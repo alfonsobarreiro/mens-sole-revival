@@ -16,9 +16,17 @@ import {
 } from "@/lib/reviews";
 
 export const metadata: Metadata = {
-  title: "Reviews · Men's Sole Revival",
+  title: { absolute: "Honest Reviews of Men's Foot-Care Products" },
   description:
-    "Honest, evidence-based product reviews for men's foot health. Every review starts with the mechanism, then the test, then a verdict.",
+    "Evidence-based reviews for men over 40. Every review starts with the mechanism, then the test, then a verdict. No sponsored placements, no vague works-for-me calls.",
+  alternates: { canonical: "/reviews" },
+  openGraph: {
+    title: "Honest Reviews of Men's Foot-Care Products",
+    description:
+      "Evidence-based reviews for men over 40. Mechanism, test, verdict — no sponsored placements.",
+    url: "/reviews",
+    type: "website",
+  },
 };
 
 // ── Data fetching ─────────────────────────────────────────────────────────────

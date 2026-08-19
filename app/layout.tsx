@@ -5,7 +5,7 @@ import { Analytics } from "@vercel/analytics/react";
 import Script from "next/script";
 import JsonLd from "@/components/JsonLd";
 import ExitIntentPopup from "@/components/ExitIntentPopup";
-import { SITE_URL, organizationSchema, webSiteSchema } from "@/lib/site";
+import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, organizationSchema, webSiteSchema } from "@/lib/site";
 import "./globals.css";
 
 // Microsoft Clarity — qualitative analytics (session replay, heatmaps).
@@ -41,11 +41,26 @@ const barlowCondensed = Barlow_Condensed({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Men's Sole Revival",
+    default: SITE_NAME,
     template: "%s | Men's Sole Revival",
   },
-  description:
-    "Foot care, footwear, and the daily habits that keep men moving well into their best decades.",
+  description: SITE_DESCRIPTION,
+  // Site-wide OG + Twitter defaults — SEO Bundle 3 (2026-08-14).
+  // Per-route metadata merges on top, so this is a safety net for any
+  // route that doesn't set its own openGraph/twitter blocks.
+  openGraph: {
+    siteName: SITE_NAME,
+    type: "website",
+    locale: "en_US",
+    url: SITE_URL,
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+  },
 };
 
 export default function RootLayout({

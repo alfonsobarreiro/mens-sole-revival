@@ -20,6 +20,9 @@ export type GuideSeo = {
   metaTitle: string;
   metaDescription: string;
   datePublished: string;
+  /** Optional — falls back to datePublished. Bump when the article body
+   *  meaningfully changes (Bundle 2 SEO fix: split freshness signals). */
+  dateModified?: string;
   faq: GuideFaq[];
   sources: GuideSource[];
 };
@@ -239,14 +242,17 @@ export const guideSeo: Record<string, GuideSeo> = {
   },
 };
 
-/** Build the Next.js Metadata for a guide route (title, description, canonical, OG). */
+/** Build the Next.js Metadata for a guide route (title, description, canonical, OG).
+ *  SEO Bundle 3: title: { absolute } prevents the root template from double-
+ *  appending " | Men's Sole Revival" (guides currently 42-50 chars land at
+ *  60-66 after templating — over Google's SERP truncation window). */
 export function buildGuideMetadata(slug: string): Metadata {
   const seo = guideSeo[slug];
   const meta = articles[slug];
   if (!seo) return {};
   const canonical = `/guides/${slug}`;
   return {
-    title: seo.metaTitle,
+    title: { absolute: seo.metaTitle },
     description: seo.metaDescription,
     alternates: { canonical },
     openGraph: {
@@ -255,11 +261,19 @@ export function buildGuideMetadata(slug: string): Metadata {
       url: `${SITE_URL}${canonical}`,
       type: "article",
     },
+    twitter: {
+      card: "summary_large_image",
+      title: seo.metaTitle,
+      description: seo.metaDescription,
+    },
     ...(meta?.category ? { keywords: [meta.category, "men's foot health"] } : {}),
   };
 }
 
-/** Article + FAQPage JSON-LD for a guide, grounded in its visible content. */
+/** Article + FAQPage JSON-LD for a guide, grounded in its visible content.
+ *  SEO Bundle 2 fix: Article.author now Person (Alfonso), not Organization —
+ *  required for Article rich-result eligibility. Split published/modified so
+ *  Google can differentiate content freshness signals. */
 export function buildGuideSchema(slug: string) {
   const seo = guideSeo[slug];
   const meta = articles[slug];
@@ -272,9 +286,24 @@ export function buildGuideSchema(slug: string) {
     headline: seo.metaTitle,
     description: seo.metaDescription,
     datePublished: seo.datePublished,
-    dateModified: seo.datePublished,
-    author: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
-    publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+    dateModified: seo.dateModified ?? seo.datePublished,
+    inLanguage: "en-US",
+    author: {
+      "@type": "Person",
+      name: "Alfonso Barreiro",
+      url: `${SITE_URL}/about`,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_URL,
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}/icon.svg`,
+        width: 512,
+        height: 512,
+      },
+    },
     mainEntityOfPage: { "@type": "WebPage", "@id": url },
     ...(meta?.imageUrl ? { image: `${SITE_URL}${meta.imageUrl}` } : {}),
     ...(meta?.category ? { articleSection: meta.category } : {}),

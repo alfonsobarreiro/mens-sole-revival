@@ -20,7 +20,10 @@ export const SITE_DESCRIPTION =
   "Evidence-based foot-health guides, a 5-minute self-assessment, and daily routines for men over 40.";
 export const SITE_EMAIL = "alfonso@barreiro.com";
 
-/** Organization — emitted on every page from the root layout. */
+/** Organization — emitted on every page from the root layout.
+ *  SEO Bundle 2 additions: publisher.logo (required for Article rich results)
+ *  + sameAs (identity signals for knowledge panel).
+ */
 export const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -28,6 +31,16 @@ export const organizationSchema = {
   url: SITE_URL,
   description: SITE_DESCRIPTION,
   email: SITE_EMAIL,
+  logo: {
+    "@type": "ImageObject",
+    url: `${SITE_URL}/icon.svg`,
+    width: 512,
+    height: 512,
+  },
+  sameAs: [
+    "https://barreiro.com",
+    "https://www.linkedin.com/in/alfonsobarreiro/",
+  ],
   knowsAbout: [
     "foot health",
     "men's foot care",
@@ -46,6 +59,7 @@ export const webSiteSchema = {
   name: SITE_NAME,
   url: SITE_URL,
   description: SITE_DESCRIPTION,
+  inLanguage: "en-US",
   potentialAction: {
     "@type": "SearchAction",
     target: {

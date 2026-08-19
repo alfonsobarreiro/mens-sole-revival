@@ -8,8 +8,17 @@ import { Card } from "@/components/ui/Card";
 import { type } from "@/components/typography";
 
 export const metadata: Metadata = {
-  title: "About",
-  description: "The story behind Men's Sole Revival — why we're building this and who it's for.",
+  title: { absolute: "About Men's Sole Revival: Why We Built This" },
+  description:
+    "Built by Alfonso Barreiro for men over 40. Every guide traces the mechanism, then cites the research behind the fix. Foot care that starts before you need a podiatrist.",
+  alternates: { canonical: "/about" },
+  openGraph: {
+    title: "About Men's Sole Revival",
+    description:
+      "Built by Alfonso Barreiro for men over 40. Foot care that starts before you need a podiatrist.",
+    url: "/about",
+    type: "website",
+  },
 };
 
 // Values — three load-bearing operating principles. Copy tightened per

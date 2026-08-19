@@ -9,9 +9,17 @@ import { Tag } from "@/components/ui/Tag";
 import { type } from "@/components/typography";
 
 export const metadata: Metadata = {
-  title: "Routines | Men's Sole Revival",
+  title: { absolute: "Daily Foot-Care Routines for Men Over 40" },
   description:
-    "Daily and weekly foot care routines for men. Stretches, soaking, lotion, toe strengthening: what to actually do.",
+    "Stretches, soaks, daily habits, and treatment protocols for men over 40. Five to twenty minutes at a time, most days of the week — no gear required.",
+  alternates: { canonical: "/routines" },
+  openGraph: {
+    title: "Daily Foot-Care Routines for Men Over 40",
+    description:
+      "Stretches, soaks, daily habits, and treatment protocols for men over 40. Five to twenty minutes at a time, most days of the week.",
+    url: "/routines",
+    type: "website",
+  },
 };
 
 // ── Routine categories ──────────────────────────────────────────────────────
