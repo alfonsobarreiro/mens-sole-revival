@@ -9,6 +9,7 @@ import {
   ASSESSMENT_EVENTS,
   type AssessmentStats,
 } from "@/lib/ga-data";
+import { fetchListSizes, type ListSizes } from "@/lib/list-size";
 
 // Server component — runs on Node runtime (GA SDK needs Node crypto).
 export const runtime = "nodejs";
@@ -110,8 +111,70 @@ function SetupInstructions({ missing }: { missing: readonly string[] }) {
   );
 }
 
+// ── List-size widget ─────────────────────────────────────────────────────
+// Queries Resend audience + Sanity assessmentSubmission at request time.
+// Missing envs render "not configured" instead of failing.
+function ListSizeSection({ sizes }: { sizes: ListSizes }) {
+  return (
+    <div className="mt-16">
+      <h2 className={`${type.h2} text-ink`}>Email list</h2>
+      <p className={`mt-3 ${type.body} text-neutral-600`}>
+        Reachable contacts (Resend audience) + full submission history (Sanity).
+      </p>
+
+      <div className="mt-6 grid gap-6 md:grid-cols-2">
+        <Card variant="outline" className="p-6">
+          <p className={`${type.small} text-neutral-500`}>Resend audience</p>
+          {sizes.resendAudienceReady ? (
+            <>
+              <p className={`mt-2 ${type.h1} text-ink tabular-nums`}>
+                {sizes.resendAudienceSize != null ? fmt(sizes.resendAudienceSize) : "—"}
+              </p>
+              <p className={`mt-2 ${type.small} text-neutral-500`}>
+                Newsletter + assessment saves combined
+              </p>
+            </>
+          ) : (
+            <p className={`mt-2 ${type.small} text-neutral-500`}>
+              Set <code>RESEND_API_KEY</code> and <code>RESEND_AUDIENCE_ID</code>{" "}
+              in Vercel to see counts.
+            </p>
+          )}
+        </Card>
+
+        <Card variant="outline" className="p-6">
+          <p className={`${type.small} text-neutral-500`}>Assessment submissions</p>
+          {sizes.sanitySubmissionReady ? (
+            <>
+              <p className={`mt-2 ${type.h1} text-ink tabular-nums`}>
+                {sizes.sanitySubmissionCount != null ? fmt(sizes.sanitySubmissionCount) : "—"}
+              </p>
+              <p className={`mt-2 ${type.small} text-neutral-500`}>
+                Sanity <code>assessmentSubmission</code> documents (all-time)
+              </p>
+            </>
+          ) : (
+            <p className={`mt-2 ${type.small} text-neutral-500`}>
+              Set <code>NEXT_PUBLIC_SANITY_PROJECT_ID</code> +{" "}
+              <code>NEXT_PUBLIC_SANITY_DATASET</code> to see counts.
+            </p>
+          )}
+        </Card>
+      </div>
+
+      {sizes.errors.length > 0 && (
+        <ul className={`mt-4 ${type.small} text-signal-error space-y-1`}>
+          {sizes.errors.map((e, i) => (
+            <li key={i}>{e}</li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
 // ── Dashboard ────────────────────────────────────────────────────────────
-function Dashboard({ stats }: { stats: AssessmentStats }) {
+function Dashboard({ stats, sizes }: { stats: AssessmentStats; sizes: ListSizes }) {
   const started = stats.events.find((e) => e.name === "assessment_started")?.count ?? 0;
   const triage = stats.events.find((e) => e.name === "assessment_triage_done")?.count ?? 0;
   const results = stats.events.find((e) => e.name === "assessment_results_view")?.count ?? 0;
@@ -241,6 +304,9 @@ function Dashboard({ stats }: { stats: AssessmentStats }) {
               </table>
             </div>
 
+            {/* List sizes — Resend + Sanity totals */}
+            <ListSizeSection sizes={sizes} />
+
             {/* Range switcher */}
             <div className="mt-12 flex items-center gap-3">
               <p className={`${type.small} text-neutral-500`}>Range:</p>
@@ -305,6 +371,9 @@ export default async function AssessmentStatsPage({
   }
 
   const rangeDays = Number(days) || 28;
-  const stats = await fetchAssessmentStats(rangeDays);
-  return <Dashboard stats={stats} />;
+  const [stats, sizes] = await Promise.all([
+    fetchAssessmentStats(rangeDays),
+    fetchListSizes(),
+  ]);
+  return <Dashboard stats={stats} sizes={sizes} />;
 }
