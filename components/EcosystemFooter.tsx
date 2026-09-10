@@ -67,10 +67,12 @@ export default function EcosystemFooter({
         </div>
 
         <div className="grid gap-6 md:grid-cols-3">
-          {/* Routine card */}
+          {/* Routine card. Prefer the full sub-page URL when the routine has
+              one (movement/recovery/strength as of 2026-09-10), otherwise
+              fall back to the /routines index anchor. */}
           {routine && (
             <Link
-              href={`/routines#${routine.anchor}`}
+              href={routine.href ?? `/routines#${routine.anchor}`}
               className="group block transition"
             >
               <Card

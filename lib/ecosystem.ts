@@ -19,6 +19,11 @@ export type RoutineRef = {
    * results screen so the recommendation is actionable, not just a
    * read-this link. */
   action: string;
+  /** Optional full sub-page URL. When set, EcosystemFooter prefers this
+   * over the anchor scroll on /routines. Populated for routines that have
+   * their own /routines/[slug] page (movement, recovery, strength as of
+   * 2026-09-10; more to follow). */
+  href?: string;
 };
 
 /** Catalog of routines surfaced on /routines. Lightweight references — the
@@ -38,6 +43,7 @@ export const routines: Record<string, RoutineRef> = {
     heading: "The Sunday reset.",
     time: "20 min · once a week",
     action: "Pick a Sunday: foot soak, nail trim, heel cream with socks overnight.",
+    href: "/routines/weekly",
   },
   movement: {
     anchor: "movement",
@@ -45,6 +51,7 @@ export const routines: Record<string, RoutineRef> = {
     heading: "Plantar stretch sequence.",
     time: "3 min · every morning",
     action: "Do the three-move stretch sequence before your feet hit the floor for the next 14 mornings.",
+    href: "/routines/movement",
   },
   strength: {
     anchor: "strength",
@@ -52,6 +59,7 @@ export const routines: Record<string, RoutineRef> = {
     heading: "Toe spread and grip.",
     time: "5 min · 3x per week",
     action: "Three times this week: towel scrunches and toe spreads, five minutes each.",
+    href: "/routines/strength",
   },
   treatment: {
     anchor: "treatment",
@@ -66,6 +74,7 @@ export const routines: Record<string, RoutineRef> = {
     heading: "Lacrosse ball work.",
     time: "6 min · daily or as needed",
     action: "Roll the arch of each foot on a lacrosse ball for three minutes. Hold on tender spots.",
+    href: "/routines/recovery",
   },
 };
 
@@ -221,6 +230,17 @@ export const articles: Record<string, ArticleMeta> = {
     symptoms: ["pain", "footwear"],
     action: "Do the short-foot activation drill: 10 reps per side, 2x daily.",
   },
+  "achilles-tendon-pain-in-men-over-40": {
+    slug: "achilles-tendon-pain-in-men-over-40",
+    title: "Achilles Tendon Pain in Men Over 40: The Calf-Tightness Connection",
+    category: "Pain",
+    readTime: "7 min",
+    imageUrl: "/images/pexels-17979558.jpg",
+    excerpt:
+      "Achilles pain that flares with running, hills, or the first few steps after sitting is usually not the tendon on its own; it's the calf that pulls on it. The mechanism, the eccentric-load protocol with the strongest evidence, and when to see a specialist.",
+    symptoms: ["pain"],
+    action: "Start the eccentric heel-drop protocol: 3 sets of 15, once daily, 6 to 12 weeks.",
+  },
 };
 
 /** Convenience: array form for list iteration. */
@@ -331,6 +351,15 @@ export const articleRelations: Record<
       "plantar-fasciitis-exercises-for-men-over-40",
       "big-toe-and-your-whole-body",
       "what-your-dress-shoes-are-doing-to-your-feet",
+    ],
+  },
+  "achilles-tendon-pain-in-men-over-40": {
+    reviews: ["kuru-atom-sneakers", "superfeet-blue-insoles"],
+    routine: "movement",
+    relatedArticles: [
+      "plantar-fasciitis-exercises-for-men-over-40",
+      "heel-pain-first-thing-in-the-morning",
+      "why-your-feet-hurt-after-40",
     ],
   },
 };

@@ -360,6 +360,52 @@ export const guideSeo: Record<string, GuideSeo> = {
       { label: "American Podiatric Medical Association", url: "https://www.apma.org/" },
     ],
   },
+  "achilles-tendon-pain-in-men-over-40": {
+    metaTitle: "Achilles Tendon Pain in Men Over 40: What Actually Works",
+    metaDescription:
+      "Achilles pain that flares with running, hills, or first steps after sitting is usually the calf pulling on the tendon. The eccentric-load protocol with the strongest evidence, and when to escalate.",
+    datePublished: "2026-09-10",
+    faq: [
+      {
+        q: "Is Achilles pain in men over 40 always tendonitis?",
+        a: "The clinically correct term is tendinopathy, not tendonitis, because most Achilles pain past 40 involves degenerative changes in the tendon rather than acute inflammation. The name matters because inflammation responds to rest and ice, and tendinopathy needs graded loading. Rest alone lets the tendon get weaker, not stronger.",
+      },
+      {
+        q: "Why does it hurt worse in the morning?",
+        a: "The tendon and calf settle into a shortened position overnight. The first weight-bearing steps stretch that cold, tight tissue fast, and if the tendon has degenerative changes at the calcaneal insertion or mid-portion, the sudden stretch registers as sharp pain. Same mechanism as morning plantar fasciitis, different tissue.",
+      },
+      {
+        q: "Can I keep running through it?",
+        a: "Sometimes, at a reduced volume, with the eccentric-load protocol running in parallel. Pain during the run under 3 out of 10 is a workable ceiling; pain the next day back to baseline within 24 hours is a workable dose. If either threshold is breached, back off volume by half for a week and retry. Complete rest for weeks tends to make the tendon worse, not better.",
+      },
+      {
+        q: "How long until eccentric heel drops start working?",
+        a: "Most men see meaningful reduction in Achilles pain by week 6 to 8 of consistent daily eccentric loading. Some see it earlier (week 3 to 4), some later (week 12). If nothing has changed by week 12 despite consistency, book a sports podiatrist to rule out a partial tear.",
+      },
+      {
+        q: "Do heel lifts help?",
+        a: "Short-term, yes; long-term, no. A small heel lift (5 to 12 mm) reduces tension on the Achilles during walking, which lets the tendon quiet down. But wearing one indefinitely allows the calf to shorten further, which is the upstream cause of most Achilles pain in the first place. Use for 4 to 8 weeks alongside the eccentric protocol, then wean off.",
+      },
+      {
+        q: "When is it a partial tear versus tendinopathy?",
+        a: "Partial tears usually follow a specific event (a sprint, a jump, a step off a curb) with a sharp popping sensation, and the pain is severe enough that you can't push off. Tendinopathy is gradual, achy, and worse with load rather than instantly disabling. If it started with a specific painful moment, see a podiatrist before starting any protocol.",
+      },
+    ],
+    sources: [
+      {
+        label: "PubMed — Eccentric heel-drop protocol for Achilles tendinopathy (Alfredson 1998)",
+        url: "https://pubmed.ncbi.nlm.nih.gov/9617396/",
+      },
+      {
+        label: "NIH StatPearls — Achilles Tendinopathy",
+        url: "https://www.ncbi.nlm.nih.gov/books/NBK538149/",
+      },
+      {
+        label: "AAFP — Chronic Achilles Tendon Disorders",
+        url: "https://www.aafp.org/pubs/afp/issues/2019/0715/p86.html",
+      },
+    ],
+  },
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -442,6 +488,40 @@ export const routineSeo: Record<string, GuideSeo> = {
       {
         label: "NIH StatPearls — Plantar Fasciitis",
         url: "https://www.ncbi.nlm.nih.gov/books/NBK431073/",
+      },
+    ],
+  },
+  weekly: {
+    metaTitle: "The Sunday Foot Reset: A 20-Minute Weekly Routine for Men",
+    metaDescription:
+      "Foot soak, nail trim, callus knock-down, heel cream with socks overnight. Twenty minutes once a week. What most men skip until the cracks get bad, and how to stop that.",
+    datePublished: "2026-09-10",
+    faq: [
+      {
+        q: "Why Sunday specifically?",
+        a: "Any day works, but Sunday tends to stick because it doesn't compete with a workday and it primes the feet for the week ahead. Pick a day and hold it, whichever day makes it a habit. The consistency matters more than the specific day.",
+      },
+      {
+        q: "How hot should the foot soak be?",
+        a: "Comfortably warm, not hot. Around 100 to 104 F. Hot water strips more skin oil than warm water, which is counterproductive when the point of the routine is skin recovery. If it's too hot to keep your hand in, it's too hot for your feet.",
+      },
+      {
+        q: "Epsom salts or just plain water?",
+        a: "Plain works fine for most men. Epsom is a magnesium sulfate salt; the evidence for magnesium absorption through skin is weak, but the warm water plus the ritual of adding something makes people more consistent with the soak. Use it if it helps you stick with the routine.",
+      },
+      {
+        q: "Do I really need to trim nails weekly?",
+        a: "No. Most men over 40 need a nail trim every 2 to 3 weeks. What the weekly routine catches is nails that grew unevenly or picked up a rough edge, before that rough edge tears a sock or catches. A 30-second inspection with the trimmer nearby is the point, not always a full trim.",
+      },
+      {
+        q: "Can I do the routine in the shower instead of a soak?",
+        a: "Yes, but you lose the softening effect. A 10-minute warm soak softens callus and hard skin in a way a 3-minute shower doesn't. If you skip the soak, add urea cream (10 to 25 percent) after the shower to compensate; that's what makes the callus knock-down step actually work.",
+      },
+    ],
+    sources: [
+      {
+        label: "AAFP — Common Foot Problems: OTC Treatments and Home Care",
+        url: "https://www.aafp.org/pubs/afp/issues/2019/1015/p498.html",
       },
     ],
   },

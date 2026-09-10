@@ -63,6 +63,7 @@ const categories: RoutineCategory[] = [
     time: "20 min",
     frequency: "Once a week",
     icon: "🛁",
+    href: "/routines/weekly",
   },
   {
     anchor: "movement",
@@ -228,8 +229,8 @@ export default function RoutinesPage() {
                 More routines coming.
               </h2>
               <p className={`${type.lead} mt-3 text-neutral-600`}>
-                Movement, recovery, and strength are up. The remaining three
-                (daily, weekly, treatment) publish over the coming months with
+                Movement, recovery, strength, and weekly are up. The remaining
+                two (daily, treatment) publish over the coming months with
                 timing, product recommendations, and what to watch for.
                 Subscribe and we'll send them as they publish.
               </p>
