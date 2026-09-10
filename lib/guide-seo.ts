@@ -253,23 +253,23 @@ export const guideSeo: Record<string, GuideSeo> = {
     faq: [
       {
         q: "Why does my heel hurt only in the morning?",
-        a: "TODO — the plantar fascia shortens overnight; the first steps stretch it cold. Explain the windlass mechanism at rest and why the pattern (sharp first-steps + eases in minutes) is diagnostic for plantar fasciitis vs other heel conditions.",
+        a: "The plantar fascia settles into a shortened position overnight. The first weight-bearing step of the day stretches that shortened tissue cold and fast, and if the fascia is inflamed at the heel attachment (plantar fasciitis), that sudden stretch registers as sharp pain. Ten minutes of walking warms the tissue back up and the pain eases.",
       },
       {
         q: "Is morning heel pain always plantar fasciitis?",
-        a: "TODO — no. Achilles insertional pain hurts BEHIND the heel; heel spur pain doesn't have the same time-of-day pattern; stress fracture pain is constant, not first-steps. Give the differential in one paragraph and say when to escalate.",
+        a: "Not always, but most often yes in adults over 40. Achilles insertional pain hurts behind the heel rather than under it. A stress fracture produces constant deep bone pain that gets worse with activity, not first-steps pain that eases. Fat pad atrophy feels bruised and diffuse rather than sharp. If your pain follows a sharp-first-steps-that-eases pattern, plantar fasciitis is by far the most likely cause.",
       },
       {
         q: "How long does it take for plantar fasciitis to go away?",
-        a: "TODO — 6–12 weeks of consistent stretching resolves ~80% of cases. Timeline expectations per week (see article body).",
+        a: "About 80% of cases resolve within 6 to 12 weeks of consistent daily stretching. Most men see meaningful reduction in morning pain by week 4 and near-resolution by week 8. Cases that persist past 12 weeks usually need a podiatrist consult rather than more of the same protocol.",
       },
       {
         q: "Should I keep walking on it or rest?",
-        a: "TODO — rest doesn't fix PF; controlled tissue load does. Reduce high-impact activity but keep daily walking + morning stretch. Explain the pain-threshold rule (< 3/10 during activity, back to baseline within 24 hours).",
+        a: "Keep walking; add the stretch protocol. Rest doesn't fix plantar fasciitis, controlled tissue load does. Reduce high-impact activity like running or jumping during flare weeks, but maintain daily walking and the morning stretch. The threshold rule: pain during activity should stay under 3 out of 10 and return to baseline within 24 hours.",
       },
       {
         q: "When should I see a podiatrist for morning heel pain?",
-        a: "TODO — no improvement after 6 weeks of consistent stretching; pain becomes constant rather than first-steps; numbness or tingling; visible swelling; diabetes + any foot pain change; pain after a fall.",
+        a: "Book the visit if pain hasn't improved after 6 weeks of consistent daily stretching, if it becomes constant rather than first-steps only, if numbness or tingling enters the picture, if there is visible swelling or warmth, if you have diabetes with any change in foot pain, or if the pain followed a fall or awkward step.",
       },
     ],
     sources: [
@@ -291,27 +291,27 @@ export const guideSeo: Record<string, GuideSeo> = {
     faq: [
       {
         q: "What is the single best exercise for plantar fasciitis?",
-        a: "TODO — high-load eccentric calf raises with the heel over the edge of a step; strongest single-exercise evidence per current PT literature. Cite Rathleff 2015 or similar.",
+        a: "Single-leg calf raises with the heel over the edge of a step and a slow three-second lowering phase. That eccentric loading has the strongest evidence in the current physical therapy literature and outperforms conventional stretching in a meaningful share of stubborn cases. Do it three times a week, not daily, so the tissue can adapt.",
       },
       {
         q: "How often should I stretch for plantar fasciitis?",
-        a: "TODO — the morning 3-move protocol daily before the first step; add a mid-day round after any long sitting session. Consistency beats intensity.",
+        a: "Every morning before your first step, and again after any period of sitting longer than 20 minutes. The morning session is the highest-leverage window because the fascia is at its most shortened after overnight rest. Missing a morning resets some of the previous day's tissue-length gains, so consistency matters more than intensity.",
       },
       {
         q: "Can plantar fasciitis exercises make it worse?",
-        a: "TODO — briefly yes in week 1 as tissue re-loads; that's expected. Rule: pain shouldn't exceed 3/10 during exercise and should return to baseline within 24 hours. If either fails, back off.",
+        a: "Briefly, in week 1, as inflamed tissue loads for the first time in a while. That's expected and not a signal to stop. The rule: pain during exercise should stay under 3 out of 10, and next-day pain should return to your baseline within 24 hours. If either fails, drop the load and rebuild slower rather than pushing through.",
       },
       {
         q: "How long until I see improvement from the exercises?",
-        a: "TODO — week 4 checkpoint: morning pain noticeably shorter (< 2 min vs 5–10 min). Week 8: most men <2/10 with consistency. Week 12: most cases resolved.",
+        a: "Week 4 is the first honest checkpoint: morning pain should be noticeably shorter in duration and lower in peak intensity. By week 8, most men who do the protocol consistently are under 2 out of 10 for morning pain. If nothing has moved by week 4, layer in a night splint. If nothing has moved by week 12, book a podiatrist.",
       },
       {
         q: "Do I need a night splint for plantar fasciitis?",
-        a: "TODO — layer in only if morning pain hasn't improved by week 3–4 of consistent stretching. Not needed on day 1.",
+        a: "Not on day one. Add a night splint only if morning pain has not improved by week 3 or 4 of consistent daily stretching. The splint holds the foot at a slight upward angle overnight so the fascia stays at working length, which makes the morning stretch warm rather than cold. Evidence is moderate but positive for chronic cases.",
       },
       {
         q: "Should I stop running with plantar fasciitis?",
-        a: "TODO — depends on pain threshold rule. If running keeps pain > 3/10 or extends recovery > 24 hours, swap to swim/bike until baseline drops.",
+        a: "Only if running keeps pain above 3 out of 10 during activity, or if next-day pain doesn't return to baseline within 24 hours. If either fails, swap to swimming or cycling for a few weeks until the baseline drops, then reintroduce running gradually. Complete rest doesn't accelerate healing; controlled load does.",
       },
     ],
     sources: [
@@ -333,23 +333,23 @@ export const guideSeo: Record<string, GuideSeo> = {
     faq: [
       {
         q: "Why do my arches hurt only after walking?",
-        a: "TODO — the small intrinsic foot muscles that hold the arch under sustained load fatigue and ache. Not sharp, not first-steps (that's plantar fasciitis). Builds gradually over the day, eases fast with rest.",
+        a: "The small intrinsic muscles that share load with the plantar fascia and the tibialis posterior tendon fatigue under sustained walking, and once they're tired the arch structure has to hold itself up with less support. That's the ache. It builds gradually over the day rather than showing up in a single moment, and it eases fast with rest, which is what distinguishes it from morning heel pain (plantar fasciitis).",
       },
       {
         q: "Are flat feet the same as fallen arches?",
-        a: "TODO — no. Congenital flat feet are structural and usually painless. Acquired fallen arches (posterior tibial dysfunction) is progressive, asymmetric, and often involves inner-ankle pain. Explain the difference and when to see a podiatrist.",
+        a: "No. Congenital flat feet are structural, usually symmetric, and often painless throughout life. Acquired fallen arches (posterior tibial dysfunction) is progressive, usually asymmetric, and often shows up with inner-ankle pain rather than arch pain. If one arch looks visibly flatter than the other or has collapsed in the last year, that's the acquired version and it needs a podiatrist before you strengthen through it.",
       },
       {
         q: "Should I wear arch support if my arches hurt?",
-        a: "TODO — short-term yes if on feet 8+ hours daily; long-term over-reliance perpetuates the weakness that caused the pain. Rule: if you use an insole, still do the strength protocol.",
+        a: "Short-term yes if you're on your feet 8 or more hours daily for work. Long-term, over-reliance perpetuates the weakness that caused the pain, because the shoe does the intrinsics' job and the muscles never contract. The rule: if you use an insole, still do the strength protocol. The insole is scaffolding while you build the muscles, not a permanent replacement.",
       },
       {
         q: "What exercises strengthen the arch?",
-        a: "TODO — the short-foot activation drill is the foundation. Add towel scrunch, single-leg balance work. Progress from seated to standing to single-leg. 4-week timeline.",
+        a: "The short-foot activation drill is the foundation: sitting or standing with the foot flat, draw the ball of the foot toward the heel without curling the toes, hold five seconds, release. 10 reps per side, twice a day. Progress from seated to standing to single-leg over four weeks. Add towel scrunches for the toe flexors.",
       },
       {
         q: "How long does it take to strengthen weak arches?",
-        a: "TODO — 4–8 weeks of consistent daily short-foot work + graded walking usually resolves training-related arch pain. If pain persists past 8 weeks with consistency, escalate.",
+        a: "4 to 8 weeks of consistent daily short-foot activation plus graded walking volume resolves most training-related arch pain. Increase weekly walking by no more than 10 percent so the muscles can keep up. If pain persists past 8 weeks despite consistency, escalate to a podiatrist to rule out structural arch collapse.",
       },
     ],
     sources: [
