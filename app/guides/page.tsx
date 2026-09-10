@@ -7,7 +7,7 @@ import Image from "next/image";
 import Container from "@/components/Container";
 import SiteLayout from "@/components/SiteLayout";
 import AssessmentEntryStrip from "@/components/AssessmentEntryStrip";
-import { Button, Card, CardBody, Chip, Input, Tag } from "@/components/ui";
+import { Button, Card, CardBody, Chip, Input, NewBadge, Tag } from "@/components/ui";
 import { type } from "@/components/typography";
 import {
   articleList,
@@ -15,6 +15,7 @@ import {
   symptomOrder,
   type Symptom,
 } from "@/lib/ecosystem";
+import { guideSeo } from "@/lib/guide-seo";
 
 // Every category chip renders via DS Tag variant="accent-kicker", the
 // documented terracotta-kicker exception (accent-700 label on neutral-100).
@@ -172,6 +173,9 @@ function LearnContent() {
                       <Tag variant="accent-kicker" className="backdrop-blur-sm">
                         {a.category}
                       </Tag>
+                    </div>
+                    <div className="absolute top-3 right-3">
+                      <NewBadge date={guideSeo[a.slug]?.datePublished} />
                     </div>
                   </div>
 

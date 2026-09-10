@@ -6,6 +6,7 @@ import SiteLayout from "@/components/SiteLayout";
 import AssessmentEntryStrip from "@/components/AssessmentEntryStrip";
 import JsonLd from "@/components/JsonLd";
 import { Card } from "@/components/ui/Card";
+import { NewBadge } from "@/components/ui/NewBadge";
 import { Tag } from "@/components/ui/Tag";
 import { type } from "@/components/typography";
 import { buildBreadcrumb, buildItemList } from "@/lib/breadcrumb";
@@ -90,6 +91,9 @@ function ReviewCard({ review }: { review: Review }) {
               {verdict.label}
             </Tag>
           )}
+          <div className="absolute top-3 right-3">
+            <NewBadge date={review.publishedAt} />
+          </div>
         </div>
 
         {/* Body */}

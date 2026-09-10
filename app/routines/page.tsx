@@ -7,9 +7,11 @@ import AssessmentEntryStrip from "@/components/AssessmentEntryStrip";
 import JsonLd from "@/components/JsonLd";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { NewBadge } from "@/components/ui/NewBadge";
 import { Tag } from "@/components/ui/Tag";
 import { type } from "@/components/typography";
 import { buildBreadcrumb, buildItemList } from "@/lib/breadcrumb";
+import { routineSeo } from "@/lib/guide-seo";
 
 export const metadata: Metadata = {
   title: { absolute: "Daily Foot-Care Routines for Men Over 40" },
@@ -183,9 +185,12 @@ export default function RoutinesPage() {
                   <span className="text-xl leading-none" aria-hidden>
                     {r.icon}
                   </span>
-                  <Tag variant="accent-kicker" className="!px-0">
-                    {r.label}
-                  </Tag>
+                  <div className="flex items-center gap-2">
+                    <NewBadge date={routineSeo[r.anchor]?.datePublished} />
+                    <Tag variant="accent-kicker" className="!px-0">
+                      {r.label}
+                    </Tag>
+                  </div>
                 </div>
                 <h3 className={`${type.h3} text-ink`}>{r.heading}</h3>
                 <p className={`${type.body} mt-2 flex-1 text-neutral-600`}>

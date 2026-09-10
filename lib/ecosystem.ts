@@ -241,6 +241,17 @@ export const articles: Record<string, ArticleMeta> = {
     symptoms: ["pain"],
     action: "Start the eccentric heel-drop protocol: 3 sets of 15, once daily, 6 to 12 weeks.",
   },
+  "ball-of-foot-pain-in-men-over-40": {
+    slug: "ball-of-foot-pain-in-men-over-40",
+    title: "Ball-of-Foot Pain in Men Over 40 (Metatarsalgia): Causes and Fixes",
+    category: "Pain",
+    readTime: "7 min",
+    imageUrl: "/images/pexels-8729236.jpg",
+    excerpt:
+      "Burning or aching under the ball of the foot at the end of a standing day is metatarsalgia, and it's almost always driven by two things: fat-pad thinning after 40 and a narrow toe box loading a small area with too much force. Here's the fix.",
+    symptoms: ["pain", "footwear"],
+    action: "Get measured, switch to a wider toe box, add a metatarsal pad for a 4-week trial.",
+  },
 };
 
 /** Convenience: array form for list iteration. */
@@ -360,6 +371,15 @@ export const articleRelations: Record<
       "plantar-fasciitis-exercises-for-men-over-40",
       "heel-pain-first-thing-in-the-morning",
       "why-your-feet-hurt-after-40",
+    ],
+  },
+  "ball-of-foot-pain-in-men-over-40": {
+    reviews: ["kuru-atom-sneakers", "superfeet-blue-insoles"],
+    routine: "strength",
+    relatedArticles: [
+      "what-your-dress-shoes-are-doing-to-your-feet",
+      "why-your-feet-hurt-after-40",
+      "big-toe-and-your-whole-body",
     ],
   },
 };

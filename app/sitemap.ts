@@ -26,6 +26,7 @@ const ROUTE_LASTMOD: Record<string, string> = {
   "/guides/plantar-fasciitis-exercises-for-men-over-40": "2026-09-10",
   "/guides/arches-hurt-after-walking": "2026-09-10",
   "/guides/achilles-tendon-pain-in-men-over-40": "2026-09-10",
+  "/guides/ball-of-foot-pain-in-men-over-40": "2026-09-10",
   "/reviews": "2026-08-13",
   "/routines": "2026-09-10",
   "/routines/movement": "2026-09-10",

@@ -360,6 +360,52 @@ export const guideSeo: Record<string, GuideSeo> = {
       { label: "American Podiatric Medical Association", url: "https://www.apma.org/" },
     ],
   },
+  "ball-of-foot-pain-in-men-over-40": {
+    metaTitle: "Ball-of-Foot Pain in Men Over 40 (Metatarsalgia): What Fixes It",
+    metaDescription:
+      "Burning or aching under the ball of the foot at the end of a standing day is metatarsalgia. Two things drive it after 40: fat-pad thinning and narrow toe boxes. The specific fix, and when to see a specialist.",
+    datePublished: "2026-09-10",
+    faq: [
+      {
+        q: "What causes ball-of-foot pain in men over 40?",
+        a: "Two overlapping things drive most cases. First, the fat pad under the metatarsal heads thins and loses elasticity progressively from about age 40; less cushion means more direct bone-to-shoe pressure per step. Second, narrow-toe-box shoes force the metatarsal heads together and load the middle three heads with force meant for all five. Fat pad thinning is the biology; footwear is the trigger.",
+      },
+      {
+        q: "Is metatarsalgia the same as a Morton's neuroma?",
+        a: "No, and the distinction matters for treatment. Metatarsalgia is diffuse aching or burning across the ball of the foot, usually worse at end of day and better with rest. Morton's neuroma is a specific nerve entrapment between the 3rd and 4th metatarsal heads that produces sharp, shooting, sometimes electric pain often with the sensation of a pebble under the foot. If it feels sharp and specific rather than diffuse and dull, see a podiatrist.",
+      },
+      {
+        q: "Do metatarsal pads actually work?",
+        a: "Yes, when placed correctly. A metatarsal pad sits just BEHIND the metatarsal heads (proximal to them), not directly under them, so it lifts the arch of the metatarsal bones and offloads the heads. Placement is the whole game; a pad in the wrong spot makes the pain worse. Buy an off-the-shelf pad (Pedag, Superfeet), position it, walk in it for 20 minutes, adjust until end-of-day pain drops by half.",
+      },
+      {
+        q: "Can I fix this with better shoes alone?",
+        a: "Sometimes, if the shoe change is significant. Wider toe box (measure at the ball of foot, not the toe tip), lower heel-to-toe drop (8 mm or less), and a firmer forefoot rocker sole together offload the metatarsal heads meaningfully. Add a metatarsal pad in the new shoe for maximum effect. Most men who buy new shoes without the pad get partial relief and give up too soon.",
+      },
+      {
+        q: "How long until it improves?",
+        a: "Most training-related metatarsalgia improves noticeably within 4 to 6 weeks of the shoe fix plus met-pad plus a graded reduction in standing/walking volume. If nothing has changed by week 6 with consistency, book a podiatrist to rule out a stress fracture, a neuroma, or capsulitis.",
+      },
+      {
+        q: "Are cortisone injections worth it?",
+        a: "For confirmed neuroma or capsulitis at the metatarsal joint, cortisone can quiet the flare enough to make the shoe-and-pad protocol tolerable. For plain metatarsalgia driven by fat-pad thinning, cortisone doesn't address the mechanism and repeated injections can further thin the fat pad. Ask specifically what the injection is targeting before agreeing.",
+      },
+    ],
+    sources: [
+      {
+        label: "NIH StatPearls — Metatarsalgia",
+        url: "https://www.ncbi.nlm.nih.gov/books/NBK560873/",
+      },
+      {
+        label: "PMC — Fat Pad Atrophy in the Foot",
+        url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC7304558/",
+      },
+      {
+        label: "AAFP — Metatarsalgia: Common Causes and Treatment",
+        url: "https://www.aafp.org/pubs/afp/issues/2019/0715/p86.html",
+      },
+    ],
+  },
   "achilles-tendon-pain-in-men-over-40": {
     metaTitle: "Achilles Tendon Pain in Men Over 40: What Actually Works",
     metaDescription:

@@ -16,6 +16,8 @@ export type { DialogProps } from "./Dialog";
 export { Tag } from "./Tag";
 export type { TagProps, TagVariant } from "./Tag";
 
+export { NewBadge } from "./NewBadge";
+
 export { Chip } from "./Chip";
 export type { ChipProps } from "./Chip";
 
