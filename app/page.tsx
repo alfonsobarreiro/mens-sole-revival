@@ -31,6 +31,9 @@ export const metadata: Metadata = {
 // `slug` matches a key in routineSeo (lib/guide-seo.ts). When set, NewBadge
 // lights up for the 30-day post-publish window; when unset (Daily doesn't
 // have its own sub-page yet), NewBadge silently renders nothing.
+// Order per feedback_new_articles_top_of_list: the two routines that
+// gained sub-pages on 2026-09-10 lead. Daily trails as the evergreen
+// anchor-only category.
 const routineHighlights: {
   label: string;
   title: string;
@@ -40,14 +43,6 @@ const routineHighlights: {
   image: string;
   slug?: keyof typeof routineSeo;
 }[] = [
-  {
-    label: "Daily",
-    title: "The nightly 5 minutes.",
-    desc: "Wash, dry, inspect, moisturize. Done before your phone goes to the charger.",
-    time: "5 min / every night",
-    href: "/routines",
-    image: "/images/pexels-4909313.jpg",
-  },
   {
     label: "Stretch",
     title: "Plantar stretch sequence.",
@@ -65,6 +60,14 @@ const routineHighlights: {
     href: "/routines/recovery",
     image: "/images/pexels-8729018.jpg",
     slug: "recovery",
+  },
+  {
+    label: "Daily",
+    title: "The nightly 5 minutes.",
+    desc: "Wash, dry, inspect, moisturize. Done before your phone goes to the charger.",
+    time: "5 min / every night",
+    href: "/routines",
+    image: "/images/pexels-4909313.jpg",
   },
 ];
 

@@ -117,7 +117,68 @@ export type ArticleMeta = {
   action: string;
 };
 
+// Insertion order = /guides page render order (articleList = Object.values).
+// Rule per feedback_new_articles_top_of_list: NEW articles go at the TOP,
+// not appended. Reverse-chronological by default so the [[new-badge]] lands
+// where users scan first.
 export const articles: Record<string, ArticleMeta> = {
+  // ── Latest: 2026-09-10 pain-cluster expansion (newest first).
+  "ball-of-foot-pain-in-men-over-40": {
+    slug: "ball-of-foot-pain-in-men-over-40",
+    title: "Ball-of-Foot Pain in Men Over 40 (Metatarsalgia): Causes and Fixes",
+    category: "Pain",
+    readTime: "7 min",
+    imageUrl: "/images/pexels-8729236.jpg",
+    excerpt:
+      "Burning or aching under the ball of the foot at the end of a standing day is metatarsalgia, and it's almost always driven by two things: fat-pad thinning after 40 and a narrow toe box loading a small area with too much force. Here's the fix.",
+    symptoms: ["pain", "footwear"],
+    action: "Get measured, switch to a wider toe box, add a metatarsal pad for a 4-week trial.",
+  },
+  "achilles-tendon-pain-in-men-over-40": {
+    slug: "achilles-tendon-pain-in-men-over-40",
+    title: "Achilles Tendon Pain in Men Over 40: The Calf-Tightness Connection",
+    category: "Pain",
+    readTime: "7 min",
+    imageUrl: "/images/pexels-17979558.jpg",
+    excerpt:
+      "Achilles pain that flares with running, hills, or the first few steps after sitting is usually not the tendon on its own; it's the calf that pulls on it. The mechanism, the eccentric-load protocol with the strongest evidence, and when to see a specialist.",
+    symptoms: ["pain"],
+    action: "Start the eccentric heel-drop protocol: 3 sets of 15, once daily, 6 to 12 weeks.",
+  },
+  "arches-hurt-after-walking": {
+    slug: "arches-hurt-after-walking",
+    title: "Why Your Arches Hurt After Walking (And How to Strengthen Them)",
+    category: "Pain",
+    readTime: "6 min",
+    imageUrl: "/images/pexels-7205913.jpg",
+    excerpt:
+      "Arch pain after a long walk usually traces to weak intrinsic muscles under a fine structure, or over-supportive shoes doing the muscles' work. Here's how to tell which, and the strength protocol that fixes both.",
+    symptoms: ["pain", "footwear"],
+    action: "Do the short-foot activation drill: 10 reps per side, 2x daily.",
+  },
+  "plantar-fasciitis-exercises-for-men-over-40": {
+    slug: "plantar-fasciitis-exercises-for-men-over-40",
+    title: "Plantar Fasciitis Exercises for Men Over 40: What Actually Works",
+    category: "Pain",
+    readTime: "8 min",
+    imageUrl: "/images/pexels-4909313.jpg",
+    excerpt:
+      "Ranked by evidence: the 3 morning stretches, the 3 strength moves, the weekly progression, and the mistakes that keep the pain going. Calibrated for men over 40.",
+    symptoms: ["pain"],
+    action: "Start the morning 3-move stretch daily; add the strength 3 moves 3x per week.",
+  },
+  "heel-pain-first-thing-in-the-morning": {
+    slug: "heel-pain-first-thing-in-the-morning",
+    title: "Heel Pain First Thing in the Morning: What It Means and How to Fix It",
+    category: "Pain",
+    readTime: "7 min",
+    imageUrl: "/images/pexels-9467290.jpg",
+    excerpt:
+      "Sharp heel pain in the first few steps out of bed that eases within minutes is the classic plantar fasciitis pattern. Here's the mechanism, the diagnostic self-check, and the 4-week protocol.",
+    symptoms: ["pain"],
+    action: "Do the 3-move morning stretch (calf, plantar fascia, wall calf) before your first step for 4 weeks.",
+  },
+  // ── Evergreen: pillar + earlier guides.
   "why-your-feet-hurt-after-40": {
     slug: "why-your-feet-hurt-after-40",
     title: "Why Your Feet Hurt After 40 (and What's Actually Going On)",
@@ -194,63 +255,6 @@ export const articles: Record<string, ArticleMeta> = {
       "Consistency beats intensity. A five-minute habit done after your shower produces dramatically better long-term outcomes than anything more ambitious you'll quit.",
     symptoms: ["skin", "nails"],
     action: "Tonight, anchor a 5-minute foot-care habit to your shower or bedtime routine.",
-  },
-  // ── Symptom articles added 2026-09-10 to open the educational-query
-  // acquisition channel. Currently scaffolds; Alfonso writes bodies.
-  "heel-pain-first-thing-in-the-morning": {
-    slug: "heel-pain-first-thing-in-the-morning",
-    title: "Heel Pain First Thing in the Morning: What It Means and How to Fix It",
-    category: "Pain",
-    readTime: "7 min",
-    imageUrl: "/images/pexels-9467290.jpg",
-    excerpt:
-      "Sharp heel pain in the first few steps out of bed that eases within minutes is the classic plantar fasciitis pattern. Here's the mechanism, the diagnostic self-check, and the 4-week protocol.",
-    symptoms: ["pain"],
-    action: "Do the 3-move morning stretch (calf, plantar fascia, wall calf) before your first step for 4 weeks.",
-  },
-  "plantar-fasciitis-exercises-for-men-over-40": {
-    slug: "plantar-fasciitis-exercises-for-men-over-40",
-    title: "Plantar Fasciitis Exercises for Men Over 40: What Actually Works",
-    category: "Pain",
-    readTime: "8 min",
-    imageUrl: "/images/pexels-4909313.jpg",
-    excerpt:
-      "Ranked by evidence: the 3 morning stretches, the 3 strength moves, the weekly progression, and the mistakes that keep the pain going. Calibrated for men over 40.",
-    symptoms: ["pain"],
-    action: "Start the morning 3-move stretch daily; add the strength 3 moves 3x per week.",
-  },
-  "arches-hurt-after-walking": {
-    slug: "arches-hurt-after-walking",
-    title: "Why Your Arches Hurt After Walking (And How to Strengthen Them)",
-    category: "Pain",
-    readTime: "6 min",
-    imageUrl: "/images/pexels-7205913.jpg",
-    excerpt:
-      "Arch pain after a long walk usually traces to weak intrinsic muscles under a fine structure, or over-supportive shoes doing the muscles' work. Here's how to tell which, and the strength protocol that fixes both.",
-    symptoms: ["pain", "footwear"],
-    action: "Do the short-foot activation drill: 10 reps per side, 2x daily.",
-  },
-  "achilles-tendon-pain-in-men-over-40": {
-    slug: "achilles-tendon-pain-in-men-over-40",
-    title: "Achilles Tendon Pain in Men Over 40: The Calf-Tightness Connection",
-    category: "Pain",
-    readTime: "7 min",
-    imageUrl: "/images/pexels-17979558.jpg",
-    excerpt:
-      "Achilles pain that flares with running, hills, or the first few steps after sitting is usually not the tendon on its own; it's the calf that pulls on it. The mechanism, the eccentric-load protocol with the strongest evidence, and when to see a specialist.",
-    symptoms: ["pain"],
-    action: "Start the eccentric heel-drop protocol: 3 sets of 15, once daily, 6 to 12 weeks.",
-  },
-  "ball-of-foot-pain-in-men-over-40": {
-    slug: "ball-of-foot-pain-in-men-over-40",
-    title: "Ball-of-Foot Pain in Men Over 40 (Metatarsalgia): Causes and Fixes",
-    category: "Pain",
-    readTime: "7 min",
-    imageUrl: "/images/pexels-8729236.jpg",
-    excerpt:
-      "Burning or aching under the ball of the foot at the end of a standing day is metatarsalgia, and it's almost always driven by two things: fat-pad thinning after 40 and a narrow toe box loading a small area with too much force. Here's the fix.",
-    symptoms: ["pain", "footwear"],
-    action: "Get measured, switch to a wider toe box, add a metatarsal pad for a 4-week trial.",
   },
 };
 

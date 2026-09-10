@@ -45,28 +45,12 @@ type RoutineCategory = {
   href?: string;
 };
 
+// Order per feedback_new_articles_top_of_list: newest first. The four
+// routine sub-pages shipped 2026-09-10 (movement / recovery / strength /
+// weekly) lead; the two anchor-only categories (daily → covered by
+// /guides/5-minute-routine, treatment → covered by toenail-fungus guide)
+// trail until they earn their own sub-page.
 const categories: RoutineCategory[] = [
-  {
-    anchor: "daily",
-    label: "Daily",
-    heading: "The nightly 5 minutes.",
-    body:
-      "Wash, dry, inspect, moisturize. Done before your phone goes to the charger. This is the foundation.",
-    time: "5 min",
-    frequency: "Every night",
-    icon: "🌙",
-  },
-  {
-    anchor: "weekly",
-    label: "Weekly",
-    heading: "The Sunday reset.",
-    body:
-      "Foot soak, nail trim, heel treatment. Once a week, 20 minutes.",
-    time: "20 min",
-    frequency: "Once a week",
-    icon: "🛁",
-    href: "/routines/weekly",
-  },
   {
     anchor: "movement",
     label: "Movement",
@@ -77,6 +61,17 @@ const categories: RoutineCategory[] = [
     frequency: "Every morning",
     icon: "🦶",
     href: "/routines/movement",
+  },
+  {
+    anchor: "recovery",
+    label: "Recovery",
+    heading: "Lacrosse ball work.",
+    body:
+      "Roll the arch, hold on the sore spot, let it release. Three minutes on each foot. Combine with the plantar stretch for results you'll feel within a week.",
+    time: "6 min",
+    frequency: "Daily or as needed",
+    icon: "⚽",
+    href: "/routines/recovery",
   },
   {
     anchor: "strength",
@@ -90,6 +85,27 @@ const categories: RoutineCategory[] = [
     href: "/routines/strength",
   },
   {
+    anchor: "weekly",
+    label: "Weekly",
+    heading: "The Sunday reset.",
+    body:
+      "Foot soak, nail trim, heel treatment. Once a week, 20 minutes.",
+    time: "20 min",
+    frequency: "Once a week",
+    icon: "🛁",
+    href: "/routines/weekly",
+  },
+  {
+    anchor: "daily",
+    label: "Daily",
+    heading: "The nightly 5 minutes.",
+    body:
+      "Wash, dry, inspect, moisturize. Done before your phone goes to the charger. This is the foundation.",
+    time: "5 min",
+    frequency: "Every night",
+    icon: "🌙",
+  },
+  {
     anchor: "treatment",
     label: "Treatment",
     heading: "Antifungal protocol.",
@@ -98,17 +114,6 @@ const categories: RoutineCategory[] = [
     time: "2 min",
     frequency: "Twice daily",
     icon: "💊",
-  },
-  {
-    anchor: "recovery",
-    label: "Recovery",
-    heading: "Lacrosse ball work.",
-    body:
-      "Roll the arch, hold on the sore spot, let it release. Three minutes on each foot. Combine with the plantar stretch for results you'll feel within a week.",
-    time: "6 min",
-    frequency: "Daily or as needed",
-    icon: "⚽",
-    href: "/routines/recovery",
   },
 ];
 
