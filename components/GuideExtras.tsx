@@ -1,14 +1,24 @@
 import Container from "@/components/Container";
-import { guideSeo } from "@/lib/guide-seo";
+import { guideSeo, routineSeo } from "@/lib/guide-seo";
 
 /**
  * Visible "Common questions" + "Sources" block rendered at the foot of every
- * guide. The FAQ and source data come from lib/guide-seo.ts — the SAME data the
- * FAQPage/Article JSON-LD is built from — so the structured data always matches
- * what's on the page. Renders nothing if the slug has no SEO entry.
+ * guide OR routine sub-page. The FAQ and source data come from
+ * lib/guide-seo.ts — the SAME data the FAQPage/Article JSON-LD is built from —
+ * so the structured data always matches what's on the page. Renders nothing if
+ * the slug has no SEO entry in the requested catalog.
+ *
+ * `contentType` (default "guide") selects which catalog to read from so routine
+ * sub-pages can reuse the same visible-FAQ + sources treatment.
  */
-export default function GuideExtras({ slug }: { slug: string }) {
-  const seo = guideSeo[slug];
+export default function GuideExtras({
+  slug,
+  contentType = "guide",
+}: {
+  slug: string;
+  contentType?: "guide" | "routine";
+}) {
+  const seo = contentType === "routine" ? routineSeo[slug] : guideSeo[slug];
   if (!seo) return null;
 
   return (

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import Container from "@/components/Container";
 import SiteLayout from "@/components/SiteLayout";
 import AssessmentEntryStrip from "@/components/AssessmentEntryStrip";
@@ -26,8 +27,23 @@ export const metadata: Metadata = {
 
 // ── Routine categories ──────────────────────────────────────────────────────
 // Aphoristic card-closes swept per feedback_no_aphorisms.
+// href set on categories with a dedicated sub-page (shipped 2026-09-10):
+// movement / recovery / strength. Anchor id preserved on all six for legacy
+// links and internal cross-refs to `/routines#<anchor>`.
 
-const categories = [
+type RoutineCategory = {
+  anchor: string;
+  label: string;
+  heading: string;
+  body: string;
+  time: string;
+  frequency: string;
+  icon: string;
+  /** When set, the card becomes a clickable link to the full sub-page. */
+  href?: string;
+};
+
+const categories: RoutineCategory[] = [
   {
     anchor: "daily",
     label: "Daily",
@@ -57,6 +73,7 @@ const categories = [
     time: "3 min",
     frequency: "Every morning",
     icon: "🦶",
+    href: "/routines/movement",
   },
   {
     anchor: "strength",
@@ -67,6 +84,7 @@ const categories = [
     time: "5 min",
     frequency: "3x per week",
     icon: "💪",
+    href: "/routines/strength",
   },
   {
     anchor: "treatment",
@@ -87,6 +105,7 @@ const categories = [
     time: "6 min",
     frequency: "Daily or as needed",
     icon: "⚽",
+    href: "/routines/recovery",
   },
 ];
 
@@ -98,7 +117,9 @@ const routinesSchema = [
     "Daily Foot-Care Routines for Men Over 40",
     categories.map((r) => ({
       name: r.heading,
-      path: `/routines#${r.anchor}`,
+      // Point ItemList at the full sub-page URL where one exists; otherwise
+      // fall back to the anchor within /routines.
+      path: r.href ?? `/routines#${r.anchor}`,
       description: `${r.label} · ${r.time} · ${r.frequency}`,
     })),
   ),
@@ -184,22 +205,31 @@ export default function RoutinesPage() {
                     </span>
                   </span>
                 </div>
+                {r.href && (
+                  <Link
+                    href={r.href}
+                    className={`${type.small} mt-4 font-medium text-accent-600 underline-offset-4 hover:underline`}
+                  >
+                    Read the full routine →
+                  </Link>
+                )}
               </Card>
             ))}
           </div>
         </Container>
       </section>
 
-      {/* ── Coming soon callout ── */}
+      {/* ── Newsletter callout ── */}
       <section className="border-t border-neutral-200 bg-neutral-100 py-16 md:py-24">
         <Container>
           <div className="md:flex md:items-center md:justify-between">
             <div className="max-w-xl">
               <h2 className={`${type.h2} text-ink`}>
-                Full routine guides.
+                More routines coming.
               </h2>
               <p className={`${type.lead} mt-3 text-neutral-600`}>
-                Each routine above is becoming a full step-by-step guide with
+                Movement, recovery, and strength are up. The remaining three
+                (daily, weekly, treatment) publish over the coming months with
                 timing, product recommendations, and what to watch for.
                 Subscribe and we'll send them as they publish.
               </p>

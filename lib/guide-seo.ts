@@ -362,6 +362,129 @@ export const guideSeo: Record<string, GuideSeo> = {
   },
 };
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Routine sub-page SEO catalog (2026-09-10). Parallel to guideSeo but for
+// /routines/[slug]. Ships 3 of 6 categories initially (movement, recovery,
+// strength); daily is covered by /guides/5-minute-routine, weekly + treatment
+// deferred pending measurement.
+// ─────────────────────────────────────────────────────────────────────────────
+export const routineSeo: Record<string, GuideSeo> = {
+  movement: {
+    metaTitle: "The Plantar Stretch Sequence: A 3-Minute Morning Routine",
+    metaDescription:
+      "The three-move plantar and calf stretch protocol men over 40 can do in bed. Three minutes, done before your feet hit the floor. Four weeks to noticeable morning-pain reduction for most.",
+    datePublished: "2026-09-10",
+    faq: [
+      {
+        q: "Why is the morning stretch specifically important?",
+        a: "The plantar fascia and calves settle into a shortened position overnight. The first step lands on cold, shortened tissue, which is why morning heel pain is sharper than pain at any other time of day. Stretching the tissue back to working length before the first weight-bearing step is what changes what that step feels like.",
+      },
+      {
+        q: "Can I do this stretch protocol every day, or is that too much?",
+        a: "Every day. Stretching is not the same as loading; the tissue adapts to length daily and detrains within about 48 hours if you skip. Daily is the mechanism. If you can only do it every other day, you'll still get some benefit, but the results plateau earlier.",
+      },
+      {
+        q: "What if I don't have a towel or band?",
+        a: "Loop your hands around the ball of your foot and pull the toes back toward your shin. Same stretch, same 30-second hold. The band is a convenience, not a requirement. Do the version you'll actually do.",
+      },
+      {
+        q: "How long until I feel a difference?",
+        a: "Most men over 40 doing this daily see meaningful reduction in morning stiffness by week 4. Sharp first-steps pain typically eases within 2 minutes rather than 8 by week 4, and drops to under 2 out of 10 for most by week 8. If nothing has changed by week 4, add strength work or see a podiatrist.",
+      },
+      {
+        q: "Should I do this if I don't have plantar fasciitis?",
+        a: "Yes if you're over 40 and sit for a living. The calf and fascia stiffen over decades of sitting and shod feet; the morning stretch is preventive as much as treatment. If you're already doing it as prevention and pain shows up anyway, you'll have a much easier time reversing it.",
+      },
+    ],
+    sources: [
+      {
+        label: "NIH StatPearls — Plantar Fasciitis",
+        url: "https://www.ncbi.nlm.nih.gov/books/NBK431073/",
+      },
+      {
+        label: "PubMed — High-load strength training in plantar fasciitis (Rathleff 2015)",
+        url: "https://pubmed.ncbi.nlm.nih.gov/25145882/",
+      },
+    ],
+  },
+  recovery: {
+    metaTitle: "The 6-Minute Foot Recovery Routine: Arch Release with a Ball",
+    metaDescription:
+      "How to release a tight plantar fascia and tired arches at home with a lacrosse or tennis ball. Six minutes total, three techniques, evidence-based. Not for acute flares.",
+    datePublished: "2026-09-10",
+    faq: [
+      {
+        q: "Lacrosse ball or tennis ball, does it matter?",
+        a: "Lacrosse ball for men over 40 whose feet have been on hard floors for decades. Tennis ball is softer and easier to start on if the lacrosse ball is uncomfortable, but it dissipates pressure over a wider area, which is less effective for a specific tender spot. Start with tennis, graduate to lacrosse.",
+      },
+      {
+        q: "How hard should the pressure be?",
+        a: "5 or 6 out of 10 on a pressure-discomfort scale. It should be uncomfortable enough that you can feel exactly where the muscle is releasing, but not so hard you're tensing up or holding your breath. Grinding harder is not more effective; it's how bruising happens.",
+      },
+      {
+        q: "Can I do this during a plantar fasciitis flare?",
+        a: "No. Aggressive rolling on inflamed tissue extends the flare rather than accelerating recovery. Wait until sharp first-steps pain is under 3 out of 10 for a full week before starting release work. In the meantime, use the movement routine and stay off hard floors barefoot.",
+      },
+      {
+        q: "When during the day should I do this?",
+        a: "End of day, after your feet have been loaded. That's when the intrinsic muscles are tightest and when release has the most to work on. Some men prefer 20 minutes after taking their shoes off, some prefer it as the last thing before bed. Either works.",
+      },
+      {
+        q: "How often should I do it?",
+        a: "Daily during the first 2 weeks of a build-up (post-standing, post-long-walk, post-shoe-change). After that, most men shift to alternate days as maintenance. Every day forever is fine too; it doesn't overtrain the tissue the way daily strength work would.",
+      },
+    ],
+    sources: [
+      {
+        label: "PubMed — Myofascial release for plantar fasciitis (Ajimsha 2014)",
+        url: "https://pubmed.ncbi.nlm.nih.gov/24519605/",
+      },
+      {
+        label: "NIH StatPearls — Plantar Fasciitis",
+        url: "https://www.ncbi.nlm.nih.gov/books/NBK431073/",
+      },
+    ],
+  },
+  strength: {
+    metaTitle: "Foot Strengthening for Men Over 40: The Weekly Protocol",
+    metaDescription:
+      "Three foot-strengthening exercises men over 40 can do in 5 minutes, three times a week. Wakes up the small foot muscles that decades of supportive shoes atrophied. Not a stretch routine. This is load.",
+    datePublished: "2026-09-10",
+    faq: [
+      {
+        q: "Why three times a week instead of daily?",
+        a: "Strength work adapts on rest days, not on load days. Daily strength loading of the same muscle group is where overuse injuries come from. The intrinsic foot muscles are small; they need 48 hours between sessions to get stronger. Every day is not more; it's less.",
+      },
+      {
+        q: "Can I do this if my feet already hurt?",
+        a: "Start with the stretch routine first, get pain down to under 3 out of 10, then add strength work in week 2 or 3. Loading tissue that's currently in a flare doesn't accelerate healing; it extends it. Prescribe order matters.",
+      },
+      {
+        q: "How long until I get stronger?",
+        a: "Most men over 40 can't do a proper short-foot activation on the first try. The intrinsics have been dormant for decades. It takes 2 to 3 weeks of practice to isolate the muscle at all. Actual strength gains show up around week 4 to 6, and structural change (less arch collapse under load) shows up around week 8 to 12.",
+      },
+      {
+        q: "Do I need equipment?",
+        a: "A hand towel is enough. Some men add a resistance band for toe-spread work or a wobble board for progression, but neither is required. The three foundational exercises use no equipment beyond the towel.",
+      },
+      {
+        q: "Should I stop if I feel muscle soreness?",
+        a: "Mild soreness the day after is normal and expected; it's the same mechanism as any strength work. Sharp pain during the exercise is a signal to stop; that's not adaptation, it's irritation. Muscle soreness that lasts more than 3 days means the dose was too high.",
+      },
+    ],
+    sources: [
+      {
+        label: "PubMed — Intrinsic foot muscle strengthening (Mulligan 2013)",
+        url: "https://pubmed.ncbi.nlm.nih.gov/23570729/",
+      },
+      {
+        label: "PubMed — High-load strength training in plantar fasciitis (Rathleff 2015)",
+        url: "https://pubmed.ncbi.nlm.nih.gov/25145882/",
+      },
+    ],
+  },
+};
+
 /** Build the Next.js Metadata for a guide route (title, description, canonical, OG).
  *  SEO Bundle 3: title: { absolute } prevents the root template from double-
  *  appending " | Men's Sole Revival" (guides currently 42-50 chars land at
@@ -443,6 +566,82 @@ export function buildGuideSchema(slug: string) {
   const breadcrumb = buildBreadcrumb([
     { name: "Guides", path: "/guides" },
     { name: seo.metaTitle, path: `/guides/${slug}` },
+  ]);
+
+  return [article, faqPage, breadcrumb];
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Routine metadata + schema (2026-09-10). Mirrors buildGuideMetadata /
+// buildGuideSchema but points canonical + JSON-LD trail at /routines/[slug].
+// ─────────────────────────────────────────────────────────────────────────────
+export function buildRoutineMetadata(slug: string): Metadata {
+  const seo = routineSeo[slug];
+  if (!seo) return {};
+  const canonical = `/routines/${slug}`;
+  return {
+    title: { absolute: seo.metaTitle },
+    description: seo.metaDescription,
+    alternates: { canonical },
+    openGraph: {
+      title: seo.metaTitle,
+      description: seo.metaDescription,
+      url: `${SITE_URL}${canonical}`,
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: seo.metaTitle,
+      description: seo.metaDescription,
+    },
+  };
+}
+
+export function buildRoutineSchema(slug: string) {
+  const seo = routineSeo[slug];
+  if (!seo) return [];
+  const url = `${SITE_URL}/routines/${slug}`;
+
+  const article = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: seo.metaTitle,
+    description: seo.metaDescription,
+    datePublished: seo.datePublished,
+    dateModified: seo.dateModified ?? seo.datePublished,
+    inLanguage: "en-US",
+    author: {
+      "@type": "Person",
+      name: "Alfonso Barreiro",
+      url: `${SITE_URL}/about`,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_URL,
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}/icon.svg`,
+        width: 512,
+        height: 512,
+      },
+    },
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+  };
+
+  const faqPage = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: seo.faq.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+
+  const breadcrumb = buildBreadcrumb([
+    { name: "Routines", path: "/routines" },
+    { name: seo.metaTitle, path: `/routines/${slug}` },
   ]);
 
   return [article, faqPage, breadcrumb];

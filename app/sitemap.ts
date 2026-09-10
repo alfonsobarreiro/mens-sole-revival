@@ -26,7 +26,10 @@ const ROUTE_LASTMOD: Record<string, string> = {
   "/guides/plantar-fasciitis-exercises-for-men-over-40": "2026-09-10",
   "/guides/arches-hurt-after-walking": "2026-09-10",
   "/reviews": "2026-08-13",
-  "/routines": "2026-08-14",
+  "/routines": "2026-09-10",
+  "/routines/movement": "2026-09-10",
+  "/routines/recovery": "2026-09-10",
+  "/routines/strength": "2026-09-10",
   "/newsletter": "2026-08-14",
   "/foot-check": "2026-08-03",
   "/doctor-prep": "2026-08-03",
@@ -35,12 +38,24 @@ const ROUTE_LASTMOD: Record<string, string> = {
 const routes = Object.keys(ROUTE_LASTMOD);
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base: MetadataRoute.Sitemap = routes.map((path) => ({
-    url: `${BASE}${path}`,
-    lastModified: new Date(ROUTE_LASTMOD[path]),
-    changeFrequency: path.startsWith("/guides/") ? "monthly" : "weekly",
-    priority: path === "" ? 1 : path.startsWith("/guides") ? 0.8 : 0.6,
-  }));
+  const base: MetadataRoute.Sitemap = routes.map((path) => {
+    const isGuideLeaf = path.startsWith("/guides/");
+    const isRoutineLeaf = /^\/routines\/[^/]+$/.test(path);
+    return {
+      url: `${BASE}${path}`,
+      lastModified: new Date(ROUTE_LASTMOD[path]),
+      changeFrequency:
+        isGuideLeaf || isRoutineLeaf ? ("monthly" as const) : ("weekly" as const),
+      priority:
+        path === ""
+          ? 1
+          : isGuideLeaf
+          ? 0.8
+          : isRoutineLeaf
+          ? 0.7
+          : 0.6,
+    };
+  });
 
   const reviews: MetadataRoute.Sitemap = staticReviews.map((r) => ({
     url: `${BASE}/reviews/${r.slug}`,
