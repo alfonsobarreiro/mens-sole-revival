@@ -241,6 +241,125 @@ export const guideSeo: Record<string, GuideSeo> = {
       { label: "American Podiatric Medical Association", url: "https://www.apma.org/" },
     ],
   },
+  // ── Symptom-query guides added 2026-09-10 to open the educational
+  // acquisition channel. Article bodies are Alfonso-authored; the meta
+  // + FAQ questions here are scaffolds — write the FAQ answers when the
+  // article body ships. TODO Alfonso: fill FAQ answers before publish.
+  "heel-pain-first-thing-in-the-morning": {
+    metaTitle: "Heel Pain First Thing in the Morning: What It Means and How to Fix It",
+    metaDescription:
+      "Sharp heel pain in the first steps out of bed that eases within minutes is the classic plantar fasciitis pattern. The mechanism, the diagnostic self-check, and the 4-week protocol.",
+    datePublished: "2026-09-10",
+    faq: [
+      {
+        q: "Why does my heel hurt only in the morning?",
+        a: "TODO — the plantar fascia shortens overnight; the first steps stretch it cold. Explain the windlass mechanism at rest and why the pattern (sharp first-steps + eases in minutes) is diagnostic for plantar fasciitis vs other heel conditions.",
+      },
+      {
+        q: "Is morning heel pain always plantar fasciitis?",
+        a: "TODO — no. Achilles insertional pain hurts BEHIND the heel; heel spur pain doesn't have the same time-of-day pattern; stress fracture pain is constant, not first-steps. Give the differential in one paragraph and say when to escalate.",
+      },
+      {
+        q: "How long does it take for plantar fasciitis to go away?",
+        a: "TODO — 6–12 weeks of consistent stretching resolves ~80% of cases. Timeline expectations per week (see article body).",
+      },
+      {
+        q: "Should I keep walking on it or rest?",
+        a: "TODO — rest doesn't fix PF; controlled tissue load does. Reduce high-impact activity but keep daily walking + morning stretch. Explain the pain-threshold rule (< 3/10 during activity, back to baseline within 24 hours).",
+      },
+      {
+        q: "When should I see a podiatrist for morning heel pain?",
+        a: "TODO — no improvement after 6 weeks of consistent stretching; pain becomes constant rather than first-steps; numbness or tingling; visible swelling; diabetes + any foot pain change; pain after a fall.",
+      },
+    ],
+    sources: [
+      {
+        label: "NIH / NCBI — Plantar Fasciitis (StatPearls)",
+        url: "https://www.ncbi.nlm.nih.gov/books/NBK431073/",
+      },
+      {
+        label: "AAFP — Common Foot Problems: OTC Treatments and Home Care",
+        url: "https://www.aafp.org/pubs/afp/issues/2018/0901/p298.html",
+      },
+    ],
+  },
+  "plantar-fasciitis-exercises-for-men-over-40": {
+    metaTitle: "Plantar Fasciitis Exercises for Men Over 40: What Actually Works",
+    metaDescription:
+      "The 3 morning stretches, the 3 strength moves, the weekly progression, and the mistakes that keep the pain going. Ranked by evidence, calibrated for men over 40.",
+    datePublished: "2026-09-10",
+    faq: [
+      {
+        q: "What is the single best exercise for plantar fasciitis?",
+        a: "TODO — high-load eccentric calf raises with the heel over the edge of a step; strongest single-exercise evidence per current PT literature. Cite Rathleff 2015 or similar.",
+      },
+      {
+        q: "How often should I stretch for plantar fasciitis?",
+        a: "TODO — the morning 3-move protocol daily before the first step; add a mid-day round after any long sitting session. Consistency beats intensity.",
+      },
+      {
+        q: "Can plantar fasciitis exercises make it worse?",
+        a: "TODO — briefly yes in week 1 as tissue re-loads; that's expected. Rule: pain shouldn't exceed 3/10 during exercise and should return to baseline within 24 hours. If either fails, back off.",
+      },
+      {
+        q: "How long until I see improvement from the exercises?",
+        a: "TODO — week 4 checkpoint: morning pain noticeably shorter (< 2 min vs 5–10 min). Week 8: most men <2/10 with consistency. Week 12: most cases resolved.",
+      },
+      {
+        q: "Do I need a night splint for plantar fasciitis?",
+        a: "TODO — layer in only if morning pain hasn't improved by week 3–4 of consistent stretching. Not needed on day 1.",
+      },
+      {
+        q: "Should I stop running with plantar fasciitis?",
+        a: "TODO — depends on pain threshold rule. If running keeps pain > 3/10 or extends recovery > 24 hours, swap to swim/bike until baseline drops.",
+      },
+    ],
+    sources: [
+      {
+        label: "NIH / NCBI — Plantar Fasciitis (StatPearls)",
+        url: "https://www.ncbi.nlm.nih.gov/books/NBK431073/",
+      },
+      {
+        label: "AAFP — Common Foot Problems: OTC Treatments and Home Care",
+        url: "https://www.aafp.org/pubs/afp/issues/2018/0901/p298.html",
+      },
+    ],
+  },
+  "arches-hurt-after-walking": {
+    metaTitle: "Why Your Arches Hurt After Walking (And How to Strengthen Them)",
+    metaDescription:
+      "Arch pain after a long walk usually traces to weak intrinsic muscles or over-supportive shoes doing the muscles' work. The self-check that tells you which, and the strength protocol that fixes both.",
+    datePublished: "2026-09-10",
+    faq: [
+      {
+        q: "Why do my arches hurt only after walking?",
+        a: "TODO — the small intrinsic foot muscles that hold the arch under sustained load fatigue and ache. Not sharp, not first-steps (that's plantar fasciitis). Builds gradually over the day, eases fast with rest.",
+      },
+      {
+        q: "Are flat feet the same as fallen arches?",
+        a: "TODO — no. Congenital flat feet are structural and usually painless. Acquired fallen arches (posterior tibial dysfunction) is progressive, asymmetric, and often involves inner-ankle pain. Explain the difference and when to see a podiatrist.",
+      },
+      {
+        q: "Should I wear arch support if my arches hurt?",
+        a: "TODO — short-term yes if on feet 8+ hours daily; long-term over-reliance perpetuates the weakness that caused the pain. Rule: if you use an insole, still do the strength protocol.",
+      },
+      {
+        q: "What exercises strengthen the arch?",
+        a: "TODO — the short-foot activation drill is the foundation. Add towel scrunch, single-leg balance work. Progress from seated to standing to single-leg. 4-week timeline.",
+      },
+      {
+        q: "How long does it take to strengthen weak arches?",
+        a: "TODO — 4–8 weeks of consistent daily short-foot work + graded walking usually resolves training-related arch pain. If pain persists past 8 weeks with consistency, escalate.",
+      },
+    ],
+    sources: [
+      {
+        label: "PMC — Incorrectly Fitted Footwear, Foot Pain and Foot Disorders",
+        url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC6064070/",
+      },
+      { label: "American Podiatric Medical Association", url: "https://www.apma.org/" },
+    ],
+  },
 };
 
 /** Build the Next.js Metadata for a guide route (title, description, canonical, OG).

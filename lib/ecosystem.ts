@@ -186,6 +186,41 @@ export const articles: Record<string, ArticleMeta> = {
     symptoms: ["skin", "nails"],
     action: "Tonight, anchor a 5-minute foot-care habit to your shower or bedtime routine.",
   },
+  // ── Symptom articles added 2026-09-10 to open the educational-query
+  // acquisition channel. Currently scaffolds; Alfonso writes bodies.
+  "heel-pain-first-thing-in-the-morning": {
+    slug: "heel-pain-first-thing-in-the-morning",
+    title: "Heel Pain First Thing in the Morning: What It Means and How to Fix It",
+    category: "Pain",
+    readTime: "7 min",
+    imageUrl: "/images/pexels-9467290.jpg",
+    excerpt:
+      "Sharp heel pain in the first few steps out of bed that eases within minutes is the classic plantar fasciitis pattern. Here's the mechanism, the diagnostic self-check, and the 4-week protocol.",
+    symptoms: ["pain"],
+    action: "Do the 3-move morning stretch (calf, plantar fascia, wall calf) before your first step for 4 weeks.",
+  },
+  "plantar-fasciitis-exercises-for-men-over-40": {
+    slug: "plantar-fasciitis-exercises-for-men-over-40",
+    title: "Plantar Fasciitis Exercises for Men Over 40: What Actually Works",
+    category: "Pain",
+    readTime: "8 min",
+    imageUrl: "/images/pexels-4909313.jpg",
+    excerpt:
+      "Ranked by evidence: the 3 morning stretches, the 3 strength moves, the weekly progression, and the mistakes that keep the pain going. Calibrated for men over 40.",
+    symptoms: ["pain"],
+    action: "Start the morning 3-move stretch daily; add the strength 3 moves 3x per week.",
+  },
+  "arches-hurt-after-walking": {
+    slug: "arches-hurt-after-walking",
+    title: "Why Your Arches Hurt After Walking (And How to Strengthen Them)",
+    category: "Pain",
+    readTime: "6 min",
+    imageUrl: "/images/pexels-7205913.jpg",
+    excerpt:
+      "Arch pain after a long walk usually traces to weak intrinsic muscles under a fine structure, or over-supportive shoes doing the muscles' work. Here's how to tell which, and the strength protocol that fixes both.",
+    symptoms: ["pain", "footwear"],
+    action: "Do the short-foot activation drill: 10 reps per side, 2x daily.",
+  },
 };
 
 /** Convenience: array form for list iteration. */
@@ -206,10 +241,12 @@ export const articleRelations: Record<
   "why-your-feet-hurt-after-40": {
     reviews: ["kuru-atom-sneakers", "superfeet-blue-insoles"],
     routine: "daily",
+    // Retro-wired 2026-09-10 to reference the new symptom guides so
+    // the pillar becomes the topic-cluster hub for pain queries too.
     relatedArticles: [
-      "what-your-dress-shoes-are-doing-to-your-feet",
-      "cracked-heels-what-actually-works",
-      "toenail-fungus-what-works",
+      "heel-pain-first-thing-in-the-morning",
+      "plantar-fasciitis-exercises-for-men-over-40",
+      "arches-hurt-after-walking",
     ],
   },
   "what-your-dress-shoes-are-doing-to-your-feet": {
@@ -264,6 +301,36 @@ export const articleRelations: Record<
       "why-your-feet-hurt-after-40",
       "cracked-heels-what-actually-works",
       "toenail-fungus-what-works",
+    ],
+  },
+  // ── Symptom articles (2026-09-10). Pair each with the routine that
+  // actually addresses the symptom, and cross-link between symptom-
+  // article pairs to build the pain topic cluster.
+  "heel-pain-first-thing-in-the-morning": {
+    reviews: ["superfeet-blue-insoles"],
+    routine: "movement",
+    relatedArticles: [
+      "plantar-fasciitis-exercises-for-men-over-40",
+      "why-your-feet-hurt-after-40",
+      "5-minute-routine",
+    ],
+  },
+  "plantar-fasciitis-exercises-for-men-over-40": {
+    reviews: ["superfeet-blue-insoles", "kuru-atom-sneakers"],
+    routine: "movement",
+    relatedArticles: [
+      "heel-pain-first-thing-in-the-morning",
+      "arches-hurt-after-walking",
+      "why-your-feet-hurt-after-40",
+    ],
+  },
+  "arches-hurt-after-walking": {
+    reviews: ["superfeet-blue-insoles", "kuru-atom-sneakers"],
+    routine: "strength",
+    relatedArticles: [
+      "plantar-fasciitis-exercises-for-men-over-40",
+      "big-toe-and-your-whole-body",
+      "what-your-dress-shoes-are-doing-to-your-feet",
     ],
   },
 };

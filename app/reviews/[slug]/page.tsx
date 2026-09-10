@@ -213,15 +213,20 @@ export async function generateMetadata({
   const review = await getReview(slug);
   if (!review) return { title: "Review Not Found" };
   const tagline = review.tagline ?? "";
-  const description = tagline.length >= 120
+  const fallbackDescription = tagline.length >= 120
     ? tagline
     : `${tagline}${tagline ? " " : ""}Evidence-based review from Men's Sole Revival.`;
+  // SEO-optimized title/description win first if the review defines them
+  // (2026-09-10 CTR sweep). Fall back to the editorial tagline shape
+  // otherwise — Sanity-only reviews get this until they carry the fields.
+  const title = review.seoTitle ?? `${review.productName} Review: ${tagline || review.brand}`;
+  const description = review.seoDescription ?? fallbackDescription;
   return {
-    title: { absolute: `${review.productName} Review: ${tagline || review.brand}` },
+    title: { absolute: title },
     description,
     alternates: { canonical: `/reviews/${slug}` },
     openGraph: {
-      title: `${review.productName} Review`,
+      title,
       description,
       url: `/reviews/${slug}`,
       type: "article",
@@ -229,7 +234,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: `${review.productName} Review`,
+      title,
       description,
     },
   };
