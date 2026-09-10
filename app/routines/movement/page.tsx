@@ -10,11 +10,8 @@ export default function Page() {
   return (
     <SiteLayout>
       <ArticleLayout
-        // TODO Alfonso: swap for a topic-matching hero when available. Ideas:
-        // barefoot morning stretch in bedroom, hands looping band around ball
-        // of foot, calf stretch at bedside.
-        heroSrc="/images/pexels-10904211.jpg"
-        heroAlt="Hands looping a band around the ball of a foot for a morning stretch"
+        heroSrc="/images/pexels-3771071.jpg"
+        heroAlt="A man seated on the ground reaching for his toe in a morning stretch"
         title="The Plantar Stretch Sequence"
         category="Movement Routine"
         readTime="4 min"

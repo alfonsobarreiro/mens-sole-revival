@@ -10,11 +10,8 @@ export default function Page() {
   return (
     <SiteLayout>
       <ArticleLayout
-        // TODO Alfonso: swap for a topic-matching hero. Ideas: bare feet on
-        // wood floor, single-leg balance stance, towel under a foot for
-        // scrunch.
-        heroSrc="/images/pexels-9467290.jpg"
-        heroAlt="Bare feet on a wood floor, single-leg balance stance"
+        heroSrc="/images/pexels-8637976.jpg"
+        heroAlt="A gray-haired man in a runner's crouch on the beach, ready to load"
         title="The 5-Minute Strength Protocol"
         category="Strength Routine"
         readTime="5 min"

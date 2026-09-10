@@ -10,11 +10,8 @@ export default function Page() {
   return (
     <SiteLayout>
       <ArticleLayout
-        // TODO Alfonso: swap for a topic-matching hero. Ideas: bare foot on
-        // lacrosse ball at floor, close-up of arch under pressure, hands-on
-        // arch massage.
-        heroSrc="/images/pexels-4909313.jpg"
-        heroAlt="A bare foot resting on a lacrosse ball for arch release"
+        heroSrc="/images/pexels-7312082.jpg"
+        heroAlt="Close-up of a bare foot resting on stone, warm and calm"
         title="The 6-Minute Recovery Routine"
         category="Recovery Routine"
         readTime="4 min"
