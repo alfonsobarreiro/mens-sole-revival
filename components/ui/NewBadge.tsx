@@ -34,7 +34,11 @@ export function NewBadge({
     <span
       className={cn(
         "inline-flex items-center rounded-sm px-1.5 py-0.5 text-[0.625rem] font-semibold uppercase tracking-[0.08em]",
-        "bg-accent-100 text-accent-800 border border-accent-200",
+        // Solid accent-600 + white text: accent-600 is the DS's AA-with-white
+        // token (see app/globals.css --color-accent-600 comment). High-
+        // visibility "New" pill that pops on both light card grounds and
+        // dark ink hero scrims.
+        "bg-accent-600 text-white",
         className,
       )}
       aria-label={`New — published ${published.toLocaleDateString("en-US", { month: "short", day: "numeric" })}`}

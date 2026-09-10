@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Container from "@/components/Container";
-import { Button } from "@/components/ui";
+import { Button, NewBadge } from "@/components/ui";
 import SiteLayout from "@/components/SiteLayout";
 import TopicsSection from "@/components/TopicsSection";
 import HeroSlideshow from "@/components/HeroSlideshow";
@@ -8,6 +8,7 @@ import InlineNewsletterForm from "@/components/InlineNewsletterForm";
 import Link from "next/link";
 import Image from "next/image";
 import { type } from "@/components/typography";
+import { guideSeo, routineSeo } from "@/lib/guide-seo";
 
 export const metadata: Metadata = {
   title: {
@@ -27,7 +28,18 @@ export const metadata: Metadata = {
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
-const routineHighlights = [
+// `slug` matches a key in routineSeo (lib/guide-seo.ts). When set, NewBadge
+// lights up for the 30-day post-publish window; when unset (Daily doesn't
+// have its own sub-page yet), NewBadge silently renders nothing.
+const routineHighlights: {
+  label: string;
+  title: string;
+  desc: string;
+  time: string;
+  href: string;
+  image: string;
+  slug?: keyof typeof routineSeo;
+}[] = [
   {
     label: "Daily",
     title: "The nightly 5 minutes.",
@@ -41,19 +53,25 @@ const routineHighlights = [
     title: "Plantar stretch sequence.",
     desc: "Three moves, three minutes, right after you get out of bed. The men who do this stop having morning heel pain.",
     time: "3 min / every morning",
-    href: "/routines",
+    href: "/routines/movement",
     image: "/images/pexels-3771071.jpg",
+    slug: "movement",
   },
   {
     label: "Recovery",
     title: "Lacrosse ball work.",
     desc: "Roll the arch, then hold on the sore spot until it releases. Three minutes per foot; pair with the stretch.",
     time: "6 min / as needed",
-    href: "/routines",
+    href: "/routines/recovery",
     image: "/images/pexels-8729018.jpg",
+    slug: "recovery",
   },
 ];
 
+// articles[0] renders as the featured card (left side of section 3).
+// articles.slice(1, 5) renders as the 4-item right column. Positions 1–3
+// are the "latest" slots — reorder to surface newly-published symptom
+// articles when they publish, so the NewBadge lights up in visible cards.
 const articles = [
   {
     slug: "why-your-feet-hurt-after-40",
@@ -63,6 +81,33 @@ const articles = [
     excerpt:
       "\"Age\" isn't a diagnosis. Four specific things change in your feet after 40. Because your feet are the foundation, you feel it travel up.",
     image: "/images/pexels-7787491.jpg",
+  },
+  {
+    slug: "heel-pain-first-thing-in-the-morning",
+    title: "Heel Pain First Thing in the Morning: What It Means",
+    category: "Pain",
+    readTime: "7 min",
+    excerpt:
+      "Sharp heel pain in the first few steps out of bed that eases within minutes is the classic plantar fasciitis pattern. The mechanism, the diagnostic self-check, and the 4-week protocol.",
+    image: "/images/pexels-9467290.jpg",
+  },
+  {
+    slug: "ball-of-foot-pain-in-men-over-40",
+    title: "Ball-of-Foot Pain in Men Over 40 (Metatarsalgia)",
+    category: "Pain",
+    readTime: "7 min",
+    excerpt:
+      "Burning under the ball of the foot at end of day is fat-pad thinning plus a narrow toe box loading too small an area. The 6-week shoe-fit + met-pad protocol that resolves most cases.",
+    image: "/images/pexels-8729236.jpg",
+  },
+  {
+    slug: "achilles-tendon-pain-in-men-over-40",
+    title: "Achilles Tendon Pain in Men Over 40",
+    category: "Pain",
+    readTime: "7 min",
+    excerpt:
+      "Achilles pain that flares with running, hills, or the first steps after sitting is usually not the tendon on its own; it's the calf that pulls on it. The eccentric heel-drop protocol with the strongest evidence.",
+    image: "/images/pexels-17979558.jpg",
   },
   {
     slug: "what-your-dress-shoes-are-doing-to-your-feet",
@@ -286,6 +331,9 @@ export default function Home() {
                     fill
                     className="muted-photo object-cover transition duration-700 group-hover:scale-105"
                   />
+                  <div className="absolute top-3 right-3">
+                    <NewBadge date={guideSeo[articles[0].slug]?.datePublished} />
+                  </div>
                 </div>
                 <p className="mt-4 text-xs font-medium text-accent-700">
                   {articles[0].category}  ·  {articles[0].readTime} read
@@ -316,6 +364,9 @@ export default function Home() {
                     fill
                     className="muted-photo object-cover transition duration-500 group-hover:scale-105"
                   />
+                  <div className="absolute top-2 right-2">
+                    <NewBadge date={guideSeo[a.slug]?.datePublished} />
+                  </div>
                 </div>
                 <div className="flex flex-col justify-center">
                   <p className="text-xs font-medium text-accent-700">
@@ -406,6 +457,9 @@ export default function Home() {
                     <span className="bg-bg-elevated/95 px-3 py-1 text-xs font-medium text-ink backdrop-blur-sm">
                       {r.label}
                     </span>
+                  </div>
+                  <div className="absolute top-3 right-3">
+                    <NewBadge date={r.slug ? routineSeo[r.slug]?.datePublished : undefined} />
                   </div>
                 </div>
                 <div className="flex flex-1 flex-col p-6">
