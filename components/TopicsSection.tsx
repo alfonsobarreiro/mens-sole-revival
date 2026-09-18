@@ -173,7 +173,7 @@ export default function TopicsSection() {
             </div>
 
             {/* Mobile hint */}
-            <p className="md:hidden mt-6 font-body text-xs text-neutral-500">
+            <p className="md:hidden mt-6 font-body text-xs text-neutral-600">
               Tap a topic to learn more
             </p>
           </div>

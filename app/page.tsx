@@ -470,7 +470,7 @@ export default function Home() {
                     {r.title}
                   </h3>
                   <p className="mt-2 flex-1 text-[0.9375rem] leading-[1.5] text-neutral-600">{r.desc}</p>
-                  <p className="mt-4 text-xs font-medium text-neutral-500">{r.time}</p>
+                  <p className="mt-4 text-xs font-medium text-neutral-600">{r.time}</p>
                 </div>
               </Link>
             ))}

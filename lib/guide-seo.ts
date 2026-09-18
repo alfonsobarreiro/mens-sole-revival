@@ -16,6 +16,23 @@ import { buildBreadcrumb } from "@/lib/breadcrumb";
 
 export type GuideFaq = { q: string; a: string };
 export type GuideSource = { label: string; url: string };
+export type HowToStep = { name: string; text: string };
+
+/** Optional HowTo schema payload — used only for routine sub-pages that are
+ *  literally step-by-step protocols. Emitted as schema.org HowTo JSON-LD by
+ *  buildRoutineSchema; Google surfaces these as rich-result "how to" cards
+ *  on mobile SERPs when eligible. Since 2023 Google narrowed HowTo eligibility
+ *  but still uses the schema for AI-overview snippets and mobile knowledge
+ *  panels. Cost is small, upside is real. */
+export type GuideHowTo = {
+  /** ISO 8601 duration, e.g. "PT3M" for 3 minutes, "PT20M" for 20. */
+  totalTime: string;
+  /** Consumable items needed (e.g. cream, tape). */
+  supplies?: string[];
+  /** Reusable equipment (e.g. lacrosse ball, foam roller). */
+  tools?: string[];
+  steps: HowToStep[];
+};
 
 export type GuideSeo = {
   metaTitle: string;
@@ -26,6 +43,10 @@ export type GuideSeo = {
   dateModified?: string;
   faq: GuideFaq[];
   sources: GuideSource[];
+  /** Optional HowTo protocol data. Populate on routineSeo entries where the
+   *  page is literally a step-by-step protocol. Skip on guideSeo entries
+   *  (essays are not HowTos). */
+  howTo?: GuideHowTo;
 };
 
 export const guideSeo: Record<string, GuideSeo> = {
@@ -682,6 +703,18 @@ export const routineSeo: Record<string, GuideSeo> = {
     metaDescription:
       "The daily 5-minute foot-care routine as a pure checklist: wash, dry between toes, inspect, moisturize. Print it, tape it above the bathroom sink, and do it before bed.",
     datePublished: "2026-09-18",
+    howTo: {
+      totalTime: "PT5M",
+      supplies: ["Urea-based foot cream (10-25%)", "Cotton socks (optional, for cracked heels)"],
+      tools: ["Towel", "Nail clipper (weekly-ish)"],
+      steps: [
+        { name: "Wash", text: "Warm water and mild soap. Rub between the toes with your fingers, not just water. Rinse. Skip if you already showered." },
+        { name: "Dry between the toes", text: "Toe-by-toe with a towel. The space between the 4th and 5th toe is where 80% of athlete's foot infections start. Fungi need moisture; dry toe webs starve them." },
+        { name: "Inspect", text: "Quick visual scan for color change, new callus, small cuts, blisters, or nail edge lifting. 15 seconds. Catches problems at week 1 instead of week 4." },
+        { name: "Moisturize", text: "Urea-based cream (10-25%) on damp feet. Focus on heels, sides, dry patches. Skip between the toes; that's where you want dryness." },
+        { name: "Nail glance (weekly-ish)", text: "Not a nightly trim; a nightly glance. Most men over 40 need a full trim every 2-3 weeks. Straight across, corners left square, file the edge smooth." },
+      ],
+    },
     faq: [
       {
         q: "Why is drying between toes important?",
@@ -716,6 +749,18 @@ export const routineSeo: Record<string, GuideSeo> = {
     metaDescription:
       "Six micro-routines you can do at the desk in under two minutes each. Break up 8 hours of sitting, prevent calf shortening and ankle stiffness that show up on the walk home.",
     datePublished: "2026-09-18",
+    howTo: {
+      totalTime: "PT2M",
+      tools: ["Pen or small towel (for toe grip)", "Chair", "Wall or desk edge"],
+      steps: [
+        { name: "Seated calf pumps", text: "Feet flat on the floor. Lift both heels as high as they'll go while keeping the balls on the floor. Lower slowly. 30 reps." },
+        { name: "Ankle circles", text: "One foot at a time. Extend the leg slightly. Rotate the ankle 10 times clockwise, 10 counter-clockwise. Switch feet." },
+        { name: "Toe spreads", text: "Feet flat, socks off if possible. Spread the toes as wide as they'll go. Hold 2 seconds. 20 reps." },
+        { name: "Seated toe grip", text: "Place a pen or small towel under one foot. Pick it up with your toes. Hold 2 seconds. 10 reps per side." },
+        { name: "Wall calf stretch", text: "Every 3-4 hours, stand up. Face a wall. One foot back, heel down, back leg straight. 20 seconds. Then back knee bent, 20 more. Switch." },
+        { name: "Squat-to-stand transitions", text: "Every 3-4 hours, do 10 slow squats to a comfortable depth. Use desk for balance if needed. Breaks the seated position with a full-body load." },
+      ],
+    },
     faq: [
       {
         q: "Why does sitting all day cause foot problems?",
@@ -750,6 +795,15 @@ export const routineSeo: Record<string, GuideSeo> = {
     metaDescription:
       "An 8-minute foot recovery routine after a run, lift, or long walk. Calf release, plantar fascia work, and toe extension to prevent the next-day flare that sidelines men over 40.",
     datePublished: "2026-09-18",
+    howTo: {
+      totalTime: "PT8M",
+      tools: ["Foam roller", "Lacrosse or tennis ball"],
+      steps: [
+        { name: "Calf release", text: "Sit on the floor. Foam roller (or lacrosse ball for depth) under your calf. Cross the other leg on top for extra pressure. Roll slowly from Achilles to back of knee. 90 seconds per side. Pause on tender spots for 20-30 seconds." },
+        { name: "Plantar fascia work", text: "Sit in a chair. Lacrosse or tennis ball under one foot's arch. Slowly roll from heel to ball of foot. 90 seconds per side. Slow rolls, not fast passes. Skip during a PF flare." },
+        { name: "Toe extension work", text: "Sit with one foot in your lap. Grip the toes and gently pull upward as far as they comfortably go. Hold 30 seconds. 2 holds per side." },
+      ],
+    },
     faq: [
       {
         q: "Why is post-workout foot care more important after 40?",
@@ -788,6 +842,15 @@ export const routineSeo: Record<string, GuideSeo> = {
     metaDescription:
       "The three-move plantar and calf stretch protocol men over 40 can do in bed. Three minutes, done before your feet hit the floor. Four weeks to noticeable morning-pain reduction for most.",
     datePublished: "2026-09-10",
+    howTo: {
+      totalTime: "PT3M",
+      tools: ["Towel, belt, or resistance band", "Wall or bed frame"],
+      steps: [
+        { name: "Towel calf stretch (in bed)", text: "Sit up in bed with legs extended. Loop a towel or band around the ball of one foot. Gently pull the toes back toward you until you feel a firm stretch in the calf and arch. Hold 30 seconds. Switch. Repeat once per side." },
+        { name: "Plantar fascia stretch (bedside)", text: "Sit on the edge of the bed. Cross one ankle over the opposite knee, sole facing up. Pull the toes back with one hand. Press your thumb along the arch, walking from heel to ball. Hold 30 seconds per side." },
+        { name: "Wall calf stretch (before first step)", text: "Face a wall or bed frame, hands on it. Step one foot back, heel down, back knee straight. Hold 20 seconds. Bend the back knee slightly, hold 20 more. Switch. Both variations, both sides." },
+      ],
+    },
     faq: [
       {
         q: "Why is the morning stretch specifically important?",
@@ -826,6 +889,15 @@ export const routineSeo: Record<string, GuideSeo> = {
     metaDescription:
       "How to release a tight plantar fascia and tired arches at home with a lacrosse or tennis ball. Six minutes total, three techniques, evidence-based. Not for acute flares.",
     datePublished: "2026-09-10",
+    howTo: {
+      totalTime: "PT6M",
+      tools: ["Lacrosse ball (or tennis ball to start)"],
+      steps: [
+        { name: "Roll the length of the arch", text: "Stand or sit with the ball under one arch. Slowly roll from heel to ball of foot using controlled body weight. 90 seconds per side. Pressure at 5-6 out of 10; slow, not fast." },
+        { name: "Hold on tender spots", text: "While rolling, find spots more tender than the rest. Stop, hold static pressure, breathe. Wait for discomfort to drop by half. 60 seconds per spot, 2 spots per side." },
+        { name: "Cross-friction across the arch", text: "Sit. Ball under the midfoot. Roll side-to-side across the arch, medial to lateral. 60 seconds per side. Least tender, most missed." },
+      ],
+    },
     faq: [
       {
         q: "Lacrosse ball or tennis ball, does it matter?",
@@ -864,6 +936,17 @@ export const routineSeo: Record<string, GuideSeo> = {
     metaDescription:
       "Foot soak, nail trim, callus knock-down, heel cream with socks overnight. Twenty minutes once a week. What most men skip until the cracks get bad, and how to stop that.",
     datePublished: "2026-09-10",
+    howTo: {
+      totalTime: "PT20M",
+      supplies: ["Urea-based foot cream (10-25% maintenance, 40% for cracks)", "Epsom salt (optional)", "Cotton socks"],
+      tools: ["Basin or tub", "Pumice stone or fine-grit foot file", "Nail clipper", "Small nail file"],
+      steps: [
+        { name: "Warm foot soak (10 minutes)", text: "Fill a basin with water at 100-104°F (comfortably warm, not hot). Add Epsom salt if you like the ritual. Sit with feet submerged for a full 10 minutes." },
+        { name: "Callus knock-down (3 minutes)", text: "While skin is soft, use a pumice stone or fine-grit foot file on the thickest callused areas. Light pressure, one direction, not back-and-forth grinding. Reduce, don't remove." },
+        { name: "Nail check and trim (3 minutes)", text: "Dry feet completely. Inspect each nail. Trim straight across (not curved) if needed. File corners smooth to prevent ingrown edges." },
+        { name: "Heel cream + socks overnight (2 minutes to apply)", text: "While skin is still slightly damp, apply urea-based cream. Focus on heels, sides, dry patches. Skip between the toes. Put on cotton socks. Sleep in them; occlusion multiplies cream effectiveness 3-5x." },
+      ],
+    },
     faq: [
       {
         q: "Why Sunday specifically?",
@@ -898,6 +981,15 @@ export const routineSeo: Record<string, GuideSeo> = {
     metaDescription:
       "Three foot-strengthening exercises men over 40 can do in 5 minutes, three times a week. Wakes up the small foot muscles that decades of supportive shoes atrophied. Not a stretch routine. This is load.",
     datePublished: "2026-09-10",
+    howTo: {
+      totalTime: "PT5M",
+      tools: ["Hand towel", "Chair (for balance progression)"],
+      steps: [
+        { name: "Short-foot activation", text: "Sit with feet flat. Without curling the toes, draw the ball of the foot toward the heel; the arch should rise slightly. Hold 5 seconds. Release. 10 reps per side, 2 rounds. Toes stay flat — no cheating by curling." },
+        { name: "Towel scrunch", text: "Sit, feet flat, hand towel spread flat under one foot. Without lifting the heel, scrunch the towel toward you using only the toes. 10 reps per side, 2 rounds. Progress by adding a small weight (soup can) to the towel." },
+        { name: "Single-leg balance", text: "Stand on one foot on a flat floor. Keep foot flat, standing knee soft. Hold 30 seconds. Once easy, close your eyes. 2 rounds per side. Progress to a folded pillow surface." },
+      ],
+    },
     faq: [
       {
         q: "Why three times a week instead of daily?",
@@ -1092,5 +1184,31 @@ export function buildRoutineSchema(slug: string) {
     { name: seo.metaTitle, path: `/routines/${slug}` },
   ]);
 
-  return [article, faqPage, breadcrumb];
+  // HowTo — emit only when the routineSeo entry declares one. Cast to
+  // Record<string, unknown> so the optional supply / tool fields don't
+  // conflict with schema.org's HowTo shape when omitted.
+  const howToArr = seo.howTo
+    ? [{
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        name: seo.metaTitle,
+        description: seo.metaDescription,
+        totalTime: seo.howTo.totalTime,
+        ...(seo.howTo.supplies && seo.howTo.supplies.length > 0
+          ? { supply: seo.howTo.supplies.map((s) => ({ "@type": "HowToSupply", name: s })) }
+          : {}),
+        ...(seo.howTo.tools && seo.howTo.tools.length > 0
+          ? { tool: seo.howTo.tools.map((t) => ({ "@type": "HowToTool", name: t })) }
+          : {}),
+        step: seo.howTo.steps.map((s, i) => ({
+          "@type": "HowToStep",
+          position: i + 1,
+          name: s.name,
+          text: s.text,
+          url: `${url}#step-${i + 1}`,
+        })),
+      }]
+    : [];
+
+  return [article, faqPage, breadcrumb, ...howToArr];
 }
