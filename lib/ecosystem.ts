@@ -36,6 +36,23 @@ export const routines: Record<string, RoutineRef> = {
     heading: "The nightly 5 minutes.",
     time: "5 min · every night",
     action: "Start tonight: wash, dry between toes, inspect, moisturize. Five minutes before bed.",
+    href: "/routines/daily",
+  },
+  "office-day": {
+    anchor: "office-day",
+    label: "Office day",
+    heading: "Desk micro-routines.",
+    time: "2 min · every hour",
+    action: "Every 90 minutes at the desk: 10 seated calf pumps, 20 ankle circles, 10 toe spreads.",
+    href: "/routines/office-day",
+  },
+  "post-workout": {
+    anchor: "post-workout",
+    label: "Post-workout",
+    heading: "Recovery after a run or lift.",
+    time: "8 min · after training",
+    action: "Straight after training: 3 minutes calf release, plantar stretch, and toe extension work.",
+    href: "/routines/post-workout",
   },
   weekly: {
     anchor: "weekly",
@@ -122,7 +139,64 @@ export type ArticleMeta = {
 // not appended. Reverse-chronological by default so the [[new-badge]] lands
 // where users scan first.
 export const articles: Record<string, ArticleMeta> = {
-  // ── Latest: 2026-09-10 pain-cluster expansion (newest first).
+  // ── Latest: 2026-09-18 expansion (nails + alignment + occupation + kinetic-
+  // chain + runners). Five new symptom articles, newest first.
+  "ingrown-toenail-what-actually-stops-the-cycle": {
+    slug: "ingrown-toenail-what-actually-stops-the-cycle",
+    title: "Ingrown Toenail: What Actually Stops the Cycle",
+    category: "Nails",
+    readTime: "6 min",
+    imageUrl: "/images/pexels-5960467.jpg",
+    excerpt:
+      "Most ingrown toenails come back because the trim technique keeps reproducing the same edge that grew in. The specific fix, when to soak vs when to see a podiatrist, and the boring cutting rule that ends the cycle.",
+    symptoms: ["nails"],
+    action: "Switch to straight-across nail trims and stop rounding the corners; soak nightly during a flare.",
+  },
+  "big-toe-stiffness-in-men-over-40": {
+    slug: "big-toe-stiffness-in-men-over-40",
+    title: "Big Toe Stiffness in Men Over 40 (Hallux Limitus and Rigidus)",
+    category: "Alignment",
+    readTime: "7 min",
+    imageUrl: "/images/pexels-11873696.jpg",
+    excerpt:
+      "Big toe joint stiffness is progressive: hallux limitus reduces range, hallux rigidus locks it. Both start with cartilage wear from decades of restrictive shoes. The mobility protocol that keeps it moving before it locks.",
+    symptoms: ["alignment", "pain"],
+    action: "Do the big-toe mobilization drill daily for 8 weeks: 30 gentle extensions per side, morning and night.",
+  },
+  "foot-pain-from-standing-all-day": {
+    slug: "foot-pain-from-standing-all-day",
+    title: "Foot Pain from Standing All Day: The On-Shift Protocol",
+    category: "Pain",
+    readTime: "7 min",
+    imageUrl: "/images/pexels-13122754.jpg",
+    excerpt:
+      "Standing 8+ hours on hard floors flattens the fat pad, fatigues the arch, and inflames the plantar fascia within weeks. The shoe fit, insole, and micro-break protocol that keeps you upright without the end-of-shift ache.",
+    symptoms: ["pain", "footwear"],
+    action: "Do 10 seated calf pumps every 90 minutes on shift; swap to a wider-toe-box shoe by end of month.",
+  },
+  "knee-pain-that-starts-in-the-feet": {
+    slug: "knee-pain-that-starts-in-the-feet",
+    title: "Knee Pain That Starts in the Feet: The Pronation Chain",
+    category: "Kinetic Chain",
+    readTime: "7 min",
+    imageUrl: "/images/pexels-34806666.jpg",
+    excerpt:
+      "Knee pain over 40 often traces to the feet: overpronation rotates the shin inward and pulls the kneecap off its track. The self-check that tells you if this is you, and the strengthening + footwear fix that unwinds it.",
+    symptoms: ["alignment", "pain", "footwear"],
+    action: "Do the single-leg-squat mirror check tonight; if the knee caves inward, start the arch-support trial.",
+  },
+  "runners-over-40-foot-pain": {
+    slug: "runners-over-40-foot-pain",
+    title: "Runners Over 40: Foot Pain That Wasn't There at 30",
+    category: "Pain",
+    readTime: "8 min",
+    imageUrl: "/images/pexels-33360918.jpg",
+    excerpt:
+      "The four foot problems that show up in runners after 40 (plantar fasciitis, metatarsalgia, Achilles tendinopathy, big-toe stiffness), why they cluster in this decade, and the mileage + shoe adjustments that keep you running through them.",
+    symptoms: ["pain"],
+    action: "Cap weekly mileage increases at 10%; swap to a wider-toe-box shoe with a firm forefoot rocker.",
+  },
+  // ── 2026-09-10 pain-cluster expansion.
   "ball-of-foot-pain-in-men-over-40": {
     slug: "ball-of-foot-pain-in-men-over-40",
     title: "Ball-of-Foot Pain in Men Over 40 (Metatarsalgia): Causes and Fixes",
@@ -273,6 +347,53 @@ export const articleRelations: Record<
     relatedArticles: string[];
   }
 > = {
+  // ── 2026-09-18 expansion. Each newer article funnels users toward the
+  // most-relevant routine sub-page + 2-3 sibling articles.
+  "ingrown-toenail-what-actually-stops-the-cycle": {
+    reviews: ["gold-bond-medicated-foot-powder", "gehwol-fusskraft-soft-feet-cream"],
+    routine: "weekly",
+    relatedArticles: [
+      "toenail-fungus-what-works",
+      "cracked-heels-what-actually-works",
+      "5-minute-routine",
+    ],
+  },
+  "big-toe-stiffness-in-men-over-40": {
+    reviews: ["yoga-toes-gem-separators", "kuru-atom-sneakers"],
+    routine: "strength",
+    relatedArticles: [
+      "big-toe-and-your-whole-body",
+      "why-toe-alignment-affects-knees-and-hips",
+      "what-your-dress-shoes-are-doing-to-your-feet",
+    ],
+  },
+  "foot-pain-from-standing-all-day": {
+    reviews: ["superfeet-blue-insoles", "kuru-atom-sneakers"],
+    routine: "recovery",
+    relatedArticles: [
+      "ball-of-foot-pain-in-men-over-40",
+      "what-your-dress-shoes-are-doing-to-your-feet",
+      "why-your-feet-hurt-after-40",
+    ],
+  },
+  "knee-pain-that-starts-in-the-feet": {
+    reviews: ["superfeet-blue-insoles", "kuru-atom-sneakers"],
+    routine: "strength",
+    relatedArticles: [
+      "why-toe-alignment-affects-knees-and-hips",
+      "big-toe-and-your-whole-body",
+      "arches-hurt-after-walking",
+    ],
+  },
+  "runners-over-40-foot-pain": {
+    reviews: ["kuru-atom-sneakers", "superfeet-blue-insoles"],
+    routine: "movement",
+    relatedArticles: [
+      "achilles-tendon-pain-in-men-over-40",
+      "plantar-fasciitis-exercises-for-men-over-40",
+      "ball-of-foot-pain-in-men-over-40",
+    ],
+  },
   "why-your-feet-hurt-after-40": {
     reviews: ["kuru-atom-sneakers", "superfeet-blue-insoles"],
     routine: "daily",

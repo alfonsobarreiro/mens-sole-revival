@@ -45,12 +45,45 @@ type RoutineCategory = {
   href?: string;
 };
 
-// Order per feedback_new_articles_top_of_list: newest first. The four
-// routine sub-pages shipped 2026-09-10 (movement / recovery / strength /
-// weekly) lead; the two anchor-only categories (daily → covered by
-// /guides/5-minute-routine, treatment → covered by toenail-fungus guide)
-// trail until they earn their own sub-page.
+// Order per feedback_new_articles_top_of_list: newest first. The three
+// sub-pages shipped 2026-09-18 (daily, office-day, post-workout) lead;
+// the four shipped 2026-09-10 (movement/recovery/strength/weekly) follow;
+// the one remaining anchor-only category (treatment, still covered by
+// /guides/toenail-fungus-what-works) trails.
 const categories: RoutineCategory[] = [
+  {
+    anchor: "daily",
+    label: "Daily",
+    heading: "The nightly 5 minutes.",
+    body:
+      "Wash, dry, inspect, moisturize. Done before your phone goes to the charger. This is the foundation.",
+    time: "5 min",
+    frequency: "Every night",
+    icon: "🌙",
+    href: "/routines/daily",
+  },
+  {
+    anchor: "office-day",
+    label: "Office day",
+    heading: "Desk micro-routines.",
+    body:
+      "Calf pumps, ankle circles, toe spreads. Two minutes every 90 to break up 8 hours of sitting. Prevents the calf shortening that shows up on the walk home.",
+    time: "2 min",
+    frequency: "Every 90 min",
+    icon: "💼",
+    href: "/routines/office-day",
+  },
+  {
+    anchor: "post-workout",
+    label: "Post-workout",
+    heading: "Recovery after a run or lift.",
+    body:
+      "Calf release, plantar fascia work, toe extension. Eight minutes within 30 of finishing training. Shrinks recovery from days back to overnight.",
+    time: "8 min",
+    frequency: "After training",
+    icon: "🏃",
+    href: "/routines/post-workout",
+  },
   {
     anchor: "movement",
     label: "Movement",
@@ -94,16 +127,6 @@ const categories: RoutineCategory[] = [
     frequency: "Once a week",
     icon: "🛁",
     href: "/routines/weekly",
-  },
-  {
-    anchor: "daily",
-    label: "Daily",
-    heading: "The nightly 5 minutes.",
-    body:
-      "Wash, dry, inspect, moisturize. Done before your phone goes to the charger. This is the foundation.",
-    time: "5 min",
-    frequency: "Every night",
-    icon: "🌙",
   },
   {
     anchor: "treatment",
@@ -236,13 +259,13 @@ export default function RoutinesPage() {
           <div className="md:flex md:items-center md:justify-between">
             <div className="max-w-xl">
               <h2 className={`${type.h2} text-ink`}>
-                More routines coming.
+                Seven routines shipped.
               </h2>
               <p className={`${type.lead} mt-3 text-neutral-600`}>
-                Movement, recovery, strength, and weekly are up. The remaining
-                two (daily, treatment) publish over the coming months with
-                timing, product recommendations, and what to watch for.
-                Subscribe and we'll send them as they publish.
+                Daily, office day, post-workout, movement, recovery, strength,
+                and weekly all have full protocol pages. Only treatment is
+                still an anchor-only category. Subscribe for new routines as
+                they publish.
               </p>
             </div>
             <div className="mt-8 flex-shrink-0 md:ml-12 md:mt-0">

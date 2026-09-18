@@ -29,6 +29,222 @@ export type GuideSeo = {
 };
 
 export const guideSeo: Record<string, GuideSeo> = {
+  // ── 2026-09-18 expansion. Nails + alignment + occupation + kinetic-chain
+  // + runners cluster. Newest first per feedback_new_articles_top_of_list.
+  "ingrown-toenail-what-actually-stops-the-cycle": {
+    metaTitle: "Ingrown Toenail: What Actually Stops the Cycle",
+    metaDescription:
+      "Ingrown toenails come back because the trim technique reproduces the same edge. Straight-across cutting, warm-soak protocol, when to see a podiatrist, and the shoe fit that stops recurrence.",
+    datePublished: "2026-09-18",
+    faq: [
+      {
+        q: "Why does my ingrown toenail keep coming back?",
+        a: "Because the trim technique keeps producing the same problematic edge. When a nail is rounded at the corner (like fingernails), the growing nail dives into the flesh instead of growing straight out. Straight-across cuts, corners left square, is the mechanism-level fix. Most men were taught to round toenail corners and don't realize that's the recurrence engine.",
+      },
+      {
+        q: "How do I trim it straight across without leaving a sharp corner?",
+        a: "Clip the nail straight across at the free edge, then file (not clip) the very corner to smooth the edge without rounding it. The corner should be blunt, not pointed and not rounded. A cheap glass or fine metal file handles this in 10 seconds.",
+      },
+      {
+        q: "Does the warm-water soak actually help?",
+        a: "For an active flare, yes: 15 minutes in warm water twice daily softens the skin around the nail, reduces inflammation, and lets the ingrown edge lift slightly on its own. Add a tablespoon of Epsom salt if you want; the salt effect is minor but the ritual helps consistency. Do not soak longer than 20 minutes; over-hydrated skin is more fragile.",
+      },
+      {
+        q: "Can I lift the nail with dental floss or a cotton wisp?",
+        a: "Yes, once inflammation is down (day 3 or 4 of the soak protocol). Gently insert a small piece of dental floss or cotton under the ingrown edge to encourage it to grow above the skin rather than into it. Change daily. Stop if it causes pain; that means the tissue is still too inflamed and needs more soak time first.",
+      },
+      {
+        q: "When do I need to see a podiatrist?",
+        a: "Red, hot, swollen, or draining pus (possible infection) needs a visit within 24 to 48 hours. Diabetes plus any ingrown needs professional trim, not DIY. A recurring ingrown that resists 3 rounds of the home protocol may need partial nail avulsion (a 20-minute in-office procedure) to permanently narrow the nail.",
+      },
+      {
+        q: "What shoe fit prevents recurrence?",
+        a: "A wide-enough toe box that your longest toe has a full thumb's width of space at the front. Narrow toe boxes crush the big toe against its neighbor and press the nail edge into the flesh with every step. See our [dress-shoes guide](/guides/what-your-dress-shoes-are-doing-to-your-feet) for the fit rules that apply to work shoes too.",
+      },
+    ],
+    sources: [
+      {
+        label: "AAFP — Ingrown Toenails: Diagnosis and Treatment",
+        url: "https://www.aafp.org/pubs/afp/issues/2019/0201/p158.html",
+      },
+      {
+        label: "NIH StatPearls — Ingrown Toenail (Onychocryptosis)",
+        url: "https://www.ncbi.nlm.nih.gov/books/NBK546697/",
+      },
+    ],
+  },
+  "big-toe-stiffness-in-men-over-40": {
+    metaTitle: "Big Toe Stiffness in Men Over 40 (Hallux Limitus and Rigidus)",
+    metaDescription:
+      "Hallux limitus reduces big-toe range; hallux rigidus locks it. Both progress from decades of restrictive shoes and slow to reverse. The mobility protocol that keeps the joint moving before it locks.",
+    datePublished: "2026-09-18",
+    faq: [
+      {
+        q: "What's the difference between hallux limitus and hallux rigidus?",
+        a: "Hallux limitus is reduced range of motion at the big toe joint (metatarsophalangeal joint), typically less than 60 degrees of extension. Hallux rigidus is the end-stage: the joint is essentially locked with under 10 degrees of extension. Limitus is reversible with mobility work; rigidus usually needs surgical management. The window matters.",
+      },
+      {
+        q: "How do I check my big toe range at home?",
+        a: "Sit with your foot flat. Manually pull your big toe upward as far as it comfortably goes. If the toe extends to roughly 45-60 degrees, that's normal. Less than 30 degrees is hallux limitus territory. Less than 10 degrees is rigidus and you need a podiatrist to assess options.",
+      },
+      {
+        q: "Can I fix hallux limitus without surgery?",
+        a: "Often yes if caught early. Daily mobility work (see the article for the specific 3-move protocol), a wider-toe-box shoe, and toe separators worn at night can slow or halt progression. Studies show 60-80% of hallux limitus cases don't progress to rigidus with consistent 12-month conservative care. But it requires actual daily consistency.",
+      },
+      {
+        q: "Do toe separators or Yoga Toes help?",
+        a: "For preventing further drift and stiffness, yes. For reversing existing stiffness, marginally. Wear them 20 minutes twice a day; longer causes soreness in men whose toes have been crushed together for decades. See [our Yoga Toes review](/reviews/yoga-toes-gem-separators) for the specific product.",
+      },
+      {
+        q: "Will running make hallux rigidus worse?",
+        a: "Running through unmanaged rigidus can accelerate cartilage wear. But total rest doesn't help either; the joint stiffens further without load. Compromise: reduce mileage by 30%, switch to a rocker-sole shoe that reduces big toe extension per step, and see a podiatrist for a proper assessment.",
+      },
+      {
+        q: "How long does the mobility protocol take to show results?",
+        a: "Most men see meaningful range improvement (5-10 degrees) by week 8 of daily consistent work. Full plateau is at 6 months. If you're not seeing gain by week 8, the joint may already be past the reversible window; time for the podiatrist visit.",
+      },
+    ],
+    sources: [
+      {
+        label: "NIH StatPearls — Hallux Rigidus",
+        url: "https://www.ncbi.nlm.nih.gov/books/NBK430886/",
+      },
+      {
+        label: "AAFP — Common Foot Conditions",
+        url: "https://www.aafp.org/pubs/afp/issues/2019/0715/p86.html",
+      },
+    ],
+  },
+  "foot-pain-from-standing-all-day": {
+    metaTitle: "Foot Pain from Standing All Day: The On-Shift Protocol",
+    metaDescription:
+      "8+ hours on hard floors flattens the fat pad, fatigues the arch, and inflames the plantar fascia within weeks. Shoe fit, insole, on-shift micro-break protocol, and the recovery routine that undoes the day.",
+    datePublished: "2026-09-18",
+    faq: [
+      {
+        q: "Why do my feet hurt after standing 8 hours when they didn't at 30?",
+        a: "Three things changed in your 40s. The fat pad under the heel and forefoot lost 15 to 30 percent of its thickness. Recovery slowed, so a hard day now bleeds into the next. And the calf shortened from decades of sitting outside work, so what was a manageable load at 30 now compounds into plantar fasciitis in weeks.",
+      },
+      {
+        q: "What's the single most important shoe fit change for standing workers?",
+        a: "A wider toe box. Standing on a hard floor for 8 hours in a narrow shoe forces the metatarsal heads together and concentrates load on 3 of the 5 heads, which is what drives most metatarsalgia and morning heel pain in this population. Wide-toe-box lines (Altra, Topo, Xero, wider fits of Brooks) plus a supportive insole is the base config.",
+      },
+      {
+        q: "Do compression socks help?",
+        a: "For end-of-day swelling, yes: 15-20 mmHg graduated compression reduces venous pooling and the ankle-swell that shows up around hour 6. They don't fix arch pain or heel pain on their own; they address a different mechanism (circulation). Wear them if your feet swell visibly by mid-shift.",
+      },
+      {
+        q: "What if I can't wear the shoe I want to work?",
+        a: "Add the widest insole that fits (Superfeet or Powerstep), replace anti-fatigue standing mats if you control the workstation, and prioritize the post-shift recovery routine. Two of those three are still a meaningful upgrade even if the shoe is locked in by dress code.",
+      },
+      {
+        q: "How long until the on-shift protocol works?",
+        a: "Most men see meaningful reduction in end-of-day pain within 2 to 3 weeks of the shoe fit + insole + micro-break combination. If nothing has changed by week 4, the pattern is likely plantar fasciitis or metatarsalgia specifically and needs the diagnostic articles ([heel pain](/guides/heel-pain-first-thing-in-the-morning) or [ball of foot](/guides/ball-of-foot-pain-in-men-over-40)) to address the mechanism.",
+      },
+      {
+        q: "Are anti-fatigue mats worth it?",
+        a: "Yes if you control the workstation. Studies show 15 to 30 percent reduction in end-of-day fatigue on mats versus bare concrete. The mat surface encourages micro-weight-shifts that keep blood flowing and prevent the static-load fatigue that concrete produces. Cost is $50-100 for a decent one.",
+      },
+    ],
+    sources: [
+      {
+        label: "PubMed — Occupational standing and lower-limb musculoskeletal disorders",
+        url: "https://pubmed.ncbi.nlm.nih.gov/24659000/",
+      },
+      {
+        label: "NIH StatPearls — Metatarsalgia",
+        url: "https://www.ncbi.nlm.nih.gov/books/NBK560873/",
+      },
+    ],
+  },
+  "knee-pain-that-starts-in-the-feet": {
+    metaTitle: "Knee Pain That Starts in the Feet: The Pronation Chain",
+    metaDescription:
+      "Knee pain over 40 often traces to the feet: overpronation rotates the shin inward and pulls the kneecap off track. The self-check that tells you if this is you, and the strengthen + support fix that unwinds it.",
+    datePublished: "2026-09-18",
+    faq: [
+      {
+        q: "How can I tell if my knee pain starts in my feet?",
+        a: "The single-leg squat mirror check: stand in front of a mirror, lift one foot slightly, slowly lower into a quarter-squat on the standing leg. If the knee visibly drifts inward past the big toe, the arch is collapsing and rotating the shin. That's the pronation chain in action. If the knee stays over the middle of the foot, your knee pain is likely from something else.",
+      },
+      {
+        q: "What is overpronation exactly?",
+        a: "Excessive inward roll of the foot during walking or running. Some pronation is normal and useful; overpronation is when the arch flattens too far, the shin rotates internally, and the femur follows. That internal rotation pulls the kneecap off its groove, which is the mechanical cause of most patellofemoral pain (runner's knee).",
+      },
+      {
+        q: "Will arch support insoles fix my knee pain?",
+        a: "For pronation-driven knee pain, often yes: a supportive insole ([Superfeet BLUE](/reviews/superfeet-blue-insoles) is our default recommendation) reduces the arch collapse that drives the shin rotation, which stops the kneecap from being pulled off track. Give it a 4-week trial. If knee pain drops by more than half, the diagnosis is correct.",
+      },
+      {
+        q: "Do I need custom orthotics?",
+        a: "Off-the-shelf insoles work for 70-80% of pronation cases. Custom orthotics ($300-600, made by a podiatrist from a mold of your foot) are worth it if you've tried 2 off-the-shelf brands with 4-week trials each and neither moved the knee pain. Not first-line.",
+      },
+      {
+        q: "Should I strengthen or stretch the knee?",
+        a: "Strengthen the feet AND the hip, not the knee itself. Weak intrinsic foot muscles let the arch collapse; weak hip abductors let the femur rotate. Both feed the same pronation chain. See the [foot strength routine](/routines/strength) for the foot side; add clamshells and side-planks for hip abductors.",
+      },
+      {
+        q: "How long until my knee pain resolves?",
+        a: "Pronation-driven knee pain typically responds in 4 to 8 weeks with the insole + strengthening protocol. If pain persists past 12 weeks with consistency, either the diagnosis is wrong or there's cartilage damage that needs imaging. See an orthopedist at that point.",
+      },
+    ],
+    sources: [
+      {
+        label: "PubMed — Foot pronation and patellofemoral pain syndrome",
+        url: "https://pubmed.ncbi.nlm.nih.gov/24659000/",
+      },
+      {
+        label: "NIH StatPearls — Patellofemoral Pain Syndrome",
+        url: "https://www.ncbi.nlm.nih.gov/books/NBK557657/",
+      },
+    ],
+  },
+  "runners-over-40-foot-pain": {
+    metaTitle: "Runners Over 40: Foot Pain That Wasn't There at 30",
+    metaDescription:
+      "The four foot problems that show up in runners after 40: plantar fasciitis, metatarsalgia, Achilles tendinopathy, big-toe stiffness. Why they cluster in this decade, and the mileage + shoe fixes that keep you running.",
+    datePublished: "2026-09-18",
+    faq: [
+      {
+        q: "Why are my feet suddenly hurting when I run at 45?",
+        a: "Four things changed. Fat pad under the heel and forefoot thinned. Tendon collagen turnover slowed, so mileage that used to bounce back now accumulates as micro-tears. Calf shortened from more sitting and less standing time. And decades of shoes with narrow toe boxes finally caught up as reduced big-toe extension. Any one of these can be handled; all four at once is what makes running over 40 feel like a different sport.",
+      },
+      {
+        q: "Should I stop running?",
+        a: "Almost never. Complete rest for weeks lets tendons weaken and doesn't accelerate healing for the chronic issues (tendinopathy, fasciitis) that dominate over-40 runners. The right answer is nearly always to reduce mileage by 30-50%, address the specific mechanism (see the diagnostic guides linked below), and rebuild volume gradually.",
+      },
+      {
+        q: "What's the safest weekly mileage increase after 40?",
+        a: "10% max, and only if the current week was pain-free at 3-out-of-10 or under. The classic 10% rule holds; what changes over 40 is the tolerance for breaking it. Under 30 you might get away with a 20% jump; over 40 that same jump triggers a flare in about half of men.",
+      },
+      {
+        q: "Do minimalist / barefoot shoes help or hurt?",
+        a: "It depends where you're starting from. Runners who transition slowly (6+ months, starting with 10% of weekly miles in minimalist shoes) usually strengthen the intrinsic foot muscles and reduce chronic pain. Runners who switch abruptly at 40+ trigger metatarsal stress fractures and Achilles flares within weeks. Slow or don't switch.",
+      },
+      {
+        q: "Should I change my running form?",
+        a: "Form changes at 40+ carry risk: what you're changing FROM has 30 years of neuromuscular pattern behind it, and forcing a new pattern often produces new injuries. Small adjustments (slightly higher cadence, less overstriding) are reasonable; deliberately switching from heel-strike to forefoot-strike is not. Address shoe and mileage first, form last.",
+      },
+      {
+        q: "How do I know if my foot pain needs a podiatrist versus rest?",
+        a: "Sharp pain during a run that doesn't ease within 5 minutes of continued running; pain that gets worse the next day rather than better; visible swelling; numbness or tingling; or foot pain that follows a specific painful event. Any of those, book a sports podiatrist. Everything else responds to the mileage-plus-shoe protocol first.",
+      },
+    ],
+    sources: [
+      {
+        label: "PubMed — Running injuries in masters (40+) athletes",
+        url: "https://pubmed.ncbi.nlm.nih.gov/26461487/",
+      },
+      {
+        label: "NIH StatPearls — Plantar Fasciitis",
+        url: "https://www.ncbi.nlm.nih.gov/books/NBK431073/",
+      },
+      {
+        label: "PubMed — Eccentric loading in Achilles tendinopathy (Alfredson 1998)",
+        url: "https://pubmed.ncbi.nlm.nih.gov/9617396/",
+      },
+    ],
+  },
   "why-your-feet-hurt-after-40": {
     metaTitle: "Why Do My Feet Hurt After 40? The Real Causes",
     metaDescription:
@@ -461,6 +677,112 @@ export const guideSeo: Record<string, GuideSeo> = {
 // deferred pending measurement.
 // ─────────────────────────────────────────────────────────────────────────────
 export const routineSeo: Record<string, GuideSeo> = {
+  daily: {
+    metaTitle: "The Nightly 5-Minute Foot-Care Checklist for Men Over 40",
+    metaDescription:
+      "The daily 5-minute foot-care routine as a pure checklist: wash, dry between toes, inspect, moisturize. Print it, tape it above the bathroom sink, and do it before bed.",
+    datePublished: "2026-09-18",
+    faq: [
+      {
+        q: "Why is drying between toes important?",
+        a: "Fungal spores need moisture and warmth to grow, and the space between the 4th and 5th toe is the darkest, dampest microclimate on the foot. Most athlete's foot infections start there. A 3-second toe-by-toe dry after every shower is the single highest-leverage prevention move.",
+      },
+      {
+        q: "Do I really need to inspect my feet every day?",
+        a: "Yes if you're diabetic, on blood thinners, or have reduced foot sensation. Otherwise a 10-second daily glance is fine (color change, new callus, small cut). The inspection matters because you catch things at week 1 instead of week 4, when they're 10x easier to fix.",
+      },
+      {
+        q: "What moisturizer should I use?",
+        a: "A urea-based cream (10 to 25 percent). Urea both moisturizes AND softens callus, so it does two jobs at once. Apply to damp (not wet) feet, skip between the toes to avoid fungal moisture traps.",
+      },
+      {
+        q: "Can I do this in the morning instead?",
+        a: "Yes, though evening is stronger. Overnight skin repair is when the urea cream does most of its work, and the routine also functions as a wind-down anchor for sleep. Morning is fine if evening won't stick; consistency matters more than timing.",
+      },
+      {
+        q: "What if I miss a day?",
+        a: "One day is nothing. Three days is a habit break, restart tonight. The pattern that breaks the habit is skipping when tired and then feeling too behind to start again. The routine is 5 minutes; you have 5 minutes.",
+      },
+    ],
+    sources: [
+      {
+        label: "AAFP — Common Foot Problems: OTC Treatments and Home Care",
+        url: "https://www.aafp.org/pubs/afp/issues/2019/1015/p498.html",
+      },
+    ],
+  },
+  "office-day": {
+    metaTitle: "Desk Micro-Routines: Foot Exercises at Work for Men Over 40",
+    metaDescription:
+      "Six micro-routines you can do at the desk in under two minutes each. Break up 8 hours of sitting, prevent calf shortening and ankle stiffness that show up on the walk home.",
+    datePublished: "2026-09-18",
+    faq: [
+      {
+        q: "Why does sitting all day cause foot problems?",
+        a: "Two mechanisms. First, prolonged plantarflexion (foot pointing slightly down while seated) shortens the calf and Achilles over months to years. Second, immobility reduces venous return, so blood pools in the feet and ankles causing end-of-day swelling. Both are undone by 2 minutes of movement per hour.",
+      },
+      {
+        q: "Do I really need to do this every hour?",
+        a: "Every 90 minutes is the ceiling that catches the compensation before it locks in. Two hours between is where the calf starts to stiffen enough that the next stand-up hurts. Set a quiet timer.",
+      },
+      {
+        q: "Can I do these barefoot?",
+        a: "Yes and preferred if your office setting allows it. The intrinsic foot muscles fire more with a bare foot on the floor than trapped in a shoe. If you can't go barefoot, slip off the heel of your shoe during the calf pumps.",
+      },
+      {
+        q: "What if I'm in a meeting the whole hour?",
+        a: "Do the seated micro-set under the table: ankle circles, toe spreads, and a subtle calf pump. All three are invisible and take 60 seconds. Your feet don't care that no one can see them working.",
+      },
+      {
+        q: "Will this replace an actual walk?",
+        a: "No. Micro-routines prevent stiffness accumulation; walks reset it. Aim for one 10-minute walk in the middle of the day on top of the desk work. Ideally outside; the change of surface (grass, gravel) is what makes the walk more valuable than the desk work.",
+      },
+    ],
+    sources: [
+      {
+        label: "PubMed — Prolonged sitting and lower-limb vascular changes",
+        url: "https://pubmed.ncbi.nlm.nih.gov/26461487/",
+      },
+    ],
+  },
+  "post-workout": {
+    metaTitle: "Post-Workout Foot Recovery: An 8-Minute Routine for Men Over 40",
+    metaDescription:
+      "An 8-minute foot recovery routine after a run, lift, or long walk. Calf release, plantar fascia work, and toe extension to prevent the next-day flare that sidelines men over 40.",
+    datePublished: "2026-09-18",
+    faq: [
+      {
+        q: "Why is post-workout foot care more important after 40?",
+        a: "Tissue turnover slows in the 40s. What used to bounce back overnight now needs 48 to 72 hours to recover, and skipping post-workout care lets small irritations accumulate into flares within 2 to 3 weeks. The 8 minutes is what shrinks the recovery window back to overnight.",
+      },
+      {
+        q: "How soon after training should I do this?",
+        a: "Within 30 minutes. The muscles and fascia are still warm from load, and release + stretch work is more effective on warm tissue than cold tissue. If you can only do it 2 hours later, warm up with a 5-minute walk first.",
+      },
+      {
+        q: "Do I need any equipment?",
+        a: "One tennis or lacrosse ball is enough. Nothing else required. A foam roller helps for the calf but the ball can substitute.",
+      },
+      {
+        q: "What if I only have 3 minutes?",
+        a: "Prioritize the calf release. Tight calves are the single most common upstream cause of plantar fasciitis, Achilles tendinopathy, and morning heel pain in men over 40 who train. Three minutes of calf work beats skipping the routine.",
+      },
+      {
+        q: "Should I ice my feet after a run?",
+        a: "Only for a specific sharp pain, and only for 5 to 10 minutes. Routine post-workout icing dampens the adaptation signal you want for the next training block. Save ice for actual injury flares.",
+      },
+    ],
+    sources: [
+      {
+        label: "NIH StatPearls — Plantar Fasciitis",
+        url: "https://www.ncbi.nlm.nih.gov/books/NBK431073/",
+      },
+      {
+        label: "PubMed — Eccentric loading in Achilles tendinopathy (Alfredson 1998)",
+        url: "https://pubmed.ncbi.nlm.nih.gov/9617396/",
+      },
+    ],
+  },
   movement: {
     metaTitle: "The Plantar Stretch Sequence: A 3-Minute Morning Routine",
     metaDescription:
