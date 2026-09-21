@@ -11,7 +11,7 @@
 import type { Chunk } from "./chunk";
 
 export type EmbeddedChunk = Chunk & {
-  /** L2-normalized embedding vector. Voyage-3-lite is 512 dims. */
+  /** L2-normalized embedding vector: voyage-4-lite trimmed to 512 dims. */
   embedding: number[];
 };
 
@@ -56,16 +56,26 @@ export function retrieveTopK(args: {
 }
 
 /**
- * Confidence heuristic for the "I'm not sure" state.
- * Voyage-3-lite scores for on-topic queries typically land 0.55–0.85 cosine.
- * Below 0.50 is a strong "we don't cover this" signal.
- * Between 0.50 and 0.60 is borderline — show the answer but flag uncertainty.
+ * Confidence buckets that pick the page state:
+ *   high    answer state
+ *   medium  "I'm not sure" state (model still answers, with the closest guide)
+ *   low     out-of-scope state (no model call, so off-topic questions cost nothing)
+ *
+ * Calibrated 2026-09-21 against voyage-4-lite at 512 dims with
+ * scripts/calibrate-confidence.ts (top-hit cosine score per question):
+ *   covered by a guide          0.54 to 0.70
+ *   about feet, not covered     0.44 to 0.58  (gout, warts, sprains, orthotics)
+ *   nothing to do with feet     0.08 to 0.38
+ * Re-run the script after adding guides or changing the embedding model.
  */
+export const CONFIDENCE_HIGH = 0.53;
+export const CONFIDENCE_MEDIUM = 0.4;
+
 export function classifyRetrievalConfidence(hits: RetrievalHit[]): "high" | "medium" | "low" {
   if (hits.length === 0) return "low";
   const top = hits[0].score;
-  if (top >= 0.6) return "high";
-  if (top >= 0.5) return "medium";
+  if (top >= CONFIDENCE_HIGH) return "high";
+  if (top >= CONFIDENCE_MEDIUM) return "medium";
   return "low";
 }
 
