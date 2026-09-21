@@ -39,6 +39,27 @@ const MAX_BODY_BYTES = 32_000;
 
 const chunks = (index as unknown as { chunks: EmbeddedChunk[] }).chunks;
 
+/**
+ * House style bans em-dashes and models slip them in anyway, so the stream is
+ * cleaned on the way out rather than trusting the prompt. Trailing commas and
+ * spaces are held back one chunk so a dash split across chunks still comes out
+ * as a single ", ".
+ */
+function createDashFilter() {
+  let carry = "";
+  return (text: string, flush = false): string => {
+    let s = (carry + text).replace(/\s*\u2014\s*/g, ", ").replace(/,\s*,/g, ",").replace(/, {2,}/g, ", ");
+    if (flush) {
+      carry = "";
+      return s.replace(/[,\s]+$/, "");
+    }
+    const tail = s.match(/[,\s]+$/)?.[0] ?? "";
+    carry = tail;
+    s = s.slice(0, s.length - tail.length);
+    return s;
+  };
+}
+
 type WireMessage = { role: "user" | "assistant"; content: string };
 
 const json = (body: unknown, status = 200) =>
@@ -174,18 +195,24 @@ export async function POST(request: Request) {
   const bodyStream = new ReadableStream<Uint8Array>({
     async start(controller) {
       controller.enqueue(line({ type: "meta", variant, sources }));
+      const clean = createDashFilter();
       let sentText = false;
       let stopReason: string | null = null;
 
       try {
         for await (const event of stream) {
           if (event.type === "content_block_delta" && event.delta.type === "text_delta") {
-            sentText = true;
-            controller.enqueue(line({ type: "delta", text: event.delta.text }));
+            const text = clean(event.delta.text);
+            if (text) {
+              sentText = true;
+              controller.enqueue(line({ type: "delta", text }));
+            }
           } else if (event.type === "message_delta") {
             stopReason = event.delta.stop_reason;
           }
         }
+        const rest = clean("", true);
+        if (rest) controller.enqueue(line({ type: "delta", text: rest }));
         // A refusal or an empty reply has nothing worth showing.
         const ok = sentText && stopReason !== "refusal";
         controller.enqueue(line({ type: ok ? "done" : "error" }));

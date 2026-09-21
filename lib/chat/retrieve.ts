@@ -98,7 +98,9 @@ export function sourcesFromHits(
   hits: RetrievalHit[],
   opts: { window?: number; max?: number } = {},
 ): { title: string; url: string }[] {
-  const { window = 0.08, max = 3 } = opts;
+  // Window and cap checked against real score gaps on 2026-09-21: a second
+  // guide within 0.05 of the best hit is on topic; past that they drift.
+  const { window = 0.05, max = 2 } = opts;
   if (hits.length === 0) return [];
   const floor = Math.max(CONFIDENCE_MEDIUM, hits[0].score - window);
   const seen = new Set<string>();
@@ -108,7 +110,8 @@ export function sourcesFromHits(
     const url = chunkUrl(hit.chunk);
     if (seen.has(url)) continue;
     seen.add(url);
-    out.push({ title: hit.chunk.title, url });
+    // Article titles carry an SEO subtitle after the colon; the link shows the name only.
+    out.push({ title: hit.chunk.title.split(":")[0].trim(), url });
     if (out.length >= max) break;
   }
   return out;
