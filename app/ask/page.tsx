@@ -7,14 +7,15 @@ import { askCopy } from "@/components/chat/copy";
 import { previewSnapshot } from "@/components/chat/preview";
 import { PREVIEW_STATES, type PreviewState } from "@/components/chat/types";
 import { type } from "@/components/typography";
+import { ASK_LAUNCHED } from "@/lib/chat/launch";
 
 export const metadata: Metadata = {
   title: "Ask a Foot Question",
   description:
     "Ask a question about foot pain, toenails, or foot care and get an answer drawn only from the Men's Sole Revival guides, with a link to each guide it used.",
   alternates: { canonical: "/ask" },
-  // TODO(launch): remove noindex, add /ask to app/sitemap.ts and the site nav.
-  robots: { index: false, follow: false },
+  // Indexing follows the launch switch in lib/chat/launch.ts.
+  robots: ASK_LAUNCHED ? undefined : { index: false, follow: false },
 };
 
 // ─────────────────────────────────────────────────────────────────────────────

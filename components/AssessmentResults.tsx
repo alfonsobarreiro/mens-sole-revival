@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { askCopy } from "@/components/chat/copy";
+import { ASK_LAUNCHED } from "@/lib/chat/launch";
 import { useActionState, useEffect } from "react";
 import {
   submitAssessmentEmail,
@@ -517,6 +519,14 @@ export default function AssessmentResults({
           >
             Restart the assessment →
           </button>
+          {ASK_LAUNCHED && (
+            <Link
+              href="/ask"
+              className="text-xs font-semibold uppercase tracking-wider text-neutral-500 underline underline-offset-4 hover:text-brand-700"
+            >
+              {askCopy.promo.fromAssessment}
+            </Link>
+          )}
         </div>
       </section>
     </div>

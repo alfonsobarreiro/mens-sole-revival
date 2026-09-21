@@ -101,6 +101,14 @@ export const askCopy = {
     stopped: "The assistant has stopped answering in this conversation.",
   },
 
+  // Shown outside /ask: under every article and on assessment results.
+  promo: {
+    body: "Have a question this page didn't answer?",
+    link: "Ask the assistant",
+    note: "It answers only from these guides and links to the one it used.",
+    fromAssessment: "Ask a question about your results →",
+  },
+
   notice: {
     error: {
       heading: "The assistant hit a snag",

@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL as BASE } from "@/lib/site";
 import { staticReviews } from "@/lib/reviews";
+import { ASK_LAUNCHED } from "@/lib/chat/launch";
 
 // Public, indexable routes. Internal/dev routes (studio, wireframes, homepage-2/3,
 // case-study frames, design-critique, admin) are intentionally excluded.
@@ -11,6 +12,8 @@ import { staticReviews } from "@/lib/reviews";
 // build time). SEO Bundle 1 fix — universal "now" was training Google to
 // distrust the sitemap since every URL claimed to change on every build.
 const ROUTE_LASTMOD: Record<string, string> = {
+  // Listed only once the launch switch is on (lib/chat/launch.ts).
+  ...(ASK_LAUNCHED ? { "/ask": "2026-09-21" } : {}),
   "": "2026-08-14",
   "/about": "2026-08-14",
   "/assessment": "2026-08-14",
