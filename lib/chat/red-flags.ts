@@ -9,6 +9,13 @@
  * zero-cost. Catches the obvious patterns. Errs on the side of MORE flags
  * (false positives are safer than false negatives here).
  *
+ * Runs in two places. The /ask page calls it in the browser so the escalation
+ * shows at once, still works when the assistant is rate limited or out of
+ * budget, and the message never leaves the device. The route handler calls it
+ * again because the server never trusts the client. This is a safety net, not
+ * a security boundary: a message that slips past still reaches a model whose
+ * system prompt refuses to diagnose.
+ *
  * A future v1.1 can add a Layer 2 LLM check that only fires when Layer 1
  * misses AND the message contains medical-sounding language. Not needed for
  * v1 launch.

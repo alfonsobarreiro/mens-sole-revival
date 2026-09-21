@@ -72,3 +72,34 @@ export function trackAssessment(
 ): void {
   track(event, params);
 }
+
+// ── /ask assistant event taxonomy ─────────────────────────────────────────
+//
+// Privacy rule: NO message text, ever. Params are counts, enums, and turn
+// numbers only. Inputs on /ask are treated as health data.
+//
+//   ask_question_sent    — visitor sends a question   { turn, via: "typed" | "starter" }
+//   ask_answer_shown     — an answer finished         { variant, source_count, turn }
+//   ask_out_of_scope     — question outside coverage  { turn }
+//   ask_red_flag         — escalation state shown     { tier, where: "client" | "server" }
+//   ask_notice           — error / rate limit / rest  { kind }
+//   ask_feedback         — helpful yes / no           { value, variant }
+//   ask_turn_limit       — conversation hit the cap
+//   ask_restart          — visitor starts over        { from }
+
+export type AskEvent =
+  | "ask_question_sent"
+  | "ask_answer_shown"
+  | "ask_out_of_scope"
+  | "ask_red_flag"
+  | "ask_notice"
+  | "ask_feedback"
+  | "ask_turn_limit"
+  | "ask_restart";
+
+export function trackAsk(
+  event: AskEvent,
+  params: Record<string, string | number> = {}
+): void {
+  track(event, params);
+}
