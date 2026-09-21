@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import createMDX from "@next/mdx";
+import { withBotId } from "botid/next/config";
 
 const nextConfig: NextConfig = {
   typescript: {
@@ -47,4 +48,5 @@ const withMDX = createMDX({
   extension: /\.mdx?$/,
 });
 
-export default withMDX(nextConfig);
+// withBotId adds the proxy rewrites BotID needs to protect POST /api/ask.
+export default withBotId(withMDX(nextConfig));

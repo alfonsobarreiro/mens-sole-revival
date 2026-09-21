@@ -80,10 +80,40 @@ export function classifyRetrievalConfidence(hits: RetrievalHit[]): "high" | "med
 }
 
 /**
- * Format retrieved chunks as a system-prompt-injectable context block.
- * Sent to Claude alongside the user's question. Each chunk is prefixed with
- * a source header so the model can cite by slug + section in the reply.
+ * Format retrieved chunks as the <source> blocks inside the context message.
+ * Each block carries the article URL so the model can link a next step.
  */
+
+/** Site path for a chunk's article. */
+export function chunkUrl(chunk: Chunk): string {
+  return chunk.type === "routine" ? `/routines/${chunk.slug}` : `/guides/${chunk.slug}`;
+}
+
+/**
+ * The guides shown under an answer: distinct articles among the hits that
+ * scored close to the best one. Decided here, not by the model, so the list
+ * cannot be steered by anything a visitor types.
+ */
+export function sourcesFromHits(
+  hits: RetrievalHit[],
+  opts: { window?: number; max?: number } = {},
+): { title: string; url: string }[] {
+  const { window = 0.08, max = 3 } = opts;
+  if (hits.length === 0) return [];
+  const floor = Math.max(CONFIDENCE_MEDIUM, hits[0].score - window);
+  const seen = new Set<string>();
+  const out: { title: string; url: string }[] = [];
+  for (const hit of hits) {
+    if (hit.score < floor) continue;
+    const url = chunkUrl(hit.chunk);
+    if (seen.has(url)) continue;
+    seen.add(url);
+    out.push({ title: hit.chunk.title, url });
+    if (out.length >= max) break;
+  }
+  return out;
+}
+
 export function formatContext(hits: RetrievalHit[]): string {
   if (hits.length === 0) return "No relevant articles found.";
 
@@ -94,9 +124,10 @@ export function formatContext(hits: RetrievalHit[]): string {
         chunk.type === "routine"
           ? `/routines/${chunk.slug}`
           : `/guides/${chunk.slug}`;
-      const section = chunk.section ? ` — Section: ${chunk.section}` : "";
+      const attr = (value: string) => value.replace(/"/g, "'");
+      const section = chunk.section ? ` section="${attr(chunk.section)}"` : "";
       return [
-        `<source index="${i + 1}" url="${source}" title="${chunk.title}"${section}>`,
+        `<source index="${i + 1}" url="${source}" title="${attr(chunk.title)}"${section}>`,
         chunk.text,
         `</source>`,
       ].join("\n");

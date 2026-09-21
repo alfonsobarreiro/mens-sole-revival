@@ -49,6 +49,17 @@ function trimAndNormalize(vector: number[]): number[] {
   return trimmed.map((x) => x / length);
 }
 
+/** Gateway failure with its HTTP status, so callers can tell a spent budget (402) from a hiccup. */
+export class EmbeddingError extends Error {
+  constructor(
+    public readonly status: number,
+    detail: string,
+  ) {
+    super(`AI Gateway embeddings ${status}: ${detail}`);
+    this.name = "EmbeddingError";
+  }
+}
+
 export async function embedTexts(texts: string[]): Promise<EmbedResult> {
   const apiKey = process.env.AI_GATEWAY_API_KEY ?? process.env.VERCEL_OIDC_TOKEN;
   if (!apiKey) {
@@ -70,7 +81,7 @@ export async function embedTexts(texts: string[]): Promise<EmbedResult> {
 
   if (!res.ok) {
     // The gateway's error body never contains the key, so it is safe to surface.
-    throw new Error(`AI Gateway embeddings ${res.status}: ${await res.text()}`);
+    throw new EmbeddingError(res.status, await res.text());
   }
 
   const json = (await res.json()) as GatewayEmbeddingResponse;
