@@ -81,7 +81,12 @@ export function previewSnapshot(state: PreviewState): ChatSnapshot {
     case "empty":
       return { ...idle, messages: [] };
     case "loading":
-      return { ...idle, phase: "loading", messages: [heelQuestion] };
+      return {
+        ...idle,
+        phase: "loading",
+        reading: "Heel Pain First Thing in the Morning",
+        messages: [heelQuestion],
+      };
     case "streaming":
       return {
         ...idle,

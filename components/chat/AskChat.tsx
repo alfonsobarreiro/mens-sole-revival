@@ -38,6 +38,8 @@ import type {
  *   200 JSON  { type: "red_flag", tier } | { type: "out_of_scope" }
  *   200 NDJSON stream, one event per line:
  *             { type: "meta", variant, sources } → { type: "delta", text }… → { type: "done" }
+ *             meta arrives before the model is called, so the page can name the
+ *             guide it's reading; a failure after that is { type: "notice", kind }
  *   429       rate limited
  *   503       { code: "resting" } when the monthly budget is spent
  */
@@ -47,6 +49,8 @@ export type ChatSnapshot = {
   phase: Phase;
   escalation: RedFlagTier | null;
   notice: Notice | null;
+  /** Title of the guide being read while loading (preview only). */
+  reading?: string | null;
 };
 
 const EMPTY: ChatSnapshot = { messages: [], phase: "idle", escalation: null, notice: null };
@@ -55,7 +59,8 @@ type StreamEvent =
   | { type: "meta"; variant?: string; sources?: unknown }
   | { type: "delta"; text?: string }
   | { type: "done" }
-  | { type: "error" };
+  | { type: "error" }
+  | { type: "notice"; kind?: string };
 
 const TIERS: RedFlagTier[] = ["tier1", "tier2", "tier3"];
 
@@ -111,6 +116,7 @@ export default function AskChat({ initial = EMPTY }: { initial?: ChatSnapshot })
   const [notice, setNotice] = useState<Notice | null>(initial.notice);
   const [draft, setDraft] = useState("");
   const [status, setStatus] = useState("");
+  const [reading, setReading] = useState<string | null>(initial.reading ?? null);
   const [atEnd, setAtEnd] = useState(true);
 
   const fieldId = useId();
@@ -198,6 +204,7 @@ export default function AskChat({ initial = EMPTY }: { initial?: ChatSnapshot })
   const fail = useCallback((next: Notice, partialId?: string | null) => {
     if (partialId) setMessages((prev) => prev.filter((m) => m.id !== partialId));
     setPhase("idle");
+    setReading(null);
     setStatus("");
     setNotice(next);
     pendingFocus.current = "notice";
@@ -207,6 +214,7 @@ export default function AskChat({ initial = EMPTY }: { initial?: ChatSnapshot })
   const escalate = useCallback((tier: RedFlagTier, where: "client" | "server") => {
     abortRef.current?.abort();
     setPhase("idle");
+    setReading(null);
     setStatus("");
     setNotice(null);
     setEscalation(tier);
@@ -222,6 +230,7 @@ export default function AskChat({ initial = EMPTY }: { initial?: ChatSnapshot })
 
       const turn = history.filter((m) => m.role === "user").length;
       setNotice(null);
+      setReading(null);
       setPhase("loading");
       setStatus(askCopy.loading);
 
@@ -270,7 +279,8 @@ export default function AskChat({ initial = EMPTY }: { initial?: ChatSnapshot })
         let buffer = "";
         let fullText = "";
         let variant: AssistantVariant = "answer";
-        let sourceCount = 0;
+        let sources: Source[] = [];
+        let noticeKind: Notice["kind"] | null = null;
         let finished = false;
 
         // Read until the server closes the stream, even after the done event,
@@ -290,21 +300,32 @@ export default function AskChat({ initial = EMPTY }: { initial?: ChatSnapshot })
             const event = JSON.parse(line) as StreamEvent;
 
             if (event.type === "meta") {
+              // Arrives before the model is called; the answer row waits for text.
               variant = event.variant === "uncertain" ? "uncertain" : "answer";
-              const sources = cleanSources(event.sources);
-              sourceCount = sources.length;
-              assistantId = nextId();
-              const message: AssistantMessage = {
-                id: assistantId,
-                role: "assistant",
-                text: "",
-                variant,
-                sources,
-                streaming: true,
-              };
-              setMessages((prev) => [...prev, message]);
-              setPhase("streaming");
-            } else if (event.type === "delta" && assistantId && event.text) {
+              sources = cleanSources(event.sources);
+              const title = sources[0]?.title;
+              if (title) {
+                setReading(title);
+                setStatus(askCopy.loadingGuide(title));
+              }
+            } else if (event.type === "notice") {
+              noticeKind =
+                event.kind === "rate_limited" || event.kind === "resting" ? event.kind : "error";
+            } else if (event.type === "delta" && event.text) {
+              if (!assistantId) {
+                assistantId = nextId();
+                const message: AssistantMessage = {
+                  id: assistantId,
+                  role: "assistant",
+                  text: "",
+                  variant,
+                  sources,
+                  streaming: true,
+                };
+                setMessages((prev) => [...prev, message]);
+                setReading(null);
+                setPhase("streaming");
+              }
               fullText += event.text;
               const id = assistantId;
               const text = fullText;
@@ -317,6 +338,7 @@ export default function AskChat({ initial = EMPTY }: { initial?: ChatSnapshot })
           }
         }
 
+        if (noticeKind) return fail({ kind: noticeKind }, assistantId);
         if (!finished || !assistantId || fullText.trim() === "") {
           throw new Error("stream ended early");
         }
@@ -329,7 +351,7 @@ export default function AskChat({ initial = EMPTY }: { initial?: ChatSnapshot })
             variant === "uncertain" ? `${askCopy.uncertain.heading}. ` : ""
           }${toPlainText(fullText)}`,
         );
-        trackAsk("ask_answer_shown", { variant, source_count: sourceCount, turn });
+        trackAsk("ask_answer_shown", { variant, source_count: sources.length, turn });
         if (turn >= MAX_TURNS) trackAsk("ask_turn_limit");
       } catch {
         if (controller.signal.aborted) return;
@@ -382,6 +404,7 @@ export default function AskChat({ initial = EMPTY }: { initial?: ChatSnapshot })
         .filter((m) => m.role === "user" || m.text.trim() !== "" || m.variant === "out_of_scope"),
     );
     setPhase("idle");
+    setReading(null);
     setStatus(askCopy.stopped);
     pendingFocus.current = "composer";
     trackAsk("ask_stopped", { turn: userTurns });
@@ -397,6 +420,7 @@ export default function AskChat({ initial = EMPTY }: { initial?: ChatSnapshot })
     abortRef.current?.abort();
     setMessages([]);
     setPhase("idle");
+    setReading(null);
     setEscalation(null);
     setNotice(null);
     setDraft("");
@@ -459,7 +483,7 @@ export default function AskChat({ initial = EMPTY }: { initial?: ChatSnapshot })
           ),
         )}
 
-        {phase === "loading" && <LoadingRow />}
+        {phase === "loading" && <LoadingRow reading={reading} />}
 
         {escalation && <EscalationPanel ref={escalationRef} tier={escalation} />}
 

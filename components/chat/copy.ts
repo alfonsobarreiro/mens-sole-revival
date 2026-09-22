@@ -11,9 +11,9 @@ export const askCopy = {
   },
 
   assistant: {
-    name: "MSR assistant",
+    name: "Alf",
     opening:
-      "I answer foot questions from the guides on this site and link to the one I used. I can't diagnose you, and I'll say when something needs a doctor. What's going on with your feet?",
+      "Men over 40 look after everyone but themselves, and their feet come last. That's why this site exists. I'm Alf. I answer from its guides and nothing else, I link the one I used, and I won't diagnose you. If something needs a doctor, I'll say so. What's going on with your feet?",
   },
 
   // The field answers the assistant's opening question, so it reads as a
@@ -37,6 +37,8 @@ export const askCopy = {
   ],
 
   loading: "Reading the guides…",
+  /** Once retrieval has picked the guides, the wait names the first one. */
+  loadingGuide: (title: string) => `Reading ${title}…`,
   srAnswerReady: "Answer ready.",
   stopped: "Stopped.",
   jumpToLatest: "Jump to latest",

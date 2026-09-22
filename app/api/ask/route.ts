@@ -21,7 +21,7 @@ import { CHATBOT_SYSTEM_PROMPT, buildContextMessage } from "@/lib/chat/system-pr
 //   2. Red-flag triage (regex, free). A match ends the request here.
 //   3. Embed the question, find the closest guide passages
 //   4. Weak match? Decline without calling the model (costs nothing)
-//   5. Stream the answer from Claude Haiku 4.5
+//   5. Open the stream, name the guides, then stream the answer from Haiku 4.5
 //
 // Privacy: nothing about the conversation is stored or logged. Logs carry
 // error types and status codes only, never message text.
@@ -165,42 +165,34 @@ export async function POST(request: Request) {
   }
 
   const client = new Anthropic({ maxRetries: 1, timeout: 25_000 });
-
-  let stream: Awaited<ReturnType<typeof openStream>>;
-  try {
-    // Awaiting here means billing, rate-limit, and auth failures surface as a
-    // real HTTP status before any of the streamed response has been sent.
-    stream = await openStream(client, modelMessages, request.signal);
-  } catch (err) {
-    if (err instanceof Anthropic.RateLimitError) {
-      console.error("[ask] model rate limited");
-      return json({ code: "rate_limited" }, 429);
-    }
-    if (err instanceof Anthropic.PermissionDeniedError) {
-      console.error("[ask] model permission denied", { type: err.type });
-      return resting();
-    }
-    if (err instanceof Anthropic.APIError) {
-      console.error("[ask] model error", { status: err.status, type: err.type });
-      // 402 billing_error = credits or the workspace spend limit are used up.
-      return err.status === 402 ? resting() : snag();
-    }
-    console.error("[ask] model connection failed");
-    return snag();
-  }
-
   const encoder = new TextEncoder();
   const line = (event: unknown) => encoder.encode(`${JSON.stringify(event)}\n`);
+
+  // The stream opens before the model is called so the page can name the guide
+  // being read during the slowest part of the wait. A model failure after this
+  // point travels as a notice event, since the status is already 200.
+  let stream: Awaited<ReturnType<typeof openStream>> | null = null;
 
   const bodyStream = new ReadableStream<Uint8Array>({
     async start(controller) {
       controller.enqueue(line({ type: "meta", variant, sources }));
+
+      let opened: Awaited<ReturnType<typeof openStream>>;
+      try {
+        opened = await openStream(client, modelMessages, request.signal);
+      } catch (err) {
+        controller.enqueue(line({ type: "notice", kind: noticeKind(err) }));
+        controller.close();
+        return;
+      }
+      stream = opened;
+
       const clean = createDashFilter();
       let sentText = false;
       let stopReason: string | null = null;
 
       try {
-        for await (const event of stream) {
+        for await (const event of opened) {
           if (event.type === "content_block_delta" && event.delta.type === "text_delta") {
             const text = clean(event.delta.text);
             if (text) {
@@ -226,7 +218,7 @@ export async function POST(request: Request) {
       }
     },
     cancel() {
-      stream.controller.abort();
+      stream?.controller.abort();
     },
   });
 
@@ -237,6 +229,25 @@ export async function POST(request: Request) {
       "X-Accel-Buffering": "no",
     },
   });
+}
+
+/** Which notice the page shows for a failed model call. Logs carry status only. */
+function noticeKind(err: unknown): "rate_limited" | "resting" | "error" {
+  if (err instanceof Anthropic.RateLimitError) {
+    console.error("[ask] model rate limited");
+    return "rate_limited";
+  }
+  if (err instanceof Anthropic.PermissionDeniedError) {
+    console.error("[ask] model permission denied", { type: err.type });
+    return "resting";
+  }
+  if (err instanceof Anthropic.APIError) {
+    console.error("[ask] model error", { status: err.status, type: err.type });
+    // 402 billing_error = credits or the workspace spend limit are used up.
+    return err.status === 402 ? "resting" : "error";
+  }
+  console.error("[ask] model connection failed");
+  return "error";
 }
 
 function openStream(client: Anthropic, messages: Anthropic.MessageParam[], signal: AbortSignal) {

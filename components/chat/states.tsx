@@ -72,12 +72,12 @@ export const UserRow = forwardRef<HTMLDivElement, { message: UserMessage }>(func
   );
 });
 
-export function LoadingRow() {
+export function LoadingRow({ reading }: { reading?: string | null }) {
   return (
     <div aria-hidden="true">
       <AssistantFrame>
         <p className="text-[1.0625rem] leading-[1.5] text-neutral-600 motion-safe:animate-pulse">
-          {askCopy.loading}
+          {reading ? askCopy.loadingGuide(reading) : askCopy.loading}
         </p>
       </AssistantFrame>
     </div>
