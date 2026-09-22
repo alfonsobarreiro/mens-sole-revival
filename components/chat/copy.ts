@@ -67,9 +67,13 @@ export const askCopy = {
     thanks: "Thanks. Noted.",
   },
 
+  // Under each finished answer. The doctor line shows when the answer itself
+  // points the reader to a clinician; the assessment line otherwise.
   nextStep: {
     body: "Not sure which problem is yours?",
     link: "Take the 5-minute assessment",
+    doctorBody: "Seeing a podiatrist about this?",
+    doctorLink: "Bring the doctor-prep checklist",
   },
 
   startOver: "New conversation",
@@ -133,5 +137,6 @@ export const askCopy = {
     },
     guides: "Browse all guides",
     assessment: "Take the 5-minute assessment",
+    checklist: "Print the doctor-prep checklist",
   },
 } as const;
