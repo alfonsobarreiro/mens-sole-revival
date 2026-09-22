@@ -16,13 +16,15 @@ export const askCopy = {
       "I answer foot questions from the guides on this site and link to the one I used. I can't diagnose you, and I'll say when something needs a doctor. What's going on with your feet?",
   },
 
+  // The field answers the assistant's opening question, so it reads as a
+  // reply, not a form prompt.
   composer: {
-    label: "Your question",
-    placeholder: "Ask a foot question",
+    label: "Your message",
+    placeholder: "Describe what's going on",
     send: "Send",
     stop: "Stop",
     privacy:
-      "Your question goes to Claude, by Anthropic, and isn't saved. Leave out your name and contact details.",
+      "What you type goes to Claude, by Anthropic, and isn't saved. Leave out your name and contact details.",
     tooLong: "Keep it under 500 characters.",
   },
 
