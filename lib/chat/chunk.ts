@@ -9,11 +9,13 @@
  * for chunk sizing because Voyage embedding model tokenizes independently.
  */
 
+export type ChunkType = "guide" | "routine" | "page";
+
 export type Chunk = {
   /** Source page slug, e.g. "heel-pain-first-thing-in-the-morning". */
   slug: string;
-  /** "guide" or "routine" — used at retrieval time to prefer the right surface. */
-  type: "guide" | "routine";
+  /** Which surface the passage came from; decides its URL at answer time. */
+  type: ChunkType;
   /** Human-readable article title, mirrored from guideSeo / routineSeo. */
   title: string;
   /** Zero-based chunk index within this article. */
@@ -75,7 +77,7 @@ export function extractTitle(normalized: string): string {
  */
 export function chunkArticle(args: {
   slug: string;
-  type: "guide" | "routine";
+  type: ChunkType;
   title: string;
   rawMdx: string;
 }): Chunk[] {

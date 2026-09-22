@@ -86,7 +86,9 @@ export function classifyRetrievalConfidence(hits: RetrievalHit[]): "high" | "med
 
 /** Site path for a chunk's article. */
 export function chunkUrl(chunk: Chunk): string {
-  return chunk.type === "routine" ? `/routines/${chunk.slug}` : `/guides/${chunk.slug}`;
+  if (chunk.type === "routine") return `/routines/${chunk.slug}`;
+  if (chunk.type === "page") return `/${chunk.slug}`;
+  return `/guides/${chunk.slug}`;
 }
 
 /**
@@ -123,10 +125,7 @@ export function formatContext(hits: RetrievalHit[]): string {
   return hits
     .map((hit, i) => {
       const { chunk } = hit;
-      const source =
-        chunk.type === "routine"
-          ? `/routines/${chunk.slug}`
-          : `/guides/${chunk.slug}`;
+      const source = chunkUrl(chunk);
       const attr = (value: string) => value.replace(/"/g, "'");
       const section = chunk.section ? ` section="${attr(chunk.section)}"` : "";
       return [

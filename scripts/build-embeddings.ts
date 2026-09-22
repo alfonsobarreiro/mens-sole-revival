@@ -12,6 +12,7 @@
 import { readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { chunkArticle, extractTitle, type Chunk } from "../lib/chat/chunk";
+import { DOCTOR_PREP_TITLE, doctorPrepAsMarkdown } from "../lib/doctor-prep-content";
 import { embedTexts, EMBEDDING_MODEL, EMBEDDING_DIMENSIONS } from "../lib/chat/embed";
 import { guideSeo, routineSeo } from "../lib/guide-seo";
 
@@ -63,6 +64,15 @@ async function main() {
     const title = routineSeo[slug]?.metaTitle || extractTitle(raw) || slug;
     allChunks.push(...chunkArticle({ slug, type: "routine", title, rawMdx: raw }));
   }
+  // Standalone pages the assistant should be able to point to.
+  allChunks.push(
+    ...chunkArticle({
+      slug: "doctor-prep",
+      type: "page",
+      title: DOCTOR_PREP_TITLE,
+      rawMdx: doctorPrepAsMarkdown(),
+    }),
+  );
   console.log(`Chunked into ${allChunks.length} passages.`);
 
   const embedded: (Chunk & { embedding: number[] })[] = [];
