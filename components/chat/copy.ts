@@ -7,37 +7,43 @@
 export const askCopy = {
   hero: {
     title: "Ask a foot question",
-    body: "Answers come only from the guides on this site, and each one links to the guide it used. The assistant can't diagnose you. It will tell you when something needs a doctor.",
+    body: "Answers come only from the guides on this site.",
+  },
+
+  assistant: {
+    name: "MSR assistant",
+    opening:
+      "I answer foot questions from the guides on this site and link to the one I used. I can't diagnose you, and I'll say when something needs a doctor. What's going on with your feet?",
   },
 
   composer: {
     label: "Your question",
-    placeholder: "For example: why does my heel hurt when I get out of bed?",
+    placeholder: "Ask a foot question",
+    send: "Send",
+    stop: "Stop",
     privacy:
-      "Leave out your name and contact details. Your question is sent to an AI model (Claude, by Anthropic) to write the answer. This site doesn't save it.",
-    keys: "Enter to send. Shift + Enter for a new line.",
-    submit: "Ask",
+      "Your question goes to Claude, by Anthropic, and isn't saved. Leave out your name and contact details.",
     tooLong: "Keep it under 500 characters.",
   },
 
-  empty: {
-    heading: "Not sure what to ask?",
-    starters: [
-      "Why does my heel hurt when I get out of bed?",
-      "How should I trim my toenails?",
-      "I sit at a desk all day. What can I do for my feet?",
-      "My knee hurts. Could it be my feet?",
-    ],
-  },
+  /** Short chip labels; the full question is what gets sent. */
+  starters: [
+    { label: "Heel pain in the morning", question: "Why does my heel hurt when I get out of bed?" },
+    { label: "Trimming toenails", question: "How should I trim my toenails?" },
+    { label: "Desk job, tired feet", question: "I sit at a desk all day. What can I do for my feet?" },
+    { label: "Knee pain from my feet?", question: "My knee hurts. Could it be my feet?" },
+  ],
 
   loading: "Reading the guides…",
   srAnswerReady: "Answer ready.",
+  stopped: "Stopped.",
+  jumpToLatest: "Jump to latest",
 
   message: {
-    youAsked: "You asked",
-    answer: "Answer",
-    sources: "From the guide:",
-    sourcesPlural: "From these guides:",
+    you: "You",
+    sources: "From the guides",
+    copy: "Copy",
+    copied: "Copied",
   },
 
   uncertain: {
@@ -53,7 +59,7 @@ export const askCopy = {
   },
 
   feedback: {
-    prompt: "Was this helpful?",
+    prompt: "Helpful?",
     yes: "Yes",
     no: "No",
     thanks: "Thanks. Noted.",
@@ -64,7 +70,7 @@ export const askCopy = {
     link: "Take the 5-minute assessment",
   },
 
-  startOver: "Start a new conversation",
+  startOver: "New conversation",
 
   turnLimit: {
     heading: "This conversation has reached its limit",

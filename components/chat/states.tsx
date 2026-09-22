@@ -1,49 +1,65 @@
 import Link from "next/link";
-import { forwardRef, useId } from "react";
+import { forwardRef, useId, useState } from "react";
+import MSRMark from "@/components/MSRMark";
 import { Button } from "@/components/ui";
 import { type } from "@/components/typography";
 import RichText from "./RichText";
 import { askCopy } from "./copy";
+import { toPlainText } from "./text";
 import type { AssistantMessage, Notice, RedFlagTier, UserMessage } from "./types";
 
 const linkClass = "text-link underline underline-offset-4 hover:text-link-hover";
-const smallLabel = "text-xs font-medium tracking-[0.01em] text-neutral-600";
+const nameLabel = "text-xs font-medium tracking-[0.01em] text-neutral-600";
+const chipClass =
+  "inline-flex min-h-9 items-center border border-neutral-300 bg-bg-elevated px-4 py-2 text-xs font-medium tracking-[0.01em] text-neutral-700 transition hover:border-ink hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2";
 
-// ── Empty ────────────────────────────────────────────────────────────────────
+// ── Speaker identity ─────────────────────────────────────────────────────────
 
-export function StarterQuestions({ onPick }: { onPick: (question: string) => void }) {
+export function AssistantMark() {
   return (
-    <div>
-      <h2 className={`${type.h3} text-ink`}>{askCopy.empty.heading}</h2>
-      <ul className="mt-4 space-y-2">
-        {askCopy.empty.starters.map((q) => (
-          <li key={q}>
-            <button
-              type="button"
-              onClick={() => onPick(q)}
-              className="w-full border border-neutral-300 bg-bg-elevated px-4 py-3 text-left text-[0.9375rem] leading-[1.5] text-ink transition hover:border-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2"
-            >
-              {q}
-            </button>
-          </li>
-        ))}
-      </ul>
+    <span
+      aria-hidden="true"
+      className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-ink text-white"
+    >
+      <MSRMark className="h-4 w-auto" size="sm" bg="ink" />
+    </span>
+  );
+}
+
+/** Left column mark plus a name label; the body is whatever the caller passes. */
+function AssistantFrame({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex gap-3">
+      <AssistantMark />
+      <div className="min-w-0 flex-1 pt-0.5">
+        <p className={nameLabel}>{askCopy.assistant.name}</p>
+        <div className="mt-1.5">{children}</div>
+      </div>
     </div>
   );
 }
 
-// ── Conversation rows ────────────────────────────────────────────────────────
+// ── Thread rows ──────────────────────────────────────────────────────────────
+
+/** The assistant speaks first. Always the first row, never part of the history. */
+export function OpeningRow() {
+  return (
+    <AssistantFrame>
+      <p className="text-[1.0625rem] leading-[1.5] text-ink">{askCopy.assistant.opening}</p>
+    </AssistantFrame>
+  );
+}
 
 export const UserRow = forwardRef<HTMLDivElement, { message: UserMessage }>(function UserRow(
   { message },
   ref,
 ) {
   return (
-    <div ref={ref} className="scroll-mt-28 border-l-2 border-neutral-300 pl-4">
-      <p className={smallLabel}>{askCopy.message.youAsked}</p>
-      <p className="mt-1 whitespace-pre-wrap text-[1.0625rem] font-medium leading-[1.5] text-ink">
-        {message.text}
-      </p>
+    <div ref={ref} className="flex scroll-mt-28 justify-end">
+      <div className="max-w-[85%] bg-neutral-100 px-4 py-3">
+        <span className="sr-only">{askCopy.message.you}: </span>
+        <p className="whitespace-pre-wrap text-[1.0625rem] leading-[1.5] text-ink">{message.text}</p>
+      </div>
     </div>
   );
 });
@@ -51,11 +67,49 @@ export const UserRow = forwardRef<HTMLDivElement, { message: UserMessage }>(func
 export function LoadingRow() {
   return (
     <div aria-hidden="true">
-      <p className={smallLabel}>{askCopy.message.answer}</p>
-      <p className="mt-1 text-[1.0625rem] leading-[1.5] text-neutral-600 motion-safe:animate-pulse">
-        {askCopy.loading}
-      </p>
+      <AssistantFrame>
+        <p className="text-[1.0625rem] leading-[1.5] text-neutral-600 motion-safe:animate-pulse">
+          {askCopy.loading}
+        </p>
+      </AssistantFrame>
     </div>
+  );
+}
+
+export function StarterChips({ onPick }: { onPick: (question: string) => void }) {
+  return (
+    <ul className="flex flex-wrap gap-2" aria-label="Example questions">
+      {askCopy.starters.map((s) => (
+        <li key={s.question}>
+          <button type="button" onClick={() => onPick(s.question)} className={chipClass}>
+            {s.label}
+          </button>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function CopyButton({ text, onCopy }: { text: string; onCopy: () => void }) {
+  const [copied, setCopied] = useState(false);
+  return (
+    <Button
+      variant="ghost"
+      size="sm"
+      className="-ml-4"
+      onClick={() => {
+        navigator.clipboard
+          ?.writeText(toPlainText(text))
+          .then(() => {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+          })
+          .catch(() => {});
+        onCopy();
+      }}
+    >
+      {copied ? askCopy.message.copied : askCopy.message.copy}
+    </Button>
   );
 }
 
@@ -63,39 +117,41 @@ export function AssistantRow({
   message,
   isLatest,
   onFeedback,
+  onCopy,
 }: {
   message: AssistantMessage;
   isLatest: boolean;
   onFeedback: (id: string, value: "up" | "down") => void;
+  onCopy: (variant: AssistantMessage["variant"]) => void;
 }) {
   const { variant, sources, streaming, feedback } = message;
 
   if (variant === "out_of_scope") {
     return (
-      <div className="border border-neutral-300 bg-neutral-100 p-5">
-        <h3 className={`${type.h4} text-ink`}>{askCopy.outOfScope.heading}</h3>
-        <p className={`${type.body} mt-2 text-neutral-700`}>{askCopy.outOfScope.body}</p>
-        <p className="mt-3 text-[0.9375rem]">
-          <Link href="/guides" className={linkClass}>
-            {askCopy.outOfScope.browse}
-          </Link>
-        </p>
-      </div>
+      <AssistantFrame>
+        <div className="border border-neutral-300 bg-neutral-100 p-4">
+          <h3 className={`${type.h4} text-ink`}>{askCopy.outOfScope.heading}</h3>
+          <p className={`${type.body} mt-2 text-neutral-700`}>{askCopy.outOfScope.body}</p>
+          <p className="mt-3 text-[0.9375rem]">
+            <Link href="/guides" className={linkClass}>
+              {askCopy.outOfScope.browse}
+            </Link>
+          </p>
+        </div>
+      </AssistantFrame>
     );
   }
 
   return (
-    <div>
-      <p className={smallLabel}>{askCopy.message.answer}</p>
-
+    <AssistantFrame>
       {variant === "uncertain" && (
-        <div className="mt-2 border border-neutral-300 bg-neutral-100 p-4">
+        <div className="mb-3 border border-neutral-300 bg-neutral-100 p-4">
           <h3 className={`${type.h4} text-ink`}>{askCopy.uncertain.heading}</h3>
           <p className={`${type.body} mt-1 text-neutral-700`}>{askCopy.uncertain.body}</p>
         </div>
       )}
 
-      <div className="mt-2">
+      <div>
         <RichText text={message.text} />
         {streaming && (
           <span
@@ -106,21 +162,22 @@ export function AssistantRow({
       </div>
 
       {!streaming && sources.length > 0 && (
-        <p className="mt-4 text-[0.9375rem] leading-[1.5] text-neutral-700">
-          {sources.length === 1 ? askCopy.message.sources : askCopy.message.sourcesPlural}{" "}
-          {sources.map((s, i) => (
-            <span key={s.url}>
-              <Link href={s.url} className={linkClass}>
-                {s.title}
-              </Link>
-              {i < sources.length - 1 ? ", " : ""}
-            </span>
-          ))}
-        </p>
+        <div className="mt-4">
+          <p className={nameLabel}>{askCopy.message.sources}</p>
+          <ul className="mt-2 flex flex-wrap gap-2">
+            {sources.map((s) => (
+              <li key={s.url}>
+                <Link href={s.url} className={chipClass}>
+                  {s.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
 
       {!streaming && variant === "uncertain" && (
-        <p className="mt-2 text-[0.9375rem]">
+        <p className="mt-3 text-[0.9375rem]">
           <Link href="/doctor-prep" className={linkClass}>
             {askCopy.uncertain.doctorPrep}
           </Link>
@@ -128,18 +185,22 @@ export function AssistantRow({
       )}
 
       {!streaming && (
-        <div className="mt-4 flex flex-wrap items-center gap-3 border-t border-neutral-200 pt-3">
+        <div className="mt-3 flex flex-wrap items-center gap-x-1 gap-y-2">
+          <CopyButton text={message.text} onCopy={() => onCopy(variant)} />
+          <span aria-hidden="true" className="text-neutral-300">
+            ·
+          </span>
           {feedback ? (
-            <p className="text-xs text-neutral-600" role="status">
+            <p className="px-3 text-xs text-neutral-600" role="status">
               {askCopy.feedback.thanks}
             </p>
           ) : (
             <>
-              <p className="text-xs text-neutral-600">{askCopy.feedback.prompt}</p>
-              <Button variant="secondary" size="sm" onClick={() => onFeedback(message.id, "up")}>
+              <p className="pl-3 text-xs text-neutral-600">{askCopy.feedback.prompt}</p>
+              <Button variant="ghost" size="sm" onClick={() => onFeedback(message.id, "up")}>
                 {askCopy.feedback.yes}
               </Button>
-              <Button variant="secondary" size="sm" onClick={() => onFeedback(message.id, "down")}>
+              <Button variant="ghost" size="sm" onClick={() => onFeedback(message.id, "down")}>
                 {askCopy.feedback.no}
               </Button>
             </>
@@ -155,7 +216,7 @@ export function AssistantRow({
           </Link>
         </p>
       )}
-    </div>
+    </AssistantFrame>
   );
 }
 
@@ -168,7 +229,7 @@ export const EscalationPanel = forwardRef<HTMLHeadingElement, { tier: RedFlagTie
     return (
       <section
         aria-labelledby={headingId}
-        className="border-l-4 border-ink bg-bg-elevated p-6 md:p-8"
+        className="border-l-4 border-ink bg-neutral-100 p-6 md:p-8"
       >
         <h2
           id={headingId}

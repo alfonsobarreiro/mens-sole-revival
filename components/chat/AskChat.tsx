@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useId, useRef, useState } from "react";
-import { Button, Textarea } from "@/components/ui";
+import { Button } from "@/components/ui";
 import { type } from "@/components/typography";
 import { trackAsk } from "@/lib/analytics";
 import { MAX_INPUT_CHARS, MAX_TURNS } from "@/lib/chat/limits";
@@ -12,9 +12,11 @@ import {
   EscalationPanel,
   LoadingRow,
   NoticePanel,
-  StarterQuestions,
+  OpeningRow,
+  StarterChips,
   UserRow,
 } from "./states";
+import { toPlainText } from "./text";
 import type {
   AssistantMessage,
   AssistantVariant,
@@ -57,6 +59,9 @@ type StreamEvent =
 
 const TIERS: RedFlagTier[] = ["tier1", "tier2", "tier3"];
 
+/** The composer grows with the draft up to this height, then scrolls inside. */
+const COMPOSER_MAX_PX = 200;
+
 /** Sources render as internal links, so only same-site paths are accepted. */
 function cleanSources(raw: unknown): Source[] {
   if (!Array.isArray(raw)) return [];
@@ -69,21 +74,34 @@ function cleanSources(raw: unknown): Source[] {
   );
 }
 
-/** Screen readers get the answer as plain sentences, without markdown symbols. */
-function toPlainText(markdown: string): string {
-  return markdown
-    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
-    .replace(/\*\*([^*]+)\*\*/g, "$1")
-    .replace(/\*([^*]+)\*/g, "$1")
-    .replace(/^\s*(?:[-*]|\d+[.)])\s+/gm, "")
-    .replace(/^>\s?/gm, "")
-    .replace(/^#{1,3}\s+/gm, "");
-}
-
 function toWire(history: ChatMessage[]) {
   return history
     .filter((m) => m.text.trim() !== "")
     .map((m) => ({ role: m.role, content: m.text }));
+}
+
+function fitToContent(el: HTMLTextAreaElement) {
+  el.style.height = "0px";
+  el.style.height = `${Math.min(el.scrollHeight, COMPOSER_MAX_PX)}px`;
+}
+
+const iconButton =
+  "flex h-11 w-11 items-center justify-center transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2";
+
+function ArrowUpIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 20 20" className="h-5 w-5" fill="none">
+      <path d="M10 16V4M4.5 9.5 10 4l5.5 5.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function StopIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 20 20" className="h-5 w-5">
+      <rect x="5" y="5" width="10" height="10" fill="currentColor" />
+    </svg>
+  );
 }
 
 export default function AskChat({ initial = EMPTY }: { initial?: ChatSnapshot }) {
@@ -93,16 +111,19 @@ export default function AskChat({ initial = EMPTY }: { initial?: ChatSnapshot })
   const [notice, setNotice] = useState<Notice | null>(initial.notice);
   const [draft, setDraft] = useState("");
   const [status, setStatus] = useState("");
+  const [atEnd, setAtEnd] = useState(true);
 
   const fieldId = useId();
   const privacyId = `${fieldId}-privacy`;
   const counterId = `${fieldId}-counter`;
+  const errorId = `${fieldId}-error`;
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const escalationRef = useRef<HTMLHeadingElement>(null);
   const noticeRef = useRef<HTMLHeadingElement>(null);
   const turnLimitRef = useRef<HTMLHeadingElement>(null);
   const lastUserRef = useRef<HTMLDivElement>(null);
+  const endRef = useRef<HTMLDivElement>(null);
   const abortRef = useRef<AbortController | null>(null);
   const idCounter = useRef(0);
 
@@ -111,13 +132,14 @@ export default function AskChat({ initial = EMPTY }: { initial?: ChatSnapshot })
   const pendingFocus = useRef<"composer" | "escalation" | "notice" | "turnLimit" | null>(null);
   const pendingScroll = useRef(false);
 
+  const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
   useEffect(() => {
     if (pendingScroll.current && lastUserRef.current) {
       pendingScroll.current = false;
-      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       lastUserRef.current.scrollIntoView({
         block: "start",
-        behavior: reduced ? "auto" : "smooth",
+        behavior: reducedMotion() ? "auto" : "smooth",
       });
     }
 
@@ -139,19 +161,39 @@ export default function AskChat({ initial = EMPTY }: { initial?: ChatSnapshot })
 
   useEffect(() => () => abortRef.current?.abort(), []);
 
+  // The composer keeps its one-line height until the draft needs more.
+  useEffect(() => {
+    if (textareaRef.current) fitToContent(textareaRef.current);
+  }, [draft]);
+
+  // "Jump to latest" shows while the end of the thread sits under the composer
+  // or below the fold. The margin is roughly the composer's height.
+  useEffect(() => {
+    const el = endRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(([entry]) => setAtEnd(entry.isIntersecting), {
+      rootMargin: "0px 0px -150px 0px",
+    });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   const nextId = useCallback(() => `m${++idCounter.current}`, []);
 
   const userTurns = messages.filter((m) => m.role === "user").length;
   const busy = phase !== "idle";
   const tooLong = draft.length > MAX_INPUT_CHARS;
+  const nearLimit = draft.length >= MAX_INPUT_CHARS - 100;
   const atTurnLimit = !busy && !escalation && !notice && userTurns >= MAX_TURNS;
   const composerHidden =
     escalation !== null ||
     atTurnLimit ||
     notice?.kind === "rate_limited" ||
     notice?.kind === "resting";
+  const hasConversation = messages.length > 0;
   const lastAssistantId = [...messages].reverse().find((m) => m.role === "assistant")?.id;
   const lastUserId = [...messages].reverse().find((m) => m.role === "user")?.id;
+  const showJump = hasConversation && !atEnd && !composerHidden;
 
   const fail = useCallback((next: Notice, partialId?: string | null) => {
     if (partialId) setMessages((prev) => prev.filter((m) => m.id !== partialId));
@@ -326,8 +368,23 @@ export default function AskChat({ initial = EMPTY }: { initial?: ChatSnapshot })
       return;
     }
 
-    if (via === "starter") pendingFocus.current = "composer";
+    pendingFocus.current = "composer";
     void request(history);
+  };
+
+  /** Keeps whatever has streamed so far and hands the composer back. */
+  const stop = () => {
+    if (!busy) return;
+    abortRef.current?.abort();
+    setMessages((prev) =>
+      prev
+        .map((m) => (m.role === "assistant" && m.streaming ? { ...m, streaming: false } : m))
+        .filter((m) => m.role === "user" || m.text.trim() !== "" || m.variant === "out_of_scope"),
+    );
+    setPhase("idle");
+    setStatus(askCopy.stopped);
+    pendingFocus.current = "composer";
+    trackAsk("ask_stopped", { turn: userTurns });
   };
 
   const retry = () => {
@@ -357,57 +414,64 @@ export default function AskChat({ initial = EMPTY }: { initial?: ChatSnapshot })
     trackAsk("ask_feedback", { value, variant: target.variant });
   };
 
+  const jumpToLatest = () => {
+    endRef.current?.scrollIntoView({ block: "end", behavior: reducedMotion() ? "auto" : "smooth" });
+  };
+
   const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key !== "Enter" || e.shiftKey || e.nativeEvent.isComposing) return;
     e.preventDefault();
     send(draft, "typed");
   };
 
-  const hasConversation = messages.length > 0;
   const restartFrom = escalation ? "escalation" : notice ? notice.kind : atTurnLimit ? "turn_limit" : "conversation";
 
   return (
-    <div className="border border-neutral-200 bg-white">
+    <div className="flex min-h-[70vh] flex-col border border-neutral-200 bg-white">
       <p role="status" className="sr-only">
         {status}
       </p>
 
       {hasConversation && (
-        <section aria-label="Conversation" aria-busy={busy} className="space-y-8 p-6 md:p-8">
-          {messages.map((m) =>
-            m.role === "user" ? (
-              <UserRow key={m.id} ref={m.id === lastUserId ? lastUserRef : undefined} message={m} />
-            ) : (
-              <AssistantRow
-                key={m.id}
-                message={m}
-                isLatest={m.id === lastAssistantId && !escalation}
-                onFeedback={giveFeedback}
-              />
-            ),
+        <div className="flex min-h-12 items-center justify-end border-b border-neutral-200 px-4 md:px-6">
+          {!busy && (
+            <Button variant="ghost" size="sm" className="-mr-4" onClick={() => startOver(restartFrom)}>
+              {askCopy.startOver}
+            </Button>
           )}
-          {phase === "loading" && <LoadingRow />}
-        </section>
-      )}
-
-      {escalation && (
-        <div className="px-6 pb-6 md:px-8 md:pb-8">
-          <EscalationPanel ref={escalationRef} tier={escalation} />
         </div>
       )}
 
-      {notice && (
-        <div className={`px-6 pb-6 md:px-8 md:pb-8 ${hasConversation ? "" : "pt-6 md:pt-8"}`}>
+      <section aria-label="Conversation" aria-busy={busy} className="flex-1 space-y-6 px-4 py-6 md:px-6">
+        <OpeningRow />
+
+        {messages.map((m) =>
+          m.role === "user" ? (
+            <UserRow key={m.id} ref={m.id === lastUserId ? lastUserRef : undefined} message={m} />
+          ) : (
+            <AssistantRow
+              key={m.id}
+              message={m}
+              isLatest={m.id === lastAssistantId && !escalation}
+              onFeedback={giveFeedback}
+              onCopy={(variant) => trackAsk("ask_copy", { variant })}
+            />
+          ),
+        )}
+
+        {phase === "loading" && <LoadingRow />}
+
+        {escalation && <EscalationPanel ref={escalationRef} tier={escalation} />}
+
+        {notice && (
           <NoticePanel
             ref={noticeRef}
             notice={notice}
             onRetry={notice.kind === "error" && hasConversation ? retry : undefined}
           />
-        </div>
-      )}
+        )}
 
-      {atTurnLimit && (
-        <div className="px-6 pb-6 md:px-8 md:pb-8">
+        {atTurnLimit && (
           <section className="border border-neutral-300 bg-neutral-100 p-6">
             <h2
               ref={turnLimitRef}
@@ -418,65 +482,93 @@ export default function AskChat({ initial = EMPTY }: { initial?: ChatSnapshot })
             </h2>
             <p className={`${type.body} mt-2 text-neutral-700`}>{askCopy.turnLimit.body}</p>
           </section>
-        </div>
-      )}
+        )}
+
+        {/* Scroll margin keeps "jump to latest" from landing under the sticky composer. */}
+        <div ref={endRef} aria-hidden="true" className="h-px scroll-mb-44" />
+      </section>
 
       {!composerHidden && (
-        <form
-          className={`p-6 md:p-8 ${hasConversation ? "border-t border-neutral-200" : ""}`}
-          onSubmit={(e) => {
-            e.preventDefault();
-            send(draft, "typed");
-          }}
-        >
-          <Textarea
-            ref={textareaRef}
-            id={fieldId}
-            label={askCopy.composer.label}
-            placeholder={askCopy.composer.placeholder}
-            rows={3}
-            value={draft}
-            onChange={(e) => setDraft(e.target.value)}
-            onKeyDown={onKeyDown}
-            error={tooLong ? askCopy.composer.tooLong : undefined}
-            // Textarea wires its own error id; privacy note and counter are added here.
-            aria-describedby={`${privacyId} ${counterId}${tooLong ? ` ${fieldId}-error` : ""}`}
-            enterKeyHint="send"
-          />
+        <div className="sticky bottom-0 border-t border-neutral-200 bg-white px-4 py-3 md:px-6 md:py-4">
+          {showJump && (
+            <div className="absolute -top-12 right-4 md:right-6">
+              <Button variant="secondary" size="sm" className="bg-white" onClick={jumpToLatest}>
+                {askCopy.jumpToLatest} ↓
+              </Button>
+            </div>
+          )}
 
-          <div className="mt-3 flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
-            <Button
-              type="submit"
-              aria-disabled={busy || tooLong}
-              className="aria-disabled:cursor-not-allowed aria-disabled:opacity-40"
-            >
-              {askCopy.composer.submit}
-            </Button>
-            <p className="text-xs text-neutral-600">
-              <span className="hidden sm:inline">{askCopy.composer.keys} </span>
-              <span id={counterId} className={tooLong ? "font-medium text-signal-error" : undefined}>
-                {draft.length} / {MAX_INPUT_CHARS}
-              </span>
-            </p>
-          </div>
+          {!hasConversation && !notice && (
+            <div className="mb-3">
+              <StarterChips onPick={(q) => send(q, "starter")} />
+            </div>
+          )}
 
-          <p id={privacyId} className="mt-4 max-w-prose text-xs leading-[1.5] text-neutral-600">
-            {askCopy.composer.privacy}
-          </p>
-        </form>
-      )}
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              send(draft, "typed");
+            }}
+          >
+            <label htmlFor={fieldId} className="sr-only">
+              {askCopy.composer.label}
+            </label>
+            <div className="relative">
+              <textarea
+                ref={textareaRef}
+                id={fieldId}
+                rows={1}
+                value={draft}
+                placeholder={askCopy.composer.placeholder}
+                onChange={(e) => setDraft(e.target.value)}
+                onKeyDown={onKeyDown}
+                enterKeyHint="send"
+                aria-invalid={tooLong || undefined}
+                aria-describedby={`${privacyId}${nearLimit ? ` ${counterId}` : ""}${tooLong ? ` ${errorId}` : ""}`}
+                className="block min-h-[3.25rem] w-full resize-none border border-border-input bg-bg-elevated py-3.5 pl-4 pr-16 text-[0.9375rem] leading-[1.5] text-ink placeholder:text-neutral-500 transition-colors focus:border-accent-600 focus:outline-none focus:ring-2 focus:ring-accent-600/40 aria-[invalid=true]:border-signal-error"
+              />
+              <div className="absolute bottom-1 right-1">
+                {busy ? (
+                  <button
+                    type="button"
+                    onClick={stop}
+                    aria-label={askCopy.composer.stop}
+                    className={`${iconButton} bg-ink text-white hover:bg-neutral-800`}
+                  >
+                    <StopIcon />
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    aria-label={askCopy.composer.send}
+                    aria-disabled={tooLong || undefined}
+                    className={`${iconButton} bg-cta-fill text-cta-text hover:bg-cta-fill-hover aria-disabled:cursor-not-allowed aria-disabled:opacity-40`}
+                  >
+                    <ArrowUpIcon />
+                  </button>
+                )}
+              </div>
+            </div>
 
-      {!hasConversation && !notice && (
-        <div className="border-t border-neutral-200 p-6 md:p-8">
-          <StarterQuestions onPick={(q) => send(q, "starter")} />
-        </div>
-      )}
-
-      {hasConversation && !busy && (
-        <div className="border-t border-neutral-200 px-6 py-4 md:px-8">
-          <Button variant="link" className="text-[0.8125rem]" onClick={() => startOver(restartFrom)}>
-            {askCopy.startOver}
-          </Button>
+            <div className="mt-2 flex items-start justify-between gap-4">
+              <p id={privacyId} className="text-xs leading-[1.5] text-neutral-600">
+                {askCopy.composer.privacy}
+              </p>
+              {nearLimit && (
+                <p
+                  id={counterId}
+                  className={`shrink-0 text-xs tabular-nums ${tooLong ? "font-medium text-signal-error" : "text-neutral-600"}`}
+                >
+                  {draft.length} / {MAX_INPUT_CHARS}
+                </p>
+              )}
+            </div>
+            {tooLong && (
+              <p id={errorId} className="mt-1 text-xs text-signal-error">
+                {askCopy.composer.tooLong}
+              </p>
+            )}
+          </form>
         </div>
       )}
     </div>

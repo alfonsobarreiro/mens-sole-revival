@@ -41,16 +41,16 @@ export default async function AskPage({
 
   return (
     <SiteLayout>
-      <section className="bg-ink py-16 md:py-24">
+      <section className="bg-ink py-10 md:py-14">
         <Container>
           <h1 className={`${type.h1} text-inverse`}>{askCopy.hero.title}</h1>
-          <p className="mt-4 max-w-2xl text-[1.0625rem] leading-[1.5] text-inverse-body">
+          <p className="mt-3 max-w-2xl text-[1.0625rem] leading-[1.5] text-inverse-body">
             {askCopy.hero.body}
           </p>
         </Container>
       </section>
 
-      <section className="bg-neutral-100 py-16 md:py-24">
+      <section className="bg-neutral-100 py-8 md:py-12">
         <Container>
           <div className="max-w-3xl">
             {state === "gallery" ? (
