@@ -231,7 +231,9 @@ export default function AskChat({ initial = EMPTY }: { initial?: ChatSnapshot })
         let sourceCount = 0;
         let finished = false;
 
-        while (!finished) {
+        // Read until the server closes the stream, even after the done event,
+        // so the browser sees a completed request rather than an aborted one.
+        for (;;) {
           const { value, done } = await reader.read();
           if (done) break;
           buffer += decoder.decode(value, { stream: true });
