@@ -50,6 +50,375 @@ export type GuideSeo = {
 };
 
 export const guideSeo: Record<string, GuideSeo> = {
+  // ── 2026-09-22 expansion: eight guides, newest first.
+  "sprained-ankle-recovery-over-40": {
+    metaTitle: "Sprained Ankle After 40: Recover Without a Weak Ankle for Life",
+    metaDescription:
+      "Most sprains heal. The one that never gets rehabbed keeps rolling. The first 48 hours under PEACE and LOVE, the Ottawa X-ray check, and a six-week progression.",
+    datePublished: "2026-09-22",
+    faq: [
+      {
+        q: "How long does a sprained ankle take to heal after 40?",
+        a: "It depends on the grade. A grade 1 (stretched ligament, microscopic tearing) is usually about two weeks. A grade 2 (partial tear) runs four to six weeks. A grade 3 (complete tear) takes months and should be managed by a clinician. Those numbers assume you rehab it. Past 40, collagen turnover is slower and balance sense takes longer to return, so an ankle that's rested and never trained tends to stay loose and roll again.",
+      },
+      {
+        q: "Should I ice a sprained ankle?",
+        a: "Briefly, for pain, if you want. Not for hours, and not as the treatment. The PEACE and LOVE framework in the British Journal of Sports Medicine groups ice with anti-inflammatory drugs: the authors flag potentially harmful effects on tissue repair, and there's no good evidence ice speeds healing. Compression, keeping the ankle up, and early protected walking do more for swelling than a frozen bag does.",
+      },
+      {
+        q: "How do I know if my sprained ankle needs an X-ray?",
+        a: "Run the Ottawa ankle rules. Press on the bone at the back edge or tip of the outer and inner ankle bones, the base of the fifth metatarsal (the bump on the outside of the midfoot), and the navicular (the bump on the inside of the midfoot). Bone tenderness at any of those, or being unable to take four steps both right after the injury and now, means get an X-ray. No positives and a fracture is unlikely.",
+      },
+      {
+        q: "Can I walk on a sprained ankle?",
+        a: "Usually, yes, and you should, as soon as it's tolerable. Current guidance calls for protecting the ankle for one to three days, then loading it with protected weight bearing: a supportive shoe or a lace-up brace, flat ground, as far as the pain allows. Weeks in a boot for a simple sprain stiffens the joint and weakens the calf. If you can't bear any weight after 48 hours, that's a doctor visit.",
+      },
+      {
+        q: "Why does my ankle keep rolling after a sprain?",
+        a: "The ligament carried nerve endings that told your brain where the foot was, and a sprain scrambles that signal. Pain fades in weeks; position sense doesn't come back on its own. Add weaker calf and peroneal muscles and you get chronic ankle instability, which OrthoInfo calls the most common result of incomplete rehab. Single-leg balance, eyes open, then closed, then on an unstable surface, is what fixes it. The [strength routine](/routines/strength) has the progression.",
+      },
+      {
+        q: "Do I need an ankle brace, and for how long?",
+        a: "For sport and uneven ground, a lace-up brace for the first several months while your own stabilizers come back. For daily walking, a supportive shoe is usually enough after the first week or two. A rigid brace worn all day, indefinitely, is the wrong answer: it lets the muscles stay weak. Wean off it when the injured side matches the other side on the single-leg hop and the eyes-closed balance test.",
+      },
+    ],
+    sources: [
+      {
+        label: "British Journal of Sports Medicine — Soft tissue injuries simply need PEACE & LOVE (Dubois and Esculier, 2019)",
+        url: "https://blogs.bmj.com/bjsm/2019/04/26/soft-tissue-injuries-simply-need-peace-love/",
+      },
+      {
+        label: "MDCalc — Ottawa Ankle Rule",
+        url: "https://www.mdcalc.com/calc/1670/ottawa-ankle-rule",
+      },
+      {
+        label: "AAOS OrthoInfo — Sprained Ankle",
+        url: "https://www.orthoinfo.org/en/diseases--conditions/sprained-ankle/",
+      },
+    ],
+  },
+  "diabetic-foot-care-men-over-40": {
+    metaTitle: "Diabetic Foot Care, Men Over 40: Daily Check, Shoe Rules, Red Flags",
+    metaDescription:
+      "With diabetes a blister can become an ulcer without hurting. The 60-second daily check, shoe and sock rules, the same-day call list, and what the exam is for.",
+    datePublished: "2026-09-22",
+    faq: [
+      {
+        q: "Why do I have to check my feet every day if nothing hurts?",
+        a: "Because with diabetes, pain is the signal you can no longer trust. Nerve damage in the feet (peripheral neuropathy) means a blister, a cut, or a rubbing seam can open the skin without any warning, and reduced blood flow means it heals slowly and gets infected easily. The daily check replaces the pain signal with your eyes. It takes about 60 seconds: tops, soles, heels, and between the toes, both feet, every day.",
+      },
+      {
+        q: "How do I check the bottom of my feet if I can't see them?",
+        a: "Put a hand mirror on the floor and hold your foot over it, or take a photo of each sole with your phone. The phone is the better option: you can zoom in on a spot, and you can compare today's picture with yesterday's. If neither works because of eyesight or mobility, ask someone in the house to look, and tell your clinician so foot checks can be built into your visits.",
+      },
+      {
+        q: "What counts as a same-day call?",
+        a: "Any break in the skin that hasn't started to close within a day. Any blister. Redness, warmth, or swelling, especially in one foot with no obvious injury, which can be infection or the start of a Charcot foot. Any wound with drainage or a smell. Black or blue skin. A fever with any foot problem. New pain in a foot that usually can't feel pain. Call the day you find it; after hours, fever, black skin, or a red, hot, swollen foot means urgent care or the emergency department.",
+      },
+      {
+        q: "Can I cut a callus or use a corn remover myself?",
+        a: "No. Never cut a corn or callus at home, and skip the over-the-counter corn pads and liquids; they use salicylic acid to dissolve skin, and on a foot that can't feel, they take too much. A podiatrist reduces calluses safely and can see what's under them. A callus with a dark spot or dried blood inside is often the first sign of a wound underneath, and that one goes on the same-day list.",
+      },
+      {
+        q: "How often should I have a foot exam if I have diabetes?",
+        a: "At least once a year, per the ADA Standards of Care and the IWGDF. The exam tests sensation with a 10-gram monofilament, checks pulses, and looks for deformity and skin changes. After that, frequency follows risk under the IWGDF system: no findings, yearly; nerve damage or artery disease, every 6 to 12 months; both or one plus a deformity, every 3 to 6 months; a previous ulcer or amputation, every 1 to 3 months. Bring the [doctor-prep checklist](/doctor-prep).",
+      },
+      {
+        q: "Do I need prescription diabetic shoes?",
+        a: "Only if your clinician prescribes them, and then yes, worn indoors and out. Extra-depth shoes, custom-made shoes, custom insoles, or toe orthoses are prescribed when your foot shape, a callus that keeps returning, or a healed ulcer puts pressure where the skin can't take it. If you have none of those, the rules are fit measured late in the day, room in front of the longest toe, socks without seams, and a hand inside every shoe before it goes on. Medicare and many insurers cover prescribed diabetic footwear.",
+      },
+    ],
+    sources: [
+      {
+        label: "American Diabetes Association — Foot Complications",
+        url: "https://diabetes.org/about-diabetes/complications/foot-complications",
+      },
+      {
+        label: "IWGDF — Guidelines on the Prevention of Foot Ulcers in Persons with Diabetes (2023 update)",
+        url: "https://iwgdfguidelines.org/wp-content/uploads/2023/07/IWGDF-2023-02-Prevention-Guideline.pdf",
+      },
+      {
+        label: "NIH NIDDK — Diabetes & Foot Problems",
+        url: "https://www.niddk.nih.gov/health-information/diabetes/overview/preventing-problems/foot-problems",
+      },
+    ],
+  },
+  "gout-in-the-big-toe-men-over-40": {
+    metaTitle: "Gout in the Big Toe: How to Tell It From Stiffness (and What to Do)",
+    metaDescription:
+      "A big toe joint that went red, hot, and swollen overnight is not stiffness. How to tell them apart, what to do in the first 48 hours, and what the doctor tests.",
+    datePublished: "2026-09-22",
+    faq: [
+      {
+        q: "How can I tell a gout flare from a stiff big toe?",
+        a: "Timing and heat. A gout flare comes on over hours, often at night, and the joint is hot, red, swollen, and too tender for a sock or a bedsheet. Stiffness builds over months or years, is worse on push-off and stairs, and the joint isn't hot. A joint that's already stiff can also flare, so handle the flare first. Only a uric acid test and sometimes joint fluid confirm gout. If the pattern is slow and mechanical, read [big toe stiffness in men over 40](/guides/big-toe-stiffness-in-men-over-40) instead.",
+      },
+      {
+        q: "What should I do in the first 48 hours of a gout flare?",
+        a: "Stay off the foot as much as you can, keep it raised above hip level when sitting, and ice it wrapped in a cloth for up to 20 minutes at a time. Drink water through the day and skip alcohol and sugary drinks. Don't stretch, mobilize, or wear toe spacers on a flaring joint. Over-the-counter anti-inflammatories are the usual first-line treatment, but only if you know they're safe for you. If it's your first flare, book a doctor this week.",
+      },
+      {
+        q: "Why does gout hit the big toe first?",
+        a: "Urate crystals form more readily in cooler tissue, and the big toe joint is the farthest from the heart and one of the coolest joints in the body. It also carries more load per step than any other joint in the foot. Both make it the most common site for a first flare. The same joint is the one that quietly stiffens over years in men over 40, which is why the two problems get mistaken for each other.",
+      },
+      {
+        q: "Can I take an over-the-counter anti-inflammatory for a gout flare?",
+        a: "Anti-inflammatories are the usual first-line treatment for a flare. They're not safe for everyone. If you have kidney disease, a history of stomach ulcers, heart failure, or you take blood thinners or blood pressure medication, ask a doctor or pharmacist before taking one. This site doesn't give doses; the label and your doctor do. A first flare is also the reason to get the diagnosis confirmed, not just to treat the pain.",
+      },
+      {
+        q: "Does one gout flare mean I need medication for life?",
+        a: "Not automatically. Long-term urate-lowering medication is a doctor's decision, usually considered after repeat flares (a common threshold is two or more a year), visible urate deposits under the skin, or a history of kidney stones. The doctor will check a uric acid level, kidney function, and your medication list first. Diet, hydration, and cutting back on alcohol support the plan, but for most men with recurring flares they aren't enough on their own.",
+      },
+      {
+        q: "When is a swollen big toe an emergency?",
+        a: "When the hot, swollen joint comes with a fever, feeling unwell, nausea, or redness spreading up the foot. A joint infection (septic arthritis) can look identical to a gout flare, and it needs same-day treatment. Go to urgent care or the emergency room rather than waiting for a routine appointment. For a flare without those signs, a doctor visit this week is the right pace. Bring the [doctor-prep checklist](/doctor-prep) so the visit covers the tests that matter.",
+      },
+    ],
+    sources: [
+      {
+        label: "NHS — Gout",
+        url: "https://www.nhs.uk/conditions/gout/",
+      },
+      {
+        label: "AAFP — Diagnosis, Treatment, and Prevention of Gout",
+        url: "https://www.aafp.org/pubs/afp/issues/2014/1215/p831.html",
+      },
+      {
+        label: "Arthritis Foundation — Gout: Symptoms, Diagnosis, and Treatment",
+        url: "https://www.arthritis.org/diseases/gout",
+      },
+    ],
+  },
+  "athletes-foot-and-foot-odor-what-works": {
+    metaTitle: "Athlete's Foot and Foot Odor: What Works (and Why It Comes Back)",
+    metaDescription:
+      "Peeling between the toes and a smell that outlasts the shower come from one damp shoe. The cream, powder, and shoe rotation that clear it, and why it returns.",
+    datePublished: "2026-09-22",
+    faq: [
+      {
+        q: "How do I know if it's athlete's foot or just dry skin?",
+        a: "Match the pattern. Athlete's foot usually starts between the toes (often the fourth and fifth), is worse on one foot, itches, and doesn't improve with moisturizer. Plain dry skin sits on the heel and ball of both feet, stays out of the web spaces, and improves within days of a real moisturizer. Thick or crumbly toenails on the same foot point toward fungus. A doctor can confirm it with a skin scraping; a course of antifungal cream that clears it answers the question too.",
+      },
+      {
+        q: "How long should I keep using the antifungal cream?",
+        a: "Use it as the package directs, on the whole area (between all the toes and across any scaling on the sole), and keep going after the skin looks normal. MedlinePlus advises continuing for 1 to 2 weeks after the infection has cleared. Stopping the day the itch goes away is the most common reason athlete's foot comes back a few weeks later. We reviewed [Lamisil AT](/reviews/lamisil-at-antifungal-cream).",
+      },
+      {
+        q: "Why does my athlete's foot keep coming back?",
+        a: "Three reasons, in order: the course was stopped early; the foot went back into the same damp, untreated shoes; or an untreated fungal toenail is reseeding the skin after every course. Fix all three: finish the cream, alternate two pairs of shoes so each dries a full day and treat them with antifungal powder, and if the nails are thick or yellow, start on those too. See the [toenail fungus guide](/guides/toenail-fungus-what-works).",
+      },
+      {
+        q: "Does smelly feet mean I have athlete's foot?",
+        a: "Not always, but they travel together. Foot odor comes from bacteria on the skin breaking sweat down; the byproducts are what you smell. A fungal infection makes it worse because peeling, soggy skin gives bacteria more to feed on, and the damp shoe that grew the fungus is the same shoe holding the sweat. If the smell survives a shower and the skin between your toes is peeling, treat both: the fungus with cream, the moisture with drying, powder, and shoe rotation.",
+      },
+      {
+        q: "Do vinegar soaks or bleach cure athlete's foot?",
+        a: "No. Vinegar may make the skin surface a little less friendly to fungus, but it doesn't clear an established infection and it stings cracked skin; treat it as a supplement at most. Bleach damages the skin barrier you're trying to repair, so skip it. The treatment with evidence behind it is an over-the-counter antifungal cream used for the full course, plus keeping the feet and shoes dry with powder and rotation.",
+      },
+      {
+        q: "When should I see a doctor about athlete's foot?",
+        a: "If it's not better after 2 to 4 weeks of cream used as directed, if it keeps returning despite finishing the course and rotating shoes, or if it has spread to the hands or nails. Go the same or next day for redness or warmth spreading up the foot or leg, cracks that weep or produce pus, or a fever. If you have diabetes, see a clinician early: cracks between the toes are an entry point for infection. Bring the [doctor-prep checklist](/doctor-prep).",
+      },
+    ],
+    sources: [
+      {
+        label: "NIH MedlinePlus — Athlete's foot",
+        url: "https://medlineplus.gov/ency/article/000875.htm",
+      },
+      {
+        label: "NHS — Athlete's foot",
+        url: "https://www.nhs.uk/conditions/athletes-foot/",
+      },
+      {
+        label: "AAFP — Diagnosis and Management of Tinea Infections",
+        url: "https://www.aafp.org/pubs/afp/issues/2014/1115/p702.html",
+      },
+    ],
+  },
+  "calluses-and-corns-men-over-40": {
+    metaTitle: "Calluses and Corns: What to Remove and What's Causing Them",
+    metaDescription:
+      "A callus is skin answering pressure. File it without moving the load and it's back. How to read where it forms, thin it safely, and when a podiatrist steps in.",
+    datePublished: "2026-09-22",
+    faq: [
+      {
+        q: "What's the difference between a corn and a callus?",
+        a: "Same tissue, different shape. A callus is a broad plate of thick skin with no clear edge, usually under the ball of the foot or around the heel, and it aches rather than stabs. A corn is small and dense with a central core that points inward, usually on or beside a toe joint or under a metatarsal head. A soft corn is the between-the-toes version, kept white and rubbery by sweat.",
+      },
+      {
+        q: "Why do I get more calluses after 40?",
+        a: "Four mechanical reasons stack up. The fat pad under the ball of the foot thins, so bone sits closer to the shoe. Toes drift and curl, which puts joints against shoe uppers. Feet widen and flatten while most men keep buying the size that fit at 30. And a stiff big toe or ankle shifts load to places that never carried it before. A standing job multiplies all of it.",
+      },
+      {
+        q: "How do I tell a corn from a plantar wart?",
+        a: "Press straight down, then squeeze from the sides. A corn hurts most under direct downward pressure and has a dense, slightly translucent core. A plantar wart hurts more when pinched from the sides and usually shows tiny black dots in it. If you can't tell after a soak, a podiatrist can, and the treatments are different, so it's worth asking. The [5-minute self-check](/assessment) covers the rest of the foot.",
+      },
+      {
+        q: "Can I cut a callus off myself?",
+        a: "No. Razors, callus knives, and nail scissors take skin unevenly and go deeper than you can see, and a cut under thick skin heals slowly and infects easily. Use a pumice stone or foot file after a shower, a few strokes at a time, and stop before the skin turns pink. A podiatrist can pare a large callus with a sterile blade in one visit if filing isn't enough.",
+      },
+      {
+        q: "Are medicated corn pads safe to use?",
+        a: "Not if you have diabetes, neuropathy, or poor circulation. The acid in them (salicylic acid) dissolves skin without knowing where the corn ends, and on a foot with poor sensation or blood flow it can open a wound that becomes an ulcer. On healthy skin it mostly burns the ring around the corn. Moving the pressure with a toe sleeve or a better-fitting shoe does more, with less risk.",
+      },
+      {
+        q: "How long does it take a callus to go away?",
+        a: "Pain usually eases within one to two weeks of removing the pressure, before the skin has changed much. With nightly urea cream and filing once or twice a week, a callus under the ball of the foot thins noticeably in three to four weeks, and a hard corn usually loses its core in four to six weeks. If it's still painful to walk on after four weeks, book a podiatrist.",
+      },
+    ],
+    sources: [
+      {
+        label: "AAFP — Corns and Calluses Resulting from Mechanical Hyperkeratosis",
+        url: "https://www.aafp.org/pubs/afp/issues/2002/0601/p2277.html",
+      },
+      {
+        label: "APMA — Corns and Calluses",
+        url: "https://www.apma.org/patients-and-the-public/conditions-affecting-the-foot-and-ankle/corns-and-calluses/",
+      },
+      {
+        label: "NHS — Corns and calluses",
+        url: "https://www.nhs.uk/conditions/corns-and-calluses/",
+      },
+    ],
+  },
+  "foot-and-calf-cramps-at-night": {
+    metaTitle: "Foot and Calf Cramps at Night: Causes After 40 and What Stops Them",
+    metaDescription:
+      "Night calf and arch cramps rise after 40, mostly from a shortened calf held toes-down in bed. The bedtime stretch, which fixes fail, and when to see a doctor.",
+    datePublished: "2026-09-22",
+    faq: [
+      {
+        q: "Why do I get calf and foot cramps at night after 40?",
+        a: "Several things stack with age: the calf and plantar fascia shorten after decades of heeled shoes and sitting, muscle mass declines, the nerves that drive the calf fire more easily, and bed holds the foot toes-down with the calf at its shortest for hours. A long day standing, dehydration, evening alcohol, or a new medication usually sets off a given night. Up to 60 percent of adults report night cramps, and the rate climbs with age.",
+      },
+      {
+        q: "What should I do the moment a cramp hits?",
+        a: "Stand up and put weight on the leg. Loading the calf usually breaks the contraction faster than anything you can do lying down. If you can't stand yet, pull the toes toward the shin and hold until the muscle releases, then walk for a minute. Use heat afterward for the soreness, not ice. A cramp that lasts longer than ten minutes despite this needs a doctor rather than another stretch.",
+      },
+      {
+        q: "Does stretching before bed prevent night cramps?",
+        a: "It has the most trial support of any option, though the evidence is limited and the trials are small. A two-minute set works: wall calf stretch with the knee straight, then bent, a towel stretch of the sole, and ankle circles. Do it nightly for four weeks before judging. Expect fewer and milder cramps rather than zero. The [recovery routine](/routines/recovery) has the same calf and sole work.",
+      },
+      {
+        q: "Does magnesium help with leg cramps?",
+        a: "Not for ordinary night cramps in older adults. A 2020 Cochrane review found the difference between magnesium and placebo was small and not statistically significant, and concluded it is unlikely to provide meaningful cramp prevention. Results in pregnancy are mixed. Unless a blood test shows a deficiency, it is a supplement with a diarrhea side effect and little else to offer for this problem.",
+      },
+      {
+        q: "Can my medication be causing the cramps?",
+        a: "Possibly. Diuretics and statins are the most often named, with some asthma inhalers, intravenous iron, and a few hormone drugs also on the list, though the evidence linking any single drug to cramps is thinner than most people assume. If cramps started within weeks of a new prescription or dose change, raise it with the prescriber. Don't stop anything on your own; whether to swap or retime a drug is their call.",
+      },
+      {
+        q: "When are night cramps a reason to see a doctor?",
+        a: "Swelling, warmth, or tenderness in one calf is urgent same-day care because it can be a blood clot. Also book a visit for weakness or numbness with the cramps, cramps that began after a new medication, visible muscle wasting, calf pain when walking that stops with rest (a circulation pattern), or cramps most nights after four weeks of nightly stretching. Bring the [doctor-prep checklist](/doctor-prep) and your two-week log.",
+      },
+    ],
+    sources: [
+      {
+        label: "AAFP — Nocturnal Leg Cramps",
+        url: "https://www.aafp.org/pubs/afp/issues/2012/0815/p350.html",
+      },
+      {
+        label: "Cochrane — Magnesium for muscle cramps",
+        url: "https://www.cochrane.org/CD009402/NEUROMUSC_magnesium-skeletal-muscle-cramps",
+      },
+      {
+        label: "NHS — Leg cramps",
+        url: "https://www.nhs.uk/conditions/leg-cramps/",
+      },
+    ],
+  },
+  "bunions-men-over-40": {
+    metaTitle: "Bunions in Men Over 40: What Slows Them and When Surgery Is Honest",
+    metaDescription:
+      "A bunion is structural: shoes and spacers don't reverse it, but they change how fast it drifts and how much it hurts. Which shoes, and when surgery is honest.",
+    datePublished: "2026-09-22",
+    faq: [
+      {
+        q: "Can a bunion be reversed without surgery?",
+        a: "No. The drift is structural: the metatarsal angles out and the toe angles in, and no shoe, spacer, or splint moves bone back. What conservative care changes is the speed of the drift and the pain. A wide toe box, evening spacers, a pad over the bump, and foot strength work can keep a mild bunion manageable for decades. Surgery is the only thing that changes the angle.",
+      },
+      {
+        q: "Why do men get bunions if it's mostly a women's problem?",
+        a: "Bunions are more common in women, but the causes aren't female. Family foot shape, flat feet that roll inward, arthritis in the joint, and decades of narrow dress shoes all apply to men. The difference is that men ignore the bump longer and the product marketing isn't aimed at them, so they tend to show up to a podiatrist a stage later than they should.",
+      },
+      {
+        q: "Do toe spacers help a bunion?",
+        a: "For symptoms, yes. Worn 20 minutes once or twice a day, they give the crowded joint a break, ease aching, and keep the soft tissue from tightening around the drifted position. They don't correct the angle, and no spacer will. Treat them as relief, not a fix. See [our Yoga Toes review](/reviews/yoga-toes-gem-separators) for fit and how to build up wear time.",
+      },
+      {
+        q: "What kind of shoes are best for a bunion?",
+        a: "A wide toe box so the big toe sits straight without pressure on the bump, a flat sole so the forefoot isn't pitched forward, and enough flexibility to bend at the ball of the foot. Any shoe that leaves a red mark over the joint after a day is working against you. We reviewed one that gets the shape right in the [Kuru Atom review](/reviews/kuru-atom-sneakers).",
+      },
+      {
+        q: "When should I consider bunion surgery?",
+        a: "When pain limits daily walking despite six months of correct shoes, spacers, and care, when the second toe is being pushed out of place, or when the skin over the bump keeps breaking down. Surgery is for pain and function, not appearance. Recovery runs weeks to months, there are many procedures, and bunions sometimes come back, so the decision rests on what the foot can no longer do.",
+      },
+      {
+        q: "What if my big toe joint suddenly became hot, red, and very painful?",
+        a: "That's a different problem. A bunion grows over years; a joint that goes from fine to hot, swollen, and painful overnight points to gout or infection and needs a doctor promptly, the same day if you have a fever. Don't treat it with a spacer or a pad. Bring the [doctor-prep checklist](/doctor-prep) so the visit covers when it started and what you've taken.",
+      },
+    ],
+    sources: [
+      {
+        label: "AAOS OrthoInfo — Bunions",
+        url: "https://www.orthoinfo.org/en/diseases--conditions/bunions/",
+      },
+      {
+        label: "NHS — Bunions",
+        url: "https://www.nhs.uk/conditions/bunions/",
+      },
+      {
+        label: "NIH MedlinePlus — Bunions",
+        url: "https://medlineplus.gov/ency/article/001231.htm",
+      },
+    ],
+  },
+  "numbness-and-tingling-in-the-feet": {
+    metaTitle: "Numbness and Tingling in the Feet: Nerve, Shoe, or Something Upstream",
+    metaDescription:
+      "Pins and needles, a dead patch, or burning in the toes has four causes in men over 40: the shoe, a trapped nerve, the lower back, or neuropathy. Sort yours.",
+    datePublished: "2026-09-22",
+    faq: [
+      {
+        q: "Why are my toes numb in one pair of shoes and fine in the others?",
+        a: "That pattern points at the shoe. The nerves on the top of the foot and between the toes sit close to the surface, and a tight lace, a stiff tongue, or a narrow toe box can press one for hours. Numbness that clears overnight and returns in the same shoes is compression until proven otherwise. Re-lace to skip the sore spot, move to a wider toe box, and give it two weeks. The [dress-shoes guide](/guides/what-your-dress-shoes-are-doing-to-your-feet) covers the work-shoe version.",
+      },
+      {
+        q: "What does Morton's neuroma feel like?",
+        a: "A thickened nerve between the third and fourth toes. It feels like a pebble or a folded sock under the ball of the foot, with burning or tingling into those two toes, worse in narrow shoes and easier once they're off. A wide toe box and a metatarsal pad placed just behind the ball of the foot bring relief for about half of people, and a podiatrist usually gives that 3 to 6 months before discussing anything else. The [ball-of-foot guide](/guides/ball-of-foot-pain-in-men-over-40) covers pad placement.",
+      },
+      {
+        q: "Can a problem in my lower back cause numbness in my foot?",
+        a: "Yes, and it is one of the four common causes. A bulging disc or a narrowed spinal canal can press a nerve root in the lower back, and you feel it at the far end of the nerve, often the outer foot or the big toe. The tell is one side only, usually with back or buttock pain, and symptoms that change with sitting, bending, or a long drive. Shoes make no difference. This version needs a clinician's exam, not a shoe change.",
+      },
+      {
+        q: "What is the stocking pattern, and why does it matter?",
+        a: "Peripheral neuropathy affects the longest nerves first, so it starts in the toes of both feet and creeps upward evenly, like a sock filling with numbness. That symmetry separates it from a shoe, a neuroma, or a back problem, which almost always affect one foot. Diabetes is the most common cause; alcohol, low B12, thyroid problems, some medications, and chemotherapy are the others. It needs bloodwork to find the cause, and the [diabetic foot care rules](/guides/diabetic-foot-care-men-over-40) apply if diabetes is in the picture.",
+      },
+      {
+        q: "Which numbness symptoms mean I should go to the ER?",
+        a: "Numbness in the groin, buttocks, or inner thighs with any change in bladder or bowel control, or sudden numbness with new weakness in a leg. That pattern (cauda equina syndrome) is a surgical emergency, and the outcome depends on how fast the pressure comes off the nerves. Separately, both feet with balance loss or a fall, a foot you can't lift, numbness after an injury, or a wound you can't feel are same-week doctor visits, not emergencies.",
+      },
+      {
+        q: "Will a vitamin B supplement fix numb feet?",
+        a: "Only if a blood test shows your B12 is low, and in that case a doctor manages the replacement. Without a measured deficiency, a supplement does nothing for the nerve and delays the workup that finds the real cause. The same goes for massage and circulation gadgets: they feel good for an hour and don't move a disc, widen a shoe, or shrink a neuroma. Test first, then treat what the test finds.",
+      },
+    ],
+    sources: [
+      {
+        label: "American Academy of Family Physicians — Peripheral Neuropathy: Evaluation and Differential Diagnosis",
+        url: "https://www.aafp.org/pubs/afp/issues/2020/1215/p732.html",
+      },
+      {
+        label: "AAOS OrthoInfo — Morton's Neuroma",
+        url: "https://www.orthoinfo.org/en/diseases--conditions/mortons-neuroma/",
+      },
+      {
+        label: "AAOS OrthoInfo — Cauda Equina Syndrome",
+        url: "https://www.orthoinfo.org/en/diseases--conditions/cauda-equina-syndrome/",
+      },
+    ],
+  },
   // ── 2026-09-18 expansion. Nails + alignment + occupation + kinetic-chain
   // + runners cluster. Newest first per feedback_new_articles_top_of_list.
   "ingrown-toenail-what-actually-stops-the-cycle": {

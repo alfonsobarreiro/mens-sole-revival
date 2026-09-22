@@ -77,6 +77,78 @@ const routineHighlights: {
 // articles when they publish, so the NewBadge lights up in visible cards.
 const articles = [
   {
+    slug: "gout-in-the-big-toe-men-over-40",
+    title: "Gout in the Big Toe",
+    category: "Pain",
+    readTime: "7 min",
+    excerpt:
+      "A red, hot, swollen big toe that came on overnight is a different animal from stiffness that built over years. How to tell the two apart, what a flare needs, what a doctor will check, and what shoes do in between.",
+    image: "/images/pexels-7047464.jpg",
+  },
+  {
+    slug: "athletes-foot-and-foot-odor-what-works",
+    title: "Athlete's Foot and Foot Odor",
+    category: "Skin",
+    readTime: "7 min",
+    excerpt:
+      "Peeling between the toes and a smell that survives the shower are the same problem from two angles: a warm, damp shoe. The antifungal protocol, the sock and shoe rotation that stops the relapse, and when it's not fungus.",
+    image: "/images/pexels-7312082.jpg",
+  },
+  {
+    slug: "calluses-and-corns-men-over-40",
+    title: "Calluses and Corns",
+    category: "Skin",
+    readTime: "7 min",
+    excerpt:
+      "A callus is your skin answering pressure. Shave it and it comes back, because the pressure didn't leave. Where they form and why, the safe way to thin them, the corn-versus-callus difference, and the diabetes rule.",
+    image: "/images/pexels-15098712.jpg",
+  },
+  {
+    slug: "foot-and-calf-cramps-at-night",
+    title: "Foot and Calf Cramps at Night",
+    category: "Pain",
+    readTime: "7 min",
+    excerpt:
+      "The 2 a.m. calf cramp is common after 40 and mostly mechanical: shortened calves, a long day on your feet, dehydration, and a few medications. What to do in the moment, the two-minute bedtime stretch that cuts them, and the signs it's something else.",
+    image: "/images/pexels-3771071.jpg",
+  },
+  {
+    slug: "bunions-men-over-40",
+    title: "Bunions in Men Over 40",
+    category: "Alignment",
+    readTime: "8 min",
+    excerpt:
+      "A bunion is the big toe drifting toward its neighbors while the joint behind it drifts out. Shoes don't reverse it and spacers don't either, but both change how fast it moves and how much it hurts. The honest map, including when surgery earns the recovery.",
+    image: "/images/pexels-9767780.jpg",
+  },
+  {
+    slug: "diabetic-foot-care-men-over-40",
+    title: "Diabetic Foot Care",
+    category: "Foot Health",
+    readTime: "8 min",
+    excerpt:
+      "With diabetes, the nerves that report pain and the vessels that heal it both work less well, so a blister can become an ulcer without ever hurting. The 60-second daily check, the shoe and sock rules, what never to do at home, and the same-day list.",
+    image: "/images/pexels-8637976.jpg",
+  },
+  {
+    slug: "numbness-and-tingling-in-the-feet",
+    title: "Numbness and Tingling in the Feet",
+    category: "Foot Health",
+    readTime: "8 min",
+    excerpt:
+      "Pins and needles in the toes has four common causes that need different fixes: a shoe pinching a nerve, a nerve trapped at the ankle or forefoot, a back problem sending signals down the leg, or neuropathy. How to narrow it down, and the version that needs a doctor this week.",
+    image: "/images/pexels-13065922.jpg",
+  },
+  {
+    slug: "sprained-ankle-recovery-over-40",
+    title: "Sprained Ankle After 40",
+    category: "Pain",
+    readTime: "8 min",
+    excerpt:
+      "Most sprains heal; the ankle you don't rehab is the one that keeps rolling. The first 48 hours (and why total rest is out), the Ottawa rules for when it needs an X-ray, the six-week balance-and-strength progression, and the shoe that helps while it heals.",
+    image: "/images/pexels-8729018.jpg",
+  },
+  {
     slug: "why-your-feet-hurt-after-40",
     title: "Why Your Feet Hurt After 40 (and What's Actually Going On)",
     category: "Foot Health",

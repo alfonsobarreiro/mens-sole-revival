@@ -139,6 +139,96 @@ export type ArticleMeta = {
 // not appended. Reverse-chronological by default so the [[new-badge]] lands
 // where users scan first.
 export const articles: Record<string, ArticleMeta> = {
+  // ── Latest: 2026-09-22 expansion (gout, skin, cramps, bunions, diabetes,
+  // nerves, sprains). Eight new guides, newest first.
+  "gout-in-the-big-toe-men-over-40": {
+    slug: "gout-in-the-big-toe-men-over-40",
+    title: "Gout in the Big Toe: How to Tell It From Stiffness (and What to Do)",
+    category: "Pain",
+    readTime: "7 min",
+    imageUrl: "/images/pexels-7047464.jpg",
+    excerpt:
+      "A red, hot, swollen big toe that came on overnight is a different animal from stiffness that built over years. How to tell the two apart, what a flare needs, what a doctor will check, and what shoes do in between.",
+    symptoms: ["pain", "alignment"],
+    action: "If the joint is hot, red, and swollen and it started overnight, book a doctor this week; don't stretch it.",
+  },
+  "athletes-foot-and-foot-odor-what-works": {
+    slug: "athletes-foot-and-foot-odor-what-works",
+    title: "Athlete's Foot and Foot Odor: What Works (and Why It Comes Back)",
+    category: "Skin",
+    readTime: "7 min",
+    imageUrl: "/images/pexels-7312082.jpg",
+    excerpt:
+      "Peeling between the toes and a smell that survives the shower are the same problem from two angles: a warm, damp shoe. The antifungal protocol, the sock and shoe rotation that stops the relapse, and when it's not fungus.",
+    symptoms: ["skin", "footwear"],
+    action: "Start a 4-week antifungal cream course and rotate two pairs of shoes; never wear the same pair two days running.",
+  },
+  "calluses-and-corns-men-over-40": {
+    slug: "calluses-and-corns-men-over-40",
+    title: "Calluses and Corns: What to Remove, What to Leave, and What's Causing Them",
+    category: "Skin",
+    readTime: "7 min",
+    imageUrl: "/images/pexels-15098712.jpg",
+    excerpt:
+      "A callus is your skin answering pressure. Shave it and it comes back, because the pressure didn't leave. Where they form and why, the safe way to thin them, the corn-versus-callus difference, and the diabetes rule.",
+    symptoms: ["skin", "footwear", "pain"],
+    action: "Find the pressure source (shoe, toe, gait) before you thin the skin; file after a shower, never cut.",
+  },
+  "foot-and-calf-cramps-at-night": {
+    slug: "foot-and-calf-cramps-at-night",
+    title: "Foot and Calf Cramps at Night: Why They Happen After 40 and What Stops Them",
+    category: "Pain",
+    readTime: "7 min",
+    imageUrl: "/images/pexels-3771071.jpg",
+    excerpt:
+      "The 2 a.m. calf cramp is common after 40 and mostly mechanical: shortened calves, a long day on your feet, dehydration, and a few medications. What to do in the moment, the two-minute bedtime stretch that cuts them, and the signs it's something else.",
+    symptoms: ["pain"],
+    action: "Do the 2-minute calf and sole stretch before bed for two weeks and track whether the cramps drop.",
+  },
+  "bunions-men-over-40": {
+    slug: "bunions-men-over-40",
+    title: "Bunions in Men Over 40: What Slows Them, Which Shoes, and When Surgery Is the Honest Answer",
+    category: "Alignment",
+    readTime: "8 min",
+    imageUrl: "/images/pexels-9767780.jpg",
+    excerpt:
+      "A bunion is the big toe drifting toward its neighbors while the joint behind it drifts out. Shoes don't reverse it and spacers don't either, but both change how fast it moves and how much it hurts. The honest map, including when surgery earns the recovery.",
+    symptoms: ["alignment", "footwear", "pain"],
+    action: "Switch to a wide toe box now; photograph both feet from above every 3 months to track the drift.",
+  },
+  "diabetic-foot-care-men-over-40": {
+    slug: "diabetic-foot-care-men-over-40",
+    title: "Diabetic Foot Care: The Daily Check, the Shoe Rules, and When a Small Thing Is an Emergency",
+    category: "Foot Health",
+    readTime: "8 min",
+    imageUrl: "/images/pexels-8637976.jpg",
+    excerpt:
+      "With diabetes, the nerves that report pain and the vessels that heal it both work less well, so a blister can become an ulcer without ever hurting. The 60-second daily check, the shoe and sock rules, what never to do at home, and the same-day list.",
+    symptoms: ["skin", "pain", "footwear"],
+    action: "Check both feet every night with a mirror or phone camera; any break in the skin that hasn't started closing in a day is a same-day call.",
+  },
+  "numbness-and-tingling-in-the-feet": {
+    slug: "numbness-and-tingling-in-the-feet",
+    title: "Numbness and Tingling in the Feet: Nerve, Shoe, or Something Upstream",
+    category: "Foot Health",
+    readTime: "8 min",
+    imageUrl: "/images/pexels-13065922.jpg",
+    excerpt:
+      "Pins and needles in the toes has four common causes that need different fixes: a shoe pinching a nerve, a nerve trapped at the ankle or forefoot, a back problem sending signals down the leg, or neuropathy. How to narrow it down, and the version that needs a doctor this week.",
+    symptoms: ["pain", "footwear"],
+    action: "Note whether it's one foot or both, and whether it changes with shoes; that decides your next step.",
+  },
+  "sprained-ankle-recovery-over-40": {
+    slug: "sprained-ankle-recovery-over-40",
+    title: "Sprained Ankle After 40: How to Recover Without Turning It Into a Weak Ankle for Life",
+    category: "Pain",
+    readTime: "8 min",
+    imageUrl: "/images/pexels-8729018.jpg",
+    excerpt:
+      "Most sprains heal; the ankle you don't rehab is the one that keeps rolling. The first 48 hours (and why total rest is out), the Ottawa rules for when it needs an X-ray, the six-week balance-and-strength progression, and the shoe that helps while it heals.",
+    symptoms: ["pain"],
+    action: "If you can't take four steps on it or it's tender on the bone behind the ankle, get an X-ray; otherwise start protected walking today.",
+  },
   // ── Latest: 2026-09-18 expansion (nails + alignment + occupation + kinetic-
   // chain + runners). Five new symptom articles, newest first.
   "ingrown-toenail-what-actually-stops-the-cycle": {
@@ -347,6 +437,46 @@ export const articleRelations: Record<
     relatedArticles: string[];
   }
 > = {
+  "gout-in-the-big-toe-men-over-40": {
+    reviews: ["kuru-atom-sneakers"],
+    routine: "movement",
+    relatedArticles: ["big-toe-stiffness-in-men-over-40", "big-toe-and-your-whole-body", "why-your-feet-hurt-after-40"],
+  },
+  "athletes-foot-and-foot-odor-what-works": {
+    reviews: ["lamisil-at-antifungal-cream", "gold-bond-medicated-foot-powder"],
+    routine: "daily",
+    relatedArticles: ["toenail-fungus-what-works", "cracked-heels-what-actually-works", "what-your-dress-shoes-are-doing-to-your-feet"],
+  },
+  "calluses-and-corns-men-over-40": {
+    reviews: ["gehwol-fusskraft-soft-feet-cream", "superfeet-blue-insoles"],
+    routine: "weekly",
+    relatedArticles: ["cracked-heels-what-actually-works", "ball-of-foot-pain-in-men-over-40", "what-your-dress-shoes-are-doing-to-your-feet"],
+  },
+  "foot-and-calf-cramps-at-night": {
+    reviews: [],
+    routine: "recovery",
+    relatedArticles: ["plantar-fasciitis-exercises-for-men-over-40", "why-your-feet-hurt-after-40", "runners-over-40-foot-pain"],
+  },
+  "bunions-men-over-40": {
+    reviews: ["yoga-toes-gem-separators", "kuru-atom-sneakers"],
+    routine: "movement",
+    relatedArticles: ["big-toe-stiffness-in-men-over-40", "why-toe-alignment-affects-knees-and-hips", "what-your-dress-shoes-are-doing-to-your-feet"],
+  },
+  "diabetic-foot-care-men-over-40": {
+    reviews: ["gehwol-fusskraft-soft-feet-cream"],
+    routine: "daily",
+    relatedArticles: ["cracked-heels-what-actually-works", "toenail-fungus-what-works", "foot-pain-from-standing-all-day"],
+  },
+  "numbness-and-tingling-in-the-feet": {
+    reviews: ["kuru-atom-sneakers"],
+    routine: "movement",
+    relatedArticles: ["ball-of-foot-pain-in-men-over-40", "what-your-dress-shoes-are-doing-to-your-feet", "diabetic-foot-care-men-over-40"],
+  },
+  "sprained-ankle-recovery-over-40": {
+    reviews: ["kuru-atom-sneakers"],
+    routine: "strength",
+    relatedArticles: ["achilles-tendon-pain-in-men-over-40", "runners-over-40-foot-pain", "knee-pain-that-starts-in-the-feet"],
+  },
   // ── 2026-09-18 expansion. Each newer article funnels users toward the
   // most-relevant routine sub-page + 2-3 sibling articles.
   "ingrown-toenail-what-actually-stops-the-cycle": {
