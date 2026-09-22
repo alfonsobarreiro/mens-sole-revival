@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { forwardRef, useId, useState } from "react";
-import MSRMark from "@/components/MSRMark";
+import Image from "next/image";
 import { Button } from "@/components/ui";
 import { type } from "@/components/typography";
 import RichText from "./RichText";
@@ -15,14 +15,19 @@ const chipClass =
 
 // ── Speaker identity ─────────────────────────────────────────────────────────
 
+/** The favicon (app/icon.svg): the solid small-size mark from the Figma
+ *  mark spec. MSRMark draws the shield as a ring, which goes hollow at 32px. */
 export function AssistantMark() {
   return (
-    <span
+    <Image
+      src="/icon.svg"
+      alt=""
       aria-hidden="true"
-      className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-ink text-white"
-    >
-      <MSRMark className="h-4 w-auto" size="sm" bg="ink" />
-    </span>
+      width={26}
+      height={32}
+      unoptimized
+      className="h-8 w-auto shrink-0"
+    />
   );
 }
 
