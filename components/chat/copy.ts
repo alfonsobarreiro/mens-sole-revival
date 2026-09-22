@@ -7,7 +7,7 @@
 export const askCopy = {
   hero: {
     title: "Ask a foot question",
-    body: "Answers come only from the guides on this site.",
+    body: "Alf, the Sole assistant, answers only from the guides on this site.",
   },
 
   assistant: {
@@ -24,7 +24,7 @@ export const askCopy = {
     send: "Send",
     stop: "Stop",
     privacy:
-      "What you type goes to Claude, by Anthropic, and isn't saved. Leave out your name and contact details.",
+      "Alf isn't a doctor. What you type goes to Claude, by Anthropic, and isn't saved. Leave out your name and contact details.",
     tooLong: "Keep it under 500 characters.",
   },
 
