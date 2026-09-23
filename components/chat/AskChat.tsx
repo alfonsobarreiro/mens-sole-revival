@@ -109,7 +109,14 @@ function StopIcon() {
   );
 }
 
-export default function AskChat({ initial = EMPTY }: { initial?: ChatSnapshot }) {
+export default function AskChat({
+  initial = EMPTY,
+  variant = "page",
+}: {
+  initial?: ChatSnapshot;
+  /** "panel" drops the outer frame and fills its scrolling host (the nav drawer). */
+  variant?: "page" | "panel";
+}) {
   const [messages, setMessages] = useState<ChatMessage[]>(initial.messages);
   const [phase, setPhase] = useState<Phase>(initial.phase);
   const [escalation, setEscalation] = useState<RedFlagTier | null>(initial.escalation);
@@ -451,7 +458,13 @@ export default function AskChat({ initial = EMPTY }: { initial?: ChatSnapshot })
   const restartFrom = escalation ? "escalation" : notice ? notice.kind : atTurnLimit ? "turn_limit" : "conversation";
 
   return (
-    <div className="flex min-h-[70vh] flex-col border border-neutral-200 bg-white">
+    <div
+      className={
+        variant === "panel"
+          ? "flex min-h-full flex-col bg-white"
+          : "flex min-h-[70vh] flex-col border border-neutral-200 bg-white"
+      }
+    >
       <p role="status" className="sr-only">
         {status}
       </p>

@@ -115,6 +115,16 @@ export const askCopy = {
     stopped: "The assistant has stopped answering in this conversation.",
   },
 
+  // The nav entry and the slide-in panel that hosts the same conversation.
+  panel: {
+    trigger: "Ask",
+    triggerLabel: "Ask Alf a foot question",
+    title: "Alf",
+    subtitle: "Answers only from the guides on this site.",
+    fullPage: "Open full page",
+    close: "Close",
+  },
+
   // Shown outside /ask: under every article and on assessment results.
   promo: {
     body: "Have a question this page didn't answer?",

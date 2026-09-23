@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import Container from "@/components/Container";
 import { Button, IconButton } from "@/components/ui";
 import SearchTrigger from "@/components/SearchTrigger";
+import AskTrigger from "@/components/chat/AskTrigger";
 
 const navLinks = [
   { label: "Guides", href: "/guides" },
@@ -75,6 +76,7 @@ export default function SiteLayout({
               />
             </Link>
             <div className="flex items-center gap-1">
+              <AskTrigger variant="mobile" />
               <SearchTrigger variant="mobile" />
               <IconButton
                 onClick={() => setMenuOpen((o) => !o)}
@@ -126,7 +128,8 @@ export default function SiteLayout({
               })}
             </nav>
             {/* Right — search + CTA, pushed to the far right */}
-            <div className="ml-auto flex items-center gap-3">
+            <div className="ml-auto flex items-center gap-4">
+              <AskTrigger variant="desktop" />
               <SearchTrigger variant="desktop" />
               <Button href="/assessment" variant="secondary" size="sm">Assessment</Button>
             </div>

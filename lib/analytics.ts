@@ -86,6 +86,7 @@ export function trackAssessment(
 //   ask_feedback         — helpful yes / no           { value, variant }
 //   ask_turn_limit       — conversation hit the cap
 //   ask_restart          — visitor starts over        { from }
+//   ask_panel_open       — nav panel opened          { from: pathname }
 //   ask_stopped          — visitor stopped a reply    { turn }
 //   ask_copy             — visitor copied an answer   { variant }
 
@@ -99,7 +100,8 @@ export type AskEvent =
   | "ask_turn_limit"
   | "ask_restart"
   | "ask_stopped"
-  | "ask_copy";
+  | "ask_copy"
+  | "ask_panel_open";
 
 export function trackAsk(
   event: AskEvent,
