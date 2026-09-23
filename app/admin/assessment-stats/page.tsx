@@ -112,7 +112,7 @@ function SetupInstructions({ missing }: { missing: readonly string[] }) {
 }
 
 // ── List-size widget ─────────────────────────────────────────────────────
-// Queries Resend audience + Sanity assessmentSubmission at request time.
+// Queries the Resend audience + the submissions store at request time.
 // Missing envs render "not configured" instead of failing.
 function ListSizeSection({ sizes }: { sizes: ListSizes }) {
   return (
@@ -144,13 +144,13 @@ function ListSizeSection({ sizes }: { sizes: ListSizes }) {
 
         <Card variant="outline" className="p-6">
           <p className={`${type.small} text-neutral-500`}>Assessment submissions</p>
-          {sizes.sanitySubmissionReady ? (
+          {sizes.submissionStoreReady ? (
             <>
               <p className={`mt-2 ${type.h1} text-ink tabular-nums`}>
-                {sizes.sanitySubmissionCount != null ? fmt(sizes.sanitySubmissionCount) : "—"}
+                {sizes.submissionCount != null ? fmt(sizes.submissionCount) : "—"}
               </p>
               <p className={`mt-2 ${type.small} text-neutral-500`}>
-                Sanity <code>assessmentSubmission</code> documents (all-time)
+                Rows in the submissions store (all-time)
               </p>
             </>
           ) : (

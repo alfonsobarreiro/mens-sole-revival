@@ -8,7 +8,7 @@
 //   2. ALWAYS return success (even for unknown emails) so an attacker can't
 //      enumerate which emails have taken the assessment.
 //   3. If Resend is configured AND at least one submission exists for that
-//      email in Sanity, send the magic link. Silently skip otherwise — the
+//      email in the submissions store, send the magic link. Silently skip otherwise — the
 //      user just won't see an email land, which is fine given step 2.
 //
 // Rate limiting is not implemented in-app; rely on Resend's per-sender limits
@@ -17,7 +17,7 @@
 
 import { EMAIL_FROM } from "@/lib/site";
 import { createProgressToken, progressUrl } from "@/lib/progress-token";
-import { serverClient } from "@/sanity/lib/client";
+import { countSubmissionsFor } from "@/lib/submissions/store";
 
 export type ProgressMagicLinkState = {
   status: "idle" | "success" | "error";
@@ -52,13 +52,11 @@ export async function requestProgressLink(
   // email actually has history worth viewing.
   let hasHistory = false;
   try {
-    const count = await serverClient.fetch<number>(
-      `count(*[_type == "assessmentSubmission" && email == $email])`,
-      { email }
-    );
-    hasHistory = count > 0;
+    hasHistory = (await countSubmissionsFor(email)) > 0;
   } catch (err) {
-    console.error("[Progress magic-link] Sanity count query failed:", err);
+    console.error("[Progress magic-link] submission store count failed", {
+      type: err instanceof Error ? err.name : typeof err,
+    });
     // On query error, treat as no-history: don't send a link, but return
     // success to the user (the "check your inbox" experience is the same).
   }
