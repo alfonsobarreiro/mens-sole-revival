@@ -6,11 +6,6 @@ const nextConfig: NextConfig = {
     // Dead routes (/shop, /shop/:slug) redirect before rendering — safe to skip
     ignoreBuildErrors: true,
   },
-  eslint: {
-    // ESLint runs as a separate CI step; skip during Vercel build to avoid
-    // spurious failures from strict rules in dead/redirect routes.
-    ignoreDuringBuilds: true,
-  },
   pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
   async headers() {
     // Enforced on every route. Nothing here can break a page: it stops the
