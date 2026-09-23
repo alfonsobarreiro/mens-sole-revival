@@ -7,7 +7,7 @@
 export const askCopy = {
   hero: {
     title: "Ask a foot question",
-    body: "Answers only from the guides on this site.",
+    body: "Alfred, your Sole Assistant.",
   },
 
   assistant: {
@@ -119,7 +119,7 @@ export const askCopy = {
   panel: {
     trigger: "Ask",
     triggerLabel: "Ask Alfred a foot question",
-    title: "Alfred",
+    title: "Alfred, your Sole Assistant",
     subtitle: "Answers only from the guides on this site.",
     fullPage: "Open full page",
     close: "Close",
