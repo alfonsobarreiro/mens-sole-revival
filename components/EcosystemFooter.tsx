@@ -115,6 +115,7 @@ export default function EcosystemFooter({
                     src={a.imageUrl}
                     alt={a.title}
                     fill
+                    sizes="(min-width: 768px) 33vw, 100vw"
                     className="muted-photo object-cover transition duration-500 group-hover:scale-105"
                   />
                 </div>
@@ -152,6 +153,7 @@ export default function EcosystemFooter({
                       src={r.imageUrl}
                       alt={r.productName}
                       fill
+                      sizes="(min-width: 768px) 33vw, 100vw"
                       className="muted-photo object-cover transition duration-500 group-hover:scale-105"
                     />
                   )}

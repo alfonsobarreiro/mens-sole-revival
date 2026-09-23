@@ -180,6 +180,7 @@ export default async function ReviewsPage() {
           src="/images/pexels-8729236.jpg"
           alt=""
           fill
+          sizes="100vw"
           className="muted-photo object-cover object-center"
           priority
         />

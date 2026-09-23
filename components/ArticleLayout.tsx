@@ -40,6 +40,7 @@ export default function ArticleLayout({
             src={heroSrc}
             alt={heroAlt}
             fill
+            sizes="100vw"
             className="muted-photo object-cover object-center opacity-75"
             priority
           />

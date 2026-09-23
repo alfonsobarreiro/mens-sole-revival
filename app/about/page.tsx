@@ -57,6 +57,7 @@ export default function AboutPage() {
           src="/images/pexels-8637976.jpg"
           alt=""
           fill
+          sizes="100vw"
           className="muted-photo object-cover object-center"
           priority
         />
@@ -85,6 +86,7 @@ export default function AboutPage() {
                 src="/about-alfonso.png"
                 alt="Alfonso Barreiro at Silver Falls"
                 fill
+                sizes="(min-width: 768px) 33vw, 100vw"
                 className="muted-photo object-cover object-top"
               />
             </div>

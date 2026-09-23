@@ -188,7 +188,7 @@ export default function TopicsSection() {
                     i === activeIndex ? "opacity-100" : "opacity-0"
                   }`}
                 >
-                  <Image src={topic.leftImage} alt="" fill className="muted-photo object-cover object-center" />
+                  <Image src={topic.leftImage} alt="" fill sizes="(min-width: 768px) 50vw, 100vw" className="muted-photo object-cover object-center" />
                   <div className="absolute inset-0 bg-ink/10" />
                 </div>
               ))}

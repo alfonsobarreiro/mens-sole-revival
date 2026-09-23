@@ -170,6 +170,7 @@ export default function RoutinesPage() {
           src="/images/pexels-4909313.jpg"
           alt=""
           fill
+          sizes="100vw"
           className="muted-photo object-cover object-center"
           priority
         />

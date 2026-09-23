@@ -68,6 +68,7 @@ function LearnContent() {
             src="/images/pexels-10904211.jpg"
             alt=""
             fill
+            sizes="100vw"
             className="muted-photo object-cover object-center"
             priority
           />
@@ -167,6 +168,7 @@ function LearnContent() {
                       src={a.imageUrl}
                       alt={a.title}
                       fill
+                      sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                       className="muted-photo object-cover transition duration-500 group-hover:scale-105"
                     />
                     <div className="absolute bottom-3 left-3">

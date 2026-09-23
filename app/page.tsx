@@ -404,6 +404,7 @@ export default function Home() {
                     src={articles[0].image}
                     alt={articles[0].title}
                     fill
+                    sizes="(min-width: 768px) 50vw, 100vw"
                     className="muted-photo object-cover transition duration-700 group-hover:scale-105"
                   />
                   <div className="absolute top-3 right-3">
@@ -437,6 +438,7 @@ export default function Home() {
                     src={a.image}
                     alt={a.title}
                     fill
+                    sizes="128px"
                     className="muted-photo object-cover transition duration-500 group-hover:scale-105"
                   />
                   <div className="absolute top-2 right-2">
@@ -467,6 +469,7 @@ export default function Home() {
             src="/images/pexels-34806666.jpg"
             alt=""
             fill
+            sizes="(min-width: 768px) 50vw, 100vw"
             className="muted-photo object-cover"
           />
         </div>
@@ -526,6 +529,7 @@ export default function Home() {
                     src={r.image}
                     alt={r.title}
                     fill
+                    sizes="(min-width: 768px) 33vw, 100vw"
                     className="object-cover muted-photo transition duration-500 group-hover:scale-105"
                   />
                   <div className="absolute bottom-3 left-3">

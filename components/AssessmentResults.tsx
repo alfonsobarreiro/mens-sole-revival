@@ -260,6 +260,7 @@ export default function AssessmentResults({
                       src={a.imageUrl}
                       alt={a.title}
                       fill
+                      sizes="96px"
                       className="object-cover"
                     />
                   </div>
