@@ -21,7 +21,7 @@ const topics = [
   {
     label: "Nails",
     href: "/guides/toenail-fungus-what-works",
-    leftImage: "/images/pexels-9767780.jpg",
+    leftImage: "/images/pexels-5960467.jpg",
     tagline: "Fungal infection needs a 12-week protocol.",
     description:
       "Thick, discolored, or ingrown nails are more common than most men admit, and more treatable. Physical debridement plus a topical antifungal used for the full 12 weeks (not just until it looks better) is the fix path that actually works.",

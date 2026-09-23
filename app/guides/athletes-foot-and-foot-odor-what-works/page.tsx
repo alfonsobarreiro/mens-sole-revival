@@ -14,8 +14,8 @@ export default function Page() {
     <SiteLayout>
       <ArticleLayout
         // TODO Alfonso: swap for a topic-matching hero.
-        heroSrc="/images/pexels-7312082.jpg"
-        heroAlt="A bare foot with sand on the toes, resting on a wet rock"
+        heroSrc="/images/pexels-17082339.jpg"
+        heroAlt="Two men sitting at a courtyard fountain, one with his shoes off"
         title="Athlete's Foot and Foot Odor"
         category="Skin"
         readTime="7 min"

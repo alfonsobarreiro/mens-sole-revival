@@ -14,8 +14,8 @@ export default function Page() {
     <SiteLayout>
       <ArticleLayout
         // TODO Alfonso: swap for a topic-matching hero.
-        heroSrc="/images/pexels-9767780.jpg"
-        heroAlt="Bare feet seen from above, standing on forest ground"
+        heroSrc="/images/pexels-9616030.jpg"
+        heroAlt="A man's bare feet resting on a windowsill"
         title="Bunions in Men Over 40"
         category="Alignment"
         readTime="8 min"

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import Container from "@/components/Container";
 import SiteLayout from "@/components/SiteLayout";
@@ -358,22 +357,26 @@ export default async function ReviewPage({
       <section className="py-16 md:py-24">
         <Container>
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-12 lg:gap-24">
-            {/* Image — muted-photo per DS Foundations Imagery */}
-            <div className="relative overflow-hidden bg-neutral-100" style={{ aspectRatio: "1/1" }}>
-              {review.imageUrl ? (
-                <Image
-                  src={review.imageUrl}
-                  alt={review.productName}
-                  fill
-                  className="muted-photo object-cover"
-                  priority
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-              ) : (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className={`${type.small} text-neutral-500`}>No image</span>
-                </div>
-              )}
+            {/* Rating tile in place of a product photo, until there is a
+                licensed one. Typographic, so nothing pretends to be the product. */}
+            <div
+              className="flex flex-col justify-between bg-ink p-8 md:p-10"
+              style={{ aspectRatio: "1/1" }}
+            >
+              <p className="text-xs font-medium tracking-[0.01em] text-inverse-caption">
+                {review.brand}
+              </p>
+              <div>
+                {review.rating != null && (
+                  <p className="font-heading text-[5rem] font-medium leading-none text-inverse tabular-nums">
+                    {review.rating}
+                    <span className="ml-1 text-[1.5rem] text-inverse-muted">/10</span>
+                  </p>
+                )}
+                {review.verdict && verdict && (
+                  <p className="mt-4 text-[0.9375rem] text-inverse-body">{verdict.label}</p>
+                )}
+              </div>
             </div>
 
             {/* Details */}

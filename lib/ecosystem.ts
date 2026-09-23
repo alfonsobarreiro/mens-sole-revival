@@ -146,7 +146,7 @@ export const articles: Record<string, ArticleMeta> = {
     title: "Gout in the Big Toe: How to Tell It From Stiffness (and What to Do)",
     category: "Pain",
     readTime: "7 min",
-    imageUrl: "/images/pexels-7047464.jpg",
+    imageUrl: "/images/pexels-18300650.jpg",
     excerpt:
       "A red, hot, swollen big toe that came on overnight is a different animal from stiffness that built over years. How to tell the two apart, what a flare needs, what a doctor will check, and what shoes do in between.",
     symptoms: ["pain", "alignment"],
@@ -157,7 +157,7 @@ export const articles: Record<string, ArticleMeta> = {
     title: "Athlete's Foot and Foot Odor: What Works (and Why It Comes Back)",
     category: "Skin",
     readTime: "7 min",
-    imageUrl: "/images/pexels-7312082.jpg",
+    imageUrl: "/images/pexels-17082339.jpg",
     excerpt:
       "Peeling between the toes and a smell that survives the shower are the same problem from two angles: a warm, damp shoe. The antifungal protocol, the sock and shoe rotation that stops the relapse, and when it's not fungus.",
     symptoms: ["skin", "footwear"],
@@ -190,7 +190,7 @@ export const articles: Record<string, ArticleMeta> = {
     title: "Bunions in Men Over 40: What Slows Them, Which Shoes, and When Surgery Is the Honest Answer",
     category: "Alignment",
     readTime: "8 min",
-    imageUrl: "/images/pexels-9767780.jpg",
+    imageUrl: "/images/pexels-9616030.jpg",
     excerpt:
       "A bunion is the big toe drifting toward its neighbors while the joint behind it drifts out. Shoes don't reverse it and spacers don't either, but both change how fast it moves and how much it hurts. The honest map, including when surgery earns the recovery.",
     symptoms: ["alignment", "footwear", "pain"],
@@ -236,7 +236,7 @@ export const articles: Record<string, ArticleMeta> = {
     title: "Ingrown Toenail: What Actually Stops the Cycle",
     category: "Nails",
     readTime: "6 min",
-    imageUrl: "/images/pexels-5960467.jpg",
+    imageUrl: "/images/pexels-5036256.jpg",
     excerpt:
       "Most ingrown toenails come back because the trim technique keeps reproducing the same edge that grew in. The specific fix, when to soak vs when to see a podiatrist, and the boring cutting rule that ends the cycle.",
     symptoms: ["nails"],

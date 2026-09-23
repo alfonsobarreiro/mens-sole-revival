@@ -15,8 +15,8 @@ export default function Page() {
       <ArticleLayout
         // TODO Alfonso: swap for a topic-matching hero. Ideas: nail clipper
         // on toe, close-up of a straight-across trim, before/after edge.
-        heroSrc="/images/pexels-5960467.jpg"
-        heroAlt="Close-up of a toenail edge before trim"
+        heroSrc="/images/pexels-5036256.jpg"
+        heroAlt="Three men sitting barefoot on a patterned rug"
         title="Ingrown Toenail: What Actually Stops the Cycle"
         category="Nails"
         readTime="6 min"

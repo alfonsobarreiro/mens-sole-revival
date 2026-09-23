@@ -83,7 +83,7 @@ const articles = [
     readTime: "7 min",
     excerpt:
       "A red, hot, swollen big toe that came on overnight is a different animal from stiffness that built over years. How to tell the two apart, what a flare needs, what a doctor will check, and what shoes do in between.",
-    image: "/images/pexels-7047464.jpg",
+    image: "/images/pexels-18300650.jpg",
   },
   {
     slug: "athletes-foot-and-foot-odor-what-works",
@@ -92,7 +92,7 @@ const articles = [
     readTime: "7 min",
     excerpt:
       "Peeling between the toes and a smell that survives the shower are the same problem from two angles: a warm, damp shoe. The antifungal protocol, the sock and shoe rotation that stops the relapse, and when it's not fungus.",
-    image: "/images/pexels-7312082.jpg",
+    image: "/images/pexels-17082339.jpg",
   },
   {
     slug: "calluses-and-corns-men-over-40",
@@ -119,7 +119,7 @@ const articles = [
     readTime: "8 min",
     excerpt:
       "A bunion is the big toe drifting toward its neighbors while the joint behind it drifts out. Shoes don't reverse it and spacers don't either, but both change how fast it moves and how much it hurts. The honest map, including when surgery earns the recovery.",
-    image: "/images/pexels-9767780.jpg",
+    image: "/images/pexels-9616030.jpg",
   },
   {
     slug: "diabetic-foot-care-men-over-40",

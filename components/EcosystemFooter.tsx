@@ -147,17 +147,6 @@ export default function EcosystemFooter({
                 variant="elevated"
                 className="flex h-full flex-col overflow-hidden transition group-hover:border-ink"
               >
-                <div className="relative aspect-[4/3] w-full overflow-hidden">
-                  {r.imageUrl && (
-                    <Image
-                      src={r.imageUrl}
-                      alt={r.productName}
-                      fill
-                      sizes="(min-width: 768px) 33vw, 100vw"
-                      className="muted-photo object-cover transition duration-500 group-hover:scale-105"
-                    />
-                  )}
-                </div>
                 <div className="flex flex-1 flex-col p-6">
                   <Tag variant="accent-kicker" className="self-start !px-0">
                     Reviewed · {r.brand}

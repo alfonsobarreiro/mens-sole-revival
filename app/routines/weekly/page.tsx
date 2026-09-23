@@ -10,8 +10,8 @@ export default function Page() {
   return (
     <SiteLayout>
       <ArticleLayout
-        heroSrc="/images/pexels-7047464.jpg"
-        heroAlt="Bare feet on warm wood boards in afternoon light, a quiet at-home moment"
+        heroSrc="/images/pexels-29145634.jpg"
+        heroAlt="Bare soles resting on a wooden dock, in black and white"
         title="The Sunday Foot Reset"
         category="Weekly Routine"
         readTime="5 min"

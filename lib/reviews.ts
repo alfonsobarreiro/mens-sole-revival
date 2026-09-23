@@ -73,7 +73,6 @@ export const staticReviews: Review[] = [
     tagline: "The most reliable OTC insole for men who stand or walk all day.",
     retailPriceUsd: 55,
     publishedAt: "2026-03-01",
-    imageUrl: "/images/pexels-8729236.jpg",
     seoTitle: "Superfeet BLUE Review (2026): Worth It for Men Over 40?",
     seoDescription:
       "Six months in the Superfeet BLUE. Where it works, where it doesn't, and who should skip it. Independent test, evidence-based, no affiliate spin.",
@@ -88,7 +87,6 @@ export const staticReviews: Review[] = [
     tagline: "The OTC antifungal with the best clinical track record for athlete's foot.",
     retailPriceUsd: 18,
     publishedAt: "2026-03-05",
-    imageUrl: "/images/pexels-10904211.jpg",
     seoTitle: "Lamisil AT Cream Review (2026): Does Terbinafine Actually Work?",
     seoDescription:
       "Full Lamisil AT review with the clinical evidence, the correct application, and the mistake that makes it fail. What terbinafine treats and what it doesn't.",
@@ -103,7 +101,6 @@ export const staticReviews: Review[] = [
     tagline: "The German heel cream most podiatrists quietly recommend and most men have never heard of.",
     retailPriceUsd: 22,
     publishedAt: "2026-03-10",
-    imageUrl: "/images/pexels-29145634.jpg",
     seoTitle: "Gehwol Fusskraft Review (2026): Is the German Foot Cream Worth $22?",
     seoDescription:
       "The urea + lactic acid combo in Gehwol Fusskraft is the reason podiatrists quietly recommend it. Full independent review, side-by-side vs OTC alternatives.",
@@ -118,7 +115,6 @@ export const staticReviews: Review[] = [
     tagline: "Classic for a reason, but the formula trade-offs are worth understanding before you reach for it.",
     retailPriceUsd: 9,
     publishedAt: "2026-03-15",
-    imageUrl: "/images/pexels-11873696.jpg",
     seoTitle: "Gold Bond Foot Powder Review (2026): Talc Concerns and What Works Better",
     seoDescription:
       "Full independent review of Gold Bond Medicated Foot Powder. When it wins, when it loses, and the talc-free alternative men over 40 should consider first.",
@@ -133,7 +129,6 @@ export const staticReviews: Review[] = [
     tagline: "Legitimate tool for toe alignment, but the wearing schedule matters as much as the product.",
     retailPriceUsd: 30,
     publishedAt: "2026-03-18",
-    imageUrl: "/images/pexels-35206081.jpg",
     seoTitle: "Yoga Toes GEM Review (2026): Do Toe Separators Actually Work?",
     seoDescription:
       "The real evidence behind Yoga Toes GEM: what changes, what doesn't, and the wearing schedule that separates the men who see results from the men who quit.",
@@ -151,6 +146,5 @@ export const staticReviews: Review[] = [
     seoDescription:
       "Independent KURU ATOM review after 6 months of daily wear. Where the KURUSOLE heel design earns the price and where it doesn't. For men over 40 with heel pain.",
     publishedAt: "2026-03-22",
-    imageUrl: "/images/pexels-12031206.jpg",
   },
 ];

@@ -14,8 +14,8 @@ export default function Page() {
     <SiteLayout>
       <ArticleLayout
         // TODO Alfonso: swap for a topic-matching hero.
-        heroSrc="/images/pexels-7047464.jpg"
-        heroAlt="A bare foot resting on a wooden plank, big toe in view"
+        heroSrc="/images/pexels-18300650.jpg"
+        heroAlt="A man's bare feet on wet sand at the water's edge"
         title="Gout in the Big Toe"
         category="Pain"
         readTime="7 min"
