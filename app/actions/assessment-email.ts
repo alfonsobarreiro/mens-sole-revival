@@ -23,7 +23,6 @@ import {
   type Duration,
 } from "@/lib/assessment-routing";
 import { buildResultEmail } from "@/lib/assessment-email-template";
-import { writeClient } from "@/sanity/lib/client";
 
 export type AssessmentEmailState = {
   status: "idle" | "success" | "error";
@@ -71,49 +70,10 @@ export async function submitAssessmentEmail(
   // ── Always log so dev runs capture data ──────────────────────────────────
   console.log("[Assessment email-save]", { email, checkIn, totalFlags, flags, at: submittedAt });
 
-  // ── Persist to Sanity as an assessmentSubmission document ────────────────
-  // Fail soft: a missing token or Sanity outage never blocks the user-facing
-  // results email + Resend audience add. The write is fire-and-forget so we
-  // don't add latency to the primary flow.
-  if (process.env.SANITY_API_WRITE_TOKEN) {
-    void writeClient
-      .create({
-        _type: "assessmentSubmission",
-        email,
-        submittedAt,
-        checkIn,
-        totalFlags,
-        notSureCount,
-        attemptedSections,
-        flagsBySection: Object.entries(flagsBySection).map(([sectionId, count]) => ({
-          _key: `fbs-${sectionId}`,
-          sectionId,
-          count: count ?? 0,
-        })),
-        durationBySection: Object.entries(durationBySection).map(([sectionId, duration]) => ({
-          _key: `dbs-${sectionId}`,
-          sectionId,
-          duration,
-        })),
-        itemsBySection: Object.entries(itemsBySection).map(([sectionId, items]) => ({
-          _key: `ibs-${sectionId}`,
-          sectionId,
-          items: items ?? [],
-        })),
-        flags: flags.map((f, i) => ({
-          _key: `flag-${i}`,
-          label: f.label,
-          count: f.count,
-        })),
-      })
-      .catch((err) => {
-        console.error("[Assessment email-save] Sanity write failed:", err);
-      });
-  } else {
-    console.warn(
-      "[Assessment email-save] SANITY_API_WRITE_TOKEN not set — submission not persisted."
-    );
-  }
+  // Submissions are deliberately not stored. The Sanity dataset is public on
+  // the current plan, and an email address plus health answers must never sit
+  // in a public store. The results email and PDF are the deliverables; the
+  // progress view stays dormant until submissions get a server-only home.
 
   // ── Send via Resend if configured ────────────────────────────────────────
   const apiKey = process.env.RESEND_API_KEY;
