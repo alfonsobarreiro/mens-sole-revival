@@ -11,7 +11,7 @@
  *   body   #BBCDDD   brand-200 (muted footer + URL)
  *   title  #FFFFFF
  *
- * Edge-runtime ImageResponse defaults to a sans bundled font. Custom
+ * ImageResponse defaults to a bundled sans font on the Node runtime. Custom
  * font loading (Lora) is a follow-up — ships fine without it for now.
  */
 import { ImageResponse } from "next/og";

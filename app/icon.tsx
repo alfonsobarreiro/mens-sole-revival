@@ -5,7 +5,6 @@ import { ImageResponse } from "next/og";
 // and apple-icon.tsx (iOS home screen, 512×512).
 // Paths sourced from Figma DS file cAPu29rp3vKoYF4uqiyIyr, page 12 · Mark.
 
-export const runtime = "edge";
 export const size = { width: 32, height: 32 };
 export const contentType = "image/png";
 
