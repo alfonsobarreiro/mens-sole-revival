@@ -54,11 +54,11 @@ export default function AboutPage() {
           repeated verbatim in the story below (F10 aphoristic hero redundancy). */}
       <section className="relative flex min-h-[45vh] flex-col overflow-hidden bg-ink py-16 md:py-24">
         <Image
-          src="/images/pexels-8637976.jpg"
+          src="/images/pexels-37060952.jpg"
           alt=""
           fill
           sizes="100vw"
-          className="muted-photo object-cover object-center"
+          className="muted-photo object-cover object-[center_30%]"
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-ink/20" />

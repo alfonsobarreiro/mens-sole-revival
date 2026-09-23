@@ -168,7 +168,7 @@ export const articles: Record<string, ArticleMeta> = {
     title: "Calluses and Corns: What to Remove, What to Leave, and What's Causing Them",
     category: "Skin",
     readTime: "7 min",
-    imageUrl: "/images/pexels-15098712.jpg",
+    imageUrl: "/images/pexels-19613251.jpg",
     excerpt:
       "A callus is your skin answering pressure. Shave it and it comes back, because the pressure didn't leave. Where they form and why, the safe way to thin them, the corn-versus-callus difference, and the diabetes rule.",
     symptoms: ["skin", "footwear", "pain"],
@@ -179,7 +179,7 @@ export const articles: Record<string, ArticleMeta> = {
     title: "Foot and Calf Cramps at Night: Why They Happen After 40 and What Stops Them",
     category: "Pain",
     readTime: "7 min",
-    imageUrl: "/images/pexels-3771071.jpg",
+    imageUrl: "/images/pexels-7298421.jpg",
     excerpt:
       "The 2 a.m. calf cramp is common after 40 and mostly mechanical: shortened calves, a long day on your feet, dehydration, and a few medications. What to do in the moment, the two-minute bedtime stretch that cuts them, and the signs it's something else.",
     symptoms: ["pain"],
@@ -223,7 +223,7 @@ export const articles: Record<string, ArticleMeta> = {
     title: "Sprained Ankle After 40: How to Recover Without Turning It Into a Weak Ankle for Life",
     category: "Pain",
     readTime: "8 min",
-    imageUrl: "/images/pexels-8729018.jpg",
+    imageUrl: "/images/pexels-7298407.jpg",
     excerpt:
       "Most sprains heal; the ankle you don't rehab is the one that keeps rolling. The first 48 hours (and why total rest is out), the Ottawa rules for when it needs an X-ray, the six-week balance-and-strength progression, and the shoe that helps while it heals.",
     symptoms: ["pain"],
@@ -370,7 +370,7 @@ export const articles: Record<string, ArticleMeta> = {
     title: "Your Big Toe Controls More of Your Body Than You Think",
     category: "Alignment",
     readTime: "6 min",
-    imageUrl: "/images/pexels-11873696.jpg",
+    imageUrl: "/images/pexels-22739369.jpg",
     excerpt:
       "The big toe is responsible for 40 to 60% of your push-off force. Most men have spent decades restricting it and wondering why their knee hurts.",
     symptoms: ["alignment", "pain"],

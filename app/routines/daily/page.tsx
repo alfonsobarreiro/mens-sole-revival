@@ -12,8 +12,8 @@ export default function Page() {
       <ArticleLayout
         // TODO Alfonso: swap for a topic-matching hero. Ideas: hands drying
         // between toes, urea cream tube on counter, feet before bed.
-        heroSrc="/images/pexels-10904211.jpg"
-        heroAlt="Bare feet at rest after the evening foot-care routine"
+        heroSrc="/images/unsplash-_w-v2QxDTrc.jpg"
+        heroAlt="A man sitting on the edge of a bed, checking the sole of his own foot"
         title="The Nightly 5-Minute Checklist"
         category="Daily Routine"
         readTime="5 min"

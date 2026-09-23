@@ -65,7 +65,7 @@ function LearnContent() {
       <section className="relative flex flex-col overflow-hidden bg-ink py-24 md:py-32">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/pexels-10904211.jpg"
+            src="/images/pexels-10133582.jpg"
             alt=""
             fill
             sizes="100vw"

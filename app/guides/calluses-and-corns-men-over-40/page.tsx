@@ -14,8 +14,8 @@ export default function Page() {
     <SiteLayout>
       <ArticleLayout
         // TODO Alfonso: swap for a topic-matching hero.
-        heroSrc="/images/pexels-15098712.jpg"
-        heroAlt="A worn shoe sole seen from behind as a man steps forward"
+        heroSrc="/images/pexels-19613251.jpg"
+        heroAlt="A wet bare foot pressed into sand as a man fastens an ankle strap"
         title="Calluses and Corns"
         category="Skin"
         readTime="7 min"

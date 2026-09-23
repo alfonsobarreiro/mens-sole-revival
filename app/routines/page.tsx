@@ -167,7 +167,7 @@ export default function RoutinesPage() {
           Y." AI-tell contrast structure. */}
       <section className="relative flex h-[45vh] flex-col overflow-hidden bg-ink">
         <Image
-          src="/images/pexels-4909313.jpg"
+          src="/images/unsplash-VHy5PYCEa0U.jpg"
           alt=""
           fill
           sizes="100vw"

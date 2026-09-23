@@ -14,8 +14,8 @@ export default function Page() {
     <SiteLayout>
       <ArticleLayout
         // TODO Alfonso: swap for a topic-matching hero.
-        heroSrc="/images/pexels-3771071.jpg"
-        heroAlt="A man sitting on the ground reaching for his foot to stretch his calf"
+        heroSrc="/images/pexels-7298421.jpg"
+        heroAlt="A man pressing his thumbs into a tight calf muscle after a run"
         title="Foot and Calf Cramps at Night"
         category="Pain"
         readTime="7 min"

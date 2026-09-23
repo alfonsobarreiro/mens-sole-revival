@@ -58,7 +58,7 @@ const routineHighlights: {
     desc: "Roll the arch, then hold on the sore spot until it releases. Three minutes per foot; pair with the stretch.",
     time: "6 min / as needed",
     href: "/routines/recovery",
-    image: "/images/pexels-8729018.jpg",
+    image: "/images/unsplash-cuOHHP5tx5g.jpg",
     slug: "recovery",
   },
   {
@@ -67,7 +67,7 @@ const routineHighlights: {
     desc: "Wash, dry, inspect, moisturize. Done before your phone goes to the charger.",
     time: "5 min / every night",
     href: "/routines",
-    image: "/images/pexels-4909313.jpg",
+    image: "/images/unsplash-VHy5PYCEa0U.jpg",
   },
 ];
 
@@ -101,7 +101,7 @@ const articles = [
     readTime: "7 min",
     excerpt:
       "A callus is your skin answering pressure. Shave it and it comes back, because the pressure didn't leave. Where they form and why, the safe way to thin them, the corn-versus-callus difference, and the diabetes rule.",
-    image: "/images/pexels-15098712.jpg",
+    image: "/images/pexels-19613251.jpg",
   },
   {
     slug: "foot-and-calf-cramps-at-night",
@@ -110,7 +110,7 @@ const articles = [
     readTime: "7 min",
     excerpt:
       "The 2 a.m. calf cramp is common after 40 and mostly mechanical: shortened calves, a long day on your feet, dehydration, and a few medications. What to do in the moment, the two-minute bedtime stretch that cuts them, and the signs it's something else.",
-    image: "/images/pexels-3771071.jpg",
+    image: "/images/pexels-7298421.jpg",
   },
   {
     slug: "bunions-men-over-40",
@@ -146,7 +146,7 @@ const articles = [
     readTime: "8 min",
     excerpt:
       "Most sprains heal; the ankle you don't rehab is the one that keeps rolling. The first 48 hours (and why total rest is out), the Ottawa rules for when it needs an X-ray, the six-week balance-and-strength progression, and the shoe that helps while it heals.",
-    image: "/images/pexels-8729018.jpg",
+    image: "/images/pexels-7298407.jpg",
   },
   {
     slug: "why-your-feet-hurt-after-40",
@@ -198,7 +198,7 @@ const articles = [
     category: "Toe Alignment",
     readTime: "6 min",
     excerpt: "The big toe is responsible for 40–60% of your push-off force. Most men have spent decades restricting it, and wondering why their knee hurts.",
-    image: "/images/pexels-11873696.jpg",
+    image: "/images/pexels-22739369.jpg",
   },
   {
     slug: "cracked-heels-what-actually-works",
@@ -222,7 +222,7 @@ const articles = [
     category: "Toe Alignment",
     readTime: "5 min",
     excerpt: "When your big toe can't extend and stabilize, your knee and lower back pick up the slack every single step. The compensation runs upward until something else gives.",
-    image: "/images/pexels-13065922.jpg",
+    image: "/images/pexels-35206081.jpg",
   },
   {
     slug: "5-minute-routine",
@@ -230,7 +230,7 @@ const articles = [
     category: "Daily Routine",
     readTime: "4 min",
     excerpt: "A five-minute habit done after your shower outperforms any more ambitious routine you'll quit inside a month.",
-    image: "/images/pexels-7205913.jpg",
+    image: "/images/pexels-10904211.jpg",
   },
 ];
 

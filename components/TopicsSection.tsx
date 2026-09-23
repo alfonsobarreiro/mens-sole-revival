@@ -13,7 +13,7 @@ const topics = [
   {
     label: "Pain",
     href: "/routines",
-    leftImage: "/images/pexels-15098712.jpg",
+    leftImage: "/images/pexels-5037290.jpg",
     tagline: "Heel pain rarely resolves on its own.",
     description:
       "Plantar fasciitis, heel spurs, and arch strain hold for months and years without treatment. Identifying the source and loading the tissue correctly is the difference between a six-week recovery and a five-year problem.",
@@ -21,7 +21,7 @@ const topics = [
   {
     label: "Nails",
     href: "/guides/toenail-fungus-what-works",
-    leftImage: "/images/pexels-5960467.jpg",
+    leftImage: "/images/pexels-3884710.jpg",
     tagline: "Fungal infection needs a 12-week protocol.",
     description:
       "Thick, discolored, or ingrown nails are more common than most men admit, and more treatable. Physical debridement plus a topical antifungal used for the full 12 weeks (not just until it looks better) is the fix path that actually works.",
@@ -29,7 +29,7 @@ const topics = [
   {
     label: "Alignment",
     href: "/guides/why-toe-alignment-affects-knees-and-hips",
-    leftImage: "/images/pexels-33360918.jpg",
+    leftImage: "/images/unsplash-EouxhqlDnnQ.jpg",
     tagline: "Your big toe drives 40–60% of push-off.",
     description:
       "Bunions, hammer toes, and crowded toe boxes all trace back to how your foot contacts the ground. Daily spreader work and wide toe-box footwear can slow or reverse years of drift.",
@@ -37,7 +37,7 @@ const topics = [
   {
     label: "Routine",
     href: "/guides/5-minute-routine",
-    leftImage: "/images/pexels-4909313.jpg",
+    leftImage: "/images/pexels-4853035.jpg",
     tagline: "Five minutes. Every day.",
     description:
       "A two-minute check done every night after the shower: wash, dry, moisturize, inspect. Same time every day is what turns it into a habit that heads off most of the routine problems men over 40 develop.",
@@ -45,7 +45,7 @@ const topics = [
   {
     label: "Fit",
     href: "/guides/what-your-dress-shoes-are-doing-to-your-feet",
-    leftImage: "/images/pexels-8729236.jpg",
+    leftImage: "/images/pexels-16000228.jpg",
     tagline: "Most men wear the wrong size for 20+ years.",
     description:
       "63–72% of adults wear shoes that don't fit, and the number climbs after 40 because feet keep changing. Getting your length and width measured, both feet at day's end, is the highest-leverage fix on this site.",
@@ -53,7 +53,7 @@ const topics = [
   {
     label: "Skin",
     href: "/guides/cracked-heels-what-actually-works",
-    leftImage: "/images/pexels-11873696.jpg",
+    leftImage: "/images/pexels-6760956.jpg",
     tagline: "Cracks close in 2–3 weeks with a nightly routine.",
     description:
       "Heels don't have oil glands, so rough skin and cracks are a moisture-loss problem. Nightly urea cream on damp feet in a sock shifts it. Pumice comes second, not first.",

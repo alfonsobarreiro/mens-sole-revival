@@ -10,8 +10,8 @@ export default function Page() {
   return (
     <SiteLayout>
       <ArticleLayout
-        heroSrc="/images/pexels-8729236.jpg"
-        heroAlt="A man sitting on rock, taking off his climbing shoes"
+        heroSrc="/images/unsplash-cuOHHP5tx5g.jpg"
+        heroAlt="A man seated on a porch, folded forward with his hands on his feet"
         title="The 6-Minute Recovery Routine"
         category="Recovery Routine"
         readTime="4 min"

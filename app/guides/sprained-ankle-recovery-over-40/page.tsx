@@ -14,8 +14,8 @@ export default function Page() {
     <SiteLayout>
       <ArticleLayout
         // TODO Alfonso: swap for a topic-matching hero.
-        heroSrc="/images/pexels-8729018.jpg"
-        heroAlt="A man hiking up a rocky forest trail"
+        heroSrc="/images/pexels-7298407.jpg"
+        heroAlt="A man bent forward, holding his lower calf and ankle with both hands"
         title="Sprained Ankle After 40"
         category="Pain"
         readTime="8 min"
