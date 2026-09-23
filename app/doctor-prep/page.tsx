@@ -251,6 +251,7 @@ export default function DoctorPrepPage() {
 
           <div className="mx-auto mt-14 max-w-2xl border-t border-neutral-200 pt-10">
             <InlineNewsletterForm
+              from="doctor-prep"
               heading="Get updates when we publish new tools."
               body="Same list as the 5-minute foot check. One confirmation email, unsubscribe anytime."
               cta="Send it to me"

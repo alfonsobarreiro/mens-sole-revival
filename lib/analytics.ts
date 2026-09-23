@@ -76,7 +76,9 @@ export function trackAssessment(
 // ── Newsletter event taxonomy ─────────────────────────────────────────────
 //
 //   newsletter_signup    — the signup form is accepted and the confirmation
-//                          email is on its way ({ from: "page" | "popup" })
+//                          email is on its way. `from` names the placement:
+//                          page (/newsletter), home, article, popup,
+//                          foot-check, doctor-prep
 //   newsletter_confirmed — the visitor opens a valid confirmation link
 //
 // Email capture is the site's north star. Both belong marked as key events

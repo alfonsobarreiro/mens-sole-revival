@@ -290,7 +290,7 @@ export default function Home() {
       <section className="border-y border-neutral-200 bg-ink py-16 md:py-24">
         <Container>
           <div className="max-w-2xl">
-            <InlineNewsletterForm tone="dark" />
+            <InlineNewsletterForm tone="dark" from="home" />
           </div>
         </Container>
       </section>

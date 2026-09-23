@@ -211,6 +211,7 @@ export default function ExitIntentPopup() {
           </p>
           <div id="exit-popup-title" className="mt-4">
             <InlineNewsletterForm
+              from="popup"
               heading="Get the 5-minute foot check."
               body="Printable checklist, same questions the assessment asks. Yours to keep whether you subscribe long-term or not."
               cta="Send it to me"
