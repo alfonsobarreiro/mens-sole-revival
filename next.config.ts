@@ -45,6 +45,15 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // The stable production alias serves the whole site too. Send it to the
+      // canonical host so search engines and analytics see one hostname.
+      // Preview deployments have their own hostnames and are not affected.
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "mens-sole-revival.vercel.app" }],
+        destination: "https://www.menssolerevival.com/:path*",
+        permanent: true,
+      },
       { source: "/shop", destination: "/reviews", permanent: true },
       { source: "/shop/:slug", destination: "/reviews", permanent: true },
       // Old editorial routes → /guides (vocabulary aligned across the site)

@@ -5,8 +5,11 @@
 //
 // Capture flow (in order):
 //   1. Validate + log the payload (always — keeps dev runs observable).
-//   2. Add the email to the Resend Audience (the LIST — the growth asset).
-//      `checkIn` governs whether they're subscribed or one-copy-only.
+//   2. Add the email to the Resend Audience as PENDING (unsubscribed:true).
+//      Nothing here subscribes anyone: the results email carries a signed
+//      confirmation link, and only that click flips the contact to subscribed
+//      (the same double opt-in as /newsletter). `checkIn` governs the 30 and
+//      90-day check-in emails only; it never touches the list.
 //   3. Email the user a FULL copy of their results — the same recommendations
 //      the on-screen result page and the PDF show (guides, routine, podiatrist
 //      prep, sources), rebuilt server-side from the structured payload via
@@ -24,6 +27,7 @@ import {
   type Duration,
 } from "@/lib/assessment-routing";
 import { buildResultEmail } from "@/lib/assessment-email-template";
+import { confirmUrl, createConfirmToken } from "@/lib/newsletter-token";
 import { saveSubmission, submissionsConfigured } from "@/lib/submissions/store";
 
 export type AssessmentEmailState = {
@@ -112,14 +116,17 @@ export async function submitAssessmentEmail(
     return { status: "success" };
   }
 
-  // ── Add to the Resend Audience (the list / growth asset) ─────────────────
+  // ── Add to the Resend Audience as pending ────────────────────────────────
+  // unsubscribed:true until the recipient clicks the confirmation link in the
+  // results email. A 409 means the contact already exists, subscribed or not,
+  // and is left exactly as it was.
   const audienceId = process.env.RESEND_AUDIENCE_ID;
   if (audienceId) {
     try {
       const contactRes = await fetch(`https://api.resend.com/audiences/${audienceId}/contacts`, {
         method: "POST",
         headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-        body: JSON.stringify({ email, unsubscribed: !checkIn }),
+        body: JSON.stringify({ email, unsubscribed: true }),
       });
       if (!contactRes.ok && contactRes.status !== 409) {
         console.error("Resend (audience) error", contactRes.status, await contactRes.text());
@@ -133,6 +140,8 @@ export async function submitAssessmentEmail(
 
   // ── Rebuild the full recommendations server-side (parity with page + PDF) ─
   const composed = composeResult({ flagsBySection, durationBySection, notSureCount });
+  // Only the person reading the results email can subscribe, by clicking this.
+  const newsletterConfirmUrl = confirmUrl(createConfirmToken(email));
   const resultHtml = buildResultEmail({
     totalFlags,
     checkIn,
@@ -141,6 +150,7 @@ export async function submitAssessmentEmail(
     durationBySection,
     itemsBySection,
     composed,
+    newsletterConfirmUrl,
   });
 
   try {
@@ -174,7 +184,7 @@ export async function submitAssessmentEmail(
         from: EMAIL_FROM,
         to: ["alfonso@barreiro.com"],
         subject: `Assessment capture — ${totalFlags} flags${checkIn ? " · check-in opted in" : ""}`,
-        html: `<div style="font-family:sans-serif;max-width:520px;color:#1a1a1a"><h3 style="color:#1C3F5E">New assessment capture</h3><p><strong>Email:</strong> ${escapeHtml(email)}</p><p><strong>Total flags:</strong> ${totalFlags}</p><p><strong>30/90 check-in:</strong> ${checkIn ? "yes" : "no"}</p><table style="border-collapse:collapse"><tbody>${flagRows}</tbody></table></div>`,
+        html: `<div style="font-family:sans-serif;max-width:520px;color:#1a1a1a"><h3 style="color:#1C3F5E">New assessment capture</h3><p><strong>Email:</strong> ${escapeHtml(email)}</p><p><strong>Total flags:</strong> ${totalFlags}</p><p><strong>30/90 check-in:</strong> ${checkIn ? "yes" : "no"}</p><p><strong>Newsletter:</strong> pending until they confirm</p><table style="border-collapse:collapse"><tbody>${flagRows}</tbody></table></div>`,
       }),
     });
 
