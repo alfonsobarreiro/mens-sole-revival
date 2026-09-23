@@ -3,8 +3,6 @@
 @custom-variant dark (&:is(.dark *));
 @plugin "@tailwindcss/typography";
 
-@plugin "tailwindcss-animate";
-
 /* ============================================================
    DESIGN TOKENS — Men's Sole Revival
    Source of truth: alfOS/Career/Product Design/MSR/Foundations — Color.md
