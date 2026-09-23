@@ -1,9 +1,11 @@
+import 'server-only'
 import { createClient } from 'next-sanity'
 import { apiVersion, dataset, projectId } from '../env'
 
 /**
- * Read client — CDN-cached, no token. Safe to use anywhere (server or
- * client), returns published content only.
+ * Read client — CDN-cached, no token, published content only. It can only
+ * read while the dataset is public; server code should prefer `serverClient`
+ * below. The whole module is server-only so no token can reach a bundle.
  */
 export const client = createClient({
   projectId,
@@ -28,5 +30,21 @@ export const writeClient = createClient({
   apiVersion,
   useCdn: false,
   token: process.env.SANITY_API_WRITE_TOKEN,
+  perspective: 'published',
+})
+
+/**
+ * Server read client — token-backed and uncached, for pages and actions that
+ * read the dataset from the server. Once the dataset is private the public
+ * `client` can't read it; this one still can. Prefer a Viewer-role
+ * SANITY_API_READ_TOKEN; the write token is only a fallback so flipping the
+ * dataset to private never breaks the site.
+ */
+export const serverClient = createClient({
+  projectId,
+  dataset,
+  apiVersion,
+  useCdn: false,
+  token: process.env.SANITY_API_READ_TOKEN ?? process.env.SANITY_API_WRITE_TOKEN,
   perspective: 'published',
 })
