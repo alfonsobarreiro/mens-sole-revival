@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Lora, Archivo, Barlow_Condensed } from "next/font/google";
-import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/react";
-import Script from "next/script";
+import AnalyticsTags from "@/components/AnalyticsTags";
 import JsonLd from "@/components/JsonLd";
 import ExitIntentPopup from "@/components/ExitIntentPopup";
 import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, organizationSchema, webSiteSchema } from "@/lib/site";
@@ -81,17 +80,9 @@ export default function RootLayout({
         {/* Exit-intent popup — client component, self-suppresses on
             /newsletter, /assessment, and /foot-check routes. */}
         <ExitIntentPopup />
-        {isProduction && <GoogleAnalytics gaId="G-QT90WR1MPD" />}
+        {/* GA + Clarity: production only, and never on /progress or /admin. */}
+        <AnalyticsTags enabled={isProduction} gaId="G-QT90WR1MPD" clarityId={clarityId} />
         <Analytics />
-        {isProduction && clarityId && (
-          <Script id="ms-clarity" strategy="afterInteractive">
-            {`(function(c,l,a,r,i,t,y){
-              c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-              t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-              y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-            })(window, document, "clarity", "script", "${clarityId}");`}
-          </Script>
-        )}
       </body>
     </html>
   );
