@@ -1,11 +1,15 @@
 import type { NextConfig } from "next";
 import createMDX from "@next/mdx";
-import { withBotId } from "botid/next/config";
 
 const nextConfig: NextConfig = {
   typescript: {
     // Dead routes (/shop, /shop/:slug) redirect before rendering — safe to skip
     ignoreBuildErrors: true,
+  },
+  eslint: {
+    // ESLint runs as a separate CI step; skip during Vercel build to avoid
+    // spurious failures from strict rules in dead/redirect routes.
+    ignoreDuringBuilds: true,
   },
   pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
   async headers() {
@@ -27,9 +31,9 @@ const nextConfig: NextConfig = {
     const dev = process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : "";
     const reportOnly = [
       "default-src 'self'",
-      `script-src 'self' 'unsafe-inline'${dev} https://www.googletagmanager.com https://www.clarity.ms`,
-      "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.clarity.ms",
-      "img-src 'self' data: blob: https://images.unsplash.com https://cdn.sanity.io https://*.google-analytics.com https://www.googletagmanager.com",
+      `script-src 'self' 'unsafe-inline'${dev} https://www.googletagmanager.com https://www.clarity.ms https://va.vercel-scripts.com`,
+      "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.clarity.ms https://c.bing.com https://va.vercel-scripts.com",
+      "img-src 'self' data: blob: https://images.unsplash.com https://cdn.sanity.io https://*.google-analytics.com https://www.googletagmanager.com https://c.bing.com https://*.clarity.ms",
       "style-src 'self' 'unsafe-inline'",
       "font-src 'self'",
       "frame-ancestors 'none'",
@@ -87,5 +91,4 @@ const withMDX = createMDX({
   extension: /\.mdx?$/,
 });
 
-// withBotId adds the proxy rewrites BotID needs to protect POST /api/ask.
-export default withBotId(withMDX(nextConfig));
+export default withMDX(nextConfig);

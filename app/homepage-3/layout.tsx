@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { Oswald, Roboto } from "next/font/google";
 
 const oswald = Oswald({
@@ -26,6 +27,8 @@ export default function Homepage3Layout({
 }: {
   children: React.ReactNode;
 }) {
+  // Authoring surface only: a 404 on the live site, the same rule as /case-study.
+  if (process.env.VERCEL_ENV === "production") notFound();
   return (
     <div className={`${oswald.variable} ${roboto.variable}`}>
       {children}

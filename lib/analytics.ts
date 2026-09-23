@@ -21,13 +21,45 @@ declare global {
   }
 }
 
-/** Fire a GA4 event. No-ops cleanly when gtag is unavailable
+// The GoogleAnalytics component defines window.gtag in a script that runs
+// after hydration, so an event fired while a page mounts (a confirmation
+// page, a results screen) can arrive before gtag exists. Those events are
+// held here and sent once gtag appears. If it never does (ad blocker, GA
+// not mounted outside production), the queue is dropped after ten seconds.
+const pending: Array<[string, Record<string, unknown>]> = [];
+let flushTimer: number | null = null;
+const FLUSH_EVERY_MS = 250;
+const FLUSH_ATTEMPTS = 40;
+
+function flushPending(): boolean {
+  if (typeof window.gtag !== "function") return false;
+  while (pending.length > 0) {
+    const [event, params] = pending.shift()!;
+    window.gtag("event", event, params);
+  }
+  return true;
+}
+
+/** Fire a GA4 event. No-ops cleanly when gtag never becomes available
  * (SSR, dev without GA, ad-blocker, etc.) so call sites stay simple. */
 export function track(event: string, params: Record<string, unknown> = {}): void {
   if (typeof window === "undefined") return;
-  if (typeof window.gtag !== "function") return;
   try {
-    window.gtag("event", event, params);
+    if (typeof window.gtag === "function") {
+      window.gtag("event", event, params);
+      return;
+    }
+    pending.push([event, params]);
+    if (flushTimer !== null) return;
+    let attempts = 0;
+    flushTimer = window.setInterval(() => {
+      attempts += 1;
+      if (flushPending() || attempts >= FLUSH_ATTEMPTS) {
+        window.clearInterval(flushTimer!);
+        flushTimer = null;
+        pending.length = 0;
+      }
+    }, FLUSH_EVERY_MS);
   } catch {
     /* swallow — analytics never break the UX */
   }

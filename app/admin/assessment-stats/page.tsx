@@ -10,6 +10,9 @@ import {
   type AssessmentStats,
 } from "@/lib/ga-data";
 import { fetchListSizes, type ListSizes } from "@/lib/list-size";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { ADMIN_COOKIE, verifyAdminSession } from "@/lib/admin-session";
 
 // Server component — runs on Node runtime (GA SDK needs Node crypto).
 export const runtime = "nodejs";
@@ -17,16 +20,10 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 // ── Access gate ──────────────────────────────────────────────────────────
-// Query-param key check against ADMIN_KEY env var. Missing key OR wrong
-// key → notFound(). This is not high-security auth — it's a "don't
-// accidentally get indexed" gate. The route is also noindex-nofollow
-// via the admin layout.
-
-function isAuthorized(key: string | undefined): boolean {
-  const expected = process.env.ADMIN_KEY;
-  if (!expected) return false; // fail-closed if ADMIN_KEY missing
-  return key === expected;
-}
+// ADMIN_KEY is exchanged once at /admin/open for a signed 12-hour cookie
+// (lib/admin-session.ts). A ?key= on this URL is bounced through that route
+// so the key never sits in a rendered URL. No cookie, or ADMIN_KEY unset →
+// notFound(). The route is also noindex-nofollow via the admin layout.
 
 // ── Number formatting ────────────────────────────────────────────────────
 const nf = new Intl.NumberFormat("en-US");
@@ -101,7 +98,7 @@ function SetupInstructions({ missing }: { missing: readonly string[] }) {
               </li>
               <li>
                 Redeploy. Then visit{" "}
-                <code>/admin/assessment-stats?key=YOUR_ADMIN_KEY</code>.
+                <code>/admin/open?key=YOUR_ADMIN_KEY</code> (sets a 12-hour cookie).
               </li>
             </ol>
           </div>
@@ -362,8 +359,10 @@ export default async function AssessmentStatsPage({
   searchParams: Promise<{ key?: string; days?: string }>;
 }) {
   const { key, days } = await searchParams;
+  if (key) redirect(`/admin/open?key=${encodeURIComponent(key)}`);
 
-  if (!isAuthorized(key)) notFound();
+  const jar = await cookies();
+  if (!verifyAdminSession(jar.get(ADMIN_COOKIE)?.value)) notFound();
 
   const status = gaConfigStatus();
   if (!status.ready) {

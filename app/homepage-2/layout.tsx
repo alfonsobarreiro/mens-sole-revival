@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { Merriweather, Inter } from "next/font/google";
 
 const merriweather = Merriweather({
@@ -26,6 +27,8 @@ export default function Homepage2Layout({
 }: {
   children: React.ReactNode;
 }) {
+  // Authoring surface only: a 404 on the live site, the same rule as /case-study.
+  if (process.env.VERCEL_ENV === "production") notFound();
   return (
     <div className={`${merriweather.variable} ${inter.variable}`}>
       {children}
