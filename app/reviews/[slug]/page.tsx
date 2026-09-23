@@ -173,9 +173,9 @@ async function getReview(slug: string): Promise<ReviewDetail | null> {
     return staticReviewDetails.find((r) => r.slug === slug) ?? null;
   }
   try {
-    const { client } = await import("@/sanity/lib/client");
+    const { serverClient } = await import("@/sanity/lib/client");
     const { reviewBySlugQuery } = await import("@/sanity/lib/queries");
-    const review = await client.fetch<ReviewDetail>(reviewBySlugQuery, { slug });
+    const review = await serverClient.fetch<ReviewDetail>(reviewBySlugQuery, { slug });
     if (review) return review;
     return staticReviewDetails.find((r) => r.slug === slug) ?? null;
   } catch (err) {
@@ -191,9 +191,9 @@ export async function generateStaticParams() {
     return staticReviewDetails.map((r) => ({ slug: r.slug }));
   }
   try {
-    const { client } = await import("@/sanity/lib/client");
+    const { serverClient } = await import("@/sanity/lib/client");
     const { reviewsQuery } = await import("@/sanity/lib/queries");
-    const reviews = await client.fetch<{ slug: string }[]>(reviewsQuery);
+    const reviews = await serverClient.fetch<{ slug: string }[]>(reviewsQuery);
     return reviews?.length > 0
       ? reviews.map((r) => ({ slug: r.slug }))
       : staticReviewDetails.map((r) => ({ slug: r.slug }));

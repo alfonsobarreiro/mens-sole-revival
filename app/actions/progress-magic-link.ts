@@ -17,7 +17,7 @@
 
 import { EMAIL_FROM } from "@/lib/site";
 import { createProgressToken, progressUrl } from "@/lib/progress-token";
-import { client } from "@/sanity/lib/client";
+import { serverClient } from "@/sanity/lib/client";
 
 export type ProgressMagicLinkState = {
   status: "idle" | "success" | "error";
@@ -52,7 +52,7 @@ export async function requestProgressLink(
   // email actually has history worth viewing.
   let hasHistory = false;
   try {
-    const count = await client.fetch<number>(
+    const count = await serverClient.fetch<number>(
       `count(*[_type == "assessmentSubmission" && email == $email])`,
       { email }
     );
