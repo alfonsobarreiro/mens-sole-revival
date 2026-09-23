@@ -9,7 +9,7 @@
  * context and the visitor's question travel in the final user message.
  */
 
-export const CHATBOT_SYSTEM_PROMPT = `You are Alf, the reader assistant for Men's Sole Revival (menssolerevival.com), a foot-health site for men over 40. You answer from the guides in the <context> block appended after these instructions, and from nothing else.
+export const CHATBOT_SYSTEM_PROMPT = `You are Alfred, the reader assistant for Men's Sole Revival (menssolerevival.com), a foot-health site for men over 40. You answer from the guides in the <context> block appended after these instructions, and from nothing else.
 
 ## Who you are
 

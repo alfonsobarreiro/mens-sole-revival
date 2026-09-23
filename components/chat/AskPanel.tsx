@@ -5,7 +5,6 @@ import { useEffect, useId, useRef } from "react";
 import { createPortal } from "react-dom";
 import AskChat from "./AskChat";
 import { askCopy } from "./copy";
-import { AssistantMark } from "./states";
 
 /**
  * The slide-in panel behind the nav's "Ask" entry: the same conversation as
@@ -81,17 +80,18 @@ export default function AskPanel({ open, onClose }: { open: boolean; onClose: ()
         aria-labelledby={titleId}
         className="absolute inset-y-0 right-0 flex w-full flex-col border-l border-neutral-200 bg-white shadow-xl sm:w-[440px] motion-safe:animate-in motion-safe:slide-in-from-right motion-safe:duration-200"
       >
-        <div className="flex items-center gap-3 border-b border-neutral-200 px-4 py-3">
-          <AssistantMark />
-          <div className="min-w-0 flex-1">
-            <h2 id={titleId} className="text-[0.9375rem] font-medium leading-tight text-ink">
-              {askCopy.panel.title}
-            </h2>
-            <p className="truncate text-xs text-neutral-600">{askCopy.panel.subtitle}</p>
-          </div>
+        <div className="flex items-center gap-3 border-b border-neutral-200 py-2 pl-4 pr-2">
+          {/* The dialog is named for assistive tech; on screen the first row
+              already carries the mark and the name, so the bar keeps one line. */}
+          <h2 id={titleId} className="sr-only">
+            {askCopy.panel.title}
+          </h2>
+          <p className="min-w-0 flex-1 truncate text-[0.8125rem] text-neutral-600">
+            {askCopy.panel.subtitle}
+          </p>
           <Link
             href="/ask"
-            className="hidden text-xs font-medium text-neutral-600 underline underline-offset-4 hover:text-ink sm:inline"
+            className="hidden shrink-0 text-xs font-medium text-neutral-600 underline underline-offset-4 hover:text-ink sm:inline"
           >
             {askCopy.panel.fullPage}
           </Link>
@@ -99,7 +99,7 @@ export default function AskPanel({ open, onClose }: { open: boolean; onClose: ()
             type="button"
             onClick={onClose}
             aria-label={askCopy.panel.close}
-            className="flex h-11 w-11 cursor-pointer items-center justify-center text-ink transition hover:bg-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+            className="flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center text-ink transition hover:bg-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
           >
             <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4" aria-hidden="true">
               <path d="M4 4L16 16M16 4L4 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />

@@ -7,13 +7,13 @@
 export const askCopy = {
   hero: {
     title: "Ask a foot question",
-    body: "Alf, the Sole assistant, answers only from the guides on this site.",
+    body: "Answers only from the guides on this site.",
   },
 
   assistant: {
-    name: "Alf",
+    name: "Alfred",
     opening:
-      "Men over 40 look after everyone but themselves, and their feet come last. That's why this site exists. I'm Alf. I answer from its guides and nothing else, I link the one I used, and I won't diagnose you. If something needs a doctor, I'll say so. What's going on with your feet?",
+      "Men over 40 look after everyone but themselves, and their feet come last. That's why this site exists. I'm Alfred. I answer from its guides and nothing else, I link the one I used, and I won't diagnose you. If something needs a doctor, I'll say so. What's going on with your feet?",
   },
 
   // The field answers the assistant's opening question, so it reads as a
@@ -24,7 +24,7 @@ export const askCopy = {
     send: "Send",
     stop: "Stop",
     privacy:
-      "Alf isn't a doctor. What you type goes to Claude, by Anthropic, and isn't saved. Leave out your name and contact details.",
+      "Alfred isn't a doctor. What you type goes to Claude, by Anthropic, and isn't saved. Leave out your name and contact details.",
     tooLong: "Keep it under 500 characters.",
   },
 
@@ -118,8 +118,8 @@ export const askCopy = {
   // The nav entry and the slide-in panel that hosts the same conversation.
   panel: {
     trigger: "Ask",
-    triggerLabel: "Ask Alf a foot question",
-    title: "Alf",
+    triggerLabel: "Ask Alfred a foot question",
+    title: "Alfred",
     subtitle: "Answers only from the guides on this site.",
     fullPage: "Open full page",
     close: "Close",

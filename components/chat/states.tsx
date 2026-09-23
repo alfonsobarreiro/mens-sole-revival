@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { forwardRef, useId, useState } from "react";
-import Image from "next/image";
+import AlfredMark from "./AlfredMark";
 import { Button } from "@/components/ui";
 import { type } from "@/components/typography";
 import RichText from "./RichText";
@@ -18,19 +18,13 @@ const chipClass =
 
 // ── Speaker identity ─────────────────────────────────────────────────────────
 
-/** The favicon (app/icon.svg): the solid small-size mark from the Figma
- *  mark spec. MSRMark draws the shield as a ring, which goes hollow at 32px. */
+/** Alfred's shield in the accent: the site's identity signal, on the one
+ *  surface where the site is speaking back. */
 export function AssistantMark() {
   return (
-    <Image
-      src="/icon.svg"
-      alt=""
-      aria-hidden="true"
-      width={26}
-      height={32}
-      unoptimized
-      className="h-8 w-auto shrink-0"
-    />
+    <span aria-hidden="true" className="block h-8 w-8 shrink-0 text-accent-500">
+      <AlfredMark className="h-8 w-auto" />
+    </span>
   );
 }
 
