@@ -106,19 +106,21 @@ export default function TopicsSection() {
     <>
       <section className="py-16 md:py-24">
         <Container>
-          <div className="mb-12">
-            <h2 className={`${type.displaySection} text-ink`}>
-              The topics.
-            </h2>
-            <p className="mt-4 max-w-xl text-[0.9375rem] leading-[1.5] text-neutral-600">
-              Six areas of foot health that men over 40 actually deal with.
-              Hover or tap to see what each one covers.
-            </p>
-          </div>
+          {/* The heading sits inside the left column so the image on the right
+              starts level with it, rather than a row below. */}
           <div className="grid grid-cols-1 md:grid-cols-2" style={{ minHeight: "512px" }}>
 
-          {/* Left: stacked words + active description */}
-          <div className="flex flex-col justify-center px-8 py-12 lg:px-16">
+          {/* Left: heading, stacked words, active description */}
+          <div className="flex flex-col pr-8 lg:pr-16">
+            <div className="mb-12">
+              <h2 className={`${type.displaySection} text-ink`}>
+                The topics.
+              </h2>
+              <p className="mt-4 max-w-xl text-[0.9375rem] leading-[1.5] text-neutral-600">
+                Six areas of foot health that men over 40 actually deal with.
+                Hover or tap to see what each one covers.
+              </p>
+            </div>
 
             {/* Stacked word list */}
             <div className="mb-12">
@@ -178,9 +180,9 @@ export default function TopicsSection() {
             </p>
           </div>
 
-          {/* Right: crossfading image — inset from all edges for breathing room */}
+          {/* Right: crossfading image, top edge level with the heading */}
           <div className="relative hidden md:block" style={{ minHeight: "512px" }}>
-            <div className="absolute inset-8 overflow-hidden bg-ink">
+            <div className="absolute inset-y-0 left-8 right-0 overflow-hidden bg-ink">
               {topics.map((topic, i) => (
                 <div
                   key={i}
