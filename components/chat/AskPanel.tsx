@@ -99,7 +99,7 @@ export default function AskPanel({ open, onClose }: { open: boolean; onClose: ()
             type="button"
             onClick={onClose}
             aria-label={askCopy.panel.close}
-            className="flex h-11 w-11 items-center justify-center text-ink transition hover:bg-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+            className="flex h-11 w-11 cursor-pointer items-center justify-center text-ink transition hover:bg-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
           >
             <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4" aria-hidden="true">
               <path d="M4 4L16 16M16 4L4 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />

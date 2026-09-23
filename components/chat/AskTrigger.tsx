@@ -53,7 +53,7 @@ export default function AskTrigger({ variant = "desktop" }: { variant?: "desktop
           aria-label={askCopy.panel.triggerLabel}
           aria-haspopup="dialog"
           aria-expanded={open}
-          className="flex items-center gap-1.5 text-sm font-medium text-neutral-600 transition hover:text-ink"
+          className="flex cursor-pointer items-center gap-1.5 text-sm font-medium text-neutral-600 transition hover:text-ink"
         >
           <ChatIcon className="h-4 w-4" />
           <span>{askCopy.panel.trigger}</span>
@@ -65,7 +65,7 @@ export default function AskTrigger({ variant = "desktop" }: { variant?: "desktop
           aria-label={askCopy.panel.triggerLabel}
           aria-haspopup="dialog"
           aria-expanded={open}
-          className="flex h-10 w-10 items-center justify-center text-ink transition hover:text-accent-700"
+          className="flex h-10 w-10 cursor-pointer items-center justify-center text-ink transition hover:text-accent-700"
         >
           <ChatIcon className="h-5 w-5" />
         </button>

@@ -18,7 +18,7 @@ export type IconButtonVariant = "primary" | "secondary" | "ghost";
 export type IconButtonSize = "sm" | "md" | "lg";
 
 const base =
-  "inline-flex items-center justify-center " +
+  "cursor-pointer inline-flex items-center justify-center " +
   "transition-colors focus-visible:outline-none focus-visible:ring-2 " +
   "focus-visible:ring-focus-ring focus-visible:ring-offset-2 " +
   "focus-visible:ring-offset-bg-page " +

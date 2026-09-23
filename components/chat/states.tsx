@@ -14,7 +14,7 @@ const linkClass = "text-link underline underline-offset-4 hover:text-link-hover"
 const CLINICIAN = /\b(podiatrist|doctor|clinician|physician|urgent care)\b/i;
 const nameLabel = "text-xs font-medium tracking-[0.01em] text-neutral-600";
 const chipClass =
-  "inline-flex min-h-9 items-center border border-neutral-300 bg-bg-elevated px-4 py-2 text-xs font-medium tracking-[0.01em] text-neutral-700 transition hover:border-ink hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2";
+  "inline-flex min-h-9 cursor-pointer items-center border border-neutral-300 bg-bg-elevated px-4 py-2 text-xs font-medium tracking-[0.01em] text-neutral-700 transition hover:border-ink hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2";
 
 // ── Speaker identity ─────────────────────────────────────────────────────────
 

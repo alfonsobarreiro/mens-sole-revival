@@ -91,7 +91,7 @@ function fitToContent(el: HTMLTextAreaElement) {
 }
 
 const iconButton =
-  "flex h-11 w-11 items-center justify-center transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2";
+  "flex h-11 w-11 cursor-pointer items-center justify-center transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2";
 
 function ArrowUpIcon() {
   return (
