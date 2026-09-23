@@ -543,3 +543,23 @@
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
+
+/* ── Ask panel motion ──────────────────────────────────────────────────────
+   Drawer slides in from the right (slower) and out (quicker); the backdrop
+   fades with it. Own keyframes rather than tailwindcss-animate, whose
+   variable-driven keyframes don't apply under Tailwind v4 here. Off under
+   reduced motion: the panel then appears and disappears in place. */
+@keyframes ask-slide-in  { from { transform: translateX(100%); } to { transform: translateX(0); } }
+@keyframes ask-slide-out { from { transform: translateX(0); }    to { transform: translateX(100%); } }
+@keyframes ask-fade-in   { from { opacity: 0; } to { opacity: 1; } }
+@keyframes ask-fade-out  { from { opacity: 1; } to { opacity: 0; } }
+
+.ask-panel-enter    { animation: ask-slide-in  420ms cubic-bezier(0, 0, 0.2, 1) both; }
+.ask-panel-exit     { animation: ask-slide-out 320ms cubic-bezier(0.4, 0, 1, 1) both; }
+.ask-backdrop-enter { animation: ask-fade-in   420ms ease-out both; }
+.ask-backdrop-exit  { animation: ask-fade-out  320ms ease-in  both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ask-panel-enter, .ask-panel-exit, .ask-backdrop-enter, .ask-backdrop-exit { animation: none; }
+}
+

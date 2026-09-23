@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useId, useRef } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import AskChat from "./AskChat";
 import { askCopy } from "./copy";
@@ -19,6 +19,25 @@ export default function AskPanel({ open, onClose }: { open: boolean; onClose: ()
   const panelRef = useRef<HTMLDivElement>(null);
   const previousFocus = useRef<HTMLElement | null>(null);
   const titleId = useId();
+
+  // While `leaving`, the panel stays in the DOM to play its slide-out; the
+  // animationend handler (or a timer, when animations are off) drops it.
+  // Derived from the previous render's `open`, the React pattern for
+  // reacting to a prop change without an effect.
+  const [leaving, setLeaving] = useState(false);
+  const [wasOpen, setWasOpen] = useState(open);
+  if (open !== wasOpen) {
+    setWasOpen(open);
+    if (!open) setLeaving(true);
+  }
+  const present = open || leaving;
+
+  // Fallback for reduced motion (animation: none, so no animationend).
+  useEffect(() => {
+    if (open || !leaving) return;
+    const timer = setTimeout(() => setLeaving(false), 400);
+    return () => clearTimeout(timer);
+  }, [open, leaving]);
 
   useEffect(() => {
     if (!open) return;
@@ -67,9 +86,9 @@ export default function AskPanel({ open, onClose }: { open: boolean; onClose: ()
   if (typeof document === "undefined") return null;
 
   return createPortal(
-    <div className={open ? "fixed inset-0 z-50" : "hidden"} role="presentation">
+    <div className={present ? "fixed inset-0 z-50" : "hidden"} role="presentation">
       <div
-        className="absolute inset-0 bg-ink/40"
+        className={`absolute inset-0 bg-ink/40 ${open ? "ask-backdrop-enter" : "ask-backdrop-exit"}`}
         onClick={onClose}
         aria-hidden="true"
       />
@@ -78,7 +97,12 @@ export default function AskPanel({ open, onClose }: { open: boolean; onClose: ()
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        className="absolute inset-y-0 right-0 flex w-full flex-col border-l border-neutral-200 bg-white shadow-xl sm:w-[440px] motion-safe:animate-in motion-safe:slide-in-from-right motion-safe:duration-200"
+        onAnimationEnd={() => {
+          if (!open) setLeaving(false);
+        }}
+        className={`absolute inset-y-0 right-0 flex w-full flex-col border-l border-neutral-200 bg-white shadow-xl sm:w-[440px] ${
+          open ? "ask-panel-enter" : "ask-panel-exit"
+        }`}
       >
         <div className="flex items-center gap-3 border-b border-neutral-200 py-2 pl-4 pr-2">
           {/* The dialog is named for assistive tech; on screen the first row
