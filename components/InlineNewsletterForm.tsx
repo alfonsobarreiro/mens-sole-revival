@@ -1,10 +1,11 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import Link from "next/link";
 import { Button, Input } from "@/components/ui";
 import { type } from "@/components/typography";
 import { submitNewsletter } from "@/app/actions/newsletter";
+import { trackNewsletter } from "@/lib/analytics";
 
 const initialState = { status: "idle" as const };
 
@@ -19,6 +20,8 @@ type Tone = "light" | "dark";
 
 interface Props {
   tone?: Tone;
+  /** Where this instance sits, reported with the signup event (home, article, popup, ...). */
+  from?: string;
   heading?: string;
   body?: string;
   cta?: string;
@@ -34,6 +37,7 @@ const DEFAULT_REASSURANCE =
 
 export default function InlineNewsletterForm({
   tone = "light",
+  from = "inline",
   heading = DEFAULT_HEADING,
   body = DEFAULT_BODY,
   cta = DEFAULT_CTA,
@@ -43,6 +47,11 @@ export default function InlineNewsletterForm({
     submitNewsletter,
     initialState
   );
+
+  // The action reports success once per submission; the event follows it.
+  useEffect(() => {
+    if (state.status === "success") trackNewsletter("newsletter_signup", { from });
+  }, [state.status, from]);
 
   const isDark = tone === "dark";
 

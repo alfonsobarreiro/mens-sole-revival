@@ -93,7 +93,7 @@ export default function ArticleLayout({
               the exit popup, lead-magnet framing keeps the value exchange
               honest at every touch point. */}
           <div className={`mt-16 border-t border-neutral-200 pt-12 ${tokens.layout.article}`}>
-            <InlineNewsletterForm />
+            <InlineNewsletterForm from="article" />
           </div>
         </Container>
       </div>
