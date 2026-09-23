@@ -1,9 +1,11 @@
+import { countSubmissions, submissionsConfigured } from "@/lib/submissions/store";
 /**
  * Email + submission totals for the /admin/assessment-stats dashboard.
  *
  * Resend audience is the source of truth for reachable emails (newsletter
- * + assessment saves both add contacts here). Sanity assessmentSubmission
- * is the population-level record of every submission (email + flags).
+ * + assessment saves both add contacts here). The submissions store
+ * (Postgres, lib/submissions/store.ts) is the population-level record of
+ * every submission.
  *
  * Both are queried at request-time from the /admin dashboard.
  */
@@ -13,8 +15,8 @@ const RESEND_API = "https://api.resend.com";
 export interface ListSizes {
   resendAudienceSize: number | null;
   resendAudienceReady: boolean;
-  sanitySubmissionCount: number | null;
-  sanitySubmissionReady: boolean;
+  submissionCount: number | null;
+  submissionStoreReady: boolean;
   errors: string[];
 }
 
@@ -49,44 +51,21 @@ async function fetchResendAudienceSize(): Promise<number | null> {
   return total;
 }
 
-/** Count assessmentSubmission documents in Sanity via GROQ. */
-async function fetchSanitySubmissionCount(): Promise<number | null> {
-  const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
-  const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
-  const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION ?? "2025-01-01";
-  const token = process.env.SANITY_API_WRITE_TOKEN; // read scope covered by write token
-  if (!projectId || !dataset) return null;
-
-  const query = encodeURIComponent(`count(*[_type == "assessmentSubmission"])`);
-  const url = `https://${projectId}.api.sanity.io/v${apiVersion}/data/query/${dataset}?query=${query}`;
-
-  const res = await fetch(url, {
-    headers: token ? { Authorization: `Bearer ${token}` } : {},
-    cache: "no-store",
-  });
-  if (!res.ok) throw new Error(`Sanity ${res.status}: ${await res.text()}`);
-  const json = (await res.json()) as { result: number };
-  return json.result ?? 0;
-}
-
 export async function fetchListSizes(): Promise<ListSizes> {
   const errors: string[] = [];
 
   const resendReady = Boolean(
     process.env.RESEND_API_KEY && process.env.RESEND_AUDIENCE_ID,
   );
-  const sanityReady = Boolean(
-    process.env.NEXT_PUBLIC_SANITY_PROJECT_ID &&
-      process.env.NEXT_PUBLIC_SANITY_DATASET,
-  );
+  const storeReady = submissionsConfigured();
 
-  const [resend, sanity] = await Promise.allSettled([
+  const [resend, store] = await Promise.allSettled([
     resendReady ? fetchResendAudienceSize() : Promise.resolve(null),
-    sanityReady ? fetchSanitySubmissionCount() : Promise.resolve(null),
+    storeReady ? countSubmissions() : Promise.resolve(null),
   ]);
 
   let resendAudienceSize: number | null = null;
-  let sanitySubmissionCount: number | null = null;
+  let submissionCount: number | null = null;
 
   if (resend.status === "fulfilled") {
     resendAudienceSize = resend.value;
@@ -94,17 +73,17 @@ export async function fetchListSizes(): Promise<ListSizes> {
     errors.push(`Resend: ${resend.reason?.message ?? String(resend.reason)}`);
   }
 
-  if (sanity.status === "fulfilled") {
-    sanitySubmissionCount = sanity.value;
+  if (store.status === "fulfilled") {
+    submissionCount = store.value;
   } else {
-    errors.push(`Sanity: ${sanity.reason?.message ?? String(sanity.reason)}`);
+    errors.push(`Submissions: ${store.reason?.message ?? String(store.reason)}`);
   }
 
   return {
     resendAudienceSize,
     resendAudienceReady: resendReady,
-    sanitySubmissionCount,
-    sanitySubmissionReady: sanityReady,
+    submissionCount,
+    submissionStoreReady: storeReady,
     errors,
   };
 }

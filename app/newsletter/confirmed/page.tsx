@@ -50,6 +50,15 @@ export default async function ConfirmedPage({
                   New guides, reviews, and routines will land in your inbox
                   as they publish. Unsubscribe anytime with one click.
                 </p>
+                <p className="mt-4 text-sm text-neutral-500">
+                  Already taken the assessment?{" "}
+                  <Link
+                    href="/progress"
+                    className="text-brand-600 underline underline-offset-4 hover:text-brand-900"
+                  >
+                    See your progress →
+                  </Link>
+                </p>
               </>
             ) : (
               <>

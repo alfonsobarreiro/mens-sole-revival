@@ -23,6 +23,7 @@ import {
   type Duration,
 } from "@/lib/assessment-routing";
 import { buildResultEmail } from "@/lib/assessment-email-template";
+import { saveSubmission, submissionsConfigured } from "@/lib/submissions/store";
 
 export type AssessmentEmailState = {
   status: "idle" | "success" | "error";
@@ -70,10 +71,39 @@ export async function submitAssessmentEmail(
   // ── Always log so dev runs capture data ──────────────────────────────────
   console.log("[Assessment email-save]", { email, checkIn, totalFlags, flags, at: submittedAt });
 
-  // Submissions are deliberately not stored. The Sanity dataset is public on
-  // the current plan, and an email address plus health answers must never sit
-  // in a public store. The results email and PDF are the deliverables; the
-  // progress view stays dormant until submissions get a server-only home.
+  // ── Persist to the submissions store (Postgres, server-only) ─────────────
+  // Fail soft: a missing DATABASE_URL or a database error never blocks the
+  // results email. The write is awaited because it is one short request and
+  // a serverless function may not outlive a fire-and-forget promise.
+  if (submissionsConfigured()) {
+    try {
+      await saveSubmission({
+        email,
+        submittedAt,
+        checkIn,
+        totalFlags,
+        notSureCount,
+        attemptedSections,
+        flagsBySection: Object.entries(flagsBySection).map(([sectionId, count]) => ({
+          sectionId: sectionId as SectionId,
+          count: count ?? 0,
+        })),
+        durationBySection: Object.entries(durationBySection).flatMap(([sectionId, duration]) =>
+          duration ? [{ sectionId: sectionId as SectionId, duration }] : [],
+        ),
+        itemsBySection: Object.entries(itemsBySection).map(([sectionId, items]) => ({
+          sectionId: sectionId as SectionId,
+          items: items ?? [],
+        })),
+      });
+    } catch (err) {
+      console.error("[Assessment email-save] submission store write failed", {
+        type: err instanceof Error ? err.name : typeof err,
+      });
+    }
+  } else {
+    console.warn("[Assessment email-save] DATABASE_URL not set; submission not persisted.");
+  }
 
   // ── Send via Resend if configured ────────────────────────────────────────
   const apiKey = process.env.RESEND_API_KEY;
