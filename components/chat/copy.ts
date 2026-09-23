@@ -120,7 +120,7 @@ export const askCopy = {
     trigger: "Ask",
     triggerLabel: "Ask Alfred a foot question",
     title: "Alfred, your Sole Assistant",
-    subtitle: "Answers only from the guides on this site.",
+    subtitle: "Alfred, your Sole Assistant.",
     fullPage: "Open full page",
     close: "Close",
   },
