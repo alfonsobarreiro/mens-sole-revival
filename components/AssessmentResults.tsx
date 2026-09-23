@@ -261,7 +261,7 @@ export default function AssessmentResults({
                       alt={a.title}
                       fill
                       sizes="96px"
-                      className="object-cover"
+                      className="muted-photo object-cover"
                     />
                   </div>
                   <div className="flex flex-1 flex-col">
