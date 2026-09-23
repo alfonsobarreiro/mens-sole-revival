@@ -12,6 +12,11 @@ import "./globals.css";
 // Set NEXT_PUBLIC_CLARITY_PROJECT_ID on Vercel to enable. Inert when missing.
 const clarityId = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID;
 
+// Analytics tags fire only on the production deployment, so local runs and
+// preview builds stay out of the Google Analytics property. Vercel Analytics
+// separates environments on its own and is left unconditional.
+const isProduction = process.env.NEXT_PUBLIC_VERCEL_ENV === "production";
+
 // DS: Lora carries headings + wordmark, Archivo carries everything else.
 // Kept Barlow Condensed as --font-display for back-compat with components
 // that still reference it; new components should use --font-heading (Lora).
@@ -76,9 +81,9 @@ export default function RootLayout({
         {/* Exit-intent popup — client component, self-suppresses on
             /newsletter, /assessment, and /foot-check routes. */}
         <ExitIntentPopup />
-        <GoogleAnalytics gaId="G-QT90WR1MPD" />
+        {isProduction && <GoogleAnalytics gaId="G-QT90WR1MPD" />}
         <Analytics />
-        {clarityId && (
+        {isProduction && clarityId && (
           <Script id="ms-clarity" strategy="afterInteractive">
             {`(function(c,l,a,r,i,t,y){
               c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};

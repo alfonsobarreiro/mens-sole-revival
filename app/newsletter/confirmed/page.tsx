@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Container from "@/components/Container";
 import SiteLayout from "@/components/SiteLayout";
+import TrackEvent from "@/components/TrackEvent";
 import { type } from "@/components/typography";
 
 // Transactional landing — keep it out of search.
@@ -25,6 +26,7 @@ export default async function ConfirmedPage({
           <div className="max-w-2xl">
             {ok ? (
               <>
+                <TrackEvent event="newsletter_confirmed" />
                 <p className={type.overline}>Confirmed</p>
                 <h1 className={`mt-3 ${type.h1}`}>You're in.</h1>
                 <p className={`mt-6 ${type.lead}`}>
