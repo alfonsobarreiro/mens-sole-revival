@@ -201,6 +201,7 @@ export default function SiteLayout({
                   <ul className="mt-4 space-y-1">
                     {[
                       { label: "Assessment", href: "/assessment" },
+                      { label: "Your progress", href: "/progress" },
                       { label: "Guides", href: "/guides" },
                       { label: "Product Reviews", href: "/reviews" },
                       { label: "Routines", href: "/routines" },
