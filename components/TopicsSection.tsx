@@ -188,7 +188,17 @@ export default function TopicsSection() {
                     i === activeIndex ? "opacity-100" : "opacity-0"
                   }`}
                 >
-                  <Image src={topic.leftImage} alt="" fill sizes="(min-width: 768px) 50vw, 100vw" className="muted-photo object-cover object-center" />
+                  {/* Sized, not `fill`: this panel is display:none below md, and
+                      next/image warns in dev about fill images in a zero-height
+                      box. width/height only feed the srcset; CSS does the fit. */}
+                  <Image
+                    src={topic.leftImage}
+                    alt=""
+                    width={1200}
+                    height={800}
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                    className="muted-photo absolute inset-0 h-full w-full object-cover object-center"
+                  />
                   <div className="absolute inset-0 bg-ink/10" />
                 </div>
               ))}
