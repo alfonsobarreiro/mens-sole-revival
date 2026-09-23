@@ -34,10 +34,10 @@ import type {
  * localStorage, cookies, or analytics. Reloading the page erases it.
  *
  * Wire contract with POST /api/ask:
- *   request   { messages: [{ role, content }] }
+ *   request   { messages: [{ role, content, sig? }] }   sig: server signature on assistant turns
  *   200 JSON  { type: "red_flag", tier } | { type: "out_of_scope" }
  *   200 NDJSON stream, one event per line:
- *             { type: "meta", variant, sources } → { type: "delta", text }… → { type: "done" }
+ *             { type: "meta", variant, sources } → { type: "delta", text }… → { type: "done", sig }
  *             meta arrives before the model is called, so the page can name the
  *             guide it's reading; a failure after that is { type: "notice", kind }
  *   429       rate limited
@@ -58,7 +58,7 @@ const EMPTY: ChatSnapshot = { messages: [], phase: "idle", escalation: null, not
 type StreamEvent =
   | { type: "meta"; variant?: string; sources?: unknown }
   | { type: "delta"; text?: string }
-  | { type: "done" }
+  | { type: "done"; sig?: string }
   | { type: "error" }
   | { type: "notice"; kind?: string };
 
@@ -80,10 +80,19 @@ function cleanSources(raw: unknown): Source[] {
   );
 }
 
+/**
+ * Only turns the server signed go back as history. A stopped or failed reply
+ * has no signature and is left out, and the route refuses anything unsigned,
+ * so the model only ever "remembers" what it actually said.
+ */
 function toWire(history: ChatMessage[]) {
   return history
-    .filter((m) => m.text.trim() !== "")
-    .map((m) => ({ role: m.role, content: m.text }));
+    .filter((m) => m.text.trim() !== "" && (m.role === "user" || m.sig))
+    .map((m) =>
+      m.role === "user"
+        ? { role: m.role, content: m.text }
+        : { role: m.role, content: m.text, sig: m.sig },
+    );
 }
 
 function fitToContent(el: HTMLTextAreaElement) {
@@ -286,6 +295,7 @@ export default function AskChat({
         const decoder = new TextDecoder();
         let buffer = "";
         let fullText = "";
+        let sig: string | null = null;
         let variant: AssistantVariant = "answer";
         let sources: Source[] = [];
         let noticeKind: Notice["kind"] | null = null;
@@ -340,6 +350,7 @@ export default function AskChat({
               setMessages((prev) => prev.map((m) => (m.id === id ? { ...m, text } : m)));
             } else if (event.type === "done") {
               finished = true;
+              sig = typeof event.sig === "string" ? event.sig : null;
             } else if (event.type === "error") {
               throw new Error("stream error");
             }
@@ -352,7 +363,10 @@ export default function AskChat({
         }
 
         const id = assistantId;
-        setMessages((prev) => prev.map((m) => (m.id === id ? { ...m, streaming: false } : m)));
+        const signature = sig ?? undefined;
+        setMessages((prev) =>
+          prev.map((m) => (m.id === id ? { ...m, streaming: false, sig: signature } : m)),
+        );
         setPhase("idle");
         setStatus(
           `${askCopy.srAnswerReady} ${

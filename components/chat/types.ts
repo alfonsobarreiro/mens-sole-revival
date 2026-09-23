@@ -12,6 +12,8 @@ export type AssistantMessage = {
   sources: Source[];
   streaming?: boolean;
   feedback?: "up" | "down";
+  /** Server signature over `text`; only signed turns go back as history. */
+  sig?: string;
 };
 
 export type ChatMessage = UserMessage | AssistantMessage;

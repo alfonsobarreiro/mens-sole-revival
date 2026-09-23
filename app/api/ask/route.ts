@@ -12,6 +12,7 @@ import {
   type EmbeddedChunk,
 } from "@/lib/chat/retrieve";
 import { CHATBOT_SYSTEM_PROMPT, buildContextMessage } from "@/lib/chat/system-prompt";
+import { signTurn, verifyTurn } from "@/lib/chat/turn-signature";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // POST /api/ask
@@ -87,6 +88,9 @@ function parseMessages(body: unknown): WireMessage[] | null {
     // Visitor text is capped at the composer limit; assistant text gets headroom.
     const cap = m.role === "user" ? MAX_INPUT_CHARS : MAX_ASSISTANT_CHARS;
     if (m.content.length > cap) return null;
+    // An assistant turn is only history if this server signed it (see
+    // lib/chat/turn-signature.ts). Anything else is refused, not repaired.
+    if (m.role === "assistant" && !verifyTurn(m.content, m.sig)) return null;
     messages.push({ role: m.role, content: m.content });
   }
 
@@ -215,6 +219,7 @@ export async function POST(request: Request) {
 
       const clean = createDashFilter();
       let sentText = false;
+      let fullText = "";
       let stopReason: string | null = null;
 
       try {
@@ -223,6 +228,7 @@ export async function POST(request: Request) {
             const text = clean(event.delta.text);
             if (text) {
               sentText = true;
+              fullText += text;
               controller.enqueue(line({ type: "delta", text }));
             }
           } else if (event.type === "message_delta") {
@@ -230,10 +236,15 @@ export async function POST(request: Request) {
           }
         }
         const rest = clean("", true);
-        if (rest) controller.enqueue(line({ type: "delta", text: rest }));
-        // A refusal or an empty reply has nothing worth showing.
+        if (rest) {
+          fullText += rest;
+          controller.enqueue(line({ type: "delta", text: rest }));
+        }
+        // A refusal or an empty reply has nothing worth showing. A good reply
+        // is signed over exactly the text that was streamed, so the client can
+        // send it back as history.
         const ok = sentText && stopReason !== "refusal";
-        controller.enqueue(line({ type: ok ? "done" : "error" }));
+        controller.enqueue(ok ? line({ type: "done", sig: signTurn(fullText) }) : line({ type: "error" }));
       } catch {
         if (!request.signal.aborted) {
           console.error("[ask] stream interrupted");
