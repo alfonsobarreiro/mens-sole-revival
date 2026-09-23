@@ -161,6 +161,10 @@ export function buildResultEmail(args: ResultEmailArgs): string {
         <p style="font-size:14px;color:#444;line-height:1.6;margin:10px 0 0">You flagged ${totalFlags} item${totalFlags === 1 ? "" : "s"} across the sections you took. ${checkInNote}</p>
         ${sectionCards}
         ${noFlagNote}
+        <div style="margin-top:20px;border:1px solid #eee;padding:14px 16px">
+          <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:${ACCENT};font-weight:bold">Track what changes</div>
+          <p style="font-size:13px;color:#444;line-height:1.6;margin:6px 0 0">Take the check again in 30 days, then open your progress at <a href="${SITE_URL}/progress" style="color:${NAVY};font-weight:bold;text-decoration:none">menssolerevival.com/progress</a>. Enter this email address and we'll send you a link to compare the two.</p>
+        </div>
       </div>
 
       <div style="padding:8px 28px 28px">

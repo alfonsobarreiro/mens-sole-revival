@@ -1,10 +1,11 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import Container from "@/components/Container";
 import SiteLayout from "@/components/SiteLayout";
 import { type } from "@/components/typography";
 import { submitNewsletter } from "@/app/actions/newsletter";
+import { trackNewsletter } from "@/lib/analytics";
 
 const initialState = { status: "idle" as const };
 
@@ -64,6 +65,10 @@ export default function NewsletterPage() {
     submitNewsletter,
     initialState
   );
+
+  useEffect(() => {
+    if (state.status === "success") trackNewsletter("newsletter_signup", { from: "page" });
+  }, [state.status]);
 
   if (state.status === "success") {
     return <SuccessView />;
