@@ -72,3 +72,22 @@ export function trackAssessment(
 ): void {
   track(event, params);
 }
+
+// ── Newsletter event taxonomy ─────────────────────────────────────────────
+//
+//   newsletter_signup    — the signup form is accepted and the confirmation
+//                          email is on its way ({ from: "page" | "popup" })
+//   newsletter_confirmed — the visitor opens a valid confirmation link
+//
+// Email capture is the site's north star. Both belong marked as key events
+// in the GA property (Admin → Events → Mark as key event), together with
+// assessment_email_save.
+
+export type NewsletterEvent = "newsletter_signup" | "newsletter_confirmed";
+
+export function trackNewsletter(
+  event: NewsletterEvent,
+  params: Record<string, unknown> = {}
+): void {
+  track(event, params);
+}
