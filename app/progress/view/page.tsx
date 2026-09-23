@@ -3,7 +3,9 @@ import Link from "next/link";
 import Container from "@/components/Container";
 import SiteLayout from "@/components/SiteLayout";
 import { type } from "@/components/typography";
-import { verifyProgressToken } from "@/lib/progress-token";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { PROGRESS_COOKIE, verifyProgressToken } from "@/lib/progress-token";
 import { listSubmissions, type SubmissionRecord } from "@/lib/submissions/store";
 import { sectionTitle, type SectionId, type Duration, durationLabels } from "@/lib/assessment-routing";
 
@@ -153,8 +155,14 @@ export default async function ProgressViewPage({
 }: {
   searchParams: Promise<{ token?: string }>;
 }) {
+  // Links from before the cookie exchange still carry the token in the URL.
+  // Bounce them through /progress/open so the URL the page renders on is clean.
   const { token } = await searchParams;
-  const verified = token ? verifyProgressToken(token) : null;
+  if (token) redirect(`/progress/open?token=${encodeURIComponent(token)}`);
+
+  const jar = await cookies();
+  const cookieToken = jar.get(PROGRESS_COOKIE)?.value;
+  const verified = cookieToken ? verifyProgressToken(cookieToken) : null;
   if (!verified) return <InvalidTokenView />;
 
   const { email } = verified;
