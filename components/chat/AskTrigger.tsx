@@ -14,7 +14,10 @@ import { askCopy } from "./copy";
  * so previews and local builds can review it without exposing it live.
  * Hidden on /ask itself, where it would open a second copy of the page.
  */
-const visible = ASK_LAUNCHED || process.env.NEXT_PUBLIC_VERCEL_ENV !== "production";
+const visible =
+  ASK_LAUNCHED ||
+  process.env.NEXT_PUBLIC_VERCEL_ENV === "preview" ||
+  process.env.NODE_ENV === "development";
 
 export default function AskTrigger({ variant = "desktop" }: { variant?: "desktop" | "mobile" }) {
   const pathname = usePathname();

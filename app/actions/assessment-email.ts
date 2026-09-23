@@ -16,6 +16,7 @@
 // All network steps are env-gated and fail soft.
 // ─────────────────────────────────────────────────────────────────────────────
 
+import { emailRef } from "@/lib/log-safe";
 import { EMAIL_FROM } from "@/lib/site";
 import {
   composeResult,
@@ -69,7 +70,7 @@ export async function submitAssessmentEmail(
   const submittedAt = new Date().toISOString();
 
   // ── Always log so dev runs capture data ──────────────────────────────────
-  console.log("[Assessment email-save]", { email, checkIn, totalFlags, flags, at: submittedAt });
+  console.log("[Assessment email-save]", { email: emailRef(email), checkIn, totalFlags, at: submittedAt });
 
   // ── Persist to Sanity as an assessmentSubmission document ────────────────
   // Fail soft: a missing token or Sanity outage never blocks the user-facing
@@ -173,7 +174,7 @@ export async function submitAssessmentEmail(
     // Notify alfonso@ (terse ops email).
     const flagRows = flags
       .map(
-        (f) => `<tr><td style="padding:6px 12px;border-bottom:1px solid #f0f0f0">${escapeHtml(f.label)}</td><td style="padding:6px 12px;text-align:right;font-weight:600;border-bottom:1px solid #f0f0f0">${f.count}</td></tr>`
+        (f) => `<tr><td style="padding:6px 12px;border-bottom:1px solid #f0f0f0">${escapeHtml(f.label)}</td><td style="padding:6px 12px;text-align:right;font-weight:600;border-bottom:1px solid #f0f0f0">${Number(f.count) || 0}</td></tr>`
       )
       .join("");
     await fetch("https://api.resend.com/emails", {

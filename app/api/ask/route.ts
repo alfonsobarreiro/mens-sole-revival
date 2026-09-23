@@ -36,6 +36,9 @@ const MODEL = "claude-haiku-4-5";
 const MAX_OUTPUT_TOKENS = 1024; // replies are capped near 200 words; this is the cost ceiling
 const HISTORY_MESSAGES = 6; // prior turns sent to the model, to bound cost
 const MAX_BODY_BYTES = 32_000;
+// A reply capped at 1024 output tokens cannot exceed ~4,500 characters, so a
+// replayed assistant turn longer than this was never written by the model.
+const MAX_ASSISTANT_CHARS = 5000;
 
 const chunks = (index as unknown as { chunks: EmbeddedChunk[] }).chunks;
 
@@ -82,7 +85,7 @@ function parseMessages(body: unknown): WireMessage[] | null {
       return null;
     }
     // Visitor text is capped at the composer limit; assistant text gets headroom.
-    const cap = m.role === "user" ? MAX_INPUT_CHARS : 6000;
+    const cap = m.role === "user" ? MAX_INPUT_CHARS : MAX_ASSISTANT_CHARS;
     if (m.content.length > cap) return null;
     messages.push({ role: m.role, content: m.content });
   }
@@ -95,17 +98,40 @@ function parseMessages(body: unknown): WireMessage[] | null {
 export async function POST(request: Request) {
   // 1. Same-site only. Browsers always send Origin on cross-site POSTs.
   const origin = request.headers.get("origin");
-  if (origin && new URL(origin).host !== request.headers.get("host")) {
-    return json({ code: "forbidden" }, 403);
+  if (origin) {
+    let sameSite = false;
+    try {
+      sameSite = new URL(origin).host === request.headers.get("host");
+    } catch {
+      // "null" (sandboxed frames, some redirects) or malformed: not same-site.
+    }
+    if (!sameSite) return json({ code: "forbidden" }, 403);
   }
 
-  const verification = await checkBotId();
-  if (verification.isBot) return json({ code: "forbidden" }, 403);
+  // Fail closed: if the bot check itself cannot run, the visitor gets the
+  // generic notice rather than a raw 500, and the model is never called.
+  let isBot = true;
+  try {
+    isBot = (await checkBotId()).isBot;
+  } catch (err) {
+    console.error("[ask] bot check unavailable", { type: err instanceof Error ? err.name : typeof err });
+    return snag();
+  }
+  if (isBot) return json({ code: "forbidden" }, 403);
 
   const length = Number(request.headers.get("content-length") ?? 0);
   if (length > MAX_BODY_BYTES) return json({ code: "too_large" }, 413);
 
-  const body = await request.json().catch(() => null);
+  // Chunked requests carry no Content-Length, so the cap is also applied to
+  // the bytes actually read, before anything is parsed.
+  const raw = await request.text().catch(() => "");
+  if (raw.length > MAX_BODY_BYTES) return json({ code: "too_large" }, 413);
+  let body: unknown = null;
+  try {
+    body = JSON.parse(raw);
+  } catch {
+    body = null;
+  }
   const messages = parseMessages(body);
   if (!messages) return json({ code: "bad_request" }, 400);
 

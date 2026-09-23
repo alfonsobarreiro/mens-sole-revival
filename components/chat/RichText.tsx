@@ -35,7 +35,7 @@ function renderInline(text: string, keyPrefix: string): ReactNode[] {
     const link = part.match(/^\[([^\]]+)\]\(([^)\s]+)\)$/);
     if (link) {
       const [, label, href] = link;
-      if (href.startsWith("/") && !href.startsWith("//")) {
+      if (href.startsWith("/") && !href.startsWith("//") && !href.includes("\\")) {
         return (
           <Link key={key} href={href} className={linkClass}>
             {label}

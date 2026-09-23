@@ -4,7 +4,7 @@ import Container from "@/components/Container";
 import SiteLayout from "@/components/SiteLayout";
 import { type } from "@/components/typography";
 import { verifyProgressToken } from "@/lib/progress-token";
-import { client } from "@/sanity/lib/client";
+import { serverClient } from "@/sanity/lib/client";
 import { sectionTitle, type SectionId, type Duration, durationLabels } from "@/lib/assessment-routing";
 
 // This page renders personal health data — keep it out of search entirely.
@@ -184,7 +184,7 @@ export default async function ProgressViewPage({
   // Query all submissions for this email, newest first.
   let submissions: SubmissionDoc[] = [];
   try {
-    submissions = await client.fetch<SubmissionDoc[]>(
+    submissions = await serverClient.fetch<SubmissionDoc[]>(
       `*[_type == "assessmentSubmission" && email == $email] | order(submittedAt desc) {
         _id,
         submittedAt,

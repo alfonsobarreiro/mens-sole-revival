@@ -75,7 +75,8 @@ function cleanSources(raw: unknown): Source[] {
       typeof s?.title === "string" &&
       typeof s?.url === "string" &&
       s.url.startsWith("/") &&
-      !s.url.startsWith("//"),
+      !s.url.startsWith("//") &&
+      !s.url.includes("\\"),
   );
 }
 
@@ -479,7 +480,12 @@ export default function AskChat({
         </div>
       )}
 
-      <section aria-label="Conversation" aria-busy={busy} className="flex-1 space-y-6 px-4 py-6 md:px-6">
+      <section
+        aria-label="Conversation"
+        aria-busy={busy}
+        data-clarity-mask="true"
+        className="flex-1 space-y-6 px-4 py-6 md:px-6"
+      >
         <OpeningRow />
 
         {messages.map((m) =>
@@ -542,6 +548,7 @@ export default function AskChat({
           )}
 
           <form
+            data-clarity-mask="true"
             onSubmit={(e) => {
               e.preventDefault();
               send(draft, "typed");

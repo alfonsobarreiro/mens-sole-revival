@@ -17,7 +17,9 @@ export default defineConfig({
 
   plugins: [
     structureTool(),
-    visionTool(), // GROQ query explorer — remove before production if preferred
+    // GROQ explorer stays local: a phished Studio login should not get a
+    // ready-made reader for the dataset.
+    ...(process.env.NODE_ENV === "development" ? [visionTool()] : []),
   ],
 
   schema: {

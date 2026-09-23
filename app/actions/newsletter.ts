@@ -16,6 +16,7 @@
 // send.menssolerevival.com identity, overridable via the RESEND_FROM env var.
 // ─────────────────────────────────────────────────────────────────────────────
 
+import { emailRef } from "@/lib/log-safe";
 import { EMAIL_FROM } from "@/lib/site";
 import { createConfirmToken, confirmUrl } from "@/lib/newsletter-token";
 
@@ -43,7 +44,7 @@ export async function submitNewsletter(
   }
 
   // ── Always log so dev runs capture data ────────────────────────────────────
-  console.log("[Newsletter signup]", { name, email, at: new Date().toISOString() });
+  console.log("[Newsletter signup]", { email: emailRef(email), at: new Date().toISOString() });
 
   // ── Send via Resend if configured ──────────────────────────────────────────
   const apiKey = process.env.RESEND_API_KEY;

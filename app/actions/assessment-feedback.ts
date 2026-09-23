@@ -43,7 +43,6 @@ export async function submitAssessmentFeedback(
   // ── Always log locally so dev/test runs capture data ─────────────────────
   console.log("[Assessment feedback]", {
     usefulness,
-    improvement,
     totalFlags,
     at: new Date().toISOString(),
   });

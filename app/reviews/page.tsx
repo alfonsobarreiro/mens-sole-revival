@@ -39,9 +39,9 @@ async function getReviews(): Promise<Review[]> {
     return staticReviews;
   }
   try {
-    const { client } = await import("@/sanity/lib/client");
+    const { serverClient } = await import("@/sanity/lib/client");
     const { reviewsQuery } = await import("@/sanity/lib/queries");
-    const reviews = await client.fetch<Review[]>(reviewsQuery);
+    const reviews = await serverClient.fetch<Review[]>(reviewsQuery);
     return reviews?.length > 0 ? reviews : staticReviews;
   } catch (err) {
     console.error("[reviews] Sanity fetch failed, using static fallback:", err);
