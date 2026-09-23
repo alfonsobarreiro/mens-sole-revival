@@ -6,7 +6,6 @@ import { ImageResponse } from "next/og";
 
 // 512×512 — Apple recommends 180 minimum but 512 covers high-DPI iPad Pro
 // home screens + PWA install prompts across every OS without upscaling.
-export const runtime = "edge";
 export const size = { width: 512, height: 512 };
 export const contentType = "image/png";
 

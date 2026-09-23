@@ -1,6 +1,5 @@
 import { renderMsrOg, OG_SIZE, OG_CONTENT_TYPE } from "@/lib/og";
 
-export const runtime = "edge";
 export const alt = "Desk Micro-Routines: Foot Exercises at Work — Men's Sole Revival";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;

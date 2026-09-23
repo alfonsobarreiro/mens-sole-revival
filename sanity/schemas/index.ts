@@ -1,4 +1,3 @@
-import { assessmentSubmissionType } from './assessmentSubmission'
 import { kitType } from './kit'
 import { productType } from './product'
 import { reviewType } from './review'
@@ -8,7 +7,6 @@ import { reviewType } from './review'
  * Planned additions: Article (if migrating from MDX), Author, Category
  */
 export const schemaTypes = [
-  assessmentSubmissionType,
   kitType,
   productType,
   reviewType,

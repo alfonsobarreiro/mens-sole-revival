@@ -13,6 +13,7 @@
     "@google-analytics/data": "^7.0.0",
     "@mdx-js/loader": "^3.1.1",
     "@mdx-js/react": "^3.1.1",
+    "@neondatabase/serverless": "^1.1.0",
     "@next/mdx": "^16.1.6",
     "@next/third-parties": "^16.2.4",
     "@sanity/image-url": "^2.1.1",
@@ -40,7 +41,7 @@
     "@types/react-dom": "^19",
     "autoprefixer": "^10.4.24",
     "eslint": "^9",
-    "eslint-config-next": "16.3.6",
+    "eslint-config-next": "^16.3.6",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.18",
     "typescript": "^5"

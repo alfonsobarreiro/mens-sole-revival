@@ -4,7 +4,7 @@ import Container from "@/components/Container";
 import SiteLayout from "@/components/SiteLayout";
 import { type } from "@/components/typography";
 import { verifyProgressToken } from "@/lib/progress-token";
-import { serverClient } from "@/sanity/lib/client";
+import { listSubmissions, type SubmissionRecord } from "@/lib/submissions/store";
 import { sectionTitle, type SectionId, type Duration, durationLabels } from "@/lib/assessment-routing";
 
 // This page renders personal health data — keep it out of search entirely.
@@ -18,32 +18,10 @@ export const dynamic = "force-dynamic";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
-interface SectionCountRow {
-  sectionId: SectionId;
-  count: number;
-}
-
-interface SectionDurationRow {
-  sectionId: SectionId;
-  duration: Duration;
-}
-
-interface SectionItemsRow {
-  sectionId: SectionId;
-  items?: string[];
-}
-
-interface SubmissionDoc {
-  _id: string;
-  submittedAt: string;
-  totalFlags: number;
-  checkIn: boolean;
-  notSureCount: number;
-  attemptedSections?: SectionId[];
-  flagsBySection?: SectionCountRow[];
-  durationBySection?: SectionDurationRow[];
-  itemsBySection?: SectionItemsRow[];
-}
+type SectionCountRow = SubmissionRecord["flagsBySection"][number];
+type SectionDurationRow = SubmissionRecord["durationBySection"][number];
+type SectionItemsRow = SubmissionRecord["itemsBySection"][number];
+type SubmissionDoc = SubmissionRecord;
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -181,25 +159,14 @@ export default async function ProgressViewPage({
 
   const { email } = verified;
 
-  // Query all submissions for this email, newest first.
+  // All submissions for this email, newest first.
   let submissions: SubmissionDoc[] = [];
   try {
-    submissions = await serverClient.fetch<SubmissionDoc[]>(
-      `*[_type == "assessmentSubmission" && email == $email] | order(submittedAt desc) {
-        _id,
-        submittedAt,
-        totalFlags,
-        checkIn,
-        notSureCount,
-        attemptedSections,
-        flagsBySection[]{sectionId, count},
-        durationBySection[]{sectionId, duration},
-        itemsBySection[]{sectionId, items}
-      }`,
-      { email }
-    );
+    submissions = await listSubmissions(email);
   } catch (err) {
-    console.error("[Progress view] Sanity query failed:", err);
+    console.error("[Progress view] submission store read failed", {
+      type: err instanceof Error ? err.name : typeof err,
+    });
   }
 
   if (submissions.length === 0) return <NoHistoryView email={email} />;
@@ -367,7 +334,7 @@ export default async function ProgressViewPage({
             <ol className="mt-8 max-w-3xl space-y-3">
               {submissions.map((s) => (
                 <li
-                  key={s._id}
+                  key={s.id}
                   className="flex items-baseline justify-between gap-3 border border-neutral-200 bg-white px-4 py-3"
                 >
                   <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">

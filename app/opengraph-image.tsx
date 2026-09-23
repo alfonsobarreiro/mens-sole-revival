@@ -1,6 +1,5 @@
 import { renderMsrOg, OG_SIZE, OG_CONTENT_TYPE } from "@/lib/og";
 
-export const runtime = "edge";
 export const alt = "Men's Sole Revival — Foot care, footwear, and the daily habits that keep men moving";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;

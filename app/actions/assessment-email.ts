@@ -24,7 +24,7 @@ import {
   type Duration,
 } from "@/lib/assessment-routing";
 import { buildResultEmail } from "@/lib/assessment-email-template";
-import { writeClient } from "@/sanity/lib/client";
+import { saveSubmission, submissionsConfigured } from "@/lib/submissions/store";
 
 export type AssessmentEmailState = {
   status: "idle" | "success" | "error";
@@ -72,14 +72,13 @@ export async function submitAssessmentEmail(
   // ── Always log so dev runs capture data ──────────────────────────────────
   console.log("[Assessment email-save]", { email: emailRef(email), checkIn, totalFlags, at: submittedAt });
 
-  // ── Persist to Sanity as an assessmentSubmission document ────────────────
-  // Fail soft: a missing token or Sanity outage never blocks the user-facing
-  // results email + Resend audience add. The write is fire-and-forget so we
-  // don't add latency to the primary flow.
-  if (process.env.SANITY_API_WRITE_TOKEN) {
-    void writeClient
-      .create({
-        _type: "assessmentSubmission",
+  // ── Persist to the submissions store (Postgres, server-only) ─────────────
+  // Fail soft: a missing DATABASE_URL or a database error never blocks the
+  // results email. The write is awaited because it is one short request and
+  // a serverless function may not outlive a fire-and-forget promise.
+  if (submissionsConfigured()) {
+    try {
+      await saveSubmission({
         email,
         submittedAt,
         checkIn,
@@ -87,33 +86,24 @@ export async function submitAssessmentEmail(
         notSureCount,
         attemptedSections,
         flagsBySection: Object.entries(flagsBySection).map(([sectionId, count]) => ({
-          _key: `fbs-${sectionId}`,
-          sectionId,
+          sectionId: sectionId as SectionId,
           count: count ?? 0,
         })),
-        durationBySection: Object.entries(durationBySection).map(([sectionId, duration]) => ({
-          _key: `dbs-${sectionId}`,
-          sectionId,
-          duration,
-        })),
+        durationBySection: Object.entries(durationBySection).flatMap(([sectionId, duration]) =>
+          duration ? [{ sectionId: sectionId as SectionId, duration }] : [],
+        ),
         itemsBySection: Object.entries(itemsBySection).map(([sectionId, items]) => ({
-          _key: `ibs-${sectionId}`,
-          sectionId,
+          sectionId: sectionId as SectionId,
           items: items ?? [],
         })),
-        flags: flags.map((f, i) => ({
-          _key: `flag-${i}`,
-          label: f.label,
-          count: f.count,
-        })),
-      })
-      .catch((err) => {
-        console.error("[Assessment email-save] Sanity write failed:", err);
       });
+    } catch (err) {
+      console.error("[Assessment email-save] submission store write failed", {
+        type: err instanceof Error ? err.name : typeof err,
+      });
+    }
   } else {
-    console.warn(
-      "[Assessment email-save] SANITY_API_WRITE_TOKEN not set — submission not persisted."
-    );
+    console.warn("[Assessment email-save] DATABASE_URL not set; submission not persisted.");
   }
 
   // ── Send via Resend if configured ────────────────────────────────────────
