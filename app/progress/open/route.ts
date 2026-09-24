@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
   const res = NextResponse.redirect(new URL("/progress/view", req.nextUrl.origin));
 
   if (!verifyProgressToken(token)) {
-    res.cookies.delete(PROGRESS_COOKIE);
+    res.cookies.delete({ name: PROGRESS_COOKIE, path: "/progress" });
     return res;
   }
 

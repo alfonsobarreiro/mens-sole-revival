@@ -19,6 +19,7 @@
 // All network steps are env-gated and fail soft.
 // ─────────────────────────────────────────────────────────────────────────────
 
+import { emailRef } from "@/lib/log-safe";
 import { EMAIL_FROM } from "@/lib/site";
 import {
   composeResult,
@@ -73,7 +74,7 @@ export async function submitAssessmentEmail(
   const submittedAt = new Date().toISOString();
 
   // ── Always log so dev runs capture data ──────────────────────────────────
-  console.log("[Assessment email-save]", { email, checkIn, totalFlags, flags, at: submittedAt });
+  console.log("[Assessment email-save]", { email: emailRef(email), checkIn, totalFlags, at: submittedAt });
 
   // ── Persist to the submissions store (Postgres, server-only) ─────────────
   // Fail soft: a missing DATABASE_URL or a database error never blocks the
@@ -128,7 +129,7 @@ export async function submitAssessmentEmail(
         body: JSON.stringify({ email, unsubscribed: true }),
       });
       if (!contactRes.ok && contactRes.status !== 409) {
-        console.error("Resend (audience) error", contactRes.status, await contactRes.text());
+        console.error("Resend (audience) error", { status: contactRes.status });
       }
     } catch (err) {
       console.error("Resend audience add failed:", err);
@@ -165,8 +166,7 @@ export async function submitAssessmentEmail(
     });
 
     if (!userRes.ok) {
-      const body = await userRes.text();
-      console.error("Resend (user) error", userRes.status, body);
+      console.error("Resend (user) error", { status: userRes.status });
       return { status: "error", message: "Couldn't send right now. Try the PDF download instead." };
     }
 

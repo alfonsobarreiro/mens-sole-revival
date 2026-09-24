@@ -16,6 +16,7 @@
 // send.menssolerevival.com identity, overridable via the RESEND_FROM env var.
 // ─────────────────────────────────────────────────────────────────────────────
 
+import { emailRef } from "@/lib/log-safe";
 import { EMAIL_FROM } from "@/lib/site";
 import { createConfirmToken, confirmUrl } from "@/lib/newsletter-token";
 
@@ -43,7 +44,7 @@ export async function submitNewsletter(
   }
 
   // ── Always log so dev runs capture data ────────────────────────────────────
-  console.log("[Newsletter signup]", { name, email, at: new Date().toISOString() });
+  console.log("[Newsletter signup]", { email: emailRef(email), at: new Date().toISOString() });
 
   // ── Send via Resend if configured ──────────────────────────────────────────
   const apiKey = process.env.RESEND_API_KEY;
@@ -77,11 +78,7 @@ export async function submitNewsletter(
       );
       // 409 = already a contact; not an error worth surfacing.
       if (!contactRes.ok && contactRes.status !== 409) {
-        console.error(
-          "Resend (audience) error",
-          contactRes.status,
-          await contactRes.text()
-        );
+        console.error("Resend (audience) error", { status: contactRes.status });
       }
     } catch (err) {
       console.error("Newsletter audience add failed:", err);
@@ -137,8 +134,7 @@ export async function submitNewsletter(
     });
 
     if (!res.ok) {
-      const body = await res.text();
-      console.error("Resend (confirmation email) error", res.status, body);
+      console.error("Resend (confirmation email) error", { status: res.status });
       return {
         status: "error",
         message: "We couldn't send the confirmation email. Try again in a moment.",
