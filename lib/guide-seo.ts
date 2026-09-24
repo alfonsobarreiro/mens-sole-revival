@@ -51,14 +51,17 @@ export type GuideSeo = {
 
 export const guideSeo: Record<string, GuideSeo> = {
   "is-it-toenail-fungus": {
-    metaTitle: "Is It Toenail Fungus? The Self-Check and What Else It Could Be",
-    metaDescription:
-      "About half of thick, yellow toenails aren't fungal. The patterns that mean fungus, the look-alikes in men over 40, and why a nail clipping test beats a year of guessing.",
+    metaTitle: "What Toenail Fungus Looks Like (and What Else It Could Be)",
+    metaDescription: "Thick, yellow, crumbly at the tip is the fungus pattern. Half of nails like this are trauma, age, or psoriasis instead. The self-check and the lab test.",
     datePublished: "2026-09-23",
     faq: [
       {
         q: "What does toenail fungus look like?",
         a: "The common form starts at the tip or one side of the nail as a yellow or white streak, then the nail thickens, turns crumbly, and builds up debris underneath as the discolored area creeps toward the cuticle. A less common form shows chalky white patches on the surface. It usually comes with peeling skin between the toes, because the same fungus causes athlete's foot. Pain is optional; many fungal nails don't hurt until they thicken enough to press on the shoe.",
+      },
+      {
+        q: "Can toenail fungus go away on its own?",
+        a: "Not the common form. The fungus lives in the nail plate and the bed under it, where the immune system can't reach it and nothing washes it out, so untreated it stays or spreads. The surface white form sometimes clears with filing and a topical. A 'fungal' nail that cleared with no treatment was most likely a bruise or old trauma growing out, which is one more reason to test before treating.",
       },
       {
         q: "Can a thick yellow toenail be something other than fungus?",
@@ -97,9 +100,8 @@ export const guideSeo: Record<string, GuideSeo> = {
     ],
   },
   "toenail-fungus-treatments-compared": {
-    metaTitle: "Toenail Fungus Treatments, Compared: Pills, Topicals, Laser, and What Cures",
-    metaDescription:
-      "Cure rates side by side for the pill, the prescription topicals, drugstore products, laser, and nail thinning, plus the liver test and statin interaction that decide the route.",
+    metaTitle: "Toenail Fungus Treatments Compared: Pills, Topicals, Laser",
+    metaDescription: "Terbinafine cures the most and costs the least. Jublia and ciclopirox clear some mild cases in a year. Laser and drugstore kits have no cure evidence.",
     datePublished: "2026-09-23",
     faq: [
       {
@@ -117,6 +119,10 @@ export const guideSeo: Record<string, GuideSeo> = {
       {
         q: "Does laser treatment cure toenail fungus?",
         a: "The evidence doesn't support it as a cure. The devices are cleared for a temporary increase in clear nail, which is a cosmetic claim, and the most careful review of the trials found them small and the results uncertain, with clearance well below the pill. Courses cost several hundred to over a thousand dollars and are rarely covered. Laser plus a topical is a reasonable last option for men who can't take the pill; on its own it's poor value.",
+      },
+      {
+        q: "Should the toenail be removed?",
+        a: "Rarely on its own. Chemical removal (a high-strength urea paste under a dressing) or surgical removal takes the nail off, but the fungus is in the nail bed too, and studies of removal alone show poor cure rates. It's used for a nail too thick or painful for anything else, or paired with a topical on the exposed bed while the new nail grows. For most men, thinning the nail does the same job without the downtime.",
       },
       {
         q: "Do over-the-counter fungal nail products work?",
@@ -151,18 +157,17 @@ export const guideSeo: Record<string, GuideSeo> = {
     ],
   },
   "toenail-fungus-12-month-protocol": {
-    metaTitle: "The 12-Month Toenail Fungus Protocol",
-    metaDescription:
-      "A toenail grows a millimetre a month, so clear nail takes a year to reach the tip. Month by month: what to do, what to look for at the base, and when to worry.",
+    metaTitle: "How Long Toenail Fungus Takes to Clear: The 12-Month Plan",
+    metaDescription: "A toenail grows one millimeter a month, so a clear nail takes a year. What to do and see in each quarter, how to tell it's working, and when it isn't.",
     datePublished: "2026-09-23",
     faq: [
       {
         q: "How long does toenail fungus take to clear?",
-        a: "Twelve to eighteen months for a big toenail. The treatment kills the fungus where new nail forms, at the base, and a toenail grows about one millimetre a month, so the clear nail starts at the cuticle and takes a year to reach the tip. The damaged nail in front of it never repairs; it grows out and gets trimmed off. Smaller toenails clear sooner, and older men or men with slow circulation take longer.",
+        a: "Twelve to eighteen months for a big toenail. The treatment kills the fungus where new nail forms, at the base, and a toenail grows about one millimeter a month, so the clear nail starts at the cuticle and takes a year to reach the tip. The damaged nail in front of it never repairs; it grows out and gets trimmed off. Smaller toenails clear sooner, and older men or men with slow circulation take longer.",
       },
       {
-        q: "How do I know if the treatment is working?",
-        a: "Look at the base, not the tip. By the end of month three there should be a band of healthy-looking new nail one to three millimetres wide at the cuticle, clearer and smoother than what's in front of it. By month six it should be a third of the way up a big toenail. Monthly photos in daylight with a coin for scale make the comparison; memory doesn't. The tip looks bad until it's cut off, and that's normal.",
+        q: "How do I know if the toenail fungus is dying?",
+        a: "Look at the base, not the tip. By the end of month three there should be a band of healthy-looking new nail one to three millimeters wide at the cuticle, clearer and smoother than what's in front of it. By month six it should be a third of the way up a big toenail. Monthly photos in daylight with a coin for scale make the comparison; memory doesn't. The tip looks bad until it's cut off, and that's normal.",
       },
       {
         q: "Why does the pill only last 12 weeks if the nail takes a year?",
@@ -197,11 +202,14 @@ export const guideSeo: Record<string, GuideSeo> = {
     ],
   },
   "keeping-toenail-fungus-from-coming-back": {
-    metaTitle: "Keeping Toenail Fungus From Coming Back",
-    metaDescription:
-      "Between one in ten and one in two treated nails get reinfected. Shoes, socks, showers, the household, and the twice-weekly topical podiatrists use as prevention.",
+    metaTitle: "Keep Toenail Fungus From Coming Back: Shoes, Socks, Skin",
+    metaDescription: "One in ten to one in two treated nails get reinfected, mostly from the same shoes, socks, and showers. Shoe rotation, drying, and the twice-weekly topical.",
     datePublished: "2026-09-23",
     faq: [
+      {
+        q: "Is toenail fungus contagious?",
+        a: "Yes, weakly. It spreads through damp shared floors, towels, and nail tools far more than through touch, and the foot that catches it is usually damp, cracked, or already carrying athlete's foot. Within a household, treat everyone who has it at the same time, use separate towels, and wash the bath mat hot weekly, or you'll trade it back and forth.",
+      },
       {
         q: "How often does toenail fungus come back after treatment?",
         a: "Depending on the study, somewhere between one in ten and one in two treated nails get reinfected. The fungus is cured out of the nail, not out of your life: it's still in the shoes worn during the infection, on gym and pool floors, on the skin between the toes, and often on a family member. Prevention is about not handing it a warm, damp toenail to move back into.",
@@ -243,11 +251,14 @@ export const guideSeo: Record<string, GuideSeo> = {
     ],
   },
   "toenail-fungus-home-remedies-and-laser": {
-    metaTitle: "Home Remedies and Laser for Toenail Fungus: What the Evidence Says",
-    metaDescription:
-      "Vicks, tea tree oil, vinegar, baking soda, drugstore kits, and laser, ranked by evidence. One small study, one old trial, a lot of nothing, and the one ingredient worth buying.",
+    metaTitle: "Home Remedies for Toenail Fungus: Vicks, Tea Tree, Laser",
+    metaDescription: "Vicks has one 18-person study. Tea tree oil has old, weak evidence. Vinegar, baking soda, and peroxide have none. Laser is unproven for the price.",
     datePublished: "2026-09-23",
     faq: [
+      {
+        q: "Is there anything that kills toenail fungus fast?",
+        a: "No. Nothing gets through the nail plate and kills the fungus underneath in days or weeks, and even a treatment that works leaves the damaged nail in place until it grows out at about a millimeter a month. Anything that 'cleared it in a week' was filing, a whitening soak, or a nail that was never fungal. The fastest route is the highest-cure-rate treatment started soonest.",
+      },
       {
         q: "Does Vicks VapoRub cure toenail fungus?",
         a: "There's one small pilot study: 18 people applied it daily for 48 weeks, and 5 of them ended with a nail that was clear and fungus-free on the lab test, 10 improved partially, and 3 didn't change. Nobody was compared with doing nothing. It's cheap and safe on intact skin, and about a quarter cured in a tiny study is worth knowing about. Against the pill, which cures nearly twice as many in controlled trials, it's a supporting act, not a first choice.",
