@@ -1,9 +1,9 @@
 /**
  * Dynamic OG image for any /reviews/[slug] page. Renders product name +
  * brand + verdict from staticReviews. If the slug doesn't match a known
- * review (Sanity-only entries, typos), falls back to a generic review
- * card. No Sanity fetch on the edge — staticReviews covers the core
- * catalog and gives Sanity-only items a graceful fallback rather than
+ * review (unknown slugs, typos), falls back to a generic review
+ * card. staticReviews covers the core
+ * catalog and gives unknown slugs a graceful fallback rather than
  * breaking the OG endpoint.
  */
 import { renderMsrOg, OG_SIZE, OG_CONTENT_TYPE } from "@/lib/og";

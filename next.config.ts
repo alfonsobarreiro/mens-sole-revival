@@ -18,7 +18,7 @@ const nextConfig: NextConfig = {
       { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), payment=()" },
     ];
     // Enforced. Scoped to the origins the site uses (GA, Clarity, Vercel
-    // Analytics, Unsplash, Sanity CDN); it ran report-only on production
+    // Analytics, Unsplash); it ran report-only on production
     // first and the console showed nothing else. 'unsafe-inline' for scripts
     // is required by the inline Clarity snippet and Next's hydration scripts;
     // nonces would allow dropping it.
@@ -27,7 +27,7 @@ const nextConfig: NextConfig = {
       "default-src 'self'",
       `script-src 'self' 'unsafe-inline'${dev} https://www.googletagmanager.com https://*.clarity.ms https://va.vercel-scripts.com`,
       "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.clarity.ms https://c.bing.com https://va.vercel-scripts.com",
-      "img-src 'self' data: blob: https://images.unsplash.com https://cdn.sanity.io https://*.google-analytics.com https://www.googletagmanager.com https://c.bing.com https://*.clarity.ms",
+      "img-src 'self' data: blob: https://images.unsplash.com https://*.google-analytics.com https://www.googletagmanager.com https://c.bing.com https://*.clarity.ms",
       "style-src 'self' 'unsafe-inline'",
       "font-src 'self'",
       "frame-ancestors 'none'",
@@ -35,12 +35,8 @@ const nextConfig: NextConfig = {
       "base-uri 'self'",
       "form-action 'self'",
     ].join("; ");
-    // Studio talks to many Sanity origins, so it keeps a minimal policy.
-    const studioPolicy = "frame-ancestors 'none'; object-src 'none'; base-uri 'self'";
     return [
-      { source: "/:path*", headers: base },
-      { source: "/((?!studio).*)", headers: [{ key: "Content-Security-Policy", value: policy }] },
-      { source: "/studio/:path*", headers: [{ key: "Content-Security-Policy", value: studioPolicy }] },
+      { source: "/:path*", headers: [...base, { key: "Content-Security-Policy", value: policy }] },
     ];
   },
   async redirects() {
@@ -73,11 +69,6 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "images.unsplash.com",
-      },
-      {
-        // Sanity CDN — for kit images uploaded via Studio
-        protocol: "https",
-        hostname: "cdn.sanity.io",
       },
     ],
   },
