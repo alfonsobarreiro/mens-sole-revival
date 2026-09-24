@@ -49,7 +49,7 @@ export async function GET(req: NextRequest) {
         }
       );
       if (!patch.ok) {
-        console.error("Resend (confirm update) error", patch.status, await patch.text());
+        console.error("Resend (confirm update) error", { status: patch.status });
       }
 
       // Notify alfonso@ — now it means a genuinely confirmed subscriber.

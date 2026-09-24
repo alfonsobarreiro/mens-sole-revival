@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import Image from "next/image";
 import CaseStudyNav from "@/components/CaseStudyNav";
 
@@ -41,8 +40,6 @@ const articles = [
 // ── Frame 1: Cover / Hero ──────────────────────────────────────────────────
 
 export default function CaseStudyCover() {
-  // Authoring surface only: the case study lives on the portfolio, never here.
-  if (process.env.VERCEL_ENV === "production") notFound();
   return (
     <main
       className="relative overflow-hidden"

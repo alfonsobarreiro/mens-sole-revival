@@ -15,6 +15,7 @@
 // and Vercel's function-invocation limits for basic abuse resistance.
 // ─────────────────────────────────────────────────────────────────────────────
 
+import { emailRef } from "@/lib/log-safe";
 import { EMAIL_FROM } from "@/lib/site";
 import { createProgressToken, progressUrl } from "@/lib/progress-token";
 import { countSubmissionsFor } from "@/lib/submissions/store";
@@ -38,7 +39,7 @@ export async function requestProgressLink(
     };
   }
 
-  console.log("[Progress magic-link]", { email, at: new Date().toISOString() });
+  console.log("[Progress magic-link]", { email: emailRef(email), at: new Date().toISOString() });
 
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
@@ -101,8 +102,7 @@ export async function requestProgressLink(
     });
 
     if (!res.ok) {
-      const body = await res.text();
-      console.error("[Progress magic-link] Resend send failed:", res.status, body);
+      console.error("[Progress magic-link] Resend send failed", { status: res.status });
       return {
         status: "error",
         message: "We couldn't send the email. Try again in a moment.",

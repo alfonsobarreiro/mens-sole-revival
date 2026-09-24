@@ -1,4 +1,3 @@
-import { notFound } from "next/navigation";
 import Image from "next/image";
 import Container from "@/components/Container";
 import { type } from "@/components/typography";
@@ -68,8 +67,6 @@ const TREATMENTS = [
 ];
 
 export default function ImageryTreatmentsPage() {
-  if (process.env.NODE_ENV === "production") notFound();
-
   return (
     <main className="min-h-screen bg-page text-ink">
       {DUOTONE_SVG}

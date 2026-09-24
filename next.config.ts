@@ -23,13 +23,18 @@ const nextConfig: NextConfig = {
     // is required by the inline Clarity snippet and Next's hydration scripts;
     // nonces would allow dropping it.
     const dev = process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : "";
+    // Preview deployments carry the Vercel toolbar (comments, flags), which
+    // loads from vercel.live and talks over Pusher. Production never does.
+    const preview = process.env.VERCEL_ENV === "preview";
+    const live = preview ? " https://vercel.live" : "";
     const policy = [
       "default-src 'self'",
-      `script-src 'self' 'unsafe-inline'${dev} https://www.googletagmanager.com https://*.clarity.ms https://va.vercel-scripts.com`,
-      "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.clarity.ms https://c.bing.com https://va.vercel-scripts.com",
-      "img-src 'self' data: blob: https://images.unsplash.com https://*.google-analytics.com https://www.googletagmanager.com https://c.bing.com https://*.clarity.ms",
-      "style-src 'self' 'unsafe-inline'",
-      "font-src 'self'",
+      `script-src 'self' 'unsafe-inline'${dev} https://www.googletagmanager.com https://*.clarity.ms https://va.vercel-scripts.com${live}`,
+      `connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.clarity.ms https://c.bing.com https://va.vercel-scripts.com${live}${preview ? " wss://*.pusher.com" : ""}`,
+      `img-src 'self' data: blob: https://images.unsplash.com https://*.google-analytics.com https://www.googletagmanager.com https://c.bing.com https://*.clarity.ms${live}${preview ? " https://vercel.com" : ""}`,
+      `style-src 'self' 'unsafe-inline'${live}`,
+      `font-src 'self'${live}${preview ? " https://assets.vercel.com" : ""}`,
+      ...(preview ? ["frame-src https://vercel.live"] : []),
       "frame-ancestors 'none'",
       "object-src 'none'",
       "base-uri 'self'",
