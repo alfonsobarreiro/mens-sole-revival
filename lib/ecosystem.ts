@@ -139,6 +139,61 @@ export type ArticleMeta = {
 // not appended. Reverse-chronological by default so the [[new-badge]] lands
 // where users scan first.
 export const articles: Record<string, ArticleMeta> = {
+  "is-it-toenail-fungus": {
+    slug: "is-it-toenail-fungus",
+    title: "Is It Toenail Fungus? The Self-Check and What Else It Could Be",
+    category: "Nails",
+    readTime: "7 min",
+    imageUrl: "/images/pexels-5960467.jpg",
+    excerpt:
+      "About half of thick, yellow toenails aren't fungal, and no antifungal touches those. The patterns that mean fungus, the look-alikes in men over 40, why a five-minute clipping test beats a year of guessing, and the one streak that is never a wait-and-see.",
+    symptoms: ["nails", "skin"],
+    action: "Photograph the nail, treat any peeling skin between the toes, and book a nail clipping test before you buy anything for the nail.",
+  },
+  "toenail-fungus-treatments-compared": {
+    slug: "toenail-fungus-treatments-compared",
+    title: "Toenail Fungus Treatments, Compared: Pills, Topicals, Laser, and What Cures",
+    category: "Nails",
+    readTime: "9 min",
+    imageUrl: "/images/pexels-5960467.jpg",
+    excerpt:
+      "Five ways to treat toenail fungus, and they don't work equally. Cure rates side by side for the pill, the prescription topicals, the drugstore shelf, laser, and nail thinning, plus the liver test and the statin interaction that decide the route for a man over 40.",
+    symptoms: ["nails"],
+    action: "With a confirmed diagnosis, bring your medication list to the podiatrist and ask about terbinafine first; get the nail thinned whatever you choose.",
+  },
+  "toenail-fungus-12-month-protocol": {
+    slug: "toenail-fungus-12-month-protocol",
+    title: "The 12-Month Toenail Fungus Protocol",
+    category: "Nails",
+    readTime: "8 min",
+    imageUrl: "/images/pexels-5960467.jpg",
+    excerpt:
+      "A toenail grows a millimetre a month, so clear nail takes a year to reach the tip. Month by month: what to do, what you should see at the base, when to worry, and why most men quit at month three when nothing is wrong.",
+    symptoms: ["nails"],
+    action: "Photograph every affected nail today, file it thin, treat the skin, and judge progress by the clear band at the cuticle, never the tip.",
+  },
+  "keeping-toenail-fungus-from-coming-back": {
+    slug: "keeping-toenail-fungus-from-coming-back",
+    title: "Keeping Toenail Fungus From Coming Back",
+    category: "Nails",
+    readTime: "7 min",
+    imageUrl: "/images/pexels-5960467.jpg",
+    excerpt:
+      "Between one in ten and one in two treated nails get reinfected, mostly from the same shoes, socks, and showers that grew it. Shoes in rotation and treated, thirty seconds of drying, the skin caught at the first peel, nails checked monthly, and the twice-weekly topical podiatrists use as prevention.",
+    symptoms: ["nails", "skin", "footwear"],
+    action: "Rotate two treated pairs of shoes, dry between the toes after every shower, and treat any peeling skin the week you see it.",
+  },
+  "toenail-fungus-home-remedies-and-laser": {
+    slug: "toenail-fungus-home-remedies-and-laser",
+    title: "Home Remedies and Laser for Toenail Fungus: What the Evidence Says",
+    category: "Nails",
+    readTime: "7 min",
+    imageUrl: "/images/pexels-5960467.jpg",
+    excerpt:
+      "Vicks, tea tree oil, vinegar, baking soda, garlic, mouthwash, drugstore kits, and laser, in order of evidence. One small study, one old trial, a lot of nothing, and the single drugstore ingredient worth buying. What to try alongside real treatment and what is a year lost.",
+    symptoms: ["nails"],
+    action: "Get the diagnosis, take the treatment with the best odds, and keep any remedy in a supporting role with filing and drying.",
+  },
   // ── Latest: 2026-09-22 expansion (gout, skin, cramps, bunions, diabetes,
   // nerves, sprains). Eight new guides, newest first.
   "gout-in-the-big-toe-men-over-40": {
@@ -437,6 +492,31 @@ export const articleRelations: Record<
     relatedArticles: string[];
   }
 > = {
+  "is-it-toenail-fungus": {
+    routine: "daily",
+    relatedArticles: ["toenail-fungus-treatments-compared", "athletes-foot-and-foot-odor-what-works", "toenail-fungus-what-works"],
+    reviews: [],
+  },
+  "toenail-fungus-treatments-compared": {
+    routine: "daily",
+    relatedArticles: ["toenail-fungus-12-month-protocol", "is-it-toenail-fungus", "toenail-fungus-home-remedies-and-laser"],
+    reviews: [],
+  },
+  "toenail-fungus-12-month-protocol": {
+    routine: "weekly",
+    relatedArticles: ["toenail-fungus-treatments-compared", "keeping-toenail-fungus-from-coming-back", "ingrown-toenail-what-actually-stops-the-cycle"],
+    reviews: [],
+  },
+  "keeping-toenail-fungus-from-coming-back": {
+    routine: "daily",
+    relatedArticles: ["athletes-foot-and-foot-odor-what-works", "toenail-fungus-12-month-protocol", "what-your-dress-shoes-are-doing-to-your-feet"],
+    reviews: [],
+  },
+  "toenail-fungus-home-remedies-and-laser": {
+    routine: "daily",
+    relatedArticles: ["toenail-fungus-treatments-compared", "is-it-toenail-fungus", "toenail-fungus-what-works"],
+    reviews: [],
+  },
   "gout-in-the-big-toe-men-over-40": {
     reviews: ["kuru-atom-sneakers"],
     routine: "movement",

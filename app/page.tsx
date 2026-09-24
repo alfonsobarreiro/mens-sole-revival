@@ -77,6 +77,51 @@ const routineHighlights: {
 // articles when they publish, so the NewBadge lights up in visible cards.
 const articles = [
   {
+    slug: "is-it-toenail-fungus",
+    title: "Is It Toenail Fungus?",
+    category: "Nails",
+    readTime: "7 min",
+    excerpt:
+      "About half of thick, yellow toenails aren't fungal, and no antifungal touches those. The patterns that mean fungus, the look-alikes in men over 40, why a five-minute clipping test beats a year of guessing, and the one streak that is never a wait-and-see.",
+    image: "/images/pexels-5960467.jpg",
+  },
+  {
+    slug: "toenail-fungus-treatments-compared",
+    title: "Toenail Fungus Treatments, Compared",
+    category: "Nails",
+    readTime: "9 min",
+    excerpt:
+      "Five ways to treat toenail fungus, and they don't work equally. Cure rates side by side for the pill, the prescription topicals, the drugstore shelf, laser, and nail thinning, plus the liver test and the statin interaction that decide the route for a man over 40.",
+    image: "/images/pexels-5960467.jpg",
+  },
+  {
+    slug: "toenail-fungus-12-month-protocol",
+    title: "The 12-Month Toenail Fungus Protocol",
+    category: "Nails",
+    readTime: "8 min",
+    excerpt:
+      "A toenail grows a millimetre a month, so clear nail takes a year to reach the tip. Month by month: what to do, what you should see at the base, when to worry, and why most men quit at month three when nothing is wrong.",
+    image: "/images/pexels-5960467.jpg",
+  },
+  {
+    slug: "keeping-toenail-fungus-from-coming-back",
+    title: "Keeping Toenail Fungus From Coming Back",
+    category: "Nails",
+    readTime: "7 min",
+    excerpt:
+      "Between one in ten and one in two treated nails get reinfected, mostly from the same shoes, socks, and showers that grew it. Shoes in rotation and treated, thirty seconds of drying, the skin caught at the first peel, nails checked monthly, and the twice-weekly topical podiatrists use as prevention.",
+    image: "/images/pexels-5960467.jpg",
+  },
+  {
+    slug: "toenail-fungus-home-remedies-and-laser",
+    title: "Home Remedies and Laser for Toenail Fungus",
+    category: "Nails",
+    readTime: "7 min",
+    excerpt:
+      "Vicks, tea tree oil, vinegar, baking soda, garlic, mouthwash, drugstore kits, and laser, in order of evidence. One small study, one old trial, a lot of nothing, and the single drugstore ingredient worth buying. What to try alongside real treatment and what is a year lost.",
+    image: "/images/pexels-5960467.jpg",
+  },
+  {
     slug: "gout-in-the-big-toe-men-over-40",
     title: "Gout in the Big Toe",
     category: "Pain",

@@ -50,6 +50,248 @@ export type GuideSeo = {
 };
 
 export const guideSeo: Record<string, GuideSeo> = {
+  "is-it-toenail-fungus": {
+    metaTitle: "Is It Toenail Fungus? The Self-Check and What Else It Could Be",
+    metaDescription:
+      "About half of thick, yellow toenails aren't fungal. The patterns that mean fungus, the look-alikes in men over 40, and why a nail clipping test beats a year of guessing.",
+    datePublished: "2026-09-23",
+    faq: [
+      {
+        q: "What does toenail fungus look like?",
+        a: "The common form starts at the tip or one side of the nail as a yellow or white streak, then the nail thickens, turns crumbly, and builds up debris underneath as the discolored area creeps toward the cuticle. A less common form shows chalky white patches on the surface. It usually comes with peeling skin between the toes, because the same fungus causes athlete's foot. Pain is optional; many fungal nails don't hurt until they thicken enough to press on the shoe.",
+      },
+      {
+        q: "Can a thick yellow toenail be something other than fungus?",
+        a: "Yes, and often. About half of thick, discolored toenails aren't fungal. The usual look-alikes in men over 40 are old trauma from shoes, running, or hiking, plain age-related thickening (every nail changed the same way, no debris), nail psoriasis (small pits and orange-brown spots under the nail), and a bacterial infection under a lifted nail, which tints it green. None of these responds to an antifungal, which is why testing first saves a year.",
+      },
+      {
+        q: "How do doctors test for toenail fungus?",
+        a: "A podiatrist or dermatologist clips a piece of the affected nail and scrapes the debris under it, then the lab examines it under a microscope, grows a culture, stains a slice, or runs a DNA test. It's a routine appointment, not a specialist referral. Don't apply any product to the nail for a few days beforehand, because residue can spoil the sample, and bring your medication list in case the result leads to a prescription.",
+      },
+      {
+        q: "Why should I test before buying a treatment?",
+        a: "Three reasons. Half of nails that look fungal aren't, and months of antifungal on a bruised or psoriatic nail changes nothing. The pill that cures most cases needs a confirmed diagnosis and a liver test first, so doctors won't prescribe it on a guess. And the prescription topicals cost hundreds of dollars for a year of daily use, worth it for a confirmed infection and wasted on anything else.",
+      },
+      {
+        q: "What should I do while waiting for the test?",
+        a: "Photograph the nail in daylight with a coin for scale, trim it straight across and file the thickness down once a week, treat any peeling skin between the toes with an athlete's foot cream for four weeks, dry between the toes after every shower, and rotate two pairs of shoes so each dries for a day. None of that commits you to a year of treatment, and all of it helps whatever the answer is.",
+      },
+      {
+        q: "When is a changed toenail a same-week problem?",
+        a: "A dark brown or black streak running the length of the nail, especially if it's new, widening, or spreading onto the skin at the cuticle, needs a dermatologist or podiatrist promptly, because a melanoma under the nail looks exactly like that. Also same-week: any nail change if you have diabetes, a nail fold that's red, swollen, or draining, redness spreading up the foot, or a fever with any foot problem.",
+      },
+    ],
+    sources: [
+      {
+        label: "AAD — Nail fungus: Signs and symptoms",
+        url: "https://www.aad.org/public/diseases/a-z/nail-fungus-symptoms",
+      },
+      {
+        label: "AAFP — Onychomycosis: Rapid Evidence Review (2021)",
+        url: "https://www.aafp.org/pubs/afp/issues/2021/1000/p359.html",
+      },
+      {
+        label: "NHS — Fungal nail infection",
+        url: "https://www.nhs.uk/conditions/fungal-nail-infection/",
+      },
+    ],
+  },
+  "toenail-fungus-treatments-compared": {
+    metaTitle: "Toenail Fungus Treatments, Compared: Pills, Topicals, Laser, and What Cures",
+    metaDescription:
+      "Cure rates side by side for the pill, the prescription topicals, drugstore products, laser, and nail thinning, plus the liver test and statin interaction that decide the route.",
+    datePublished: "2026-09-23",
+    faq: [
+      {
+        q: "What is the most effective treatment for toenail fungus?",
+        a: "Oral terbinafine, a daily tablet for 12 weeks. In the trials that approved it, about 4 men in 10 reached a completely normal nail and about 7 in 10 were fungus-free on the lab test, the best figures of any treatment. It's a cheap generic. It needs a confirmed diagnosis and a liver blood test before starting, and it interacts with a few medications, so bring your full list to the prescriber.",
+      },
+      {
+        q: "Do the topical toenail fungus treatments work?",
+        a: "The prescription ones work for mild infections: the tip or an edge, less than about half the nail, the base not involved, and no more than three or four nails. Efinaconazole solution is the best of them, with roughly 1 man in 6 reaching a normal nail after a year of daily use; tavaborole and the older ciclopirox lacquer do less. All three need daily application for 48 weeks, and they work better on a nail that has been filed thin.",
+      },
+      {
+        q: "Is terbinafine safe to take with a statin?",
+        a: "Usually yes, but confirm with the prescriber. Terbinafine doesn't have the cholesterol-drug interaction that the other oral antifungal, itraconazole, has. Itraconazole blocks the enzyme that clears many common drugs, and some statins can't be taken with it at all; it also carries a heart failure warning. For a man over 40 on a statin, that difference usually settles which pill is offered.",
+      },
+      {
+        q: "Does laser treatment cure toenail fungus?",
+        a: "The evidence doesn't support it as a cure. The devices are cleared for a temporary increase in clear nail, which is a cosmetic claim, and the most careful review of the trials found them small and the results uncertain, with clearance well below the pill. Courses cost several hundred to over a thousand dollars and are rarely covered. Laser plus a topical is a reasonable last option for men who can't take the pill; on its own it's poor value.",
+      },
+      {
+        q: "Do over-the-counter fungal nail products work?",
+        a: "None has trial evidence for curing toenail fungus. Most are urea, which softens and thins the nail, or a cosmetic whitener, or an antifungal cream meant for skin that can't get through a nail plate. Urea is worth having, because a thinner nail responds better to any real treatment. The rest is a year lost if it stands in for treatment.",
+      },
+      {
+        q: "Why does the podiatrist file the nail down?",
+        a: "Thinning the nail improves every other treatment. There's less material for the fungus to live in, less pressure in the shoe, and far better penetration for a topical. A podiatrist can grind a thick nail to a thin plate in one visit; at home, a 40% urea cream at night for a few weeks and a coarse emery board weekly do a slower version. It's not a cure on its own and it's the cheapest improvement available.",
+      },
+    ],
+    sources: [
+      {
+        label: "AAFP — Onychomycosis: Rapid Evidence Review (2021)",
+        url: "https://www.aafp.org/pubs/afp/issues/2021/1000/p359.html",
+      },
+      {
+        label: "AAFP — Onychomycosis: Current Trends in Diagnosis and Treatment (2013)",
+        url: "https://www.aafp.org/pubs/afp/issues/2013/1201/p762.html",
+      },
+      {
+        label: "Cochrane — Oral antifungal medication for toenail onychomycosis (2017)",
+        url: "https://doi.org/10.1002/14651858.CD010031.pub2",
+      },
+      {
+        label: "Cochrane — Topical and device-based treatments for fungal infections of the toenails (2020)",
+        url: "https://doi.org/10.1002/14651858.CD012093.pub2",
+      },
+      {
+        label: "AAD — Nail fungus: Diagnosis and treatment",
+        url: "https://www.aad.org/public/diseases/a-z/nail-fungus-treatment",
+      },
+    ],
+  },
+  "toenail-fungus-12-month-protocol": {
+    metaTitle: "The 12-Month Toenail Fungus Protocol",
+    metaDescription:
+      "A toenail grows a millimetre a month, so clear nail takes a year to reach the tip. Month by month: what to do, what to look for at the base, and when to worry.",
+    datePublished: "2026-09-23",
+    faq: [
+      {
+        q: "How long does toenail fungus take to clear?",
+        a: "Twelve to eighteen months for a big toenail. The treatment kills the fungus where new nail forms, at the base, and a toenail grows about one millimetre a month, so the clear nail starts at the cuticle and takes a year to reach the tip. The damaged nail in front of it never repairs; it grows out and gets trimmed off. Smaller toenails clear sooner, and older men or men with slow circulation take longer.",
+      },
+      {
+        q: "How do I know if the treatment is working?",
+        a: "Look at the base, not the tip. By the end of month three there should be a band of healthy-looking new nail one to three millimetres wide at the cuticle, clearer and smoother than what's in front of it. By month six it should be a third of the way up a big toenail. Monthly photos in daylight with a coin for scale make the comparison; memory doesn't. The tip looks bad until it's cut off, and that's normal.",
+      },
+      {
+        q: "Why does the pill only last 12 weeks if the nail takes a year?",
+        a: "Terbinafine builds up in the nail bed and keeps working there for months after the last dose, which is why a 12-week course treats a 12-month problem. Once the course is done there's nothing more to take, but the daily skin and shoe routine continues, and many doctors add a twice-weekly topical to protect the new growth while the old nail grows out.",
+      },
+      {
+        q: "What should I do every day during treatment?",
+        a: "Apply the treatment if it's a topical, on a clean, dry, filed nail, covering the nail and the skin fold. Dry between the toes after every shower. Wear wicking socks changed daily and rotate two pairs of shoes treated with an antifungal spray or powder. Once a week, file the nail thin. Once a month, trim straight across and take the photo. Treat any peeling skin between the toes with an athlete's foot cream, the full four weeks.",
+      },
+      {
+        q: "When should I go back to the doctor during treatment?",
+        a: "On the pill, the same day for dark urine, pale stools, yellowing eyes, nausea that won't shift, or a rash. Any time the nail fold is red, swollen, or draining. And at month six if there's no clear band at the base or the band has stopped growing: the usual reasons are the wrong diagnosis, a topical that isn't penetrating a nail still too thick, or reinfection from untreated skin or shoes. Take the photos; they show more than the nail.",
+      },
+      {
+        q: "How do I know the fungus is really gone?",
+        a: "Looks aren't the test. Ask the podiatrist for a repeat nail clipping at the end of treatment. A nail that looks clear but still grows fungus on the lab test will come back within the year. After a confirmed cure, keep the prevention routine and the monthly photo habit; a new streak at the tip caught early is a short course, not another year.",
+      },
+    ],
+    sources: [
+      {
+        label: "AAD — Nail fungus: Diagnosis and treatment",
+        url: "https://www.aad.org/public/diseases/a-z/nail-fungus-treatment",
+      },
+      {
+        label: "NHS — Fungal nail infection",
+        url: "https://www.nhs.uk/conditions/fungal-nail-infection/",
+      },
+      {
+        label: "AAFP — Onychomycosis: Rapid Evidence Review (2021)",
+        url: "https://www.aafp.org/pubs/afp/issues/2021/1000/p359.html",
+      },
+    ],
+  },
+  "keeping-toenail-fungus-from-coming-back": {
+    metaTitle: "Keeping Toenail Fungus From Coming Back",
+    metaDescription:
+      "Between one in ten and one in two treated nails get reinfected. Shoes, socks, showers, the household, and the twice-weekly topical podiatrists use as prevention.",
+    datePublished: "2026-09-23",
+    faq: [
+      {
+        q: "How often does toenail fungus come back after treatment?",
+        a: "Depending on the study, somewhere between one in ten and one in two treated nails get reinfected. The fungus is cured out of the nail, not out of your life: it's still in the shoes worn during the infection, on gym and pool floors, on the skin between the toes, and often on a family member. Prevention is about not handing it a warm, damp toenail to move back into.",
+      },
+      {
+        q: "Do I need to throw away my shoes after toenail fungus?",
+        a: "Not all of them. Fungus survives in shoes for months, so every pair worn during the infection is seeded. Spray or powder an antifungal into each pair weekly for the first couple of months after the cure, then monthly, and rotate two pairs so each dries for a day. Retire the worst: old running shoes, work boots that never dry, anything with a foam insole that has been damp for a year, or at least replace the insoles.",
+      },
+      {
+        q: "Can I get toenail fungus from a nail salon or the gym?",
+        a: "Yes, both are known routes. Shared clippers and files carry it, so bring your own tools to a salon or confirm they sterilize. Gym, pool, and hotel shower floors are where a foot picks it up; wear flip-flops or shower shoes every time. At home, a household member with athlete's foot or a fungal nail will trade it back and forth with you until everyone is treated at the same time.",
+      },
+      {
+        q: "What is the twice-weekly topical for preventing recurrence?",
+        a: "Many podiatrists keep patients on a prescription antifungal lacquer or solution, applied once or twice a week for months after a cure, sometimes indefinitely for men with repeat infections, diabetes, or poor circulation. The evidence that it lowers recurrence is reasonable, a generic like ciclopirox is inexpensive, and it takes two minutes a week. It's the one prevention step with trial data behind it; ask about it at the final visit.",
+      },
+      {
+        q: "Does athlete's foot cause toenail fungus to come back?",
+        a: "It's the main reservoir. Athlete's foot is often too mild to notice: peeling between the fourth and fifth toes, or a dry-looking patch on the heel that moisturizer doesn't fix. The nail gets reinfected from its own foot. Treat it at the first sign with four weeks of an antifungal cream, the full course even after it looks better, and dry between the toes after every shower.",
+      },
+      {
+        q: "Who needs to be strictest about prevention?",
+        a: "Men with diabetes, because a thick nail or a break in the skin beside it is how foot ulcers start, so any nail change goes to the podiatrist early. Men with poor circulation or a weakened immune system, whose nails grow and clear more slowly. And runners and hikers, whose repeated nail trauma is the entry point: shoes half a size up for long days, laces snug so the foot doesn't slide, and nails trimmed before every long run.",
+      },
+    ],
+    sources: [
+      {
+        label: "AAD — Nail fungus: Diagnosis and treatment",
+        url: "https://www.aad.org/public/diseases/a-z/nail-fungus-treatment",
+      },
+      {
+        label: "AAFP — Onychomycosis: Current Trends in Diagnosis and Treatment (2013)",
+        url: "https://www.aafp.org/pubs/afp/issues/2013/1201/p762.html",
+      },
+      {
+        label: "NHS — Fungal nail infection",
+        url: "https://www.nhs.uk/conditions/fungal-nail-infection/",
+      },
+    ],
+  },
+  "toenail-fungus-home-remedies-and-laser": {
+    metaTitle: "Home Remedies and Laser for Toenail Fungus: What the Evidence Says",
+    metaDescription:
+      "Vicks, tea tree oil, vinegar, baking soda, drugstore kits, and laser, ranked by evidence. One small study, one old trial, a lot of nothing, and the one ingredient worth buying.",
+    datePublished: "2026-09-23",
+    faq: [
+      {
+        q: "Does Vicks VapoRub cure toenail fungus?",
+        a: "There's one small pilot study: 18 people applied it daily for 48 weeks, and 5 of them ended with a nail that was clear and fungus-free on the lab test, 10 improved partially, and 3 didn't change. Nobody was compared with doing nothing. It's cheap and safe on intact skin, and about a quarter cured in a tiny study is worth knowing about. Against the pill, which cures nearly twice as many in controlled trials, it's a supporting act, not a first choice.",
+      },
+      {
+        q: "Does tea tree oil work on toenail fungus?",
+        a: "The evidence is old and weak. A 1990s trial compared 100% tea tree oil twice daily for six months with a 1% antifungal cream that isn't itself a nail treatment; both groups improved about the same on looks and both did poorly on the lab test. Tea tree oil has antifungal activity in the lab, irritates some people's skin, and can cause an allergic rash. If you use it, keep it on the nail plate and treat it as company for real treatment.",
+      },
+      {
+        q: "Do vinegar soaks get rid of toenail fungus?",
+        a: "No trial has tested vinegar on toenails. Fungus dislikes acid in a dish, but a daily soak doesn't reach the fungus under the nail plate. Soaks are harmless on intact skin and they soften the nail, which makes filing easier; if you like the ritual, file afterward and count that as the benefit. Bleach soaks, sometimes recommended online, damage skin and aren't worth it.",
+      },
+      {
+        q: "Is laser treatment for toenail fungus worth the money?",
+        a: "Not on its own. The devices are cleared for a temporary increase in clear nail, a cosmetic claim, and the most careful review of the trials found them small, short, and inconsistent, with low certainty of any benefit and clearance rates well below the pill. Courses run several hundred to over a thousand dollars, rarely covered. Laser plus a topical is a defensible last option for a man who can't take the pill and has failed a topical alone.",
+      },
+      {
+        q: "Which drugstore fungal nail product is worth buying?",
+        a: "Urea. A 40% urea cream at night for a few weeks softens and thins the nail, and a thinner nail responds better to any real treatment. Most other drugstore kits are urea in a fancier package, a cosmetic whitener, or a low-strength antifungal that penetrates nail poorly. Read the ingredients: if the active ingredient isn't a named antifungal drug at a nail-treatment concentration, it isn't a nail treatment.",
+      },
+      {
+        q: "Why do home remedies seem to work in the stories?",
+        a: "Because the ritual around them does the helping: the nail gets filed, cleaned, and trimmed, which improves the look; the foot gets dried because someone is paying attention; and in about half the cases there was never fungus to begin with, so nothing was going to change either way. Those are real benefits. Get the diagnosis first, take the treatment with the best odds, keep the remedy in a supporting role, and stop at the first sign of skin irritation.",
+      },
+    ],
+    sources: [
+      {
+        label: "Derby et al. — Novel treatment of onychomycosis using over-the-counter mentholated ointment (J Am Board Fam Med, 2011)",
+        url: "https://pubmed.ncbi.nlm.nih.gov/21209346/",
+      },
+      {
+        label: "Buck et al. — Comparison of two topical preparations for the treatment of onychomycosis: tea tree oil and clotrimazole (J Fam Pract, 1994)",
+        url: "https://pubmed.ncbi.nlm.nih.gov/8195735/",
+      },
+      {
+        label: "Cochrane — Topical and device-based treatments for fungal infections of the toenails (2020)",
+        url: "https://doi.org/10.1002/14651858.CD012093.pub2",
+      },
+      {
+        label: "AAD — Nail fungus: Diagnosis and treatment",
+        url: "https://www.aad.org/public/diseases/a-z/nail-fungus-treatment",
+      },
+    ],
+  },
   // ── 2026-09-22 expansion: eight guides, newest first.
   "sprained-ankle-recovery-over-40": {
     metaTitle: "Sprained Ankle After 40: Recover Without a Weak Ankle for Life",
