@@ -81,9 +81,9 @@ export const routines: Record<string, RoutineRef> = {
   treatment: {
     anchor: "treatment",
     label: "Treatment",
-    heading: "Antifungal protocol.",
+    heading: "Antifungal protocol, skin and nail.",
     time: "2 min · twice daily",
-    action: "Apply an OTC terbinafine cream twice daily for 4 to 6 weeks. Don't stop when it looks better.",
+    action: "Skin: OTC terbinafine cream twice daily for the full course, usually four weeks, and don't stop when it looks better. Nail: creams don't get through the plate, so get a clipping test first, then pick a treatment from the compared guide.",
   },
   recovery: {
     anchor: "recovery",
@@ -451,7 +451,7 @@ export const articles: Record<string, ArticleMeta> = {
     excerpt:
       "The evidence on OTC treatments, prescription options, and home remedies, ranked by how well they actually work.",
     symptoms: ["nails", "skin"],
-    action: "Start an OTC terbinafine (Lamisil) protocol twice daily for 4 to 6 weeks.",
+    action: "Get a nail clipping test before you buy anything, then pick the route in treatments compared.",
   },
   "why-toe-alignment-affects-knees-and-hips": {
     slug: "why-toe-alignment-affects-knees-and-hips",
@@ -774,7 +774,7 @@ export const symptomRecommendations: Record<
   },
   nails: {
     reviews: ["lamisil-at-antifungal-cream", "gold-bond-medicated-foot-powder"],
-    articles: ["toenail-fungus-what-works"],
+    articles: ["is-it-toenail-fungus", "toenail-fungus-what-works"],
   },
   skin: {
     reviews: ["gehwol-fusskraft-soft-feet-cream"],
