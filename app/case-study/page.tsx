@@ -102,7 +102,7 @@ export default function CaseStudyCover() {
             <Dot />
             <MetaItem label="Timeline" value="2024–present" />
             <Dot />
-            <MetaItem label="Stack" value="Next.js, Sanity, Tailwind" />
+            <MetaItem label="Stack" value="Next.js, Postgres, Tailwind" />
           </div>
         </div>
 

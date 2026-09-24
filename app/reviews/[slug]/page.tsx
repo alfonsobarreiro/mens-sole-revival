@@ -169,37 +169,13 @@ const staticReviewDetails: ReviewDetail[] = [
 // ── Data fetching ─────────────────────────────────────────────────────────────
 
 async function getReview(slug: string): Promise<ReviewDetail | null> {
-  if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) {
-    return staticReviewDetails.find((r) => r.slug === slug) ?? null;
-  }
-  try {
-    const { serverClient } = await import("@/sanity/lib/client");
-    const { reviewBySlugQuery } = await import("@/sanity/lib/queries");
-    const review = await serverClient.fetch<ReviewDetail>(reviewBySlugQuery, { slug });
-    if (review) return review;
-    return staticReviewDetails.find((r) => r.slug === slug) ?? null;
-  } catch (err) {
-    console.error("[reviews/slug] Sanity fetch failed, using static fallback:", err);
-    return staticReviewDetails.find((r) => r.slug === slug) ?? null;
-  }
+  return staticReviewDetails.find((r) => r.slug === slug) ?? null;
 }
 
 // ── Static params ─────────────────────────────────────────────────────────────
 
 export async function generateStaticParams() {
-  if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) {
-    return staticReviewDetails.map((r) => ({ slug: r.slug }));
-  }
-  try {
-    const { serverClient } = await import("@/sanity/lib/client");
-    const { reviewsQuery } = await import("@/sanity/lib/queries");
-    const reviews = await serverClient.fetch<{ slug: string }[]>(reviewsQuery);
-    return reviews?.length > 0
-      ? reviews.map((r) => ({ slug: r.slug }))
-      : staticReviewDetails.map((r) => ({ slug: r.slug }));
-  } catch {
-    return staticReviewDetails.map((r) => ({ slug: r.slug }));
-  }
+  return staticReviewDetails.map((r) => ({ slug: r.slug }));
 }
 
 // ── Metadata ──────────────────────────────────────────────────────────────────
@@ -218,7 +194,7 @@ export async function generateMetadata({
     : `${tagline}${tagline ? " " : ""}Evidence-based review from Men's Sole Revival.`;
   // SEO-optimized title/description win first if the review defines them
   // (2026-09-10 CTR sweep). Fall back to the editorial tagline shape
-  // otherwise — Sanity-only reviews get this until they carry the fields.
+  // otherwise — reviews without the fields get this.
   const title = review.seoTitle ?? `${review.productName} Review: ${tagline || review.brand}`;
   const description = review.seoDescription ?? fallbackDescription;
   return {

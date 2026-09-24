@@ -116,7 +116,7 @@ function ListSizeSection({ sizes }: { sizes: ListSizes }) {
     <div className="mt-16">
       <h2 className={`${type.h2} text-ink`}>Email list</h2>
       <p className={`mt-3 ${type.body} text-neutral-600`}>
-        Reachable contacts (Resend audience) + full submission history (Sanity).
+        Reachable contacts (Resend audience) + full submission history (Postgres).
       </p>
 
       <div className="mt-6 grid gap-6 md:grid-cols-2">
@@ -152,8 +152,7 @@ function ListSizeSection({ sizes }: { sizes: ListSizes }) {
             </>
           ) : (
             <p className={`mt-2 ${type.small} text-neutral-500`}>
-              Set <code>NEXT_PUBLIC_SANITY_PROJECT_ID</code> +{" "}
-              <code>NEXT_PUBLIC_SANITY_DATASET</code> to see counts.
+              Set <code>DATABASE_URL</code> to see counts.
             </p>
           )}
         </Card>
@@ -301,7 +300,7 @@ function Dashboard({ stats, sizes }: { stats: AssessmentStats; sizes: ListSizes 
               </table>
             </div>
 
-            {/* List sizes — Resend + Sanity totals */}
+            {/* List sizes — Resend + Postgres totals */}
             <ListSizeSection sizes={sizes} />
 
             {/* Range switcher */}
