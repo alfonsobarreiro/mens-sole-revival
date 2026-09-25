@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import createMDX from "@next/mdx";
+import { withBotId } from "botid/next/config";
 
 const nextConfig: NextConfig = {
   typescript: {
@@ -83,4 +84,7 @@ const withMDX = createMDX({
   extension: /\.mdx?$/,
 });
 
-export default withMDX(nextConfig);
+// withBotId adds the two same-origin routes the BotID client needs (its
+// challenge script and a proxy, both forwarded to Vercel). Without them the
+// script 404s on every host and the chat can never send a question.
+export default withBotId(withMDX(nextConfig));
