@@ -13,8 +13,8 @@ export default function Page() {
   return (
     <SiteLayout>
       <ArticleLayout
-        heroSrc="/images/unsplash-cJ9AKMgICwY.jpg"
-        heroAlt="Brown leather boots and jeans seen from above on a dark floor"
+        heroSrc="/images/pexels-356175.jpg"
+        heroAlt="A man's bare feet standing between two shoes"
         title="Measure Your Feet at Home"
         category="Footwear Fit"
         readTime="7 min"

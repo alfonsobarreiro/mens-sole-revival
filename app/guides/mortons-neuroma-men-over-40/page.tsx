@@ -13,8 +13,8 @@ export default function Page() {
   return (
     <SiteLayout>
       <ArticleLayout
-        heroSrc="/images/unsplash-vIO0aTKj8lk.jpg"
-        heroAlt="A man in a white shirt lacing brown leather dress shoes"
+        heroSrc="/images/pexels-6926012.jpg"
+        heroAlt="A man's bare sole, his hand at the ball of the foot"
         title="Morton's Neuroma"
         category="Pain"
         readTime="7 min"

@@ -82,7 +82,7 @@ const articles = [
     category: "Foot Health",
     readTime: "7 min",
     excerpt: "Most swollen feet and ankles after 40 are gravity or a medication, and both feet swell the same. One leg, hot skin, or breathlessness moves it to a same-day call. Here is how to tell them apart.",
-    image: "/images/unsplash-_qEZIh54p7E.jpg",
+    image: "/images/pexels-6863766.jpg",
   },
   {
     slug: "burning-feet-men-over-40",
@@ -114,7 +114,7 @@ const articles = [
     category: "Footwear Fit",
     readTime: "7 min",
     excerpt: "Feet lengthen and widen after 40, and most men are still buying the size they wore at 25. The ten-minute paper method, a length-to-size table, width letters, and the store fit rules that overrule the box.",
-    image: "/images/unsplash-cJ9AKMgICwY.jpg",
+    image: "/images/pexels-356175.jpg",
   },
   {
     slug: "pain-on-top-of-the-foot",
@@ -122,7 +122,7 @@ const articles = [
     category: "Pain",
     readTime: "7 min",
     excerpt: "Top of foot pain usually comes down to laces, a tendon, a bone spur, or a stress fracture. How to tell them apart by where it hurts, why an early X-ray can be normal, and the signs that mean a same-week visit.",
-    image: "/images/unsplash-rP-9W__umN0.jpg",
+    image: "/images/pexels-8729228.jpg",
   },
   {
     slug: "cold-feet-and-poor-circulation",
@@ -146,7 +146,7 @@ const articles = [
     category: "Pain",
     readTime: "7 min",
     excerpt: "A nerve squeezed between two metatarsal heads thickens until it feels like a pebble under the foot with burning into two toes. Why it sets up after 40, the shoe and pad fix, and what injections and surgery trade.",
-    image: "/images/unsplash-vIO0aTKj8lk.jpg",
+    image: "/images/pexels-6926012.jpg",
   },
   {
     slug: "heel-spurs-explained",
@@ -208,7 +208,7 @@ const articles = [
     readTime: "7 min",
     excerpt:
       "A red, hot, swollen big toe that came on overnight is a different animal from stiffness that built over years. How to tell the two apart, what a flare needs, what a doctor will check, and what shoes do in between.",
-    image: "/images/pexels-18300650.jpg",
+    image: "/images/pexels-8728672.jpg",
   },
   {
     slug: "athletes-foot-and-foot-odor-what-works",

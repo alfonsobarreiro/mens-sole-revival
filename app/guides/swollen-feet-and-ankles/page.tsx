@@ -13,8 +13,8 @@ export default function Page() {
   return (
     <SiteLayout>
       <ArticleLayout
-        heroSrc="/images/unsplash-_qEZIh54p7E.jpg"
-        heroAlt="A man lying full length on a couch by a window, feet up"
+        heroSrc="/images/pexels-6863766.jpg"
+        heroAlt="A man lying on a sofa with his feet up on the armrest"
         title="Swollen Feet and Ankles"
         category="Foot Health"
         readTime="7 min"

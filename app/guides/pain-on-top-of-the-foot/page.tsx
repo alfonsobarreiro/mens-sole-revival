@@ -13,8 +13,8 @@ export default function Page() {
   return (
     <SiteLayout>
       <ArticleLayout
-        heroSrc="/images/unsplash-rP-9W__umN0.jpg"
-        heroAlt="A man tying a running shoe, close up on the laces"
+        heroSrc="/images/pexels-8729228.jpg"
+        heroAlt="A man sitting on a rock, his hand on the top of his bare foot"
         title="Pain on Top of the Foot"
         category="Pain"
         readTime="7 min"

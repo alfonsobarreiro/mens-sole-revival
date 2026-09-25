@@ -16,8 +16,8 @@ export default function Page() {
         // TODO Alfonso: swap for a topic-matching hero. Ideas: older
         // runner mid-stride, feet in running shoes on trail, laces of
         // trainers being tightened.
-        heroSrc="/images/pexels-33360918.jpg"
-        heroAlt="A runner outdoors during a training session"
+        heroSrc="/images/pexels-7870234.jpg"
+        heroAlt="A gray-bearded man running along a waterfront"
         title="Runners Over 40: Foot Pain That Wasn't There at 30"
         category="Pain"
         readTime="8 min"

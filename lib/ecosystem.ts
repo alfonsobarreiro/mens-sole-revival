@@ -144,7 +144,7 @@ export const articles: Record<string, ArticleMeta> = {
     title: "Swollen Feet and Ankles: Gravity, Medication, or a Same-Day Call",
     category: "Foot Health",
     readTime: "7 min",
-    imageUrl: "/images/unsplash-_qEZIh54p7E.jpg",
+    imageUrl: "/images/pexels-6863766.jpg",
     excerpt:
       "Most swollen feet and ankles after 40 are gravity or a medication, and both feet swell the same. One leg, hot skin, or breathlessness moves it to a same-day call. Here is how to tell them apart.",
     symptoms: ["pain"],
@@ -188,7 +188,7 @@ export const articles: Record<string, ArticleMeta> = {
     title: "Measure Your Feet at Home: Length, Width, and Why Your Size Changed After 40",
     category: "Footwear Fit",
     readTime: "7 min",
-    imageUrl: "/images/unsplash-cJ9AKMgICwY.jpg",
+    imageUrl: "/images/pexels-356175.jpg",
     excerpt:
       "Feet lengthen and widen after 40, and most men are still buying the size they wore at 25. The ten-minute paper method, a length-to-size table, width letters, and the store fit rules that overrule the box.",
     symptoms: ["footwear", "alignment"],
@@ -199,7 +199,7 @@ export const articles: Record<string, ArticleMeta> = {
     title: "Pain on Top of the Foot: Laces, Tendon, Stress Fracture, or Arthritis",
     category: "Pain",
     readTime: "7 min",
-    imageUrl: "/images/unsplash-rP-9W__umN0.jpg",
+    imageUrl: "/images/pexels-8729228.jpg",
     excerpt:
       "Top of foot pain usually comes down to laces, a tendon, a bone spur, or a stress fracture. How to tell them apart by where it hurts, why an early X-ray can be normal, and the signs that mean a same-week visit.",
     symptoms: ["pain"],
@@ -232,7 +232,7 @@ export const articles: Record<string, ArticleMeta> = {
     title: "Morton's Neuroma: The Pebble Under the Foot and What Fixes It",
     category: "Pain",
     readTime: "7 min",
-    imageUrl: "/images/unsplash-vIO0aTKj8lk.jpg",
+    imageUrl: "/images/pexels-6926012.jpg",
     excerpt:
       "A nerve squeezed between two metatarsal heads thickens until it feels like a pebble under the foot with burning into two toes. Why it sets up after 40, the shoe and pad fix, and what injections and surgery trade.",
     symptoms: ["pain"],
@@ -311,7 +311,7 @@ export const articles: Record<string, ArticleMeta> = {
     title: "Gout in the Big Toe: How to Tell It From Stiffness (and What to Do)",
     category: "Pain",
     readTime: "7 min",
-    imageUrl: "/images/pexels-18300650.jpg",
+    imageUrl: "/images/pexels-8728672.jpg",
     excerpt:
       "A red, hot, swollen big toe that came on overnight is a different animal from stiffness that built over years. How to tell the two apart, what a flare needs, what a doctor will check, and what shoes do in between.",
     symptoms: ["pain", "alignment"],
@@ -445,7 +445,7 @@ export const articles: Record<string, ArticleMeta> = {
     title: "Runners Over 40: Foot Pain That Wasn't There at 30",
     category: "Pain",
     readTime: "8 min",
-    imageUrl: "/images/pexels-33360918.jpg",
+    imageUrl: "/images/pexels-7870234.jpg",
     excerpt:
       "The four foot problems that show up in runners after 40 (plantar fasciitis, metatarsalgia, Achilles tendinopathy, big-toe stiffness), why they cluster in this decade, and the mileage + shoe adjustments that keep you running through them.",
     symptoms: ["pain"],
