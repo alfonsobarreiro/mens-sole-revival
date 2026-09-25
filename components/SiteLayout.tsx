@@ -8,6 +8,7 @@ import Container from "@/components/Container";
 import { Button, IconButton } from "@/components/ui";
 import SearchTrigger from "@/components/SearchTrigger";
 import AskTrigger from "@/components/chat/AskTrigger";
+import { AskProvider } from "@/components/chat/AskHost";
 
 const navLinks = [
   { label: "Guides", href: "/guides" },
@@ -49,6 +50,7 @@ export default function SiteLayout({
   );
 
   return (
+    <AskProvider>
     <main className="min-h-screen bg-ground text-ink">
 
       {/* ── Header ── */}
@@ -255,5 +257,6 @@ export default function SiteLayout({
         </Container>
       </footer>
     </main>
+    </AskProvider>
   );
 }
