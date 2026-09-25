@@ -13,7 +13,6 @@ export default function Page() {
   return (
     <SiteLayout>
       <ArticleLayout
-        // TODO Alfonso: placeholder hero (shared with the fungus guide); swap once the new photo is approved.
         heroSrc="/images/pexels-9376098.jpg"
         heroAlt="A man's hands filing a toenail with an emery board"
         title="Home Remedies and Laser for Toenail Fungus"

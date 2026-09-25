@@ -49,7 +49,554 @@ export type GuideSeo = {
   howTo?: GuideHowTo;
 };
 
+/** FAQ answers may carry Markdown-style links `[text](/path)`; the visible
+ *  FAQ renders them as links (components/GuideExtras.tsx) and the JSON-LD
+ *  gets plain text. */
+export function stripInlineLinks(text: string): string {
+  return text.replace(/\[([^\]]+)\]\([^)]+\)/g, "$1");
+}
+
 export const guideSeo: Record<string, GuideSeo> = {
+  "swollen-feet-and-ankles": {
+    metaTitle: "Swollen Feet and Ankles After 40: Causes and Red Flags",
+    metaDescription:
+      "Why feet and ankles swell after 40: gravity, amlodipine and other drugs, veins, heart, or a clot. Self-checks, compression socks, and same-day red flags.",
+    datePublished: "2026-09-25",
+    faq: [
+      {
+        q: "Why are my feet swollen at the end of the day?",
+        a: "Standing or sitting for hours turns off the calf muscle pump that pushes fluid back up from the feet, so it pools at the ankle. Heat, salt, extra weight, and age make it worse. If both feet swell evenly, pit under a thumb, and clear overnight, that is dependent edema, and elevation, walking, and light compression usually handle it.",
+      },
+      {
+        q: "Why is only one ankle swollen with no injury?",
+        a: "One-sided swelling points to something local: a vein problem, lymphedema, gout at a joint, a skin infection, or a clot. If it came on suddenly with calf pain, warmth, or skin that looks red or darker than the other leg, treat it as a possible deep vein thrombosis and get seen the same day. Even without those signs, new one-sided swelling deserves a prompt visit rather than a wait.",
+      },
+      {
+        q: "Can amlodipine cause swollen ankles?",
+        a: "Yes. Swelling of the ankles, feet, and legs is a listed common side effect of amlodipine and the other calcium-channel blockers. It happens because the drug widens small arteries more than veins, and water pills don't fix it well. Don't stop the drug on your own; ask the prescriber about a lower dose or a switch.",
+      },
+      {
+        q: "Do compression socks help swollen feet?",
+        a: "For gravity and vein-related swelling, yes. Over-the-counter graduated socks at 15 to 20 mmHg, worn from morning to night, are the usual starting point. Tighter grades are used for confirmed venous edema and should be a doctor's call, because compression is not safe with peripheral arterial disease.",
+      },
+      {
+        q: "When should I worry about swollen feet and ankles?",
+        a: "Same day if one leg swells suddenly with pain or warmth, if the skin is red, hot, and painful, if you have a fever, or if you have diabetes and notice any new change. Call 911 if swelling comes with shortness of breath, chest pain, or coughing up blood. Swelling that doesn't clear overnight or stains the skin brown needs a physician visit this week.",
+      },
+      {
+        q: "Is swelling in both feet a sign of heart problems?",
+        a: "It can be, but it is more often gravity or a medication. Heart failure swelling builds over days in both legs, doesn't clear overnight, and comes with breathlessness on exertion or lying flat and fast weight gain. Kidney and liver disease produce a similar pattern. Any of those signs together is a reason to see a physician promptly.",
+      },
+    ],
+    sources: [
+      {
+        label: "AAFP \u2014 Edema: Diagnosis and Management (2013)",
+        url: "https://www.aafp.org/pubs/afp/issues/2013/0715/p102.html",
+      },
+      {
+        label: "MedlinePlus \u2014 Foot, leg, and ankle swelling (2025)",
+        url: "https://medlineplus.gov/ency/article/003104.htm",
+      },
+      {
+        label: "NHS \u2014 Swollen ankles, feet and legs (oedema) (2026)",
+        url: "https://www.nhs.uk/conditions/oedema/",
+      },
+      {
+        label: "NHS \u2014 Amlodipine: side effects (2026)",
+        url: "https://www.nhs.uk/medicines/amlodipine/side-effects-of-amlodipine/",
+      },
+      {
+        label: "NHS \u2014 DVT (deep vein thrombosis) (2026)",
+        url: "https://www.nhs.uk/conditions/deep-vein-thrombosis-dvt/",
+      },
+    ],
+  },
+  "burning-feet-men-over-40": {
+    metaTitle: "Burning Feet After 40: Neuropathy, Athlete's Foot, or Shoes",
+    metaDescription:
+      "Burning feet after 40: neuropathy, athlete's foot, circulation, or the shoe. Why it flares at night, the tests to ask for, and the red flags.",
+    datePublished: "2026-09-25",
+    faq: [
+      {
+        q: "Why do my feet burn at night?",
+        a: "Burning that flares in bed is the classic pattern of peripheral neuropathy. During the day the brain has other input; at night the misfiring nerves are the only signal, and the warmth under a blanket makes damaged fibers fire more. Burning at night that eases when you hang the foot off the bed is a circulation sign instead, and that one needs a vascular assessment soon.",
+      },
+      {
+        q: "Is burning feet a sign of diabetes?",
+        a: "It can be. Diabetes is the most common cause of peripheral neuropathy in the US, and roughly a quarter to a half of people with diabetes develop it. The damage can start in the years when blood sugar runs high but not yet in the diabetic range, so burning in both feet is a reason to get an A1c even if you have never been diagnosed.",
+      },
+      {
+        q: "Can athlete's foot cause burning feet?",
+        a: "Yes, and it is the easiest cause to spot. The burning is a burning itch between the toes, where the skin goes white, soggy, and cracked. It is a skin infection, not a nerve problem, and a drugstore antifungal used for the full course clears it.",
+      },
+      {
+        q: "What is burning feet syndrome?",
+        a: "It is an older name for burning in the soles with no obvious skin or shoe cause. In practice it usually turns out to be peripheral neuropathy from diabetes, alcohol, or a B12 deficiency, or in rare cases erythromelalgia. It is a description, not a diagnosis; bloodwork and a monofilament exam are what turn it into one.",
+      },
+      {
+        q: "What vitamin deficiency causes burning feet?",
+        a: "Vitamin B12 is the common one. Nerves need it, absorption drops with age, and two everyday medications make a deficiency more likely: metformin taken for more than a few months and acid reducers taken for more than a year. Get the level tested before taking a supplement; replacing B12 helps only if it is low.",
+      },
+      {
+        q: "When should I see a doctor for burning feet?",
+        a: "This week if there is new numbness with weakness, a wound that is not healing, unexplained weight loss, heavy drinking, a new medication, or if you have diabetes. Go to the ER if one foot suddenly turns cold, pale, and painful. Otherwise, book routine bloodwork for blood sugar, B12, thyroid, and kidney function within the month.",
+      },
+    ],
+    sources: [
+      {
+        label: "AAFP \u2014 Peripheral Neuropathy: Evaluation and Differential Diagnosis (2020)",
+        url: "https://www.aafp.org/pubs/afp/issues/2020/1215/p732.html",
+      },
+      {
+        label: "NIDDK \u2014 Peripheral Neuropathy (2018)",
+        url: "https://www.niddk.nih.gov/health-information/diabetes/overview/preventing-problems/nerve-damage-diabetic-neuropathies/peripheral-neuropathy",
+      },
+      {
+        label: "AAFP \u2014 Vitamin B12 Deficiency: Recognition and Management (2017)",
+        url: "https://www.aafp.org/pubs/afp/issues/2017/0915/p384.html",
+      },
+      {
+        label: "Society for Vascular Surgery \u2014 Peripheral Artery Disease (accessed 2026)",
+        url: "https://vascular.org/patients-and-referring-physicians/conditions/peripheral-arterial-disease",
+      },
+      {
+        label: "NHS \u2014 Erythromelalgia (2023)",
+        url: "https://www.nhs.uk/conditions/erythromelalgia/",
+      },
+    ],
+  },
+  "black-toenail-what-it-means": {
+    metaTitle: "Black Toenail: Bruise, Fungus, or Melanoma? How to Tell",
+    metaDescription:
+      "Most black toenails are blood and grow out. The color sequence, when to drain one, how long regrowth takes, and the one band that needs a dermatologist.",
+    datePublished: "2026-09-25",
+    faq: [
+      {
+        q: "Why is my toenail black?",
+        a: "Most often it is blood under the nail, from one blow or from the toe hitting the front of a shoe over many miles. It goes red, then purple, then black, and grows out with the nail over months. Fungus, a bacterial stain under a lifted nail, and, rarely, melanoma can also darken a nail, so a band with no injury behind it should be checked.",
+      },
+      {
+        q: "Will a black toenail go away on its own?",
+        a: "A bruise under the nail does. The dark patch moves toward the tip as the nail grows and clears in 6 to 12 months, or the nail falls off and a new one grows in behind it. A dark band that stays at the cuticle and does not move is not a bruise and needs a dermatologist.",
+      },
+      {
+        q: "Should I drain a black toenail myself?",
+        a: "No. A fresh, very painful hematoma can be drained by a podiatrist or urgent care with a sterile tool in minutes. A heated paperclip at home risks a burn and an infection under the nail, which matters more if you have diabetes or poor circulation. If it does not hurt, it does not need draining.",
+      },
+      {
+        q: "How long does it take for a toenail to grow back after it falls off?",
+        a: "Toenails grow about 1.5 to 2 millimeters a month, and slower with age. Most toenails take 6 to 12 months to regrow, and a big toenail can take up to 18 months. The new nail may be ridged or thick for the first cycle. Leave the old nail on as long as it stays attached, since it protects the bed.",
+      },
+      {
+        q: "How do I tell a bruise from melanoma under the toenail?",
+        a: "A bruise sits under the plate and moves toward the tip as the nail grows, leaving clean nail behind it. A melanoma band is anchored at the base and does not move, and it may widen, darken at one edge, or spread pigment onto the skin at the cuticle. A new band on one nail in a man over 50 with no injury should be seen by a dermatologist without waiting.",
+      },
+      {
+        q: "What is runner's toe and how do I stop it?",
+        a: "Runner's toe is bleeding under the nail from the toe hitting the front of the shoe on every stride, usually on the longest toe. It comes from a shoe a half size short, long downhills, or loose laces that let the foot slide. Buy a thumb's width of room, use a heel-lock lacing, and trim nails straight across before long runs.",
+      },
+    ],
+    sources: [
+      {
+        label: "American Academy of Dermatology \u2014 How to check your nails for melanoma (2021)",
+        url: "https://www.aad.org/public/diseases/skin-cancer/types/common/melanoma/nail-melanoma",
+      },
+      {
+        label: "American Family Physician \u2014 Evaluation of Nail Abnormalities (2012)",
+        url: "https://www.aafp.org/pubs/afp/issues/2012/0415/p779.html",
+      },
+      {
+        label: "NHS \u2014 Nail problems (2024)",
+        url: "https://www.nhs.uk/conditions/nail-problems/",
+      },
+      {
+        label: "ACFAS Foot Health Facts \u2014 Black Toenails (2026)",
+        url: "https://www.foothealthfacts.org/conditions/black-toenails",
+      },
+      {
+        label: "PubMed \u2014 Yaemsiri et al., Growth rate of human fingernails and toenails in healthy American young adults, J Eur Acad Dermatol Venereol (2010)",
+        url: "https://pubmed.ncbi.nlm.nih.gov/19744178/",
+      },
+    ],
+  },
+  "flat-feet-after-40": {
+    metaTitle: "Flat Feet After 40: Harmless or a Failing Tendon?",
+    metaDescription:
+      "How to tell a lifelong flexible flat foot from adult-acquired flatfoot, the four home checks, and the shoes, insoles, and exercises that help men over 40.",
+    datePublished: "2026-09-25",
+    faq: [
+      {
+        q: "Are flat feet a problem after 40?",
+        a: "Usually not. A flexible flat foot you've had since childhood, on both sides, with an arch that appears on tiptoe, rarely needs treatment. The concern is a flat foot that is new, on one side, and painful along the inside of the ankle.",
+      },
+      {
+        q: "What is adult-acquired flatfoot?",
+        a: "An arch that drops in adulthood because the posterior tibial tendon, which holds the arch up, has stretched or torn. It usually affects one foot, develops over months, and causes pain and swelling behind the inner ankle bone. Doctors also call it posterior tibial tendon dysfunction.",
+      },
+      {
+        q: "How do I check for posterior tibial tendon dysfunction at home?",
+        a: "Hold a counter, lift one foot, and rise onto the toes of the standing foot. A failing tendon can't lift the heel, can't repeat it, or hurts along the inner ankle. Also have someone look at your heels from behind: more toes visible on one side is the 'too many toes' sign.",
+      },
+      {
+        q: "What are the best shoes for flat feet?",
+        a: "For a stretching tendon, a shoe with a firm heel counter, a sole that resists twisting, and a wide stable heel. Soft minimalist shoes and sandals suit a painless lifelong flat foot but remove support a failing tendon can't supply.",
+      },
+      {
+        q: "Do insoles help flat feet, and do I need custom orthotics?",
+        a: "An over-the-counter insole with a firm arch and a deep heel cup is often enough for a mild, flexible foot. A custom orthotic makes sense when the heel has clearly tilted or a stock insole hasn't helped after two to three months.",
+      },
+      {
+        q: "Which flat feet exercises help?",
+        a: "Heel raises, tibialis posterior work with a band, short-foot holds, and calf stretches, most days for 8 to 12 weeks. In a 2009 randomized trial, orthotics plus stretching improved pain and function, and adding resistance exercise improved them further.",
+      },
+    ],
+    sources: [
+      {
+        label: "AAOS OrthoInfo \u2014 Progressive Collapsing Foot Deformity, Flatfoot (2026)",
+        url: "https://orthoinfo.aaos.org/en/diseases--conditions/posterior-tibial-tendon-dysfunction/",
+      },
+      {
+        label: "ACFAS Foot Health Facts \u2014 Posterior Tibial Tendon Dysfunction, PTTD (2026)",
+        url: "https://www.foothealthfacts.org/conditions/posterior-tibial-tendon-dysfunction-(pttd)",
+      },
+      {
+        label: "ACFAS Foot Health Facts \u2014 Flexible Flatfoot (2026)",
+        url: "https://www.foothealthfacts.org/conditions/flexible-flatfoot",
+      },
+      {
+        label: "MedlinePlus Medical Encyclopedia \u2014 Flat feet (2025)",
+        url: "https://medlineplus.gov/ency/article/001262.htm",
+      },
+      {
+        label: "PubMed \u2014 Kulig K et al., Nonsurgical management of posterior tibial tendon dysfunction with orthoses and resistive exercise: a randomized controlled trial, Physical Therapy (2009)",
+        url: "https://pubmed.ncbi.nlm.nih.gov/19022863/",
+      },
+    ],
+  },
+  "how-to-measure-your-feet-for-shoes": {
+    metaTitle: "How to Measure Your Feet for Shoes at Home (Men Over 40)",
+    metaDescription:
+      "Measure length and width at home in ten minutes, convert to US men's size and width letter, and use the store fit rules that matter more than the number.",
+    datePublished: "2026-09-25",
+    faq: [
+      {
+        q: "How do I measure my shoe size at home?",
+        a: "Late in the day, in the socks you will wear, stand on a sheet of paper on a hard floor with your heel against a wall. Mark the heel, the longest toe, and both sides of the foot at the ball, then measure heel to toe for length and side to side for width. Do both feet and use the larger numbers. Round up between sizes, and do not add toe room; the size scale already includes it.",
+      },
+      {
+        q: "Why did my shoe size change after 40?",
+        a: "Ligaments lose elasticity with age, so the foot spreads under body weight; arches lower, which makes the foot longer; weight gain adds spread at the ball; and feet swell through the day by up to about 8 percent. None of it happens fast, which is why most men are still buying the size they wore in their twenties. Podiatry and orthopedic groups recommend getting measured every time you shop.",
+      },
+      {
+        q: "How much room should be in front of my toes?",
+        a: "About half an inch, roughly a thumb's width, between the end of your longest toe and the end of the shoe while standing with weight on that foot. Measure from the longest toe, which on many men is the second toe, not the big toe. Less than that and a long walk or run jams the nail into the toe box, which is where black toenails come from.",
+      },
+      {
+        q: "What do shoe width letters mean?",
+        a: "For US men's shoes, B is narrow, D is standard, 2E is wide, and 4E is extra wide, with each step about 3/16 of an inch across the ball. The letter depends on length: the same ball width counts as wider on a shorter foot. If your width lands above the D column for your length, buy a wider shoe rather than a longer one; sizing up for width leaves the heel slipping.",
+      },
+      {
+        q: "Why do shoes from different brands fit differently in the same size?",
+        a: "Every brand builds on its own last, the foot-shaped form the shoe is made around, so two size 10s can differ by a quarter inch in length and more in the toe box. Running shoes carry extra length so the foot can slide forward on impact, which is why many men wear a half size up in them, while dress shoes are built close on a tapered toe and often need a width up. Buy the shoe that fits, whatever size is printed in it.",
+      },
+      {
+        q: "What does a Brannock device measure that a ruler does not?",
+        a: "Heel-to-ball length, along with heel-to-toe length and width read against length. Heel-to-ball tells the fitter where your ball sits, so the shoe flexes where your foot does; a man with a long arch and short toes may need a longer shoe than his toe length suggests. Podiatry groups recommend a professional measurement every time you shop, on both feet.",
+      },
+    ],
+    sources: [
+      {
+        label: "AAOS OrthoInfo \u2014 Shoes: Finding the Right Fit",
+        url: "https://orthoinfo.aaos.org/en/staying-healthy/shoes-finding-the-right-fit/",
+      },
+      {
+        label: "APMA \u2014 Balance-Boosting Footwear Tips for Older People",
+        url: "https://www.apma.org/patients-and-the-public/tips-for-healthy-feet/balance-boosting-footwear-tips-for-older-people/",
+      },
+      {
+        label: "NIDDK \u2014 Diabetes and Foot Problems",
+        url: "https://www.niddk.nih.gov/health-information/diabetes/overview/preventing-problems/foot-problems",
+      },
+      {
+        label: "Buldt & Menz, J Foot Ankle Res \u2014 Incorrectly fitted footwear, foot pain and foot disorders: a systematic search and narrative review (2018)",
+        url: "https://pubmed.ncbi.nlm.nih.gov/30065787/",
+      },
+      {
+        label: "Scott, Menz & Newcombe, Gait & Posture \u2014 Age-related differences in foot structure and function (2007)",
+        url: "https://pubmed.ncbi.nlm.nih.gov/16945538/",
+      },
+    ],
+  },
+  "pain-on-top-of-the-foot": {
+    metaTitle: "Top of Foot Pain: Laces, Tendon, Fracture, or Arthritis",
+    metaDescription:
+      "Top of foot pain: tight laces, extensor tendinitis, a bone spur, or a stress fracture. How to tell them apart, lacing fixes, and when to see a podiatrist.",
+    datePublished: "2026-09-25",
+    faq: [
+      {
+        q: "Why does the top of my foot hurt with no injury?",
+        a: "The usual answers are extensor tendinitis from laces tied too tight or a jump in hills and mileage, midfoot arthritis with a bone spur that rubs on the shoe, or a stress fracture in a metatarsal after more miles or standing hours. Gout, a ganglion cyst, and a pinched nerve on top of the foot are less common. Where it hurts and what changed in the month before narrow it fast.",
+      },
+      {
+        q: "Can tight laces cause pain on top of the foot?",
+        a: "Yes. The extensor tendons and a nerve run right under the laces with no padding, so a tight knot irritates them on every step. Loosen the laces, skip the eyelet over the sore spot or run the laces straight up on either side of it, and add a tongue pad. If the ache fades in a few days, the laces were the cause.",
+      },
+      {
+        q: "How do I know if it is a stress fracture or extensor tendonitis?",
+        a: "Tendinitis aches in a line along the tendon, feels worse with tight laces and hills, and eases when the pressure comes off. A stress fracture is tender at one point on one bone, often with swelling on top of the foot, and builds with each step after a jump in mileage or standing. Point tenderness after a change in load means imaging, not a wait-and-see.",
+      },
+      {
+        q: "Can a stress fracture in the foot show a normal X-ray?",
+        a: "Yes, and often. Early X-rays miss most stress fractures, and the crack usually shows only after two to three weeks, once the bone forms callus around it. If the story fits and the film is clean, the podiatrist repeats the X-ray in two to three weeks or orders an MRI, which shows the bone reacting right away.",
+      },
+      {
+        q: "What is the bump on top of my foot?",
+        a: "A hard, bony ridge in the middle of the foot is usually a bone spur from midfoot arthritis, common after 50 and after an old foot injury. A soft, rubbery lump that changes size is more likely a ganglion cyst. Either can be sore because the shoe rubs it, and both are a podiatrist visit rather than an emergency, unless the area is hot and red.",
+      },
+      {
+        q: "How long does a metatarsal stress fracture take to heal?",
+        a: "About six weeks off running in a stiff-soled shoe or walking boot is the usual target for a low-risk metatarsal, with a range of roughly four to twelve weeks depending on the bone. The base of the fifth metatarsal heals slowly and is often held out around twelve weeks. Return is guided by pain, not the calendar.",
+      },
+    ],
+    sources: [
+      {
+        label: "OrthoInfo (AAOS) \u2014 Stress Fractures of the Foot and Ankle (2026)",
+        url: "https://orthoinfo.aaos.org/en/diseases--conditions/stress-fractures-of-the-foot-and-ankle/",
+      },
+      {
+        label: "OrthoInfo (AAOS) \u2014 Lisfranc (Midfoot) Injury (2026)",
+        url: "https://orthoinfo.aaos.org/en/diseases--conditions/lisfranc-midfoot-injury/",
+      },
+      {
+        label: "American Family Physician \u2014 Stress Fractures: Diagnosis, Treatment, and Prevention (2011)",
+        url: "https://www.aafp.org/pubs/afp/issues/2011/0101/p39.html",
+      },
+      {
+        label: "ACFAS Foot Health Facts \u2014 Osteoarthritis of the Foot and Ankle (2026)",
+        url: "https://www.foothealthfacts.org/conditions/osteoarthritis-of-the-foot-and-ankle",
+      },
+      {
+        label: "PubMed \u2014 DiDomenico LA et al., Anterior tarsal tunnel syndrome, Clin Podiatr Med Surg (2006)",
+        url: "https://pubmed.ncbi.nlm.nih.gov/16958392/",
+      },
+    ],
+  },
+  "cold-feet-and-poor-circulation": {
+    metaTitle: "Cold Feet After 40: Circulation, Nerve, or Just Cold?",
+    metaDescription:
+      "Cold feet in men over 40: how to tell an artery problem from a nerve problem or a cold house, the 15-minute PAD test, and the signs that can't wait.",
+    datePublished: "2026-09-25",
+    faq: [
+      {
+        q: "Why are my feet always cold?",
+        a: "Usually one of three things: less blood reaching the feet (a cold room, damp socks, or an artery problem), a nerve reporting cold that isn't there (neuropathy), or a whole-body cause such as a slow thyroid, anemia, or a beta blocker. Touch them: cold to the hand points to blood flow or the room; warm to the hand but feeling cold points to a nerve.",
+      },
+      {
+        q: "How do I know if cold feet are poor circulation?",
+        a: "Cold to the touch, often one foot more than the other, with shiny hairless skin, slow nail growth, calf pain when walking that stops with rest, or a sore that won't heal. Those signs in a man over 50 who smokes or has diabetes, high blood pressure, or high cholesterol are a reason to ask for an ankle-brachial index test.",
+      },
+      {
+        q: "What is the ankle-brachial index test?",
+        a: "Blood pressure cuffs on the ankles and arms, a small Doppler probe, and a ratio of ankle pressure to arm pressure. Around 1.0 is normal and below about 0.9 suggests peripheral artery disease. It takes 10 to 20 minutes, needs no needles, and a primary care doctor can order it.",
+      },
+      {
+        q: "Why is one foot cold and the other isn't?",
+        a: "One-sided coldness to the touch is the pattern that points at an artery, because a cold room affects both feet. Gradual, with skin or walking signs, it's a routine visit and an ABI test. Sudden, with pain, pallor, and numbness or weakness, it's an emergency: call 911.",
+      },
+      {
+        q: "Does walking help poor circulation in the legs?",
+        a: "For claudication, yes, and it's the first-line treatment. In a Cochrane review, exercise programs added roughly 80 meters of pain-free walking and roughly 120 meters of maximum distance. Walk until the calf pain is mild to moderate, rest until it eases, repeat, for 30 to 45 minutes three times a week for at least 12 weeks.",
+      },
+      {
+        q: "Are cold feet at night a sign of something serious?",
+        a: "Cold feet at night are usually the room and the bedding. Foot or toe pain at night that eases when you hang the foot off the bed is different: that's rest pain, a sign of severe artery disease, and it needs a vascular referral within days.",
+      },
+    ],
+    sources: [
+      {
+        label: "NHLBI \u2014 Peripheral Artery Disease: Symptoms (2022)",
+        url: "https://www.nhlbi.nih.gov/health/peripheral-artery-disease/symptoms",
+      },
+      {
+        label: "Society for Vascular Surgery \u2014 Ankle-Brachial Index or ABI Test (accessed 2026)",
+        url: "https://vascular.org/patients-and-referring-physicians/conditions/ankle-brachial-index-or-abi-test",
+      },
+      {
+        label: "AAFP \u2014 Lower Extremity Peripheral Artery Disease: Diagnosis and Treatment, American Family Physician (2019)",
+        url: "https://www.aafp.org/pubs/afp/issues/2019/0315/p362.html",
+      },
+      {
+        label: "Cochrane Database of Systematic Reviews via PubMed \u2014 Exercise for intermittent claudication (2017)",
+        url: "https://pubmed.ncbi.nlm.nih.gov/29278423/",
+      },
+      {
+        label: "NIAMS \u2014 Raynaud's Phenomenon (2024)",
+        url: "https://www.niams.nih.gov/health-topics/raynauds-phenomenon",
+      },
+    ],
+  },
+  "hammer-toes-and-curled-toes": {
+    metaTitle: "Hammer Toe: What Straightens, What Doesn't, and the Shoe Fix",
+    metaDescription:
+      "Hammer toes have two stages. Flexible ones respond to a deep toe box, pads, and toe work; rigid ones only change with surgery. The one-finger test decides.",
+    datePublished: "2026-09-25",
+    faq: [
+      {
+        q: "Can a hammer toe be straightened without surgery?",
+        a: "Only while it is still flexible, and even then the honest word is slowed, not straightened. Toe stretches, towel scrunches, a deep toe box, and a low heel keep a flexible toe from setting and can hold a mild one where it is. Once the joint is rigid, nothing at home changes the angle; pads and shoes stop the rubbing, and surgery is the only correction.",
+      },
+      {
+        q: "What is the difference between a hammer toe, a claw toe, and a mallet toe?",
+        a: "Which joint is bent. A hammer toe bends at the middle joint, so the knuckle rides up. A claw toe bends at the middle and end joints with the base cocked up, curls under, and usually takes several toes, often with a nerve problem behind it. A mallet toe bends only at the end joint, so the tip points down and the corn sits at the tip. Treatment follows the same test for all three: flexible or rigid.",
+      },
+      {
+        q: "Why is it my second toe?",
+        a: "In many men the second toe is the longest, so it hits the front of the shoe first and folds. Next to a bunion it is crowded from the side as well: the big toe drifts under it and pushes it up, and the bone behind it picks up load the big toe stopped carrying. The [bunions guide](/guides/bunions-men-over-40) covers that side of the problem.",
+      },
+      {
+        q: "What shoes are best for hammer toes?",
+        a: "A deep, wide toe box with a soft upper, half an inch of length beyond your longest toe, and a heel of an inch or less. Depth matters more than most men expect: it is the upper pressing on the knuckle that makes the corn. A cobbler can stretch a bulge into a shoe you want to keep. Drop any shoe that leaves a red mark on the knuckle after a day.",
+      },
+      {
+        q: "Do hammer toe pads and gel sleeves work?",
+        a: "For the rubbing, yes. A gel sleeve cushions the knuckle from the upper, and a crest pad under the curled toes lifts the tips off the insole, which is what fixes the corn at the tip. Use non-medicated pads; the acid in medicated corn pads can't tell corn from healthy skin. None of them change the angle of the toe. The [calluses and corns guide](/guides/calluses-and-corns-men-over-40) covers padding and filing.",
+      },
+      {
+        q: "When should a hammer toe see a doctor the same day?",
+        a: "When the corn has opened into a sore or has fluid or blood under it, especially if you have diabetes or poor circulation. When the toe is red, hot, and swollen, or redness is spreading up the foot. And when several toes have curled over weeks with numbness, tingling, or weakness, which points to a nerve problem rather than a shoe. Bring the [doctor-prep checklist](/doctor-prep) so the visit covers when it started.",
+      },
+    ],
+    sources: [
+      {
+        label: "AAOS OrthoInfo \u2014 Hammer Toe (accessed 2026)",
+        url: "https://orthoinfo.aaos.org/en/diseases--conditions/hammer-toe/",
+      },
+      {
+        label: "ACFAS FootHealthFacts \u2014 Hammertoe (accessed 2026)",
+        url: "https://www.foothealthfacts.org/conditions/hammertoe",
+      },
+      {
+        label: "APMA \u2014 Hammer Toes (accessed 2026)",
+        url: "https://www.apma.org/hammertoes/",
+      },
+      {
+        label: "NIH MedlinePlus \u2014 Hammer toe (2024)",
+        url: "https://medlineplus.gov/ency/article/001235.htm",
+      },
+      {
+        label: "Malhotra K, Davda K, Singh D \u2014 The pathology and management of lesser toe deformities, EFORT Open Reviews (2016)",
+        url: "https://pubmed.ncbi.nlm.nih.gov/28461920/",
+      },
+    ],
+  },
+  "mortons-neuroma-men-over-40": {
+    metaTitle: "Morton's Neuroma in Men Over 40: What Fixes the Pebble",
+    metaDescription:
+      "A pebble under the foot with burning into two toes is Morton's neuroma. The shoe and pad fix, what injections and surgery trade, and when to be seen.",
+    datePublished: "2026-09-25",
+    faq: [
+      {
+        q: "What does Morton's neuroma feel like?",
+        a: "Like a pebble, a marble, or a bunched sock under the ball of the foot, usually toward the outer half, with burning, tingling, or numbness running into the third and fourth toes (sometimes the second and third). It's worse in narrow or heeled shoes and eases within minutes of taking the shoe off and rubbing the forefoot. Usually one foot. Night pain is rare, and there's nothing to see on the skin.",
+      },
+      {
+        q: "What causes a Morton's neuroma in men over 40?",
+        a: "A nerve between two metatarsal heads gets squeezed between the bones and the ligament above it until the tissue around it thickens, and a thicker nerve gets pinched more. After 40 the forefoot spreads as ligaments loosen, so the same shoes crowd the metatarsal heads together. Narrow toe boxes, heels of any height, running and court sports, and bunions or hammertoes all add to the squeeze.",
+      },
+      {
+        q: "Where do you put a metatarsal pad for a neuroma?",
+        a: "Behind the ball of the foot, not under it. Stand barefoot on the insole, feel for the ridge of the metatarsal heads, and place the pad's thick edge roughly a centimeter behind that ridge, toward the heel, so the ball of the foot sits in front of the pad. If it feels like a lump under the ball, it's too far forward. A pad placed under the heads makes a neuroma worse. The [ball-of-foot guide](/guides/ball-of-foot-pain-in-men-over-40) walks through the same placement.",
+      },
+      {
+        q: "Do steroid injections work for Morton's neuroma?",
+        a: "Often, for a while. In a patient-blinded randomized trial, a steroid plus anesthetic beat anesthetic alone at one and three months, and relief commonly runs for several months. The 2024 Cochrane review rated the evidence for most neuroma treatments low-certainty, with the steroid injection the best-supported short-term option. Repeats are limited, usually to a few a year, because steroid thins the fat pad and skin under the forefoot.",
+      },
+      {
+        q: "What does Morton's neuroma surgery involve, and what's the downside?",
+        a: "Either a release, which cuts the ligament over the nerve and keeps sensation, or a neurectomy, which removes the thickened segment of nerve. Neurectomy relieves pain for most people, and the trade is permanent numbness in the web space and the facing sides of the two toes, plus a small chance of a painful stump neuroma at the cut end. Recovery is a stiff post-op shoe for a few weeks and normal shoes at about four. It's usually offered after three to six months of conservative care hasn't worked.",
+      },
+      {
+        q: "How is Morton's neuroma diagnosed?",
+        a: "Mostly by exam. A clinician presses on each web space, squeezes the forefoot side to side to feel for the click of the nerve popping between the bones, and checks the toe joints for the swelling or drift of a plantar plate injury. An X-ray rules out a stress fracture and arthritis. Ultrasound is the preferred imaging when one is needed and can guide an injection. A numbing injection that removes the pain for an hour confirms doubtful cases. Bring the [doctor-prep checklist](/doctor-prep) so the visit stays short.",
+      },
+    ],
+    sources: [
+      {
+        label: "AAOS OrthoInfo \u2014 Morton's Neuroma",
+        url: "https://orthoinfo.aaos.org/en/diseases--conditions/mortons-neuroma/",
+      },
+      {
+        label: "NHS \u2014 Morton's neuroma (2025)",
+        url: "https://www.nhs.uk/conditions/mortons-neuroma/",
+      },
+      {
+        label: "MedlinePlus \u2014 Morton neuroma (2025)",
+        url: "https://medlineplus.gov/ency/article/007286.htm",
+      },
+      {
+        label: "Cochrane Database of Systematic Reviews \u2014 Treatments for Morton's neuroma (2024)",
+        url: "https://pubmed.ncbi.nlm.nih.gov/38334217/",
+      },
+      {
+        label: "Journal of Bone and Joint Surgery \u2014 Methylprednisolone injections for the treatment of Morton neuroma: a patient-blinded randomized trial (2013)",
+        url: "https://pubmed.ncbi.nlm.nih.gov/23636185/",
+      },
+    ],
+  },
+  "heel-spurs-explained": {
+    metaTitle: "Heel Spur Pain: Why the Spur Usually Isn't the Cause",
+    metaDescription:
+      "Most heel spurs don't hurt. The pain is the fascia or the Achilles insertion next to the spur, and that is what gets treated. What works, and what doesn't.",
+    datePublished: "2026-09-25",
+    faq: [
+      {
+        q: "What is a heel spur?",
+        a: "A heel spur, or calcaneal spur, is a shelf of extra bone on the heel bone. The common one sits on the underside where the plantar fascia attaches and points forward toward the toes; the other sits on the back of the heel where the Achilles tendon attaches. It forms over years where a tendon or fascia pulls on bone and the attachment is repeatedly stressed and repaired, so it is a record of long-term load rather than a sudden event.",
+      },
+      {
+        q: "Is a heel spur the same as plantar fasciitis?",
+        a: "No. Plantar fasciitis is irritation of the fascia at its attachment under the heel and is what produces the sharp first-step pain. The spur is bone that often forms at that same attachment after years of load. The two travel together, but in X-ray studies close to half of people with no heel pain have a spur, and orthopedic guidance is that the spur does not cause plantar fasciitis pain. The fascia is what gets treated.",
+      },
+      {
+        q: "Do heel spurs go away on their own?",
+        a: "The bone does not. A spur takes years to form and stays on the X-ray, including after the pain is gone. That matters less than it sounds, because the pain is the fascia or the Achilles insertion next to the spur, and those respond to stretching, load management, better shoes, and time. Most men are much improved within a few months, with the spur still there.",
+      },
+      {
+        q: "What is the treatment for a heel spur?",
+        a: "Treatment of the tissue next to it. Under the heel that means the plantar fasciitis plan: daily calf and fascia stretching, cutting the volume that flared it, a cushioned heel cup and a firm-soled shoe, strengthening once the sharp pain eases, weight loss where it applies, a night splint if the morning spike persists, and months of patience. Behind the heel it means a soft or open heel counter, a small heel lift, and eccentric calf work that stops at floor level.",
+      },
+      {
+        q: "Do heel spurs need surgery?",
+        a: "Rarely, and the surgery is usually not a spur removal. More than nine in ten men with plantar fasciitis recover without an operation, and surgeons typically consider one only after about a year of proper nonsurgical care has failed. Even then the procedure targets the fascia or a tight calf, and the spur is usually left alone because removing it doesn't reliably change the result and adds risk: nerve injury, a flattened arch, a heel fracture, and a long recovery.",
+      },
+      {
+        q: "What are the symptoms of a heel spur, and when should I see a doctor?",
+        a: "A plantar spur itself usually has no symptoms; the pain people blame on it is plantar fasciitis, sharp under the heel on the first steps of the morning. A spur at the back of the heel comes with pain where the tendon meets bone, a bump, and irritation from stiff-backed shoes. See a doctor the same week for heel pain with fever or a hot, red heel; pain after a fall or a jump landing; pain at rest and at night; numbness or burning; or any skin break on the heel if you have diabetes.",
+      },
+    ],
+    sources: [
+      {
+        label: "AAOS OrthoInfo \u2014 Plantar Fasciitis and Bone Spurs (accessed 2026)",
+        url: "https://orthoinfo.aaos.org/en/diseases--conditions/plantar-fasciitis-and-bone-spurs/",
+      },
+      {
+        label: "American Family Physician \u2014 Heel Pain: Diagnosis and Management (2018)",
+        url: "https://www.aafp.org/pubs/afp/issues/2018/0115/p86.html",
+      },
+      {
+        label: "PubMed \u2014 Osborne HR et al., Critical differences in lateral X-rays with and without a diagnosis of plantar fasciitis, J Sci Med Sport (2006)",
+        url: "https://pubmed.ncbi.nlm.nih.gov/16697701/",
+      },
+      {
+        label: "PubMed \u2014 Menz HB et al., Plantar calcaneal spurs in older people: longitudinal traction or vertical compression?, J Foot Ankle Res (2008)",
+        url: "https://pubmed.ncbi.nlm.nih.gov/18822162/",
+      },
+      {
+        label: "ACFAS Foot Health Facts \u2014 Haglund's Deformity (2026)",
+        url: "https://www.foothealthfacts.org/conditions/haglund%E2%80%99s-deformity",
+      },
+    ],
+  },
   "is-it-toenail-fungus": {
     metaTitle: "What Toenail Fungus Looks Like (and What Else It Could Be)",
     metaDescription: "Thick, yellow, crumbly at the tip is the fungus pattern. Half of nails like this are trauma, age, or psoriasis instead. The self-check and the lab test.",
@@ -954,25 +1501,42 @@ export const guideSeo: Record<string, GuideSeo> = {
     ],
   },
   "toenail-fungus-what-works": {
-    metaTitle: "How to Get Rid of Toenail Fungus That Works",
+    metaTitle: "Toenail Fungus: What Works, What's a Scam, Where to Start",
     metaDescription:
-      "Toenail fungus isn't dangerous, just stubborn. See the evidence-based approach that actually works, why miracle cures are scams, and what real progress looks like.",
+      "The five ways to treat toenail fungus ranked by cure rate, plus the guides that cover diagnosis, the 12-month timeline, prevention, and home remedies.",
     datePublished: "2026-03-01",
+    dateModified: "2026-09-25",
     faq: [
       {
-        q: "Why is toenail fungus so hard to get rid of?",
-        a: "It's hard not because the condition is complicated but because the solution is slow. The fungus develops quietly and changes gradually, so you can do the right thing for weeks and still see almost nothing.",
+        q: "Is my thick yellow toenail fungus?",
+        a: "About half the time, no. Old trauma, age, psoriasis, and a bacterial tint all thicken or discolor a nail, and none of them respond to antifungals. The pattern that points to fungus is a nail that goes yellow and crumbly from the tip or side and works back, often with peeling skin between the toes. A nail clipping test at the podiatrist settles it in one visit; the self-check guide covers the look-alikes.",
       },
       {
-        q: "What actually works for toenail fungus?",
-        a: "Reduce the fungal load by trimming and filing nails and keeping them clean and dry, then use proven treatments: topicals for mild to moderate cases (daily use for months) or oral antifungals for severe cases under medical supervision. You also have to treat the environment, rotating shoes, letting them dry, and wearing clean socks.",
+        q: "What is the most effective treatment for toenail fungus?",
+        a: "Oral terbinafine, a daily tablet for 12 weeks. In its trials about 4 men in 10 reached a completely normal nail and about 7 in 10 were fungus-free on the lab test, the best figures of any treatment. It needs a confirmed diagnosis, a liver blood test first, and a medication check. The prescription topicals cure fewer and suit mild cases at the tip.",
       },
       {
-        q: "How do I know the treatment is working?",
-        a: "Progress shows up as a clear strip of new nail growing from the base, less yellowing over time, and gradual reduction in thickness. The infected part of the nail doesn't heal, it grows out and gets replaced by healthier nail, which is why it takes time.",
+        q: "Does Lamisil cream work on toenail fungus?",
+        a: "No. Terbinafine cream works on skin, where it can reach the fungus. A nail plate stops it. It's the right treatment for athlete's foot between the toes, which usually comes with a fungal nail and should be treated at the same time, and the wrong treatment for the nail itself.",
+      },
+      {
+        q: "How long does it take to get rid of toenail fungus?",
+        a: "About a year for a big toenail, sometimes 18 months in men over 50. A toenail grows roughly a millimeter a month, and new clean nail has to travel from the cuticle to the tip. The pill course is 12 weeks; the topicals are 48 weeks. Progress shows at the base as a clear band, not at the tip, which looks the same until it's trimmed off.",
+      },
+      {
+        q: "Why does toenail fungus come back?",
+        a: "Because the fungus is still in the shoes, on shared floors, and usually on the skin of the same foot. Between one in ten and one in two treated nails get reinfected. Two pairs of shoes in rotation and treated, wicking socks changed daily, thirty seconds drying between the toes, athlete's foot treated at the first peel, and often a twice-weekly topical after the cure are what keep it away.",
+      },
+      {
+        q: "Do Vicks, vinegar, or tea tree oil cure toenail fungus?",
+        a: "Not at any rate close to the prescriptions. Vicks has one small uncontrolled study in which about a quarter of 18 people cleared. Tea tree oil has old, weak evidence and can cause a rash. Vinegar, baking soda, garlic, mouthwash, and peroxide have no nail trials at all. They're harmless alongside real treatment and a year lost instead of it.",
       },
     ],
     sources: [
+      {
+        label: "AAFP — Onychomycosis: Rapid Evidence Review (2021)",
+        url: "https://www.aafp.org/pubs/afp/issues/2021/1000/p359.html",
+      },
       {
         label: "Gupta et al., Mycoses 2024 — Global Prevalence of Onychomycosis",
         url: "https://onlinelibrary.wiley.com/doi/full/10.1111/myc.13725",
@@ -1720,7 +2284,7 @@ export function buildGuideSchema(slug: string) {
     mainEntity: seo.faq.map((f) => ({
       "@type": "Question",
       name: f.q,
-      acceptedAnswer: { "@type": "Answer", text: f.a },
+      acceptedAnswer: { "@type": "Answer", text: stripInlineLinks(f.a) },
     })),
   };
 
@@ -1797,7 +2361,7 @@ export function buildRoutineSchema(slug: string) {
     mainEntity: seo.faq.map((f) => ({
       "@type": "Question",
       name: f.q,
-      acceptedAnswer: { "@type": "Answer", text: f.a },
+      acceptedAnswer: { "@type": "Answer", text: stripInlineLinks(f.a) },
     })),
   };
 

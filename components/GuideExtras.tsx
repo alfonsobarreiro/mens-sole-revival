@@ -1,5 +1,34 @@
+import Link from "next/link";
 import Container from "@/components/Container";
 import { guideSeo, routineSeo } from "@/lib/guide-seo";
+
+const INLINE_LINK = /\[([^\]]+)\]\(([^)]+)\)/g;
+
+/** Render `[text](/path)` inside an FAQ answer as a real link; everything
+ *  else passes through as text. Internal paths use next/link. */
+function renderInline(text: string) {
+  const out: React.ReactNode[] = [];
+  let last = 0;
+  for (const m of text.matchAll(INLINE_LINK)) {
+    const [whole, label, href] = m;
+    const start = m.index ?? 0;
+    if (start > last) out.push(text.slice(last, start));
+    out.push(
+      href.startsWith("/") ? (
+        <Link key={start} href={href} className="underline decoration-accent-600 underline-offset-2 hover:text-brand-900">
+          {label}
+        </Link>
+      ) : (
+        <a key={start} href={href} className="underline decoration-accent-600 underline-offset-2 hover:text-brand-900" rel="noopener">
+          {label}
+        </a>
+      ),
+    );
+    last = start + whole.length;
+  }
+  if (last < text.length) out.push(text.slice(last));
+  return out;
+}
 
 /**
  * Visible "Common questions" + "Sources" block rendered at the foot of every
@@ -40,7 +69,7 @@ export default function GuideExtras({
                   {f.q}
                 </dt>
                 <dd className="mt-2 text-sm leading-7 text-neutral-600">
-                  {f.a}
+                  {renderInline(f.a)}
                 </dd>
               </div>
             ))}

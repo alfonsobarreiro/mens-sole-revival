@@ -15,16 +15,16 @@ export default function Page() {
       <ArticleLayout
         heroSrc="/images/pexels-5960467.jpg"
         heroAlt="Close-up of a man's foot, toenail fungus care guide"
-        title="Toenail Fungus: What Actually Works (and What's a Scam)"
+        title="Toenail Fungus: What Works, What's a Scam, and Where to Start"
         category="Nail Care"
-        readTime="8 min"
+        readTime="5 min"
       >
         <Article />
       </ArticleLayout>
       <GuideExtras slug="toenail-fungus-what-works" />
       <EcosystemFooter
-        heading="The protocol, not just the product."
-        intro="Recurrence kills most fungus treatments before they finish. Pair the antifungal with a twice-daily routine and a powder for the in-between."
+        heading="Start with the right guide."
+        intro="The self-check decides whether it's fungus, the comparison decides the route, and the protocol carries you through the year."
         routineKey={rel.routine}
         articleSlugs={rel.relatedArticles}
         reviewSlugs={rel.reviews}

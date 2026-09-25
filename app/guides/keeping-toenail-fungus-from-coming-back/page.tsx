@@ -13,7 +13,6 @@ export default function Page() {
   return (
     <SiteLayout>
       <ArticleLayout
-        // TODO Alfonso: placeholder hero (shared with the fungus guide); swap once the new photo is approved.
         heroSrc="/images/unsplash-oATODm0y5Aw.jpg"
         heroAlt="A pair of men's running shoes drying on a sunny step"
         title="Keeping Toenail Fungus From Coming Back"

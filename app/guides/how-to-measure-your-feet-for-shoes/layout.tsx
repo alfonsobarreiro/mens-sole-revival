@@ -1,0 +1,16 @@
+import type { Metadata } from "next";
+import JsonLd from "@/components/JsonLd";
+import { buildGuideMetadata, buildGuideSchema } from "@/lib/guide-seo";
+
+const SLUG = "how-to-measure-your-feet-for-shoes";
+
+export const metadata: Metadata = buildGuideMetadata(SLUG);
+
+export default function GuideLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+      <JsonLd schema={buildGuideSchema(SLUG)} />
+      {children}
+    </>
+  );
+}
