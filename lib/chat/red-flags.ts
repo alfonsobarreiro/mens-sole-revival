@@ -63,8 +63,15 @@ const PATTERNS: Pattern[] = [
     tier: "tier1",
     label: "foot turning black/blue/pale or cold foot",
     patterns: [
-      /\b(foot|toe|toes|feet)\s+(is|turned|turning|went|going|looks?|feels?)\s+(black|blue|dusky|purple|pale|white|cold|frozen)\b/,
+      // Colours of poor blood flow, for any foot word, allowing a word or two
+      // in between ("my foot is suddenly pale").
+      /\b(foot|toe|toes|feet|leg)\s+(is|are|turned|turning|went|going|looks?|feels?)\s+(?:\w+\s+){0,2}(black|blue|dusky|purple|pale|white)\b/,
+      // Cold on its own is only a flag for ONE foot. Both feet cold is the
+      // everyday complaint the cold-feet guide answers; sudden cold in both
+      // feet is caught by suddenColdFoot() below.
+      /\bmy\s+(left\s+|right\s+)?foot\s+(is|went|turned|feels?)\s+(?:\w+\s+){0,2}(cold|freezing|ice\s+cold|frozen)\b/,
       /\bcold\s+foot\b/,
+      /\bone\s+foot\b.{0,40}\b(cold|colder)\b/,
       /\bblack(en|ening)?\s+(toe|foot|skin|tissue|nail)\b/,
       /\bgangren(e|ous)\b/,
       /\bpallor\b.*\bfoot\b/,
@@ -114,6 +121,43 @@ const PATTERNS: Pattern[] = [
   },
   {
     tier: "tier1",
+    label: "chest pain or trouble breathing (call 911)",
+    patterns: [
+      /\bchest\s+(pain|pressure|tightness|hurts?)\b/,
+      /\b(short(ness)?\s+of\s+breath|breathless(ness)?|trouble\s+breathing|difficulty\s+breathing|hard\s+to\s+breathe|struggling\s+to\s+breathe)\b/,
+      /\bcan\W?t\s+(catch\s+my\s+breath|breathe)\b/,
+      /\bcough(ing)?\s+(up\s+)?blood\b/,
+    ],
+  },
+  {
+    tier: "tier1",
+    label: "possible blood clot (one leg or calf swollen)",
+    patterns: [
+      /\b(dvt|deep\s+vein\s+thrombosis|blood\s+clot)\b/,
+      /\bclot\s+in\s+(my|the)\s+(leg|calf)\b/,
+      /\b(swollen|swelling|puffy)\b.{0,30}\bcalf\b/,
+      /\bcalf\b.{0,30}\b(swollen|swelling|puffy|bigger)\b/,
+      /\b(one|only\s+one|left|right)\s+(leg|calf)\b.{0,40}\b(swollen|swelling|puffy|bigger)\b/,
+      /\b(swollen|swelling)\b.{0,20}\b(one|left|right)\s+(leg|calf)\b/,
+    ],
+  },
+  {
+    tier: "tier1",
+    label: "sudden cold, pale foot (possible blocked artery)",
+    patterns: [/__SUDDEN_COLD_FOOT__/],
+  },
+  {
+    tier: "tier1",
+    label: "one-sided warm swelling with no injury",
+    patterns: [/__ONE_SIDED_WARM_SWELLING__/],
+  },
+  {
+    tier: "tier1",
+    label: "bruising on the sole after an injury (possible midfoot injury)",
+    patterns: [/__SOLE_BRUISE__/],
+  },
+  {
+    tier: "tier1",
     label: "Charcot signs (diabetic warm swollen foot without wound)",
     patterns: [/__CHARCOT__/],
   },
@@ -160,6 +204,15 @@ const PATTERNS: Pattern[] = [
   },
   {
     tier: "tier2",
+    label: "red, hot, swollen joint (gout or infection)",
+    patterns: [
+      /\b(red|hot|warm)\b.{0,30}\bswollen\b.{0,30}\b(toe|joint|knuckle)\b/,
+      /\b(toe|joint|knuckle)\b.{0,30}\b(red|hot)\b.{0,30}\bswollen\b/,
+      /\b(toe|joint|knuckle)\b.{0,30}\bswollen\b.{0,30}\b(red|hot)\b/,
+    ],
+  },
+  {
+    tier: "tier2",
     label: "sudden deformity or arch collapse with pain",
     patterns: [
       /\b(arch|foot|toe)\s+(collapsed|dropped|drifted)\b.*\bpain\b/,
@@ -189,6 +242,32 @@ function charcotSigns(message: string): boolean {
   return diabetes.test(message) && warmRedSwollen.test(message) && noWoundMention;
 }
 
+const FOOT_OR_LEG = /\b(foot|feet|toe|toes|leg|legs|ankle|ankles)\b/;
+const INJURY = /\b(twist(ed)?|roll(ed)?|sprain(ed)?|fell|fall|injur(y|ed)|hit|stubbed|dropped|kicked|landed)\b/;
+
+/** Sudden cold or colour change in a foot: an artery can be blocked. */
+function suddenColdFoot(message: string): boolean {
+  const sudden = /\b(sudden(ly)?|all\s+of\s+a\s+sudden|out\s+of\s+nowhere)\b/;
+  const cold = /\b(cold|pale|white|blue|numb)\b/;
+  return sudden.test(message) && cold.test(message) && FOOT_OR_LEG.test(message) && /\b(cold|pale|white|blue)\b/.test(message);
+}
+
+/** One ankle or foot swollen and warm with no injury: clot, infection, or Charcot. */
+function oneSidedWarmSwelling(message: string): boolean {
+  const oneSide = /\b(one|only\s+one|left|right)\s+(ankle|foot)\b/;
+  const swollen = /\b(swollen|swelling|puffy)\b/;
+  const warm = /\b(warm|hot|red)\b/;
+  return oneSide.test(message) && swollen.test(message) && warm.test(message) && !INJURY.test(message);
+}
+
+/** Bruising on the sole after an injury points to a midfoot (Lisfranc) injury. */
+function soleBruise(message: string): boolean {
+  const bruise = /\bbruis(e|ed|es|ing)\b/;
+  const sole = /\b(sole|bottom\s+of\s+(my|the)\s+foot|underneath|arch)\b/;
+  const nail = /\b(nail|toenail)\b/;
+  return bruise.test(message) && sole.test(message) && !nail.test(message) && INJURY.test(message);
+}
+
 /**
  * Main entry. Returns the matched tier + label, or null if no red flag fires.
  * Returns the HIGHEST-severity match if multiple patterns hit (Tier 1 > 2 > 3).
@@ -214,6 +293,15 @@ export function classifyRedFlag(rawMessage: string): RedFlagMatch | null {
       label: "Charcot signs (diabetic warm swollen foot without wound)",
       matched: "diabetes + warm/red/swollen without wound",
     };
+  }
+  if (suddenColdFoot(message)) {
+    return { tier: "tier1", label: "sudden cold, pale foot (possible blocked artery)", matched: "sudden + cold/pale + foot" };
+  }
+  if (oneSidedWarmSwelling(message)) {
+    return { tier: "tier1", label: "one-sided warm swelling with no injury", matched: "one ankle/foot + swollen + warm, no injury" };
+  }
+  if (soleBruise(message)) {
+    return { tier: "tier1", label: "bruising on the sole after an injury (possible midfoot injury)", matched: "bruise + sole + injury" };
   }
 
   // Regex-list patterns. Sorted so Tier 1 matches short-circuit before Tier 2.
@@ -254,4 +342,25 @@ export const RED_FLAG_TEST_CASES: {
   { message: "I have a dark streak under my big toenail", expected: "tier2", reason: "rule out subungual melanoma" },
   { message: "What are the best insoles for standing all day?", expected: null, reason: "shopping question, not medical" },
   { message: "How do I trim my toenails to prevent ingrowth?", expected: null, reason: "how-to question" },
+  // Added 2026-09-25 with the swollen-feet, cold-feet, gout, top-of-foot guides.
+  { message: "my left calf is swollen and hurts and my ankle is puffy", expected: "tier1", reason: "possible DVT" },
+  { message: "one leg is swollen and warm since my flight", expected: "tier1", reason: "possible DVT after travel" },
+  { message: "my ankles are swollen and I get short of breath lying down", expected: "tier1", reason: "possible heart failure" },
+  { message: "swollen feet and chest pain", expected: "tier1", reason: "chest pain: call 911" },
+  { message: "my feet are swollen and I can't breathe well", expected: "tier1", reason: "breathing trouble: call 911" },
+  { message: "my foot is suddenly cold, pale and numb", expected: "tier1", reason: "possible blocked artery" },
+  { message: "my right foot is swollen and warm but I didn't hurt it", expected: "tier1", reason: "one-sided warm swelling" },
+  { message: "the top of my foot is swollen after I twisted it and bruised underneath", expected: "tier1", reason: "possible Lisfranc injury" },
+  { message: "my big toe joint is red hot and swollen overnight", expected: "tier2", reason: "gout or infection" },
+  { message: "my feet are always cold", expected: null, reason: "everyday cold feet: the guide answers it" },
+  { message: "my feet feel cold at night", expected: null, reason: "everyday cold feet" },
+  { message: "my toes feel cold in winter", expected: null, reason: "everyday cold toes" },
+  { message: "my foot is cold", expected: "tier1", reason: "one foot cold" },
+  { message: "what causes swollen ankles at the end of the day", expected: null, reason: "everyday swelling: the guide answers it" },
+  { message: "do compression socks help swollen feet", expected: null, reason: "how-to question" },
+  { message: "can gout cause pain in my big toe", expected: null, reason: "information question" },
+  { message: "my ankle is swollen after I rolled it", expected: null, reason: "sprain: the guide answers it" },
+  { message: "I have a bruise under my toenail from running", expected: null, reason: "black toenail: the guide answers it" },
+  { message: "my calves are tight after running", expected: null, reason: "no swelling" },
+  { message: "calf pain when I walk that goes away when I stop", expected: null, reason: "claudication: routine visit, the guide answers it" },
 ];

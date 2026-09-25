@@ -16,6 +16,7 @@ const ROUTE_LASTMOD: Record<string, string> = {
   ...(ASK_LAUNCHED ? { "/ask": "2026-09-21" } : {}),
   "": "2026-08-14",
   "/about": "2026-08-14",
+  "/privacy": "2026-09-25",
   "/assessment": "2026-08-14",
   "/guides": "2026-08-13",
   "/guides/5-minute-routine": "2026-08-13",

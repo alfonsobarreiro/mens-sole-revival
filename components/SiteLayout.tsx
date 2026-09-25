@@ -230,6 +230,7 @@ export default function SiteLayout({
                     {[
                       { label: "About", href: "/about" },
                       { label: "Contact", href: "mailto:alfonso@barreiro.com" },
+                      { label: "Privacy", href: "/privacy" },
                     ].map((l) => (
                       <li key={l.label}>
                         <Link

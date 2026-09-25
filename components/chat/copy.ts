@@ -91,7 +91,7 @@ export const askCopy = {
       body: "What you described is on the short list of foot symptoms that need in-person care before any self-treatment. That doesn't mean it's serious. When it is serious, waiting is what turns a fixable problem into a hard one.",
       nextHeading: "What to do next",
       urgent:
-        "Go to urgent care or an ER now if any of these are true: the foot is black, blue, or very pale; you have a fever; you can't put weight on it; redness is spreading; the pain came on suddenly and is severe; or you have diabetes and an open wound.",
+        "Call 911 now if you have chest pain or trouble breathing. Go to urgent care or an ER now if any of these are true: the foot is black, blue, or very pale; one calf or leg is suddenly swollen, warm, or painful; you have a fever; you can't put weight on it; redness is spreading; the pain came on suddenly and is severe; or you have diabetes and an open wound.",
       otherwise:
         "Otherwise, call a podiatrist and ask for a same-day or next-day appointment. Many keep slots for urgent problems.",
     },
