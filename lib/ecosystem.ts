@@ -139,6 +139,116 @@ export type ArticleMeta = {
 // not appended. Reverse-chronological by default so the [[new-badge]] lands
 // where users scan first.
 export const articles: Record<string, ArticleMeta> = {
+  "swollen-feet-and-ankles": {
+    slug: "swollen-feet-and-ankles",
+    title: "Swollen Feet and Ankles: Gravity, Medication, or a Same-Day Call",
+    category: "Foot Health",
+    readTime: "7 min",
+    imageUrl: "/images/pexels-7787491.jpg",
+    excerpt:
+      "Most swollen feet and ankles after 40 are gravity or a medication, and both feet swell the same. One leg, hot skin, or breathlessness moves it to a same-day call. Here is how to tell them apart.",
+    symptoms: ["pain"],
+    action: "Press a thumb above each ankle tonight for five seconds and note whether it pits and whether one side or both is swollen.",
+  },
+  "burning-feet-men-over-40": {
+    slug: "burning-feet-men-over-40",
+    title: "Burning Feet: Neuropathy, Athlete's Foot, or the Shoe",
+    category: "Foot Health",
+    readTime: "7 min",
+    imageUrl: "/images/pexels-13065922.jpg",
+    excerpt:
+      "Burning feet after 40 come from a short list: peripheral neuropathy, athlete's foot, a nerve trapped at the ankle, circulation, or the shoe. What each one feels like, the tests that sort them, and the signs that mean this week.",
+    symptoms: ["pain", "skin"],
+    action: "Check between your toes tonight, write down when and where the burning hits, and book bloodwork if it is both feet and worse at night.",
+  },
+  "black-toenail-what-it-means": {
+    slug: "black-toenail-what-it-means",
+    title: "Black Toenail: Bruise, Fungus, or the One That Needs a Dermatologist",
+    category: "Nails",
+    readTime: "7 min",
+    imageUrl: "/images/pexels-5036256.jpg",
+    excerpt:
+      "Most black toenails are blood from a stub or a short running shoe and grow out on their own. The color sequence, when to drain it, how long regrowth takes, and the one band that needs a dermatologist this week.",
+    symptoms: ["nails"],
+    action: "Photograph the nail today, and if the dark area is a band running cuticle to tip on one nail with no injury behind it, book a dermatologist this week.",
+  },
+  "flat-feet-after-40": {
+    slug: "flat-feet-after-40",
+    title: "Flat Feet After 40: When It's a Problem, When It Isn't, and What Helps",
+    category: "Alignment",
+    readTime: "7 min",
+    imageUrl: "/images/pexels-7205913.jpg",
+    excerpt:
+      "A flat foot you've had all your life is a shape. One that arrives after 40, on one side, with a swollen inner ankle, is usually a tendon failing. How to tell them apart and what helps.",
+    symptoms: ["alignment", "pain"],
+    action: "Stand on one foot and rise onto your toes; if one side can't, book a podiatrist this week.",
+  },
+  "how-to-measure-your-feet-for-shoes": {
+    slug: "how-to-measure-your-feet-for-shoes",
+    title: "Measure Your Feet at Home: Length, Width, and Why Your Size Changed After 40",
+    category: "Footwear Fit",
+    readTime: "7 min",
+    imageUrl: "/images/pexels-12031206.jpg",
+    excerpt:
+      "Feet lengthen and widen after 40, and most men are still buying the size they wore at 25. The ten-minute paper method, a length-to-size table, width letters, and the store fit rules that overrule the box.",
+    symptoms: ["footwear", "alignment"],
+    action: "Measure both feet standing, late in the day, in the socks you will wear, and buy for the larger foot in both length and width.",
+  },
+  "pain-on-top-of-the-foot": {
+    slug: "pain-on-top-of-the-foot",
+    title: "Pain on Top of the Foot: Laces, Tendon, Stress Fracture, or Arthritis",
+    category: "Pain",
+    readTime: "7 min",
+    imageUrl: "/images/pexels-8729236.jpg",
+    excerpt:
+      "Top of foot pain usually comes down to laces, a tendon, a bone spur, or a stress fracture. How to tell them apart by where it hurts, why an early X-ray can be normal, and the signs that mean a same-week visit.",
+    symptoms: ["pain"],
+    action: "Loosen your laces and skip the eyelet over the sore spot for three days, and book a podiatrist this week if one bone is tender to a thumb press.",
+  },
+  "cold-feet-and-poor-circulation": {
+    slug: "cold-feet-and-poor-circulation",
+    title: "Cold Feet and Poor Circulation: Nerve, Artery, or Just Cold",
+    category: "Foot Health",
+    readTime: "7 min",
+    imageUrl: "/images/pexels-8637976.jpg",
+    excerpt:
+      "Feet that are cold to the touch and feet that only feel cold are different problems. The touch test, the PAD signs to look for, the 15-minute ABI test, and what to do this week.",
+    symptoms: ["skin"],
+    action: "Do the touch test tonight and ask for an ankle-brachial index if your feet are cold to the hand and you're over 50 with a risk factor.",
+  },
+  "hammer-toes-and-curled-toes": {
+    slug: "hammer-toes-and-curled-toes",
+    title: "Hammer Toes and Curled Toes: What Straightens, What Doesn't, and the Shoe Fix",
+    category: "Alignment",
+    readTime: "7 min",
+    imageUrl: "/images/pexels-9616030.jpg",
+    excerpt:
+      "A hammer toe is the middle joint of a small toe buckling so the knuckle rides up. Flexible ones respond to shoes, pads, and toe work; rigid ones only change with surgery. The one-finger test decides which you have.",
+    symptoms: ["alignment", "skin"],
+    action: "Press each small toe straight with one finger: if it goes, switch to a deep toe box and start daily toe work; if it won't, book a podiatrist.",
+  },
+  "mortons-neuroma-men-over-40": {
+    slug: "mortons-neuroma-men-over-40",
+    title: "Morton's Neuroma: The Pebble Under the Foot and What Fixes It",
+    category: "Pain",
+    readTime: "7 min",
+    imageUrl: "/images/pexels-13122754.jpg",
+    excerpt:
+      "A nerve squeezed between two metatarsal heads thickens until it feels like a pebble under the foot with burning into two toes. Why it sets up after 40, the shoe and pad fix, and what injections and surgery trade.",
+    symptoms: ["pain"],
+    action: "Stand on your insole, move to a wider low-heel shoe, and fit a metatarsal pad behind the ball of the foot, not under it.",
+  },
+  "heel-spurs-explained": {
+    slug: "heel-spurs-explained",
+    title: "Heel Spurs: Why the Spur Usually Isn't the Pain",
+    category: "Pain",
+    readTime: "7 min",
+    imageUrl: "/images/pexels-9467290.jpg",
+    excerpt:
+      "A heel spur is a record of years of load on the heel, not the thing that hurts. In X-ray studies, close to half of people with no heel pain have one. The pain is the fascia or the Achilles insertion, and that is what gets treated.",
+    symptoms: ["pain"],
+    action: "Treat the fascia or the tendon, not the spur: start daily calf and fascia stretching and fix the shoe this week.",
+  },
   "is-it-toenail-fungus": {
     slug: "is-it-toenail-fungus",
     title: "Is It Toenail Fungus? The Self-Check and What Else It Could Be",
@@ -492,6 +602,56 @@ export const articleRelations: Record<
     relatedArticles: string[];
   }
 > = {
+  "swollen-feet-and-ankles": {
+    routine: "daily",
+    relatedArticles: ["foot-pain-from-standing-all-day", "numbness-and-tingling-in-the-feet", "diabetic-foot-care-men-over-40"],
+    reviews: [],
+  },
+  "burning-feet-men-over-40": {
+    routine: "daily",
+    relatedArticles: ["numbness-and-tingling-in-the-feet", "diabetic-foot-care-men-over-40", "athletes-foot-and-foot-odor-what-works"],
+    reviews: ["lamisil-at-antifungal-cream"],
+  },
+  "black-toenail-what-it-means": {
+    routine: "daily",
+    relatedArticles: ["is-it-toenail-fungus", "runners-over-40-foot-pain", "ingrown-toenail-what-actually-stops-the-cycle"],
+    reviews: [],
+  },
+  "flat-feet-after-40": {
+    routine: "strength",
+    relatedArticles: ["arches-hurt-after-walking", "knee-pain-that-starts-in-the-feet", "bunions-men-over-40"],
+    reviews: ["superfeet-blue-insoles", "kuru-atom-sneakers"],
+  },
+  "how-to-measure-your-feet-for-shoes": {
+    routine: "daily",
+    relatedArticles: ["what-your-dress-shoes-are-doing-to-your-feet", "bunions-men-over-40", "ball-of-foot-pain-in-men-over-40"],
+    reviews: ["kuru-atom-sneakers", "superfeet-blue-insoles"],
+  },
+  "pain-on-top-of-the-foot": {
+    routine: "recovery",
+    relatedArticles: ["runners-over-40-foot-pain", "gout-in-the-big-toe-men-over-40", "ball-of-foot-pain-in-men-over-40"],
+    reviews: [],
+  },
+  "cold-feet-and-poor-circulation": {
+    routine: "daily",
+    relatedArticles: ["numbness-and-tingling-in-the-feet", "diabetic-foot-care-men-over-40", "foot-and-calf-cramps-at-night"],
+    reviews: [],
+  },
+  "hammer-toes-and-curled-toes": {
+    routine: "strength",
+    relatedArticles: ["bunions-men-over-40", "calluses-and-corns-men-over-40", "what-your-dress-shoes-are-doing-to-your-feet"],
+    reviews: ["yoga-toes-gem-separators", "kuru-atom-sneakers"],
+  },
+  "mortons-neuroma-men-over-40": {
+    routine: "recovery",
+    relatedArticles: ["ball-of-foot-pain-in-men-over-40", "what-your-dress-shoes-are-doing-to-your-feet", "numbness-and-tingling-in-the-feet"],
+    reviews: ["kuru-atom-sneakers"],
+  },
+  "heel-spurs-explained": {
+    routine: "recovery",
+    relatedArticles: ["heel-pain-first-thing-in-the-morning", "plantar-fasciitis-exercises-for-men-over-40", "achilles-tendon-pain-in-men-over-40"],
+    reviews: ["superfeet-blue-insoles"],
+  },
   "is-it-toenail-fungus": {
     routine: "daily",
     relatedArticles: ["toenail-fungus-treatments-compared", "athletes-foot-and-foot-odor-what-works", "ingrown-toenail-what-actually-stops-the-cycle"],
@@ -774,7 +934,7 @@ export const symptomRecommendations: Record<
   },
   nails: {
     reviews: ["lamisil-at-antifungal-cream", "gold-bond-medicated-foot-powder"],
-    articles: ["is-it-toenail-fungus", "toenail-fungus-what-works"],
+    articles: ["black-toenail-what-it-means", "is-it-toenail-fungus", "toenail-fungus-what-works"],
   },
   skin: {
     reviews: ["gehwol-fusskraft-soft-feet-cream"],
@@ -783,12 +943,14 @@ export const symptomRecommendations: Record<
   alignment: {
     reviews: ["yoga-toes-gem-separators", "kuru-atom-sneakers"],
     articles: [
+      "hammer-toes-and-curled-toes",
+      "flat-feet-after-40",
       "big-toe-and-your-whole-body",
       "why-toe-alignment-affects-knees-and-hips",
     ],
   },
   footwear: {
     reviews: ["kuru-atom-sneakers", "superfeet-blue-insoles"],
-    articles: ["what-your-dress-shoes-are-doing-to-your-feet"],
+    articles: ["how-to-measure-your-feet-for-shoes", "what-your-dress-shoes-are-doing-to-your-feet"],
   },
 };
