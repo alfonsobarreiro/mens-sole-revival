@@ -144,7 +144,7 @@ export const articles: Record<string, ArticleMeta> = {
     title: "Swollen Feet and Ankles: Gravity, Medication, or a Same-Day Call",
     category: "Foot Health",
     readTime: "7 min",
-    imageUrl: "/images/pexels-6863766.jpg",
+    imageUrl: "/images/pexels-4975652.jpg",
     excerpt:
       "Most swollen feet and ankles after 40 are gravity or a medication, and both feet swell the same. One leg, hot skin, or breathlessness moves it to a same-day call. Here is how to tell them apart.",
     symptoms: ["pain"],

@@ -82,7 +82,7 @@ const articles = [
     category: "Foot Health",
     readTime: "7 min",
     excerpt: "Most swollen feet and ankles after 40 are gravity or a medication, and both feet swell the same. One leg, hot skin, or breathlessness moves it to a same-day call. Here is how to tell them apart.",
-    image: "/images/pexels-6863766.jpg",
+    image: "/images/pexels-4975652.jpg",
   },
   {
     slug: "burning-feet-men-over-40",
