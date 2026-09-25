@@ -83,7 +83,7 @@ const articles = [
     readTime: "7 min",
     excerpt:
       "About half of thick, yellow toenails aren't fungal, and no antifungal touches those. The patterns that mean fungus, the look-alikes in men over 40, why a five-minute clipping test beats a year of guessing, and the one streak that is never a wait-and-see.",
-    image: "/images/pexels-5960467.jpg",
+    image: "/images/unsplash-JTyPaac8ycY.jpg",
   },
   {
     slug: "toenail-fungus-treatments-compared",
@@ -92,7 +92,7 @@ const articles = [
     readTime: "9 min",
     excerpt:
       "Five ways to treat toenail fungus, and they don't work equally. Cure rates side by side for the pill, the prescription topicals, the drugstore shelf, laser, and nail thinning, plus the liver test and the statin interaction that decide the route for a man over 40.",
-    image: "/images/pexels-5960467.jpg",
+    image: "/images/unsplash-Zw4tbB4UfWI.jpg",
   },
   {
     slug: "toenail-fungus-12-month-protocol",
@@ -100,8 +100,8 @@ const articles = [
     category: "Nails",
     readTime: "8 min",
     excerpt:
-      "A toenail grows a millimetre a month, so clear nail takes a year to reach the tip. Month by month: what to do, what you should see at the base, when to worry, and why most men quit at month three when nothing is wrong.",
-    image: "/images/pexels-5960467.jpg",
+      "A toenail grows a millimeter a month, so clear nail takes a year to reach the tip. Month by month: what to do, what you should see at the base, when to worry, and why most men quit at month three when nothing is wrong.",
+    image: "/images/unsplash-UrFkjQkLs6I.jpg",
   },
   {
     slug: "keeping-toenail-fungus-from-coming-back",
@@ -110,7 +110,7 @@ const articles = [
     readTime: "7 min",
     excerpt:
       "Between one in ten and one in two treated nails get reinfected, mostly from the same shoes, socks, and showers that grew it. Shoes in rotation and treated, thirty seconds of drying, the skin caught at the first peel, nails checked monthly, and the twice-weekly topical podiatrists use as prevention.",
-    image: "/images/pexels-5960467.jpg",
+    image: "/images/unsplash-oATODm0y5Aw.jpg",
   },
   {
     slug: "toenail-fungus-home-remedies-and-laser",
@@ -119,7 +119,7 @@ const articles = [
     readTime: "7 min",
     excerpt:
       "Vicks, tea tree oil, vinegar, baking soda, garlic, mouthwash, drugstore kits, and laser, in order of evidence. One small study, one old trial, a lot of nothing, and the single drugstore ingredient worth buying. What to try alongside real treatment and what is a year lost.",
-    image: "/images/pexels-5960467.jpg",
+    image: "/images/pexels-9376098.jpg",
   },
   {
     slug: "gout-in-the-big-toe-men-over-40",
