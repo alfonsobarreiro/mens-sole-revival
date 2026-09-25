@@ -43,6 +43,8 @@ function normalizeMdx(raw: string): string {
     .replace(/^---[\s\S]*?---\n/, "")
     // Import / export lines.
     .replace(/^\s*(import|export)\s.*$/gm, "")
+    // MDX comments ({/* ... */}): editorial notes, never reader text
+    .replace(/\{\/\*[\s\S]*?\*\/\}/g, "")
     // JSX elements on their own line: <Component ... />, <Component>...</Component>.
     .replace(/<[A-Z][\w-]*(?:\s[^>]*)?\s*\/?>/g, "")
     .replace(/<\/[A-Z][\w-]*>/g, "")
