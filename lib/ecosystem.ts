@@ -444,12 +444,12 @@ export const articles: Record<string, ArticleMeta> = {
   },
   "toenail-fungus-what-works": {
     slug: "toenail-fungus-what-works",
-    title: "Toenail Fungus: What Actually Works (and What's a Scam)",
+    title: "Toenail Fungus: What Works, What's a Scam, and Where to Start",
     category: "Nail Care",
-    readTime: "8 min",
+    readTime: "5 min",
     imageUrl: "/images/pexels-5960467.jpg",
     excerpt:
-      "The evidence on OTC treatments, prescription options, and home remedies, ranked by how well they actually work.",
+      "The five ways to treat toenail fungus ranked by cure rate, what's a year lost, and which of the five guides to read next: diagnosis, treatment, the 12-month plan, prevention, or home remedies.",
     symptoms: ["nails", "skin"],
     action: "Get a nail clipping test before you buy anything, then pick the route in treatments compared.",
   },
@@ -494,27 +494,27 @@ export const articleRelations: Record<
 > = {
   "is-it-toenail-fungus": {
     routine: "daily",
-    relatedArticles: ["toenail-fungus-treatments-compared", "athletes-foot-and-foot-odor-what-works", "toenail-fungus-what-works"],
+    relatedArticles: ["toenail-fungus-treatments-compared", "athletes-foot-and-foot-odor-what-works", "ingrown-toenail-what-actually-stops-the-cycle"],
     reviews: [],
   },
   "toenail-fungus-treatments-compared": {
     routine: "daily",
-    relatedArticles: ["toenail-fungus-12-month-protocol", "is-it-toenail-fungus", "toenail-fungus-home-remedies-and-laser"],
+    relatedArticles: ["is-it-toenail-fungus", "toenail-fungus-12-month-protocol", "toenail-fungus-home-remedies-and-laser"],
     reviews: [],
   },
   "toenail-fungus-12-month-protocol": {
     routine: "weekly",
-    relatedArticles: ["toenail-fungus-treatments-compared", "keeping-toenail-fungus-from-coming-back", "ingrown-toenail-what-actually-stops-the-cycle"],
+    relatedArticles: ["toenail-fungus-treatments-compared", "keeping-toenail-fungus-from-coming-back", "is-it-toenail-fungus"],
     reviews: [],
   },
   "keeping-toenail-fungus-from-coming-back": {
     routine: "daily",
-    relatedArticles: ["athletes-foot-and-foot-odor-what-works", "toenail-fungus-12-month-protocol", "what-your-dress-shoes-are-doing-to-your-feet"],
+    relatedArticles: ["toenail-fungus-12-month-protocol", "athletes-foot-and-foot-odor-what-works", "diabetic-foot-care-men-over-40"],
     reviews: [],
   },
   "toenail-fungus-home-remedies-and-laser": {
     routine: "daily",
-    relatedArticles: ["toenail-fungus-treatments-compared", "is-it-toenail-fungus", "toenail-fungus-what-works"],
+    relatedArticles: ["toenail-fungus-treatments-compared", "is-it-toenail-fungus", "toenail-fungus-12-month-protocol"],
     reviews: [],
   },
   "gout-in-the-big-toe-men-over-40": {
@@ -646,9 +646,9 @@ export const articleRelations: Record<
     reviews: ["lamisil-at-antifungal-cream", "gold-bond-medicated-foot-powder"],
     routine: "treatment",
     relatedArticles: [
-      "why-your-feet-hurt-after-40",
-      "cracked-heels-what-actually-works",
-      "5-minute-routine",
+      "is-it-toenail-fungus",
+      "toenail-fungus-treatments-compared",
+      "toenail-fungus-12-month-protocol",
     ],
   },
   "why-toe-alignment-affects-knees-and-hips": {
@@ -729,7 +729,7 @@ export const reviewRelations: Record<
     routine: "movement",
   },
   "lamisil-at-antifungal-cream": {
-    articles: ["toenail-fungus-what-works"],
+    articles: ["athletes-foot-and-foot-odor-what-works", "toenail-fungus-what-works"],
     routine: "treatment",
   },
   "gehwol-fusskraft-soft-feet-cream": {
@@ -737,7 +737,7 @@ export const reviewRelations: Record<
     routine: "weekly",
   },
   "gold-bond-medicated-foot-powder": {
-    articles: ["toenail-fungus-what-works", "5-minute-routine"],
+    articles: ["keeping-toenail-fungus-from-coming-back", "5-minute-routine"],
     routine: "daily",
   },
   "yoga-toes-gem-separators": {

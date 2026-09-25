@@ -13,7 +13,6 @@ export default function Page() {
   return (
     <SiteLayout>
       <ArticleLayout
-        // TODO Alfonso: placeholder hero (shared with the fungus guide); swap once the new photo is approved.
         heroSrc="/images/unsplash-JTyPaac8ycY.jpg"
         heroAlt="A man's bare feet on a wooden floor, big toes in focus"
         title="Is It Toenail Fungus?"

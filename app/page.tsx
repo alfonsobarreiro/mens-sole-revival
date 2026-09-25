@@ -255,10 +255,10 @@ const articles = [
   },
   {
     slug: "toenail-fungus-what-works",
-    title: "Toenail Fungus: What Actually Works (and What's a Scam)",
+    title: "Toenail Fungus: What Works, What's a Scam, and Where to Start",
     category: "Nail Care",
-    readTime: "8 min",
-    excerpt: "OTC and prescription options ranked by how well they actually work. Plus which of the home remedies do anything at all.",
+    readTime: "5 min",
+    excerpt: "The five treatments ranked by cure rate, what's a year lost, and which of the five fungus guides to read next.",
     image: "/images/pexels-5960467.jpg",
   },
   {

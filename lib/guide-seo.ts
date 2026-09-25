@@ -954,25 +954,42 @@ export const guideSeo: Record<string, GuideSeo> = {
     ],
   },
   "toenail-fungus-what-works": {
-    metaTitle: "How to Get Rid of Toenail Fungus That Works",
+    metaTitle: "Toenail Fungus: What Works, What's a Scam, Where to Start",
     metaDescription:
-      "Toenail fungus isn't dangerous, just stubborn. See the evidence-based approach that actually works, why miracle cures are scams, and what real progress looks like.",
+      "The five ways to treat toenail fungus ranked by cure rate, plus the guides that cover diagnosis, the 12-month timeline, prevention, and home remedies.",
     datePublished: "2026-03-01",
+    dateModified: "2026-09-25",
     faq: [
       {
-        q: "Why is toenail fungus so hard to get rid of?",
-        a: "It's hard not because the condition is complicated but because the solution is slow. The fungus develops quietly and changes gradually, so you can do the right thing for weeks and still see almost nothing.",
+        q: "Is my thick yellow toenail fungus?",
+        a: "About half the time, no. Old trauma, age, psoriasis, and a bacterial tint all thicken or discolor a nail, and none of them respond to antifungals. The pattern that points to fungus is a nail that goes yellow and crumbly from the tip or side and works back, often with peeling skin between the toes. A nail clipping test at the podiatrist settles it in one visit; the self-check guide covers the look-alikes.",
       },
       {
-        q: "What actually works for toenail fungus?",
-        a: "Reduce the fungal load by trimming and filing nails and keeping them clean and dry, then use proven treatments: topicals for mild to moderate cases (daily use for months) or oral antifungals for severe cases under medical supervision. You also have to treat the environment, rotating shoes, letting them dry, and wearing clean socks.",
+        q: "What is the most effective treatment for toenail fungus?",
+        a: "Oral terbinafine, a daily tablet for 12 weeks. In its trials about 4 men in 10 reached a completely normal nail and about 7 in 10 were fungus-free on the lab test, the best figures of any treatment. It needs a confirmed diagnosis, a liver blood test first, and a medication check. The prescription topicals cure fewer and suit mild cases at the tip.",
       },
       {
-        q: "How do I know the treatment is working?",
-        a: "Progress shows up as a clear strip of new nail growing from the base, less yellowing over time, and gradual reduction in thickness. The infected part of the nail doesn't heal, it grows out and gets replaced by healthier nail, which is why it takes time.",
+        q: "Does Lamisil cream work on toenail fungus?",
+        a: "No. Terbinafine cream works on skin, where it can reach the fungus. A nail plate stops it. It's the right treatment for athlete's foot between the toes, which usually comes with a fungal nail and should be treated at the same time, and the wrong treatment for the nail itself.",
+      },
+      {
+        q: "How long does it take to get rid of toenail fungus?",
+        a: "About a year for a big toenail, sometimes 18 months in men over 50. A toenail grows roughly a millimeter a month, and new clean nail has to travel from the cuticle to the tip. The pill course is 12 weeks; the topicals are 48 weeks. Progress shows at the base as a clear band, not at the tip, which looks the same until it's trimmed off.",
+      },
+      {
+        q: "Why does toenail fungus come back?",
+        a: "Because the fungus is still in the shoes, on shared floors, and usually on the skin of the same foot. Between one in ten and one in two treated nails get reinfected. Two pairs of shoes in rotation and treated, wicking socks changed daily, thirty seconds drying between the toes, athlete's foot treated at the first peel, and often a twice-weekly topical after the cure are what keep it away.",
+      },
+      {
+        q: "Do Vicks, vinegar, or tea tree oil cure toenail fungus?",
+        a: "Not at any rate close to the prescriptions. Vicks has one small uncontrolled study in which about a quarter of 18 people cleared. Tea tree oil has old, weak evidence and can cause a rash. Vinegar, baking soda, garlic, mouthwash, and peroxide have no nail trials at all. They're harmless alongside real treatment and a year lost instead of it.",
       },
     ],
     sources: [
+      {
+        label: "AAFP — Onychomycosis: Rapid Evidence Review (2021)",
+        url: "https://www.aafp.org/pubs/afp/issues/2021/1000/p359.html",
+      },
       {
         label: "Gupta et al., Mycoses 2024 — Global Prevalence of Onychomycosis",
         url: "https://onlinelibrary.wiley.com/doi/full/10.1111/myc.13725",
