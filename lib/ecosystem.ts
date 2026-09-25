@@ -144,7 +144,7 @@ export const articles: Record<string, ArticleMeta> = {
     title: "Is It Toenail Fungus? The Self-Check and What Else It Could Be",
     category: "Nails",
     readTime: "7 min",
-    imageUrl: "/images/pexels-5960467.jpg",
+    imageUrl: "/images/unsplash-JTyPaac8ycY.jpg",
     excerpt:
       "About half of thick, yellow toenails aren't fungal, and no antifungal touches those. The patterns that mean fungus, the look-alikes in men over 40, why a five-minute clipping test beats a year of guessing, and the one streak that is never a wait-and-see.",
     symptoms: ["nails", "skin"],
@@ -155,7 +155,7 @@ export const articles: Record<string, ArticleMeta> = {
     title: "Toenail Fungus Treatments, Compared: Pills, Topicals, Laser, and What Cures",
     category: "Nails",
     readTime: "9 min",
-    imageUrl: "/images/pexels-5960467.jpg",
+    imageUrl: "/images/unsplash-Zw4tbB4UfWI.jpg",
     excerpt:
       "Five ways to treat toenail fungus, and they don't work equally. Cure rates side by side for the pill, the prescription topicals, the drugstore shelf, laser, and nail thinning, plus the liver test and the statin interaction that decide the route for a man over 40.",
     symptoms: ["nails"],
@@ -166,7 +166,7 @@ export const articles: Record<string, ArticleMeta> = {
     title: "The 12-Month Toenail Fungus Protocol",
     category: "Nails",
     readTime: "8 min",
-    imageUrl: "/images/pexels-5960467.jpg",
+    imageUrl: "/images/unsplash-UrFkjQkLs6I.jpg",
     excerpt:
       "A toenail grows a millimetre a month, so clear nail takes a year to reach the tip. Month by month: what to do, what you should see at the base, when to worry, and why most men quit at month three when nothing is wrong.",
     symptoms: ["nails"],
@@ -177,7 +177,7 @@ export const articles: Record<string, ArticleMeta> = {
     title: "Keeping Toenail Fungus From Coming Back",
     category: "Nails",
     readTime: "7 min",
-    imageUrl: "/images/pexels-5960467.jpg",
+    imageUrl: "/images/unsplash-oATODm0y5Aw.jpg",
     excerpt:
       "Between one in ten and one in two treated nails get reinfected, mostly from the same shoes, socks, and showers that grew it. Shoes in rotation and treated, thirty seconds of drying, the skin caught at the first peel, nails checked monthly, and the twice-weekly topical podiatrists use as prevention.",
     symptoms: ["nails", "skin", "footwear"],
@@ -188,7 +188,7 @@ export const articles: Record<string, ArticleMeta> = {
     title: "Home Remedies and Laser for Toenail Fungus: What the Evidence Says",
     category: "Nails",
     readTime: "7 min",
-    imageUrl: "/images/pexels-5960467.jpg",
+    imageUrl: "/images/pexels-9376098.jpg",
     excerpt:
       "Vicks, tea tree oil, vinegar, baking soda, garlic, mouthwash, drugstore kits, and laser, in order of evidence. One small study, one old trial, a lot of nothing, and the single drugstore ingredient worth buying. What to try alongside real treatment and what is a year lost.",
     symptoms: ["nails"],

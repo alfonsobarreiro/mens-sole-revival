@@ -14,7 +14,7 @@ export default function Page() {
     <SiteLayout>
       <ArticleLayout
         // TODO Alfonso: placeholder hero (shared with the fungus guide); swap once the new photo is approved.
-        heroSrc="/images/pexels-5960467.jpg"
+        heroSrc="/images/unsplash-Zw4tbB4UfWI.jpg"
         heroAlt="A man's feet resting on a wooden dock, toenails in view"
         title="Toenail Fungus Treatments, Compared"
         category="Nails"
