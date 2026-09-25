@@ -173,7 +173,7 @@ export async function submitAssessmentEmail(
     // Notify alfonso@ (terse ops email).
     const flagRows = flags
       .map(
-        (f) => `<tr><td style="padding:6px 12px;border-bottom:1px solid #f0f0f0">${escapeHtml(f.label)}</td><td style="padding:6px 12px;text-align:right;font-weight:600;border-bottom:1px solid #f0f0f0">${f.count}</td></tr>`
+        (f) => `<tr><td style="padding:6px 12px;border-bottom:1px solid #f0f0f0">${escapeHtml(f.label)}</td><td style="padding:6px 12px;text-align:right;font-weight:600;border-bottom:1px solid #f0f0f0">${Number(f.count) || 0}</td></tr>`
       )
       .join("");
     await fetch("https://api.resend.com/emails", {

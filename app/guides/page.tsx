@@ -65,10 +65,11 @@ function LearnContent() {
       <section className="relative flex flex-col overflow-hidden bg-ink py-24 md:py-32">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/pexels-10904211.jpg"
+            src="/images/pexels-5319372.jpg"
             alt=""
             fill
-            className="muted-photo object-cover object-center"
+            sizes="100vw"
+            className="muted-photo object-cover object-[center_68%]"
             priority
           />
         </div>
@@ -167,6 +168,7 @@ function LearnContent() {
                       src={a.imageUrl}
                       alt={a.title}
                       fill
+                      sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                       className="muted-photo object-cover transition duration-500 group-hover:scale-105"
                     />
                     <div className="absolute bottom-3 left-3">

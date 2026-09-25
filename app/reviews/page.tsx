@@ -56,34 +56,15 @@ function ReviewCard({ review }: { review: Review }) {
         variant="elevated"
         className="flex flex-col overflow-hidden transition group-hover:border-ink"
       >
-        {/* Image — muted-photo per DS Foundations Imagery */}
-        <div className="relative overflow-hidden" style={{ aspectRatio: "4/3" }}>
-          {review.imageUrl ? (
-            <Image
-              src={review.imageUrl}
-              alt={review.productName}
-              fill
-              className="muted-photo object-cover transition duration-500 group-hover:scale-105"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            />
+        {/* Typographic header. No product photos until the site has licensed
+            ones: a stock shoe would be pretending to be the product. */}
+        <div className="flex items-start justify-between gap-3 px-6 pt-6">
+          {review.verdict && verdict ? (
+            <Tag variant={verdictToTagVariant(review.verdict)}>{verdict.label}</Tag>
           ) : (
-            <div className="absolute inset-0 flex items-center justify-center bg-neutral-100">
-              <span className={`${type.small} text-neutral-400`}>No image</span>
-            </div>
+            <span />
           )}
-
-          {/* Verdict badge — DS Tag with weight-based verdict variant */}
-          {review.verdict && verdict && (
-            <Tag
-              variant={verdictToTagVariant(review.verdict)}
-              className="absolute top-3 left-3"
-            >
-              {verdict.label}
-            </Tag>
-          )}
-          <div className="absolute top-3 right-3">
-            <NewBadge date={review.publishedAt} />
-          </div>
+          <NewBadge date={review.publishedAt} />
         </div>
 
         {/* Body */}
@@ -170,6 +151,7 @@ export default async function ReviewsPage() {
           src="/images/pexels-8729236.jpg"
           alt=""
           fill
+          sizes="100vw"
           className="muted-photo object-cover object-center"
           priority
         />

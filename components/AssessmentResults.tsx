@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { askCopy } from "@/components/chat/copy";
+import { ASK_LAUNCHED } from "@/lib/chat/launch";
 import { useActionState, useEffect } from "react";
 import {
   submitAssessmentEmail,
@@ -258,7 +260,8 @@ export default function AssessmentResults({
                       src={a.imageUrl}
                       alt={a.title}
                       fill
-                      className="object-cover"
+                      sizes="96px"
+                      className="muted-photo object-cover"
                     />
                   </div>
                   <div className="flex flex-1 flex-col">
@@ -517,6 +520,14 @@ export default function AssessmentResults({
           >
             Restart the assessment →
           </button>
+          {ASK_LAUNCHED && (
+            <Link
+              href="/ask"
+              className="text-xs font-semibold uppercase tracking-wider text-neutral-500 underline underline-offset-4 hover:text-brand-700"
+            >
+              {askCopy.promo.fromAssessment}
+            </Link>
+          )}
         </div>
       </section>
     </div>

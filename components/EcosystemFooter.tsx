@@ -6,6 +6,8 @@ import { Tag } from "@/components/ui/Tag";
 import { type } from "@/components/typography";
 import { staticReviews } from "@/lib/reviews";
 import { articles, routines, type RoutineRef } from "@/lib/ecosystem";
+import { askCopy } from "@/components/chat/copy";
+import { ASK_LAUNCHED } from "@/lib/chat/launch";
 
 interface EcosystemFooterProps {
   /** Heading shown above the block. Defaults to "Continue with...". */
@@ -113,6 +115,7 @@ export default function EcosystemFooter({
                     src={a.imageUrl}
                     alt={a.title}
                     fill
+                    sizes="(min-width: 768px) 33vw, 100vw"
                     className="muted-photo object-cover transition duration-500 group-hover:scale-105"
                   />
                 </div>
@@ -144,16 +147,6 @@ export default function EcosystemFooter({
                 variant="elevated"
                 className="flex h-full flex-col overflow-hidden transition group-hover:border-ink"
               >
-                <div className="relative aspect-[4/3] w-full overflow-hidden">
-                  {r.imageUrl && (
-                    <Image
-                      src={r.imageUrl}
-                      alt={r.productName}
-                      fill
-                      className="muted-photo object-cover transition duration-500 group-hover:scale-105"
-                    />
-                  )}
-                </div>
                 <div className="flex flex-1 flex-col p-6">
                   <Tag variant="accent-kicker" className="self-start !px-0">
                     Reviewed · {r.brand}
@@ -171,6 +164,21 @@ export default function EcosystemFooter({
             </Link>
           ))}
         </div>
+
+        {/* Path to the assistant. One quiet line in the section's own type
+            and link treatment, so the cards stay the primary action. */}
+        {ASK_LAUNCHED && (
+          <p className={`mt-10 max-w-2xl border-t border-neutral-200 pt-6 ${type.body} text-neutral-700`}>
+            {askCopy.promo.body}{" "}
+            <Link
+              href="/ask"
+              className="text-link underline underline-offset-4 hover:text-link-hover"
+            >
+              {askCopy.promo.link}
+            </Link>
+            . {askCopy.promo.note}
+          </p>
+        )}
       </Container>
     </section>
   );

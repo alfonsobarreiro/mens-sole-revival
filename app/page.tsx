@@ -58,7 +58,7 @@ const routineHighlights: {
     desc: "Roll the arch, then hold on the sore spot until it releases. Three minutes per foot; pair with the stretch.",
     time: "6 min / as needed",
     href: "/routines/recovery",
-    image: "/images/pexels-8729018.jpg",
+    image: "/images/unsplash-cuOHHP5tx5g.jpg",
     slug: "recovery",
   },
   {
@@ -67,7 +67,7 @@ const routineHighlights: {
     desc: "Wash, dry, inspect, moisturize. Done before your phone goes to the charger.",
     time: "5 min / every night",
     href: "/routines",
-    image: "/images/pexels-4909313.jpg",
+    image: "/images/unsplash-VHy5PYCEa0U.jpg",
   },
 ];
 
@@ -76,6 +76,123 @@ const routineHighlights: {
 // are the "latest" slots — reorder to surface newly-published symptom
 // articles when they publish, so the NewBadge lights up in visible cards.
 const articles = [
+  {
+    slug: "is-it-toenail-fungus",
+    title: "Is It Toenail Fungus?",
+    category: "Nails",
+    readTime: "7 min",
+    excerpt:
+      "About half of thick, yellow toenails aren't fungal, and no antifungal touches those. The patterns that mean fungus, the look-alikes in men over 40, why a five-minute clipping test beats a year of guessing, and the one streak that is never a wait-and-see.",
+    image: "/images/unsplash-JTyPaac8ycY.jpg",
+  },
+  {
+    slug: "toenail-fungus-treatments-compared",
+    title: "Toenail Fungus Treatments, Compared",
+    category: "Nails",
+    readTime: "9 min",
+    excerpt:
+      "Five ways to treat toenail fungus, and they don't work equally. Cure rates side by side for the pill, the prescription topicals, the drugstore shelf, laser, and nail thinning, plus the liver test and the statin interaction that decide the route for a man over 40.",
+    image: "/images/unsplash-Zw4tbB4UfWI.jpg",
+  },
+  {
+    slug: "toenail-fungus-12-month-protocol",
+    title: "The 12-Month Toenail Fungus Protocol",
+    category: "Nails",
+    readTime: "8 min",
+    excerpt:
+      "A toenail grows a millimeter a month, so clear nail takes a year to reach the tip. Month by month: what to do, what you should see at the base, when to worry, and why most men quit at month three when nothing is wrong.",
+    image: "/images/unsplash-UrFkjQkLs6I.jpg",
+  },
+  {
+    slug: "keeping-toenail-fungus-from-coming-back",
+    title: "Keeping Toenail Fungus From Coming Back",
+    category: "Nails",
+    readTime: "7 min",
+    excerpt:
+      "Between one in ten and one in two treated nails get reinfected, mostly from the same shoes, socks, and showers that grew it. Shoes in rotation and treated, thirty seconds of drying, the skin caught at the first peel, nails checked monthly, and the twice-weekly topical podiatrists use as prevention.",
+    image: "/images/unsplash-oATODm0y5Aw.jpg",
+  },
+  {
+    slug: "toenail-fungus-home-remedies-and-laser",
+    title: "Home Remedies and Laser for Toenail Fungus",
+    category: "Nails",
+    readTime: "7 min",
+    excerpt:
+      "Vicks, tea tree oil, vinegar, baking soda, garlic, mouthwash, drugstore kits, and laser, in order of evidence. One small study, one old trial, a lot of nothing, and the single drugstore ingredient worth buying. What to try alongside real treatment and what is a year lost.",
+    image: "/images/pexels-9376098.jpg",
+  },
+  {
+    slug: "gout-in-the-big-toe-men-over-40",
+    title: "Gout in the Big Toe",
+    category: "Pain",
+    readTime: "7 min",
+    excerpt:
+      "A red, hot, swollen big toe that came on overnight is a different animal from stiffness that built over years. How to tell the two apart, what a flare needs, what a doctor will check, and what shoes do in between.",
+    image: "/images/pexels-18300650.jpg",
+  },
+  {
+    slug: "athletes-foot-and-foot-odor-what-works",
+    title: "Athlete's Foot and Foot Odor",
+    category: "Skin",
+    readTime: "7 min",
+    excerpt:
+      "Peeling between the toes and a smell that survives the shower are the same problem from two angles: a warm, damp shoe. The antifungal protocol, the sock and shoe rotation that stops the relapse, and when it's not fungus.",
+    image: "/images/pexels-17082339.jpg",
+  },
+  {
+    slug: "calluses-and-corns-men-over-40",
+    title: "Calluses and Corns",
+    category: "Skin",
+    readTime: "7 min",
+    excerpt:
+      "A callus is your skin answering pressure. Shave it and it comes back, because the pressure didn't leave. Where they form and why, the safe way to thin them, the corn-versus-callus difference, and the diabetes rule.",
+    image: "/images/pexels-19613251.jpg",
+  },
+  {
+    slug: "foot-and-calf-cramps-at-night",
+    title: "Foot and Calf Cramps at Night",
+    category: "Pain",
+    readTime: "7 min",
+    excerpt:
+      "The 2 a.m. calf cramp is common after 40 and mostly mechanical: shortened calves, a long day on your feet, dehydration, and a few medications. What to do in the moment, the two-minute bedtime stretch that cuts them, and the signs it's something else.",
+    image: "/images/pexels-7298421.jpg",
+  },
+  {
+    slug: "bunions-men-over-40",
+    title: "Bunions in Men Over 40",
+    category: "Alignment",
+    readTime: "8 min",
+    excerpt:
+      "A bunion is the big toe drifting toward its neighbors while the joint behind it drifts out. Shoes don't reverse it and spacers don't either, but both change how fast it moves and how much it hurts. The honest map, including when surgery earns the recovery.",
+    image: "/images/pexels-9616030.jpg",
+  },
+  {
+    slug: "diabetic-foot-care-men-over-40",
+    title: "Diabetic Foot Care",
+    category: "Foot Health",
+    readTime: "8 min",
+    excerpt:
+      "With diabetes, the nerves that report pain and the vessels that heal it both work less well, so a blister can become an ulcer without ever hurting. The 60-second daily check, the shoe and sock rules, what never to do at home, and the same-day list.",
+    image: "/images/pexels-8637976.jpg",
+  },
+  {
+    slug: "numbness-and-tingling-in-the-feet",
+    title: "Numbness and Tingling in the Feet",
+    category: "Foot Health",
+    readTime: "8 min",
+    excerpt:
+      "Pins and needles in the toes has four common causes that need different fixes: a shoe pinching a nerve, a nerve trapped at the ankle or forefoot, a back problem sending signals down the leg, or neuropathy. How to narrow it down, and the version that needs a doctor this week.",
+    image: "/images/pexels-13065922.jpg",
+  },
+  {
+    slug: "sprained-ankle-recovery-over-40",
+    title: "Sprained Ankle After 40",
+    category: "Pain",
+    readTime: "8 min",
+    excerpt:
+      "Most sprains heal; the ankle you don't rehab is the one that keeps rolling. The first 48 hours (and why total rest is out), the Ottawa rules for when it needs an X-ray, the six-week balance-and-strength progression, and the shoe that helps while it heals.",
+    image: "/images/pexels-7298407.jpg",
+  },
   {
     slug: "why-your-feet-hurt-after-40",
     title: "Why Your Feet Hurt After 40 (and What's Actually Going On)",
@@ -126,7 +243,7 @@ const articles = [
     category: "Toe Alignment",
     readTime: "6 min",
     excerpt: "The big toe is responsible for 40–60% of your push-off force. Most men have spent decades restricting it, and wondering why their knee hurts.",
-    image: "/images/pexels-11873696.jpg",
+    image: "/images/pexels-22739369.jpg",
   },
   {
     slug: "cracked-heels-what-actually-works",
@@ -150,7 +267,7 @@ const articles = [
     category: "Toe Alignment",
     readTime: "5 min",
     excerpt: "When your big toe can't extend and stabilize, your knee and lower back pick up the slack every single step. The compensation runs upward until something else gives.",
-    image: "/images/pexels-13065922.jpg",
+    image: "/images/pexels-35206081.jpg",
   },
   {
     slug: "5-minute-routine",
@@ -158,7 +275,7 @@ const articles = [
     category: "Daily Routine",
     readTime: "4 min",
     excerpt: "A five-minute habit done after your shower outperforms any more ambitious routine you'll quit inside a month.",
-    image: "/images/pexels-7205913.jpg",
+    image: "/images/pexels-10904211.jpg",
   },
 ];
 
@@ -332,6 +449,7 @@ export default function Home() {
                     src={articles[0].image}
                     alt={articles[0].title}
                     fill
+                    sizes="(min-width: 768px) 50vw, 100vw"
                     className="muted-photo object-cover transition duration-700 group-hover:scale-105"
                   />
                   <div className="absolute top-3 right-3">
@@ -365,6 +483,7 @@ export default function Home() {
                     src={a.image}
                     alt={a.title}
                     fill
+                    sizes="128px"
                     className="muted-photo object-cover transition duration-500 group-hover:scale-105"
                   />
                   <div className="absolute top-2 right-2">
@@ -395,6 +514,7 @@ export default function Home() {
             src="/images/pexels-34806666.jpg"
             alt=""
             fill
+            sizes="(min-width: 768px) 50vw, 100vw"
             className="muted-photo object-cover"
           />
         </div>
@@ -454,6 +574,7 @@ export default function Home() {
                     src={r.image}
                     alt={r.title}
                     fill
+                    sizes="(min-width: 768px) 33vw, 100vw"
                     className="object-cover muted-photo transition duration-500 group-hover:scale-105"
                   />
                   <div className="absolute bottom-3 left-3">

@@ -65,7 +65,7 @@ export default function SearchTrigger({
           onClick={() => setOpen(true)}
           aria-label="Search the site"
           title={isMac ? "Search  (⌘K)" : "Search  (Ctrl K)"}
-          className="flex items-center gap-1.5 text-sm font-medium text-neutral-600 transition hover:text-ink"
+          className="flex cursor-pointer items-center gap-1.5 text-sm font-medium text-neutral-600 transition hover:text-ink"
         >
           <SearchIcon className="h-4 w-4" />
           <span>Search</span>
@@ -75,7 +75,7 @@ export default function SearchTrigger({
           type="button"
           onClick={() => setOpen(true)}
           aria-label="Search the site"
-          className="flex h-10 w-10 items-center justify-center text-ink transition hover:text-accent-700"
+          className="flex h-10 w-10 cursor-pointer items-center justify-center text-ink transition hover:text-accent-700"
         >
           <SearchIcon className="h-5 w-5" />
         </button>

@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL as BASE } from "@/lib/site";
 import { staticReviews } from "@/lib/reviews";
+import { ASK_LAUNCHED } from "@/lib/chat/launch";
 
 // Public, indexable routes. Internal/dev routes (studio, wireframes, homepage-2/3,
 // case-study frames, design-critique, admin) are intentionally excluded.
@@ -11,6 +12,8 @@ import { staticReviews } from "@/lib/reviews";
 // build time). SEO Bundle 1 fix — universal "now" was training Google to
 // distrust the sitemap since every URL claimed to change on every build.
 const ROUTE_LASTMOD: Record<string, string> = {
+  // Listed only once the launch switch is on (lib/chat/launch.ts).
+  ...(ASK_LAUNCHED ? { "/ask": "2026-09-21" } : {}),
   "": "2026-08-14",
   "/about": "2026-08-14",
   "/assessment": "2026-08-14",
@@ -32,6 +35,19 @@ const ROUTE_LASTMOD: Record<string, string> = {
   "/guides/foot-pain-from-standing-all-day": "2026-09-18",
   "/guides/knee-pain-that-starts-in-the-feet": "2026-09-18",
   "/guides/runners-over-40-foot-pain": "2026-09-18",
+  "/guides/is-it-toenail-fungus": "2026-09-23",
+  "/guides/toenail-fungus-treatments-compared": "2026-09-23",
+  "/guides/toenail-fungus-12-month-protocol": "2026-09-23",
+  "/guides/keeping-toenail-fungus-from-coming-back": "2026-09-23",
+  "/guides/toenail-fungus-home-remedies-and-laser": "2026-09-23",
+  "/guides/gout-in-the-big-toe-men-over-40": "2026-09-22",
+  "/guides/athletes-foot-and-foot-odor-what-works": "2026-09-22",
+  "/guides/calluses-and-corns-men-over-40": "2026-09-22",
+  "/guides/foot-and-calf-cramps-at-night": "2026-09-22",
+  "/guides/bunions-men-over-40": "2026-09-22",
+  "/guides/diabetic-foot-care-men-over-40": "2026-09-22",
+  "/guides/numbness-and-tingling-in-the-feet": "2026-09-22",
+  "/guides/sprained-ankle-recovery-over-40": "2026-09-22",
   "/reviews": "2026-08-13",
   "/routines": "2026-09-10",
   "/routines/movement": "2026-09-10",

@@ -11,7 +11,7 @@
 import type { Chunk } from "./chunk";
 
 export type EmbeddedChunk = Chunk & {
-  /** L2-normalized embedding vector. Voyage-3-lite is 512 dims. */
+  /** L2-normalized embedding vector: voyage-4-lite trimmed to 512 dims. */
   embedding: number[];
 };
 
@@ -56,37 +56,80 @@ export function retrieveTopK(args: {
 }
 
 /**
- * Confidence heuristic for the "I'm not sure" state.
- * Voyage-3-lite scores for on-topic queries typically land 0.55–0.85 cosine.
- * Below 0.50 is a strong "we don't cover this" signal.
- * Between 0.50 and 0.60 is borderline — show the answer but flag uncertainty.
+ * Confidence buckets that pick the page state:
+ *   high    answer state
+ *   medium  "I'm not sure" state (model still answers, with the closest guide)
+ *   low     out-of-scope state (no model call, so off-topic questions cost nothing)
+ *
+ * Calibrated 2026-09-21 against voyage-4-lite at 512 dims with
+ * scripts/calibrate-confidence.ts (top-hit cosine score per question):
+ *   covered by a guide          0.54 to 0.70
+ *   about feet, not covered     0.44 to 0.58  (gout, warts, sprains, orthotics)
+ *   nothing to do with feet     0.08 to 0.38
+ * Re-run the script after adding guides or changing the embedding model.
  */
+export const CONFIDENCE_HIGH = 0.53;
+export const CONFIDENCE_MEDIUM = 0.4;
+
 export function classifyRetrievalConfidence(hits: RetrievalHit[]): "high" | "medium" | "low" {
   if (hits.length === 0) return "low";
   const top = hits[0].score;
-  if (top >= 0.6) return "high";
-  if (top >= 0.5) return "medium";
+  if (top >= CONFIDENCE_HIGH) return "high";
+  if (top >= CONFIDENCE_MEDIUM) return "medium";
   return "low";
 }
 
 /**
- * Format retrieved chunks as a system-prompt-injectable context block.
- * Sent to Claude alongside the user's question. Each chunk is prefixed with
- * a source header so the model can cite by slug + section in the reply.
+ * Format retrieved chunks as the <source> blocks inside the context message.
+ * Each block carries the article URL so the model can link a next step.
  */
+
+/** Site path for a chunk's article. */
+export function chunkUrl(chunk: Chunk): string {
+  if (chunk.type === "routine") return `/routines/${chunk.slug}`;
+  if (chunk.type === "page") return `/${chunk.slug}`;
+  return `/guides/${chunk.slug}`;
+}
+
+/**
+ * The guides shown under an answer: distinct articles among the hits that
+ * scored close to the best one. Decided here, not by the model, so the list
+ * cannot be steered by anything a visitor types.
+ */
+export function sourcesFromHits(
+  hits: RetrievalHit[],
+  opts: { window?: number; max?: number } = {},
+): { title: string; url: string }[] {
+  // Window and cap checked against real score gaps on 2026-09-21: a second
+  // guide within 0.05 of the best hit is on topic; past that they drift.
+  const { window = 0.05, max = 2 } = opts;
+  if (hits.length === 0) return [];
+  const floor = Math.max(CONFIDENCE_MEDIUM, hits[0].score - window);
+  const seen = new Set<string>();
+  const out: { title: string; url: string }[] = [];
+  for (const hit of hits) {
+    if (hit.score < floor) continue;
+    const url = chunkUrl(hit.chunk);
+    if (seen.has(url)) continue;
+    seen.add(url);
+    // Article titles carry an SEO subtitle after the colon; the link shows the name only.
+    out.push({ title: hit.chunk.title.split(":")[0].trim(), url });
+    if (out.length >= max) break;
+  }
+  return out;
+}
+
 export function formatContext(hits: RetrievalHit[]): string {
   if (hits.length === 0) return "No relevant articles found.";
 
   return hits
     .map((hit, i) => {
       const { chunk } = hit;
-      const source =
-        chunk.type === "routine"
-          ? `/routines/${chunk.slug}`
-          : `/guides/${chunk.slug}`;
-      const section = chunk.section ? ` — Section: ${chunk.section}` : "";
+      const source = chunkUrl(chunk);
+      const attr = (value: string) => value.replace(/"/g, "'");
+      const section = chunk.section ? ` section="${attr(chunk.section)}"` : "";
       return [
-        `<source index="${i + 1}" url="${source}" title="${chunk.title}"${section}>`,
+        `<source index="${i + 1}" url="${source}" title="${attr(chunk.title)}"${section}>`,
         chunk.text,
         `</source>`,
       ].join("\n");

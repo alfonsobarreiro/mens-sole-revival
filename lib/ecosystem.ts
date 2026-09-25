@@ -81,9 +81,9 @@ export const routines: Record<string, RoutineRef> = {
   treatment: {
     anchor: "treatment",
     label: "Treatment",
-    heading: "Antifungal protocol.",
+    heading: "Antifungal protocol, skin and nail.",
     time: "2 min · twice daily",
-    action: "Apply an OTC terbinafine cream twice daily for 4 to 6 weeks. Don't stop when it looks better.",
+    action: "Skin: OTC terbinafine cream twice daily for the full course, usually four weeks, and don't stop when it looks better. Nail: creams don't get through the plate, so get a clipping test first, then pick a treatment from the compared guide.",
   },
   recovery: {
     anchor: "recovery",
@@ -139,6 +139,151 @@ export type ArticleMeta = {
 // not appended. Reverse-chronological by default so the [[new-badge]] lands
 // where users scan first.
 export const articles: Record<string, ArticleMeta> = {
+  "is-it-toenail-fungus": {
+    slug: "is-it-toenail-fungus",
+    title: "Is It Toenail Fungus? The Self-Check and What Else It Could Be",
+    category: "Nails",
+    readTime: "7 min",
+    imageUrl: "/images/unsplash-JTyPaac8ycY.jpg",
+    excerpt:
+      "About half of thick, yellow toenails aren't fungal, and no antifungal touches those. The patterns that mean fungus, the look-alikes in men over 40, why a five-minute clipping test beats a year of guessing, and the one streak that is never a wait-and-see.",
+    symptoms: ["nails", "skin"],
+    action: "Photograph the nail, treat any peeling skin between the toes, and book a nail clipping test before you buy anything for the nail.",
+  },
+  "toenail-fungus-treatments-compared": {
+    slug: "toenail-fungus-treatments-compared",
+    title: "Toenail Fungus Treatments, Compared: Pills, Topicals, Laser, and What Cures",
+    category: "Nails",
+    readTime: "9 min",
+    imageUrl: "/images/unsplash-Zw4tbB4UfWI.jpg",
+    excerpt:
+      "Five ways to treat toenail fungus, and they don't work equally. Cure rates side by side for the pill, the prescription topicals, the drugstore shelf, laser, and nail thinning, plus the liver test and the statin interaction that decide the route for a man over 40.",
+    symptoms: ["nails"],
+    action: "With a confirmed diagnosis, bring your medication list to the podiatrist and ask about terbinafine first; get the nail thinned whatever you choose.",
+  },
+  "toenail-fungus-12-month-protocol": {
+    slug: "toenail-fungus-12-month-protocol",
+    title: "The 12-Month Toenail Fungus Protocol",
+    category: "Nails",
+    readTime: "8 min",
+    imageUrl: "/images/unsplash-UrFkjQkLs6I.jpg",
+    excerpt:
+      "A toenail grows a millimetre a month, so clear nail takes a year to reach the tip. Month by month: what to do, what you should see at the base, when to worry, and why most men quit at month three when nothing is wrong.",
+    symptoms: ["nails"],
+    action: "Photograph every affected nail today, file it thin, treat the skin, and judge progress by the clear band at the cuticle, never the tip.",
+  },
+  "keeping-toenail-fungus-from-coming-back": {
+    slug: "keeping-toenail-fungus-from-coming-back",
+    title: "Keeping Toenail Fungus From Coming Back",
+    category: "Nails",
+    readTime: "7 min",
+    imageUrl: "/images/unsplash-oATODm0y5Aw.jpg",
+    excerpt:
+      "Between one in ten and one in two treated nails get reinfected, mostly from the same shoes, socks, and showers that grew it. Shoes in rotation and treated, thirty seconds of drying, the skin caught at the first peel, nails checked monthly, and the twice-weekly topical podiatrists use as prevention.",
+    symptoms: ["nails", "skin", "footwear"],
+    action: "Rotate two treated pairs of shoes, dry between the toes after every shower, and treat any peeling skin the week you see it.",
+  },
+  "toenail-fungus-home-remedies-and-laser": {
+    slug: "toenail-fungus-home-remedies-and-laser",
+    title: "Home Remedies and Laser for Toenail Fungus: What the Evidence Says",
+    category: "Nails",
+    readTime: "7 min",
+    imageUrl: "/images/pexels-9376098.jpg",
+    excerpt:
+      "Vicks, tea tree oil, vinegar, baking soda, garlic, mouthwash, drugstore kits, and laser, in order of evidence. One small study, one old trial, a lot of nothing, and the single drugstore ingredient worth buying. What to try alongside real treatment and what is a year lost.",
+    symptoms: ["nails"],
+    action: "Get the diagnosis, take the treatment with the best odds, and keep any remedy in a supporting role with filing and drying.",
+  },
+  // ── Latest: 2026-09-22 expansion (gout, skin, cramps, bunions, diabetes,
+  // nerves, sprains). Eight new guides, newest first.
+  "gout-in-the-big-toe-men-over-40": {
+    slug: "gout-in-the-big-toe-men-over-40",
+    title: "Gout in the Big Toe: How to Tell It From Stiffness (and What to Do)",
+    category: "Pain",
+    readTime: "7 min",
+    imageUrl: "/images/pexels-18300650.jpg",
+    excerpt:
+      "A red, hot, swollen big toe that came on overnight is a different animal from stiffness that built over years. How to tell the two apart, what a flare needs, what a doctor will check, and what shoes do in between.",
+    symptoms: ["pain", "alignment"],
+    action: "If the joint is hot, red, and swollen and it started overnight, book a doctor this week; don't stretch it.",
+  },
+  "athletes-foot-and-foot-odor-what-works": {
+    slug: "athletes-foot-and-foot-odor-what-works",
+    title: "Athlete's Foot and Foot Odor: What Works (and Why It Comes Back)",
+    category: "Skin",
+    readTime: "7 min",
+    imageUrl: "/images/pexels-17082339.jpg",
+    excerpt:
+      "Peeling between the toes and a smell that survives the shower are the same problem from two angles: a warm, damp shoe. The antifungal protocol, the sock and shoe rotation that stops the relapse, and when it's not fungus.",
+    symptoms: ["skin", "footwear"],
+    action: "Start a 4-week antifungal cream course and rotate two pairs of shoes; never wear the same pair two days running.",
+  },
+  "calluses-and-corns-men-over-40": {
+    slug: "calluses-and-corns-men-over-40",
+    title: "Calluses and Corns: What to Remove, What to Leave, and What's Causing Them",
+    category: "Skin",
+    readTime: "7 min",
+    imageUrl: "/images/pexels-19613251.jpg",
+    excerpt:
+      "A callus is your skin answering pressure. Shave it and it comes back, because the pressure didn't leave. Where they form and why, the safe way to thin them, the corn-versus-callus difference, and the diabetes rule.",
+    symptoms: ["skin", "footwear", "pain"],
+    action: "Find the pressure source (shoe, toe, gait) before you thin the skin; file after a shower, never cut.",
+  },
+  "foot-and-calf-cramps-at-night": {
+    slug: "foot-and-calf-cramps-at-night",
+    title: "Foot and Calf Cramps at Night: Why They Happen After 40 and What Stops Them",
+    category: "Pain",
+    readTime: "7 min",
+    imageUrl: "/images/pexels-7298421.jpg",
+    excerpt:
+      "The 2 a.m. calf cramp is common after 40 and mostly mechanical: shortened calves, a long day on your feet, dehydration, and a few medications. What to do in the moment, the two-minute bedtime stretch that cuts them, and the signs it's something else.",
+    symptoms: ["pain"],
+    action: "Do the 2-minute calf and sole stretch before bed for two weeks and track whether the cramps drop.",
+  },
+  "bunions-men-over-40": {
+    slug: "bunions-men-over-40",
+    title: "Bunions in Men Over 40: What Slows Them, Which Shoes, and When Surgery Is the Honest Answer",
+    category: "Alignment",
+    readTime: "8 min",
+    imageUrl: "/images/pexels-9616030.jpg",
+    excerpt:
+      "A bunion is the big toe drifting toward its neighbors while the joint behind it drifts out. Shoes don't reverse it and spacers don't either, but both change how fast it moves and how much it hurts. The honest map, including when surgery earns the recovery.",
+    symptoms: ["alignment", "footwear", "pain"],
+    action: "Switch to a wide toe box now; photograph both feet from above every 3 months to track the drift.",
+  },
+  "diabetic-foot-care-men-over-40": {
+    slug: "diabetic-foot-care-men-over-40",
+    title: "Diabetic Foot Care: The Daily Check, the Shoe Rules, and When a Small Thing Is an Emergency",
+    category: "Foot Health",
+    readTime: "8 min",
+    imageUrl: "/images/pexels-8637976.jpg",
+    excerpt:
+      "With diabetes, the nerves that report pain and the vessels that heal it both work less well, so a blister can become an ulcer without ever hurting. The 60-second daily check, the shoe and sock rules, what never to do at home, and the same-day list.",
+    symptoms: ["skin", "pain", "footwear"],
+    action: "Check both feet every night with a mirror or phone camera; any break in the skin that hasn't started closing in a day is a same-day call.",
+  },
+  "numbness-and-tingling-in-the-feet": {
+    slug: "numbness-and-tingling-in-the-feet",
+    title: "Numbness and Tingling in the Feet: Nerve, Shoe, or Something Upstream",
+    category: "Foot Health",
+    readTime: "8 min",
+    imageUrl: "/images/pexels-13065922.jpg",
+    excerpt:
+      "Pins and needles in the toes has four common causes that need different fixes: a shoe pinching a nerve, a nerve trapped at the ankle or forefoot, a back problem sending signals down the leg, or neuropathy. How to narrow it down, and the version that needs a doctor this week.",
+    symptoms: ["pain", "footwear"],
+    action: "Note whether it's one foot or both, and whether it changes with shoes; that decides your next step.",
+  },
+  "sprained-ankle-recovery-over-40": {
+    slug: "sprained-ankle-recovery-over-40",
+    title: "Sprained Ankle After 40: How to Recover Without Turning It Into a Weak Ankle for Life",
+    category: "Pain",
+    readTime: "8 min",
+    imageUrl: "/images/pexels-7298407.jpg",
+    excerpt:
+      "Most sprains heal; the ankle you don't rehab is the one that keeps rolling. The first 48 hours (and why total rest is out), the Ottawa rules for when it needs an X-ray, the six-week balance-and-strength progression, and the shoe that helps while it heals.",
+    symptoms: ["pain"],
+    action: "If you can't take four steps on it or it's tender on the bone behind the ankle, get an X-ray; otherwise start protected walking today.",
+  },
   // ── Latest: 2026-09-18 expansion (nails + alignment + occupation + kinetic-
   // chain + runners). Five new symptom articles, newest first.
   "ingrown-toenail-what-actually-stops-the-cycle": {
@@ -146,7 +291,7 @@ export const articles: Record<string, ArticleMeta> = {
     title: "Ingrown Toenail: What Actually Stops the Cycle",
     category: "Nails",
     readTime: "6 min",
-    imageUrl: "/images/pexels-5960467.jpg",
+    imageUrl: "/images/pexels-5036256.jpg",
     excerpt:
       "Most ingrown toenails come back because the trim technique keeps reproducing the same edge that grew in. The specific fix, when to soak vs when to see a podiatrist, and the boring cutting rule that ends the cycle.",
     symptoms: ["nails"],
@@ -280,7 +425,7 @@ export const articles: Record<string, ArticleMeta> = {
     title: "Your Big Toe Controls More of Your Body Than You Think",
     category: "Alignment",
     readTime: "6 min",
-    imageUrl: "/images/pexels-11873696.jpg",
+    imageUrl: "/images/pexels-22739369.jpg",
     excerpt:
       "The big toe is responsible for 40 to 60% of your push-off force. Most men have spent decades restricting it and wondering why their knee hurts.",
     symptoms: ["alignment", "pain"],
@@ -306,7 +451,7 @@ export const articles: Record<string, ArticleMeta> = {
     excerpt:
       "The evidence on OTC treatments, prescription options, and home remedies, ranked by how well they actually work.",
     symptoms: ["nails", "skin"],
-    action: "Start an OTC terbinafine (Lamisil) protocol twice daily for 4 to 6 weeks.",
+    action: "Get a nail clipping test before you buy anything, then pick the route in treatments compared.",
   },
   "why-toe-alignment-affects-knees-and-hips": {
     slug: "why-toe-alignment-affects-knees-and-hips",
@@ -347,6 +492,71 @@ export const articleRelations: Record<
     relatedArticles: string[];
   }
 > = {
+  "is-it-toenail-fungus": {
+    routine: "daily",
+    relatedArticles: ["toenail-fungus-treatments-compared", "athletes-foot-and-foot-odor-what-works", "toenail-fungus-what-works"],
+    reviews: [],
+  },
+  "toenail-fungus-treatments-compared": {
+    routine: "daily",
+    relatedArticles: ["toenail-fungus-12-month-protocol", "is-it-toenail-fungus", "toenail-fungus-home-remedies-and-laser"],
+    reviews: [],
+  },
+  "toenail-fungus-12-month-protocol": {
+    routine: "weekly",
+    relatedArticles: ["toenail-fungus-treatments-compared", "keeping-toenail-fungus-from-coming-back", "ingrown-toenail-what-actually-stops-the-cycle"],
+    reviews: [],
+  },
+  "keeping-toenail-fungus-from-coming-back": {
+    routine: "daily",
+    relatedArticles: ["athletes-foot-and-foot-odor-what-works", "toenail-fungus-12-month-protocol", "what-your-dress-shoes-are-doing-to-your-feet"],
+    reviews: [],
+  },
+  "toenail-fungus-home-remedies-and-laser": {
+    routine: "daily",
+    relatedArticles: ["toenail-fungus-treatments-compared", "is-it-toenail-fungus", "toenail-fungus-what-works"],
+    reviews: [],
+  },
+  "gout-in-the-big-toe-men-over-40": {
+    reviews: ["kuru-atom-sneakers"],
+    routine: "movement",
+    relatedArticles: ["big-toe-stiffness-in-men-over-40", "big-toe-and-your-whole-body", "why-your-feet-hurt-after-40"],
+  },
+  "athletes-foot-and-foot-odor-what-works": {
+    reviews: ["lamisil-at-antifungal-cream", "gold-bond-medicated-foot-powder"],
+    routine: "daily",
+    relatedArticles: ["toenail-fungus-what-works", "cracked-heels-what-actually-works", "what-your-dress-shoes-are-doing-to-your-feet"],
+  },
+  "calluses-and-corns-men-over-40": {
+    reviews: ["gehwol-fusskraft-soft-feet-cream", "superfeet-blue-insoles"],
+    routine: "weekly",
+    relatedArticles: ["cracked-heels-what-actually-works", "ball-of-foot-pain-in-men-over-40", "what-your-dress-shoes-are-doing-to-your-feet"],
+  },
+  "foot-and-calf-cramps-at-night": {
+    reviews: [],
+    routine: "recovery",
+    relatedArticles: ["plantar-fasciitis-exercises-for-men-over-40", "why-your-feet-hurt-after-40", "runners-over-40-foot-pain"],
+  },
+  "bunions-men-over-40": {
+    reviews: ["yoga-toes-gem-separators", "kuru-atom-sneakers"],
+    routine: "movement",
+    relatedArticles: ["big-toe-stiffness-in-men-over-40", "why-toe-alignment-affects-knees-and-hips", "what-your-dress-shoes-are-doing-to-your-feet"],
+  },
+  "diabetic-foot-care-men-over-40": {
+    reviews: ["gehwol-fusskraft-soft-feet-cream"],
+    routine: "daily",
+    relatedArticles: ["cracked-heels-what-actually-works", "toenail-fungus-what-works", "foot-pain-from-standing-all-day"],
+  },
+  "numbness-and-tingling-in-the-feet": {
+    reviews: ["kuru-atom-sneakers"],
+    routine: "movement",
+    relatedArticles: ["ball-of-foot-pain-in-men-over-40", "what-your-dress-shoes-are-doing-to-your-feet", "diabetic-foot-care-men-over-40"],
+  },
+  "sprained-ankle-recovery-over-40": {
+    reviews: ["kuru-atom-sneakers"],
+    routine: "strength",
+    relatedArticles: ["achilles-tendon-pain-in-men-over-40", "runners-over-40-foot-pain", "knee-pain-that-starts-in-the-feet"],
+  },
   // ── 2026-09-18 expansion. Each newer article funnels users toward the
   // most-relevant routine sub-page + 2-3 sibling articles.
   "ingrown-toenail-what-actually-stops-the-cycle": {
@@ -564,7 +774,7 @@ export const symptomRecommendations: Record<
   },
   nails: {
     reviews: ["lamisil-at-antifungal-cream", "gold-bond-medicated-foot-powder"],
-    articles: ["toenail-fungus-what-works"],
+    articles: ["is-it-toenail-fungus", "toenail-fungus-what-works"],
   },
   skin: {
     reviews: ["gehwol-fusskraft-soft-feet-cream"],

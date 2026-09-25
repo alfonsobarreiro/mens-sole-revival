@@ -11,8 +11,9 @@ export default function JsonLd({ schema }: { schema: Schema | Schema[] }) {
         <script
           key={i}
           type="application/ld+json"
-          // Structured data is trusted, internally-authored JSON — not user input.
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(block) }}
+          // Internally authored, but review copy can come from Sanity, so "<" is
+          // escaped: a "</script>" inside a string can never close the tag.
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(block).replace(/</g, "\\u003c") }}
         />
       ))}
     </>

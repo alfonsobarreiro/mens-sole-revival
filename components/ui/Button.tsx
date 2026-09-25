@@ -10,7 +10,7 @@ const base =
   "transition-colors focus-visible:outline-none focus-visible:ring-2 " +
   "focus-visible:ring-focus-ring focus-visible:ring-offset-2 " +
   "focus-visible:ring-offset-bg-page " +
-  "disabled:pointer-events-none disabled:opacity-40 select-none";
+  "disabled:pointer-events-none disabled:opacity-40 select-none cursor-pointer";
 
 const variants: Record<ButtonVariant, string> = {
   primary:

@@ -50,6 +50,628 @@ export type GuideSeo = {
 };
 
 export const guideSeo: Record<string, GuideSeo> = {
+  "is-it-toenail-fungus": {
+    metaTitle: "What Toenail Fungus Looks Like (and What Else It Could Be)",
+    metaDescription: "Thick, yellow, crumbly at the tip is the fungus pattern. Half of nails like this are trauma, age, or psoriasis instead. The self-check and the lab test.",
+    datePublished: "2026-09-23",
+    faq: [
+      {
+        q: "What does toenail fungus look like?",
+        a: "The common form starts at the tip or one side of the nail as a yellow or white streak, then the nail thickens, turns crumbly, and builds up debris underneath as the discolored area creeps toward the cuticle. A less common form shows chalky white patches on the surface. It usually comes with peeling skin between the toes, because the same fungus causes athlete's foot. Pain is optional; many fungal nails don't hurt until they thicken enough to press on the shoe.",
+      },
+      {
+        q: "Can toenail fungus go away on its own?",
+        a: "Not the common form. The fungus lives in the nail plate and the bed under it, where the immune system can't reach it and nothing washes it out, so untreated it stays or spreads. The surface white form sometimes clears with filing and a topical. A 'fungal' nail that cleared with no treatment was most likely a bruise or old trauma growing out, which is one more reason to test before treating.",
+      },
+      {
+        q: "Can a thick yellow toenail be something other than fungus?",
+        a: "Yes, and often. About half of thick, discolored toenails aren't fungal. The usual look-alikes in men over 40 are old trauma from shoes, running, or hiking, plain age-related thickening (every nail changed the same way, no debris), nail psoriasis (small pits and orange-brown spots under the nail), and a bacterial infection under a lifted nail, which tints it green. None of these responds to an antifungal, which is why testing first saves a year.",
+      },
+      {
+        q: "How do doctors test for toenail fungus?",
+        a: "A podiatrist or dermatologist clips a piece of the affected nail and scrapes the debris under it, then the lab examines it under a microscope, grows a culture, stains a slice, or runs a DNA test. It's a routine appointment, not a specialist referral. Don't apply any product to the nail for a few days beforehand, because residue can spoil the sample, and bring your medication list in case the result leads to a prescription.",
+      },
+      {
+        q: "Why should I test before buying a treatment?",
+        a: "Three reasons. Half of nails that look fungal aren't, and months of antifungal on a bruised or psoriatic nail changes nothing. The pill that cures most cases needs a confirmed diagnosis and a liver test first, so doctors won't prescribe it on a guess. And the prescription topicals cost hundreds of dollars for a year of daily use, worth it for a confirmed infection and wasted on anything else.",
+      },
+      {
+        q: "What should I do while waiting for the test?",
+        a: "Photograph the nail in daylight with a coin for scale, trim it straight across and file the thickness down once a week, treat any peeling skin between the toes with an athlete's foot cream for four weeks, dry between the toes after every shower, and rotate two pairs of shoes so each dries for a day. None of that commits you to a year of treatment, and all of it helps whatever the answer is.",
+      },
+      {
+        q: "When is a changed toenail a same-week problem?",
+        a: "A dark brown or black streak running the length of the nail, especially if it's new, widening, or spreading onto the skin at the cuticle, needs a dermatologist or podiatrist promptly, because a melanoma under the nail looks exactly like that. Also same-week: any nail change if you have diabetes, a nail fold that's red, swollen, or draining, redness spreading up the foot, or a fever with any foot problem.",
+      },
+    ],
+    sources: [
+      {
+        label: "AAD — Nail fungus: Signs and symptoms",
+        url: "https://www.aad.org/public/diseases/a-z/nail-fungus-symptoms",
+      },
+      {
+        label: "AAFP — Onychomycosis: Rapid Evidence Review (2021)",
+        url: "https://www.aafp.org/pubs/afp/issues/2021/1000/p359.html",
+      },
+      {
+        label: "NHS — Fungal nail infection",
+        url: "https://www.nhs.uk/conditions/fungal-nail-infection/",
+      },
+    ],
+  },
+  "toenail-fungus-treatments-compared": {
+    metaTitle: "Toenail Fungus Treatments Compared: Pills, Topicals, Laser",
+    metaDescription: "Terbinafine cures the most and costs the least. Jublia and ciclopirox clear some mild cases in a year. Laser and drugstore kits have no cure evidence.",
+    datePublished: "2026-09-23",
+    faq: [
+      {
+        q: "What is the most effective treatment for toenail fungus?",
+        a: "Oral terbinafine, a daily tablet for 12 weeks. In the trials that approved it, about 4 men in 10 reached a completely normal nail and about 7 in 10 were fungus-free on the lab test, the best figures of any treatment. It's a cheap generic. It needs a confirmed diagnosis and a liver blood test before starting, and it interacts with a few medications, so bring your full list to the prescriber.",
+      },
+      {
+        q: "Do the topical toenail fungus treatments work?",
+        a: "The prescription ones work for mild infections: the tip or an edge, less than about half the nail, the base not involved, and no more than three or four nails. Efinaconazole solution is the best of them, with roughly 1 man in 6 reaching a normal nail after a year of daily use; tavaborole and the older ciclopirox lacquer do less. All three need daily application for 48 weeks, and they work better on a nail that has been filed thin.",
+      },
+      {
+        q: "Is terbinafine safe to take with a statin?",
+        a: "Usually yes, but confirm with the prescriber. Terbinafine doesn't have the cholesterol-drug interaction that the other oral antifungal, itraconazole, has. Itraconazole blocks the enzyme that clears many common drugs, and some statins can't be taken with it at all; it also carries a heart failure warning. For a man over 40 on a statin, that difference usually settles which pill is offered.",
+      },
+      {
+        q: "Does laser treatment cure toenail fungus?",
+        a: "The evidence doesn't support it as a cure. The devices are cleared for a temporary increase in clear nail, which is a cosmetic claim, and the most careful review of the trials found them small and the results uncertain, with clearance well below the pill. Courses cost several hundred to over a thousand dollars and are rarely covered. Laser plus a topical is a reasonable last option for men who can't take the pill; on its own it's poor value.",
+      },
+      {
+        q: "Should the toenail be removed?",
+        a: "Rarely on its own. Chemical removal (a high-strength urea paste under a dressing) or surgical removal takes the nail off, but the fungus is in the nail bed too, and studies of removal alone show poor cure rates. It's used for a nail too thick or painful for anything else, or paired with a topical on the exposed bed while the new nail grows. For most men, thinning the nail does the same job without the downtime.",
+      },
+      {
+        q: "Do over-the-counter fungal nail products work?",
+        a: "None has trial evidence for curing toenail fungus. Most are urea, which softens and thins the nail, or a cosmetic whitener, or an antifungal cream meant for skin that can't get through a nail plate. Urea is worth having, because a thinner nail responds better to any real treatment. The rest is a year lost if it stands in for treatment.",
+      },
+      {
+        q: "Why does the podiatrist file the nail down?",
+        a: "Thinning the nail improves every other treatment. There's less material for the fungus to live in, less pressure in the shoe, and far better penetration for a topical. A podiatrist can grind a thick nail to a thin plate in one visit; at home, a 40% urea cream at night for a few weeks and a coarse emery board weekly do a slower version. It's not a cure on its own and it's the cheapest improvement available.",
+      },
+    ],
+    sources: [
+      {
+        label: "AAFP — Onychomycosis: Rapid Evidence Review (2021)",
+        url: "https://www.aafp.org/pubs/afp/issues/2021/1000/p359.html",
+      },
+      {
+        label: "AAFP — Onychomycosis: Current Trends in Diagnosis and Treatment (2013)",
+        url: "https://www.aafp.org/pubs/afp/issues/2013/1201/p762.html",
+      },
+      {
+        label: "Cochrane — Oral antifungal medication for toenail onychomycosis (2017)",
+        url: "https://doi.org/10.1002/14651858.CD010031.pub2",
+      },
+      {
+        label: "Cochrane — Topical and device-based treatments for fungal infections of the toenails (2020)",
+        url: "https://doi.org/10.1002/14651858.CD012093.pub2",
+      },
+      {
+        label: "AAD — Nail fungus: Diagnosis and treatment",
+        url: "https://www.aad.org/public/diseases/a-z/nail-fungus-treatment",
+      },
+    ],
+  },
+  "toenail-fungus-12-month-protocol": {
+    metaTitle: "How Long Toenail Fungus Takes to Clear: The 12-Month Plan",
+    metaDescription: "A toenail grows one millimeter a month, so a clear nail takes a year. What to do and see in each quarter, how to tell it's working, and when it isn't.",
+    datePublished: "2026-09-23",
+    faq: [
+      {
+        q: "How long does toenail fungus take to clear?",
+        a: "Twelve to eighteen months for a big toenail. The treatment kills the fungus where new nail forms, at the base, and a toenail grows about one millimeter a month, so the clear nail starts at the cuticle and takes a year to reach the tip. The damaged nail in front of it never repairs; it grows out and gets trimmed off. Smaller toenails clear sooner, and older men or men with slow circulation take longer.",
+      },
+      {
+        q: "How do I know if the toenail fungus is dying?",
+        a: "Look at the base, not the tip. By the end of month three there should be a band of healthy-looking new nail one to three millimeters wide at the cuticle, clearer and smoother than what's in front of it. By month six it should be a third of the way up a big toenail. Monthly photos in daylight with a coin for scale make the comparison; memory doesn't. The tip looks bad until it's cut off, and that's normal.",
+      },
+      {
+        q: "Why does the pill only last 12 weeks if the nail takes a year?",
+        a: "Terbinafine builds up in the nail bed and keeps working there for months after the last dose, which is why a 12-week course treats a 12-month problem. Once the course is done there's nothing more to take, but the daily skin and shoe routine continues, and many doctors add a twice-weekly topical to protect the new growth while the old nail grows out.",
+      },
+      {
+        q: "What should I do every day during treatment?",
+        a: "Apply the treatment if it's a topical, on a clean, dry, filed nail, covering the nail and the skin fold. Dry between the toes after every shower. Wear wicking socks changed daily and rotate two pairs of shoes treated with an antifungal spray or powder. Once a week, file the nail thin. Once a month, trim straight across and take the photo. Treat any peeling skin between the toes with an athlete's foot cream, the full four weeks.",
+      },
+      {
+        q: "When should I go back to the doctor during treatment?",
+        a: "On the pill, the same day for dark urine, pale stools, yellowing eyes, nausea that won't shift, or a rash. Any time the nail fold is red, swollen, or draining. And at month six if there's no clear band at the base or the band has stopped growing: the usual reasons are the wrong diagnosis, a topical that isn't penetrating a nail still too thick, or reinfection from untreated skin or shoes. Take the photos; they show more than the nail.",
+      },
+      {
+        q: "How do I know the fungus is really gone?",
+        a: "Looks aren't the test. Ask the podiatrist for a repeat nail clipping at the end of treatment. A nail that looks clear but still grows fungus on the lab test will come back within the year. After a confirmed cure, keep the prevention routine and the monthly photo habit; a new streak at the tip caught early is a short course, not another year.",
+      },
+    ],
+    sources: [
+      {
+        label: "AAD — Nail fungus: Diagnosis and treatment",
+        url: "https://www.aad.org/public/diseases/a-z/nail-fungus-treatment",
+      },
+      {
+        label: "NHS — Fungal nail infection",
+        url: "https://www.nhs.uk/conditions/fungal-nail-infection/",
+      },
+      {
+        label: "AAFP — Onychomycosis: Rapid Evidence Review (2021)",
+        url: "https://www.aafp.org/pubs/afp/issues/2021/1000/p359.html",
+      },
+    ],
+  },
+  "keeping-toenail-fungus-from-coming-back": {
+    metaTitle: "Keep Toenail Fungus From Coming Back: Shoes, Socks, Skin",
+    metaDescription: "One in ten to one in two treated nails get reinfected, mostly from the same shoes, socks, and showers. Shoe rotation, drying, and the twice-weekly topical.",
+    datePublished: "2026-09-23",
+    faq: [
+      {
+        q: "Is toenail fungus contagious?",
+        a: "Yes, weakly. It spreads through damp shared floors, towels, and nail tools far more than through touch, and the foot that catches it is usually damp, cracked, or already carrying athlete's foot. Within a household, treat everyone who has it at the same time, use separate towels, and wash the bath mat hot weekly, or you'll trade it back and forth.",
+      },
+      {
+        q: "How often does toenail fungus come back after treatment?",
+        a: "Depending on the study, somewhere between one in ten and one in two treated nails get reinfected. The fungus is cured out of the nail, not out of your life: it's still in the shoes worn during the infection, on gym and pool floors, on the skin between the toes, and often on a family member. Prevention is about not handing it a warm, damp toenail to move back into.",
+      },
+      {
+        q: "Do I need to throw away my shoes after toenail fungus?",
+        a: "Not all of them. Fungus survives in shoes for months, so every pair worn during the infection is seeded. Spray or powder an antifungal into each pair weekly for the first couple of months after the cure, then monthly, and rotate two pairs so each dries for a day. Retire the worst: old running shoes, work boots that never dry, anything with a foam insole that has been damp for a year, or at least replace the insoles.",
+      },
+      {
+        q: "Can I get toenail fungus from a nail salon or the gym?",
+        a: "Yes, both are known routes. Shared clippers and files carry it, so bring your own tools to a salon or confirm they sterilize. Gym, pool, and hotel shower floors are where a foot picks it up; wear flip-flops or shower shoes every time. At home, a household member with athlete's foot or a fungal nail will trade it back and forth with you until everyone is treated at the same time.",
+      },
+      {
+        q: "What is the twice-weekly topical for preventing recurrence?",
+        a: "Many podiatrists keep patients on a prescription antifungal lacquer or solution, applied once or twice a week for months after a cure, sometimes indefinitely for men with repeat infections, diabetes, or poor circulation. The evidence that it lowers recurrence is reasonable, a generic like ciclopirox is inexpensive, and it takes two minutes a week. It's the one prevention step with trial data behind it; ask about it at the final visit.",
+      },
+      {
+        q: "Does athlete's foot cause toenail fungus to come back?",
+        a: "It's the main reservoir. Athlete's foot is often too mild to notice: peeling between the fourth and fifth toes, or a dry-looking patch on the heel that moisturizer doesn't fix. The nail gets reinfected from its own foot. Treat it at the first sign with four weeks of an antifungal cream, the full course even after it looks better, and dry between the toes after every shower.",
+      },
+      {
+        q: "Who needs to be strictest about prevention?",
+        a: "Men with diabetes, because a thick nail or a break in the skin beside it is how foot ulcers start, so any nail change goes to the podiatrist early. Men with poor circulation or a weakened immune system, whose nails grow and clear more slowly. And runners and hikers, whose repeated nail trauma is the entry point: shoes half a size up for long days, laces snug so the foot doesn't slide, and nails trimmed before every long run.",
+      },
+    ],
+    sources: [
+      {
+        label: "AAD — Nail fungus: Diagnosis and treatment",
+        url: "https://www.aad.org/public/diseases/a-z/nail-fungus-treatment",
+      },
+      {
+        label: "AAFP — Onychomycosis: Current Trends in Diagnosis and Treatment (2013)",
+        url: "https://www.aafp.org/pubs/afp/issues/2013/1201/p762.html",
+      },
+      {
+        label: "NHS — Fungal nail infection",
+        url: "https://www.nhs.uk/conditions/fungal-nail-infection/",
+      },
+    ],
+  },
+  "toenail-fungus-home-remedies-and-laser": {
+    metaTitle: "Home Remedies for Toenail Fungus: Vicks, Tea Tree, Laser",
+    metaDescription: "Vicks has one 18-person study. Tea tree oil has old, weak evidence. Vinegar, baking soda, and peroxide have none. Laser is unproven for the price.",
+    datePublished: "2026-09-23",
+    faq: [
+      {
+        q: "Is there anything that kills toenail fungus fast?",
+        a: "No. Nothing gets through the nail plate and kills the fungus underneath in days or weeks, and even a treatment that works leaves the damaged nail in place until it grows out at about a millimeter a month. Anything that 'cleared it in a week' was filing, a whitening soak, or a nail that was never fungal. The fastest route is the highest-cure-rate treatment started soonest.",
+      },
+      {
+        q: "Does Vicks VapoRub cure toenail fungus?",
+        a: "There's one small pilot study: 18 people applied it daily for 48 weeks, and 5 of them ended with a nail that was clear and fungus-free on the lab test, 10 improved partially, and 3 didn't change. Nobody was compared with doing nothing. It's cheap and safe on intact skin, and about a quarter cured in a tiny study is worth knowing about. Against the pill, which cures nearly twice as many in controlled trials, it's a supporting act, not a first choice.",
+      },
+      {
+        q: "Does tea tree oil work on toenail fungus?",
+        a: "The evidence is old and weak. A 1990s trial compared 100% tea tree oil twice daily for six months with a 1% antifungal cream that isn't itself a nail treatment; both groups improved about the same on looks and both did poorly on the lab test. Tea tree oil has antifungal activity in the lab, irritates some people's skin, and can cause an allergic rash. If you use it, keep it on the nail plate and treat it as company for real treatment.",
+      },
+      {
+        q: "Do vinegar soaks get rid of toenail fungus?",
+        a: "No trial has tested vinegar on toenails. Fungus dislikes acid in a dish, but a daily soak doesn't reach the fungus under the nail plate. Soaks are harmless on intact skin and they soften the nail, which makes filing easier; if you like the ritual, file afterward and count that as the benefit. Bleach soaks, sometimes recommended online, damage skin and aren't worth it.",
+      },
+      {
+        q: "Is laser treatment for toenail fungus worth the money?",
+        a: "Not on its own. The devices are cleared for a temporary increase in clear nail, a cosmetic claim, and the most careful review of the trials found them small, short, and inconsistent, with low certainty of any benefit and clearance rates well below the pill. Courses run several hundred to over a thousand dollars, rarely covered. Laser plus a topical is a defensible last option for a man who can't take the pill and has failed a topical alone.",
+      },
+      {
+        q: "Which drugstore fungal nail product is worth buying?",
+        a: "Urea. A 40% urea cream at night for a few weeks softens and thins the nail, and a thinner nail responds better to any real treatment. Most other drugstore kits are urea in a fancier package, a cosmetic whitener, or a low-strength antifungal that penetrates nail poorly. Read the ingredients: if the active ingredient isn't a named antifungal drug at a nail-treatment concentration, it isn't a nail treatment.",
+      },
+      {
+        q: "Why do home remedies seem to work in the stories?",
+        a: "Because the ritual around them does the helping: the nail gets filed, cleaned, and trimmed, which improves the look; the foot gets dried because someone is paying attention; and in about half the cases there was never fungus to begin with, so nothing was going to change either way. Those are real benefits. Get the diagnosis first, take the treatment with the best odds, keep the remedy in a supporting role, and stop at the first sign of skin irritation.",
+      },
+    ],
+    sources: [
+      {
+        label: "Derby et al. — Novel treatment of onychomycosis using over-the-counter mentholated ointment (J Am Board Fam Med, 2011)",
+        url: "https://pubmed.ncbi.nlm.nih.gov/21209346/",
+      },
+      {
+        label: "Buck et al. — Comparison of two topical preparations for the treatment of onychomycosis: tea tree oil and clotrimazole (J Fam Pract, 1994)",
+        url: "https://pubmed.ncbi.nlm.nih.gov/8195735/",
+      },
+      {
+        label: "Cochrane — Topical and device-based treatments for fungal infections of the toenails (2020)",
+        url: "https://doi.org/10.1002/14651858.CD012093.pub2",
+      },
+      {
+        label: "AAD — Nail fungus: Diagnosis and treatment",
+        url: "https://www.aad.org/public/diseases/a-z/nail-fungus-treatment",
+      },
+    ],
+  },
+  // ── 2026-09-22 expansion: eight guides, newest first.
+  "sprained-ankle-recovery-over-40": {
+    metaTitle: "Sprained Ankle After 40: Recover Without a Weak Ankle for Life",
+    metaDescription:
+      "Most sprains heal. The one that never gets rehabbed keeps rolling. The first 48 hours under PEACE and LOVE, the Ottawa X-ray check, and a six-week progression.",
+    datePublished: "2026-09-22",
+    faq: [
+      {
+        q: "How long does a sprained ankle take to heal after 40?",
+        a: "It depends on the grade. A grade 1 (stretched ligament, microscopic tearing) is usually about two weeks. A grade 2 (partial tear) runs four to six weeks. A grade 3 (complete tear) takes months and should be managed by a clinician. Those numbers assume you rehab it. Past 40, collagen turnover is slower and balance sense takes longer to return, so an ankle that's rested and never trained tends to stay loose and roll again.",
+      },
+      {
+        q: "Should I ice a sprained ankle?",
+        a: "Briefly, for pain, if you want. Not for hours, and not as the treatment. The PEACE and LOVE framework in the British Journal of Sports Medicine groups ice with anti-inflammatory drugs: the authors flag potentially harmful effects on tissue repair, and there's no good evidence ice speeds healing. Compression, keeping the ankle up, and early protected walking do more for swelling than a frozen bag does.",
+      },
+      {
+        q: "How do I know if my sprained ankle needs an X-ray?",
+        a: "Run the Ottawa ankle rules. Press on the bone at the back edge or tip of the outer and inner ankle bones, the base of the fifth metatarsal (the bump on the outside of the midfoot), and the navicular (the bump on the inside of the midfoot). Bone tenderness at any of those, or being unable to take four steps both right after the injury and now, means get an X-ray. No positives and a fracture is unlikely.",
+      },
+      {
+        q: "Can I walk on a sprained ankle?",
+        a: "Usually, yes, and you should, as soon as it's tolerable. Current guidance calls for protecting the ankle for one to three days, then loading it with protected weight bearing: a supportive shoe or a lace-up brace, flat ground, as far as the pain allows. Weeks in a boot for a simple sprain stiffens the joint and weakens the calf. If you can't bear any weight after 48 hours, that's a doctor visit.",
+      },
+      {
+        q: "Why does my ankle keep rolling after a sprain?",
+        a: "The ligament carried nerve endings that told your brain where the foot was, and a sprain scrambles that signal. Pain fades in weeks; position sense doesn't come back on its own. Add weaker calf and peroneal muscles and you get chronic ankle instability, which OrthoInfo calls the most common result of incomplete rehab. Single-leg balance, eyes open, then closed, then on an unstable surface, is what fixes it. The [strength routine](/routines/strength) has the progression.",
+      },
+      {
+        q: "Do I need an ankle brace, and for how long?",
+        a: "For sport and uneven ground, a lace-up brace for the first several months while your own stabilizers come back. For daily walking, a supportive shoe is usually enough after the first week or two. A rigid brace worn all day, indefinitely, is the wrong answer: it lets the muscles stay weak. Wean off it when the injured side matches the other side on the single-leg hop and the eyes-closed balance test.",
+      },
+    ],
+    sources: [
+      {
+        label: "British Journal of Sports Medicine — Soft tissue injuries simply need PEACE & LOVE (Dubois and Esculier, 2019)",
+        url: "https://blogs.bmj.com/bjsm/2019/04/26/soft-tissue-injuries-simply-need-peace-love/",
+      },
+      {
+        label: "MDCalc — Ottawa Ankle Rule",
+        url: "https://www.mdcalc.com/calc/1670/ottawa-ankle-rule",
+      },
+      {
+        label: "AAOS OrthoInfo — Sprained Ankle",
+        url: "https://www.orthoinfo.org/en/diseases--conditions/sprained-ankle/",
+      },
+    ],
+  },
+  "diabetic-foot-care-men-over-40": {
+    metaTitle: "Diabetic Foot Care, Men Over 40: Daily Check, Shoe Rules, Red Flags",
+    metaDescription:
+      "With diabetes a blister can become an ulcer without hurting. The 60-second daily check, shoe and sock rules, the same-day call list, and what the exam is for.",
+    datePublished: "2026-09-22",
+    faq: [
+      {
+        q: "Why do I have to check my feet every day if nothing hurts?",
+        a: "Because with diabetes, pain is the signal you can no longer trust. Nerve damage in the feet (peripheral neuropathy) means a blister, a cut, or a rubbing seam can open the skin without any warning, and reduced blood flow means it heals slowly and gets infected easily. The daily check replaces the pain signal with your eyes. It takes about 60 seconds: tops, soles, heels, and between the toes, both feet, every day.",
+      },
+      {
+        q: "How do I check the bottom of my feet if I can't see them?",
+        a: "Put a hand mirror on the floor and hold your foot over it, or take a photo of each sole with your phone. The phone is the better option: you can zoom in on a spot, and you can compare today's picture with yesterday's. If neither works because of eyesight or mobility, ask someone in the house to look, and tell your clinician so foot checks can be built into your visits.",
+      },
+      {
+        q: "What counts as a same-day call?",
+        a: "Any break in the skin that hasn't started to close within a day. Any blister. Redness, warmth, or swelling, especially in one foot with no obvious injury, which can be infection or the start of a Charcot foot. Any wound with drainage or a smell. Black or blue skin. A fever with any foot problem. New pain in a foot that usually can't feel pain. Call the day you find it; after hours, fever, black skin, or a red, hot, swollen foot means urgent care or the emergency department.",
+      },
+      {
+        q: "Can I cut a callus or use a corn remover myself?",
+        a: "No. Never cut a corn or callus at home, and skip the over-the-counter corn pads and liquids; they use salicylic acid to dissolve skin, and on a foot that can't feel, they take too much. A podiatrist reduces calluses safely and can see what's under them. A callus with a dark spot or dried blood inside is often the first sign of a wound underneath, and that one goes on the same-day list.",
+      },
+      {
+        q: "How often should I have a foot exam if I have diabetes?",
+        a: "At least once a year, per the ADA Standards of Care and the IWGDF. The exam tests sensation with a 10-gram monofilament, checks pulses, and looks for deformity and skin changes. After that, frequency follows risk under the IWGDF system: no findings, yearly; nerve damage or artery disease, every 6 to 12 months; both or one plus a deformity, every 3 to 6 months; a previous ulcer or amputation, every 1 to 3 months. Bring the [doctor-prep checklist](/doctor-prep).",
+      },
+      {
+        q: "Do I need prescription diabetic shoes?",
+        a: "Only if your clinician prescribes them, and then yes, worn indoors and out. Extra-depth shoes, custom-made shoes, custom insoles, or toe orthoses are prescribed when your foot shape, a callus that keeps returning, or a healed ulcer puts pressure where the skin can't take it. If you have none of those, the rules are fit measured late in the day, room in front of the longest toe, socks without seams, and a hand inside every shoe before it goes on. Medicare and many insurers cover prescribed diabetic footwear.",
+      },
+    ],
+    sources: [
+      {
+        label: "American Diabetes Association — Foot Complications",
+        url: "https://diabetes.org/about-diabetes/complications/foot-complications",
+      },
+      {
+        label: "IWGDF — Guidelines on the Prevention of Foot Ulcers in Persons with Diabetes (2023 update)",
+        url: "https://iwgdfguidelines.org/wp-content/uploads/2023/07/IWGDF-2023-02-Prevention-Guideline.pdf",
+      },
+      {
+        label: "NIH NIDDK — Diabetes & Foot Problems",
+        url: "https://www.niddk.nih.gov/health-information/diabetes/overview/preventing-problems/foot-problems",
+      },
+    ],
+  },
+  "gout-in-the-big-toe-men-over-40": {
+    metaTitle: "Gout in the Big Toe: How to Tell It From Stiffness (and What to Do)",
+    metaDescription:
+      "A big toe joint that went red, hot, and swollen overnight is not stiffness. How to tell them apart, what to do in the first 48 hours, and what the doctor tests.",
+    datePublished: "2026-09-22",
+    faq: [
+      {
+        q: "How can I tell a gout flare from a stiff big toe?",
+        a: "Timing and heat. A gout flare comes on over hours, often at night, and the joint is hot, red, swollen, and too tender for a sock or a bedsheet. Stiffness builds over months or years, is worse on push-off and stairs, and the joint isn't hot. A joint that's already stiff can also flare, so handle the flare first. Only a uric acid test and sometimes joint fluid confirm gout. If the pattern is slow and mechanical, read [big toe stiffness in men over 40](/guides/big-toe-stiffness-in-men-over-40) instead.",
+      },
+      {
+        q: "What should I do in the first 48 hours of a gout flare?",
+        a: "Stay off the foot as much as you can, keep it raised above hip level when sitting, and ice it wrapped in a cloth for up to 20 minutes at a time. Drink water through the day and skip alcohol and sugary drinks. Don't stretch, mobilize, or wear toe spacers on a flaring joint. Over-the-counter anti-inflammatories are the usual first-line treatment, but only if you know they're safe for you. If it's your first flare, book a doctor this week.",
+      },
+      {
+        q: "Why does gout hit the big toe first?",
+        a: "Urate crystals form more readily in cooler tissue, and the big toe joint is the farthest from the heart and one of the coolest joints in the body. It also carries more load per step than any other joint in the foot. Both make it the most common site for a first flare. The same joint is the one that quietly stiffens over years in men over 40, which is why the two problems get mistaken for each other.",
+      },
+      {
+        q: "Can I take an over-the-counter anti-inflammatory for a gout flare?",
+        a: "Anti-inflammatories are the usual first-line treatment for a flare. They're not safe for everyone. If you have kidney disease, a history of stomach ulcers, heart failure, or you take blood thinners or blood pressure medication, ask a doctor or pharmacist before taking one. This site doesn't give doses; the label and your doctor do. A first flare is also the reason to get the diagnosis confirmed, not just to treat the pain.",
+      },
+      {
+        q: "Does one gout flare mean I need medication for life?",
+        a: "Not automatically. Long-term urate-lowering medication is a doctor's decision, usually considered after repeat flares (a common threshold is two or more a year), visible urate deposits under the skin, or a history of kidney stones. The doctor will check a uric acid level, kidney function, and your medication list first. Diet, hydration, and cutting back on alcohol support the plan, but for most men with recurring flares they aren't enough on their own.",
+      },
+      {
+        q: "When is a swollen big toe an emergency?",
+        a: "When the hot, swollen joint comes with a fever, feeling unwell, nausea, or redness spreading up the foot. A joint infection (septic arthritis) can look identical to a gout flare, and it needs same-day treatment. Go to urgent care or the emergency room rather than waiting for a routine appointment. For a flare without those signs, a doctor visit this week is the right pace. Bring the [doctor-prep checklist](/doctor-prep) so the visit covers the tests that matter.",
+      },
+    ],
+    sources: [
+      {
+        label: "NHS — Gout",
+        url: "https://www.nhs.uk/conditions/gout/",
+      },
+      {
+        label: "AAFP — Diagnosis, Treatment, and Prevention of Gout",
+        url: "https://www.aafp.org/pubs/afp/issues/2014/1215/p831.html",
+      },
+      {
+        label: "Arthritis Foundation — Gout: Symptoms, Diagnosis, and Treatment",
+        url: "https://www.arthritis.org/diseases/gout",
+      },
+    ],
+  },
+  "athletes-foot-and-foot-odor-what-works": {
+    metaTitle: "Athlete's Foot and Foot Odor: What Works (and Why It Comes Back)",
+    metaDescription:
+      "Peeling between the toes and a smell that outlasts the shower come from one damp shoe. The cream, powder, and shoe rotation that clear it, and why it returns.",
+    datePublished: "2026-09-22",
+    faq: [
+      {
+        q: "How do I know if it's athlete's foot or just dry skin?",
+        a: "Match the pattern. Athlete's foot usually starts between the toes (often the fourth and fifth), is worse on one foot, itches, and doesn't improve with moisturizer. Plain dry skin sits on the heel and ball of both feet, stays out of the web spaces, and improves within days of a real moisturizer. Thick or crumbly toenails on the same foot point toward fungus. A doctor can confirm it with a skin scraping; a course of antifungal cream that clears it answers the question too.",
+      },
+      {
+        q: "How long should I keep using the antifungal cream?",
+        a: "Use it as the package directs, on the whole area (between all the toes and across any scaling on the sole), and keep going after the skin looks normal. MedlinePlus advises continuing for 1 to 2 weeks after the infection has cleared. Stopping the day the itch goes away is the most common reason athlete's foot comes back a few weeks later. We reviewed [Lamisil AT](/reviews/lamisil-at-antifungal-cream).",
+      },
+      {
+        q: "Why does my athlete's foot keep coming back?",
+        a: "Three reasons, in order: the course was stopped early; the foot went back into the same damp, untreated shoes; or an untreated fungal toenail is reseeding the skin after every course. Fix all three: finish the cream, alternate two pairs of shoes so each dries a full day and treat them with antifungal powder, and if the nails are thick or yellow, start on those too. See the [toenail fungus guide](/guides/toenail-fungus-what-works).",
+      },
+      {
+        q: "Does smelly feet mean I have athlete's foot?",
+        a: "Not always, but they travel together. Foot odor comes from bacteria on the skin breaking sweat down; the byproducts are what you smell. A fungal infection makes it worse because peeling, soggy skin gives bacteria more to feed on, and the damp shoe that grew the fungus is the same shoe holding the sweat. If the smell survives a shower and the skin between your toes is peeling, treat both: the fungus with cream, the moisture with drying, powder, and shoe rotation.",
+      },
+      {
+        q: "Do vinegar soaks or bleach cure athlete's foot?",
+        a: "No. Vinegar may make the skin surface a little less friendly to fungus, but it doesn't clear an established infection and it stings cracked skin; treat it as a supplement at most. Bleach damages the skin barrier you're trying to repair, so skip it. The treatment with evidence behind it is an over-the-counter antifungal cream used for the full course, plus keeping the feet and shoes dry with powder and rotation.",
+      },
+      {
+        q: "When should I see a doctor about athlete's foot?",
+        a: "If it's not better after 2 to 4 weeks of cream used as directed, if it keeps returning despite finishing the course and rotating shoes, or if it has spread to the hands or nails. Go the same or next day for redness or warmth spreading up the foot or leg, cracks that weep or produce pus, or a fever. If you have diabetes, see a clinician early: cracks between the toes are an entry point for infection. Bring the [doctor-prep checklist](/doctor-prep).",
+      },
+    ],
+    sources: [
+      {
+        label: "NIH MedlinePlus — Athlete's foot",
+        url: "https://medlineplus.gov/ency/article/000875.htm",
+      },
+      {
+        label: "NHS — Athlete's foot",
+        url: "https://www.nhs.uk/conditions/athletes-foot/",
+      },
+      {
+        label: "AAFP — Diagnosis and Management of Tinea Infections",
+        url: "https://www.aafp.org/pubs/afp/issues/2014/1115/p702.html",
+      },
+    ],
+  },
+  "calluses-and-corns-men-over-40": {
+    metaTitle: "Calluses and Corns: What to Remove and What's Causing Them",
+    metaDescription:
+      "A callus is skin answering pressure. File it without moving the load and it's back. How to read where it forms, thin it safely, and when a podiatrist steps in.",
+    datePublished: "2026-09-22",
+    faq: [
+      {
+        q: "What's the difference between a corn and a callus?",
+        a: "Same tissue, different shape. A callus is a broad plate of thick skin with no clear edge, usually under the ball of the foot or around the heel, and it aches rather than stabs. A corn is small and dense with a central core that points inward, usually on or beside a toe joint or under a metatarsal head. A soft corn is the between-the-toes version, kept white and rubbery by sweat.",
+      },
+      {
+        q: "Why do I get more calluses after 40?",
+        a: "Four mechanical reasons stack up. The fat pad under the ball of the foot thins, so bone sits closer to the shoe. Toes drift and curl, which puts joints against shoe uppers. Feet widen and flatten while most men keep buying the size that fit at 30. And a stiff big toe or ankle shifts load to places that never carried it before. A standing job multiplies all of it.",
+      },
+      {
+        q: "How do I tell a corn from a plantar wart?",
+        a: "Press straight down, then squeeze from the sides. A corn hurts most under direct downward pressure and has a dense, slightly translucent core. A plantar wart hurts more when pinched from the sides and usually shows tiny black dots in it. If you can't tell after a soak, a podiatrist can, and the treatments are different, so it's worth asking. The [5-minute self-check](/assessment) covers the rest of the foot.",
+      },
+      {
+        q: "Can I cut a callus off myself?",
+        a: "No. Razors, callus knives, and nail scissors take skin unevenly and go deeper than you can see, and a cut under thick skin heals slowly and infects easily. Use a pumice stone or foot file after a shower, a few strokes at a time, and stop before the skin turns pink. A podiatrist can pare a large callus with a sterile blade in one visit if filing isn't enough.",
+      },
+      {
+        q: "Are medicated corn pads safe to use?",
+        a: "Not if you have diabetes, neuropathy, or poor circulation. The acid in them (salicylic acid) dissolves skin without knowing where the corn ends, and on a foot with poor sensation or blood flow it can open a wound that becomes an ulcer. On healthy skin it mostly burns the ring around the corn. Moving the pressure with a toe sleeve or a better-fitting shoe does more, with less risk.",
+      },
+      {
+        q: "How long does it take a callus to go away?",
+        a: "Pain usually eases within one to two weeks of removing the pressure, before the skin has changed much. With nightly urea cream and filing once or twice a week, a callus under the ball of the foot thins noticeably in three to four weeks, and a hard corn usually loses its core in four to six weeks. If it's still painful to walk on after four weeks, book a podiatrist.",
+      },
+    ],
+    sources: [
+      {
+        label: "AAFP — Corns and Calluses Resulting from Mechanical Hyperkeratosis",
+        url: "https://www.aafp.org/pubs/afp/issues/2002/0601/p2277.html",
+      },
+      {
+        label: "APMA — Corns and Calluses",
+        url: "https://www.apma.org/patients-and-the-public/conditions-affecting-the-foot-and-ankle/corns-and-calluses/",
+      },
+      {
+        label: "NHS — Corns and calluses",
+        url: "https://www.nhs.uk/conditions/corns-and-calluses/",
+      },
+    ],
+  },
+  "foot-and-calf-cramps-at-night": {
+    metaTitle: "Foot and Calf Cramps at Night: Causes After 40 and What Stops Them",
+    metaDescription:
+      "Night calf and arch cramps rise after 40, mostly from a shortened calf held toes-down in bed. The bedtime stretch, which fixes fail, and when to see a doctor.",
+    datePublished: "2026-09-22",
+    faq: [
+      {
+        q: "Why do I get calf and foot cramps at night after 40?",
+        a: "Several things stack with age: the calf and plantar fascia shorten after decades of heeled shoes and sitting, muscle mass declines, the nerves that drive the calf fire more easily, and bed holds the foot toes-down with the calf at its shortest for hours. A long day standing, dehydration, evening alcohol, or a new medication usually sets off a given night. Up to 60 percent of adults report night cramps, and the rate climbs with age.",
+      },
+      {
+        q: "What should I do the moment a cramp hits?",
+        a: "Stand up and put weight on the leg. Loading the calf usually breaks the contraction faster than anything you can do lying down. If you can't stand yet, pull the toes toward the shin and hold until the muscle releases, then walk for a minute. Use heat afterward for the soreness, not ice. A cramp that lasts longer than ten minutes despite this needs a doctor rather than another stretch.",
+      },
+      {
+        q: "Does stretching before bed prevent night cramps?",
+        a: "It has the most trial support of any option, though the evidence is limited and the trials are small. A two-minute set works: wall calf stretch with the knee straight, then bent, a towel stretch of the sole, and ankle circles. Do it nightly for four weeks before judging. Expect fewer and milder cramps rather than zero. The [recovery routine](/routines/recovery) has the same calf and sole work.",
+      },
+      {
+        q: "Does magnesium help with leg cramps?",
+        a: "Not for ordinary night cramps in older adults. A 2020 Cochrane review found the difference between magnesium and placebo was small and not statistically significant, and concluded it is unlikely to provide meaningful cramp prevention. Results in pregnancy are mixed. Unless a blood test shows a deficiency, it is a supplement with a diarrhea side effect and little else to offer for this problem.",
+      },
+      {
+        q: "Can my medication be causing the cramps?",
+        a: "Possibly. Diuretics and statins are the most often named, with some asthma inhalers, intravenous iron, and a few hormone drugs also on the list, though the evidence linking any single drug to cramps is thinner than most people assume. If cramps started within weeks of a new prescription or dose change, raise it with the prescriber. Don't stop anything on your own; whether to swap or retime a drug is their call.",
+      },
+      {
+        q: "When are night cramps a reason to see a doctor?",
+        a: "Swelling, warmth, or tenderness in one calf is urgent same-day care because it can be a blood clot. Also book a visit for weakness or numbness with the cramps, cramps that began after a new medication, visible muscle wasting, calf pain when walking that stops with rest (a circulation pattern), or cramps most nights after four weeks of nightly stretching. Bring the [doctor-prep checklist](/doctor-prep) and your two-week log.",
+      },
+    ],
+    sources: [
+      {
+        label: "AAFP — Nocturnal Leg Cramps",
+        url: "https://www.aafp.org/pubs/afp/issues/2012/0815/p350.html",
+      },
+      {
+        label: "Cochrane — Magnesium for muscle cramps",
+        url: "https://www.cochrane.org/CD009402/NEUROMUSC_magnesium-skeletal-muscle-cramps",
+      },
+      {
+        label: "NHS — Leg cramps",
+        url: "https://www.nhs.uk/conditions/leg-cramps/",
+      },
+    ],
+  },
+  "bunions-men-over-40": {
+    metaTitle: "Bunions in Men Over 40: What Slows Them and When Surgery Is Honest",
+    metaDescription:
+      "A bunion is structural: shoes and spacers don't reverse it, but they change how fast it drifts and how much it hurts. Which shoes, and when surgery is honest.",
+    datePublished: "2026-09-22",
+    faq: [
+      {
+        q: "Can a bunion be reversed without surgery?",
+        a: "No. The drift is structural: the metatarsal angles out and the toe angles in, and no shoe, spacer, or splint moves bone back. What conservative care changes is the speed of the drift and the pain. A wide toe box, evening spacers, a pad over the bump, and foot strength work can keep a mild bunion manageable for decades. Surgery is the only thing that changes the angle.",
+      },
+      {
+        q: "Why do men get bunions if it's mostly a women's problem?",
+        a: "Bunions are more common in women, but the causes aren't female. Family foot shape, flat feet that roll inward, arthritis in the joint, and decades of narrow dress shoes all apply to men. The difference is that men ignore the bump longer and the product marketing isn't aimed at them, so they tend to show up to a podiatrist a stage later than they should.",
+      },
+      {
+        q: "Do toe spacers help a bunion?",
+        a: "For symptoms, yes. Worn 20 minutes once or twice a day, they give the crowded joint a break, ease aching, and keep the soft tissue from tightening around the drifted position. They don't correct the angle, and no spacer will. Treat them as relief, not a fix. See [our Yoga Toes review](/reviews/yoga-toes-gem-separators) for fit and how to build up wear time.",
+      },
+      {
+        q: "What kind of shoes are best for a bunion?",
+        a: "A wide toe box so the big toe sits straight without pressure on the bump, a flat sole so the forefoot isn't pitched forward, and enough flexibility to bend at the ball of the foot. Any shoe that leaves a red mark over the joint after a day is working against you. We reviewed one that gets the shape right in the [Kuru Atom review](/reviews/kuru-atom-sneakers).",
+      },
+      {
+        q: "When should I consider bunion surgery?",
+        a: "When pain limits daily walking despite six months of correct shoes, spacers, and care, when the second toe is being pushed out of place, or when the skin over the bump keeps breaking down. Surgery is for pain and function, not appearance. Recovery runs weeks to months, there are many procedures, and bunions sometimes come back, so the decision rests on what the foot can no longer do.",
+      },
+      {
+        q: "What if my big toe joint suddenly became hot, red, and very painful?",
+        a: "That's a different problem. A bunion grows over years; a joint that goes from fine to hot, swollen, and painful overnight points to gout or infection and needs a doctor promptly, the same day if you have a fever. Don't treat it with a spacer or a pad. Bring the [doctor-prep checklist](/doctor-prep) so the visit covers when it started and what you've taken.",
+      },
+    ],
+    sources: [
+      {
+        label: "AAOS OrthoInfo — Bunions",
+        url: "https://www.orthoinfo.org/en/diseases--conditions/bunions/",
+      },
+      {
+        label: "NHS — Bunions",
+        url: "https://www.nhs.uk/conditions/bunions/",
+      },
+      {
+        label: "NIH MedlinePlus — Bunions",
+        url: "https://medlineplus.gov/ency/article/001231.htm",
+      },
+    ],
+  },
+  "numbness-and-tingling-in-the-feet": {
+    metaTitle: "Numbness and Tingling in the Feet: Nerve, Shoe, or Something Upstream",
+    metaDescription:
+      "Pins and needles, a dead patch, or burning in the toes has four causes in men over 40: the shoe, a trapped nerve, the lower back, or neuropathy. Sort yours.",
+    datePublished: "2026-09-22",
+    faq: [
+      {
+        q: "Why are my toes numb in one pair of shoes and fine in the others?",
+        a: "That pattern points at the shoe. The nerves on the top of the foot and between the toes sit close to the surface, and a tight lace, a stiff tongue, or a narrow toe box can press one for hours. Numbness that clears overnight and returns in the same shoes is compression until proven otherwise. Re-lace to skip the sore spot, move to a wider toe box, and give it two weeks. The [dress-shoes guide](/guides/what-your-dress-shoes-are-doing-to-your-feet) covers the work-shoe version.",
+      },
+      {
+        q: "What does Morton's neuroma feel like?",
+        a: "A thickened nerve between the third and fourth toes. It feels like a pebble or a folded sock under the ball of the foot, with burning or tingling into those two toes, worse in narrow shoes and easier once they're off. A wide toe box and a metatarsal pad placed just behind the ball of the foot bring relief for about half of people, and a podiatrist usually gives that 3 to 6 months before discussing anything else. The [ball-of-foot guide](/guides/ball-of-foot-pain-in-men-over-40) covers pad placement.",
+      },
+      {
+        q: "Can a problem in my lower back cause numbness in my foot?",
+        a: "Yes, and it is one of the four common causes. A bulging disc or a narrowed spinal canal can press a nerve root in the lower back, and you feel it at the far end of the nerve, often the outer foot or the big toe. The tell is one side only, usually with back or buttock pain, and symptoms that change with sitting, bending, or a long drive. Shoes make no difference. This version needs a clinician's exam, not a shoe change.",
+      },
+      {
+        q: "What is the stocking pattern, and why does it matter?",
+        a: "Peripheral neuropathy affects the longest nerves first, so it starts in the toes of both feet and creeps upward evenly, like a sock filling with numbness. That symmetry separates it from a shoe, a neuroma, or a back problem, which almost always affect one foot. Diabetes is the most common cause; alcohol, low B12, thyroid problems, some medications, and chemotherapy are the others. It needs bloodwork to find the cause, and the [diabetic foot care rules](/guides/diabetic-foot-care-men-over-40) apply if diabetes is in the picture.",
+      },
+      {
+        q: "Which numbness symptoms mean I should go to the ER?",
+        a: "Numbness in the groin, buttocks, or inner thighs with any change in bladder or bowel control, or sudden numbness with new weakness in a leg. That pattern (cauda equina syndrome) is a surgical emergency, and the outcome depends on how fast the pressure comes off the nerves. Separately, both feet with balance loss or a fall, a foot you can't lift, numbness after an injury, or a wound you can't feel are same-week doctor visits, not emergencies.",
+      },
+      {
+        q: "Will a vitamin B supplement fix numb feet?",
+        a: "Only if a blood test shows your B12 is low, and in that case a doctor manages the replacement. Without a measured deficiency, a supplement does nothing for the nerve and delays the workup that finds the real cause. The same goes for massage and circulation gadgets: they feel good for an hour and don't move a disc, widen a shoe, or shrink a neuroma. Test first, then treat what the test finds.",
+      },
+    ],
+    sources: [
+      {
+        label: "American Academy of Family Physicians — Peripheral Neuropathy: Evaluation and Differential Diagnosis",
+        url: "https://www.aafp.org/pubs/afp/issues/2020/1215/p732.html",
+      },
+      {
+        label: "AAOS OrthoInfo — Morton's Neuroma",
+        url: "https://www.orthoinfo.org/en/diseases--conditions/mortons-neuroma/",
+      },
+      {
+        label: "AAOS OrthoInfo — Cauda Equina Syndrome",
+        url: "https://www.orthoinfo.org/en/diseases--conditions/cauda-equina-syndrome/",
+      },
+    ],
+  },
   // ── 2026-09-18 expansion. Nails + alignment + occupation + kinetic-chain
   // + runners cluster. Newest first per feedback_new_articles_top_of_list.
   "ingrown-toenail-what-actually-stops-the-cycle": {

@@ -10,8 +10,8 @@ export default function Page() {
   return (
     <SiteLayout>
       <ArticleLayout
-        heroSrc="/images/pexels-8637976.jpg"
-        heroAlt="A gray-haired man in a runner's crouch on the beach, ready to load"
+        heroSrc="/images/pexels-8700843.jpg"
+        heroAlt="A man holding a lunge on grass, front knee bent, rear leg long"
         title="The 5-Minute Strength Protocol"
         category="Strength Routine"
         readTime="5 min"
