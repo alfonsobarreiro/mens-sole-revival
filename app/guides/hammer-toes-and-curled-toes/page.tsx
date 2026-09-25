@@ -13,9 +13,8 @@ export default function Page() {
   return (
     <SiteLayout>
       <ArticleLayout
-        // TODO Alfonso: placeholder hero (shared with another guide); swap once the new photo is approved.
-        heroSrc="/images/pexels-9616030.jpg"
-        heroAlt="A man's bare feet resting on a windowsill"
+        heroSrc="/images/unsplash-yExJ3n6_iiE.jpg"
+        heroAlt="A man's bare foot on the floor, toes in focus"
         title="Hammer Toes and Curled Toes"
         category="Alignment"
         readTime="7 min"

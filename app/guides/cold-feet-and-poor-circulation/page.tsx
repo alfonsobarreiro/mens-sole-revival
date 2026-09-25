@@ -13,9 +13,8 @@ export default function Page() {
   return (
     <SiteLayout>
       <ArticleLayout
-        // TODO Alfonso: placeholder hero (shared with another guide); swap once the new photo is approved.
-        heroSrc="/images/pexels-8637976.jpg"
-        heroAlt="A gray-haired man kneeling on a beach in running gear"
+        heroSrc="/images/unsplash-SUPbHp8VkMQ.jpg"
+        heroAlt="A man in socks sitting on the floor with a book and a mug"
         title="Cold Feet and Poor Circulation"
         category="Foot Health"
         readTime="7 min"

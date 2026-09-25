@@ -13,9 +13,8 @@ export default function Page() {
   return (
     <SiteLayout>
       <ArticleLayout
-        // TODO Alfonso: placeholder hero (shared with another guide); swap once the new photo is approved.
-        heroSrc="/images/pexels-13065922.jpg"
-        heroAlt="A man walking barefoot along a road beside a field"
+        heroSrc="/images/unsplash-jMHGpZaBlts.jpg"
+        heroAlt="A man's bare soles resting on a bed"
         title="Burning Feet"
         category="Foot Health"
         readTime="7 min"

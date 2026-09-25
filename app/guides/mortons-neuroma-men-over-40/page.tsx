@@ -13,9 +13,8 @@ export default function Page() {
   return (
     <SiteLayout>
       <ArticleLayout
-        // TODO Alfonso: placeholder hero (shared with another guide); swap once the new photo is approved.
-        heroSrc="/images/pexels-13122754.jpg"
-        heroAlt="A man barefoot after a long day on his feet"
+        heroSrc="/images/unsplash-vIO0aTKj8lk.jpg"
+        heroAlt="A man in a white shirt lacing brown leather dress shoes"
         title="Morton's Neuroma"
         category="Pain"
         readTime="7 min"

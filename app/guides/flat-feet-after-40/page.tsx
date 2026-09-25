@@ -13,9 +13,8 @@ export default function Page() {
   return (
     <SiteLayout>
       <ArticleLayout
-        // TODO Alfonso: placeholder hero (shared with another guide); swap once the new photo is approved.
-        heroSrc="/images/pexels-7205913.jpg"
-        heroAlt="Barefoot walking, arch loaded"
+        heroSrc="/images/unsplash-m8QQln0sigA.jpg"
+        heroAlt="A man's bare feet on a dark wooden plank, seen from above"
         title="Flat Feet After 40"
         category="Alignment"
         readTime="7 min"

@@ -13,9 +13,8 @@ export default function Page() {
   return (
     <SiteLayout>
       <ArticleLayout
-        // TODO Alfonso: placeholder hero (shared with another guide); swap once the new photo is approved.
-        heroSrc="/images/pexels-8729236.jpg"
-        heroAlt="A bare foot resting on stone after loading, the ball of foot visible"
+        heroSrc="/images/unsplash-rP-9W__umN0.jpg"
+        heroAlt="A man tying a running shoe, close up on the laces"
         title="Pain on Top of the Foot"
         category="Pain"
         readTime="7 min"

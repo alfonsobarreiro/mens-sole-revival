@@ -13,9 +13,8 @@ export default function Page() {
   return (
     <SiteLayout>
       <ArticleLayout
-        // TODO Alfonso: placeholder hero (shared with another guide); swap once the new photo is approved.
-        heroSrc="/images/pexels-12031206.jpg"
-        heroAlt="Close-up of polished leather dress shoes"
+        heroSrc="/images/unsplash-cJ9AKMgICwY.jpg"
+        heroAlt="Brown leather boots and jeans seen from above on a dark floor"
         title="Measure Your Feet at Home"
         category="Footwear Fit"
         readTime="7 min"

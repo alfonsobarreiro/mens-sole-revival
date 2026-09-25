@@ -13,9 +13,8 @@ export default function Page() {
   return (
     <SiteLayout>
       <ArticleLayout
-        // TODO Alfonso: placeholder hero (shared with another guide); swap once the new photo is approved.
-        heroSrc="/images/pexels-7787491.jpg"
-        heroAlt="An older man hiking outdoors, staying active after 40"
+        heroSrc="/images/unsplash-_qEZIh54p7E.jpg"
+        heroAlt="A man lying full length on a couch by a window, feet up"
         title="Swollen Feet and Ankles"
         category="Foot Health"
         readTime="7 min"

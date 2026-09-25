@@ -13,9 +13,8 @@ export default function Page() {
   return (
     <SiteLayout>
       <ArticleLayout
-        // TODO Alfonso: placeholder hero (shared with another guide); swap once the new photo is approved.
-        heroSrc="/images/pexels-5036256.jpg"
-        heroAlt="Three men sitting barefoot on a patterned rug"
+        heroSrc="/images/unsplash-4eSt3-ZfJT8.jpg"
+        heroAlt="A man crouching to tie his running shoes before a race"
         title="Black Toenail"
         category="Nails"
         readTime="7 min"

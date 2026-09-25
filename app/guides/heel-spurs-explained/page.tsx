@@ -13,9 +13,8 @@ export default function Page() {
   return (
     <SiteLayout>
       <ArticleLayout
-        // TODO Alfonso: placeholder hero (shared with another guide); swap once the new photo is approved.
-        heroSrc="/images/pexels-9467290.jpg"
-        heroAlt="A man out of bed, taking the first steps of the morning"
+        heroSrc="/images/unsplash-pbHHfu95bBM.jpg"
+        heroAlt="A man in a suit stretching his calf against a concrete wall"
         title="Heel Spurs"
         category="Pain"
         readTime="7 min"

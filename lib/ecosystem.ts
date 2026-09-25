@@ -144,7 +144,7 @@ export const articles: Record<string, ArticleMeta> = {
     title: "Swollen Feet and Ankles: Gravity, Medication, or a Same-Day Call",
     category: "Foot Health",
     readTime: "7 min",
-    imageUrl: "/images/pexels-7787491.jpg",
+    imageUrl: "/images/unsplash-_qEZIh54p7E.jpg",
     excerpt:
       "Most swollen feet and ankles after 40 are gravity or a medication, and both feet swell the same. One leg, hot skin, or breathlessness moves it to a same-day call. Here is how to tell them apart.",
     symptoms: ["pain"],
@@ -155,7 +155,7 @@ export const articles: Record<string, ArticleMeta> = {
     title: "Burning Feet: Neuropathy, Athlete's Foot, or the Shoe",
     category: "Foot Health",
     readTime: "7 min",
-    imageUrl: "/images/pexels-13065922.jpg",
+    imageUrl: "/images/unsplash-jMHGpZaBlts.jpg",
     excerpt:
       "Burning feet after 40 come from a short list: peripheral neuropathy, athlete's foot, a nerve trapped at the ankle, circulation, or the shoe. What each one feels like, the tests that sort them, and the signs that mean this week.",
     symptoms: ["pain", "skin"],
@@ -166,7 +166,7 @@ export const articles: Record<string, ArticleMeta> = {
     title: "Black Toenail: Bruise, Fungus, or the One That Needs a Dermatologist",
     category: "Nails",
     readTime: "7 min",
-    imageUrl: "/images/pexels-5036256.jpg",
+    imageUrl: "/images/unsplash-4eSt3-ZfJT8.jpg",
     excerpt:
       "Most black toenails are blood from a stub or a short running shoe and grow out on their own. The color sequence, when to drain it, how long regrowth takes, and the one band that needs a dermatologist this week.",
     symptoms: ["nails"],
@@ -177,7 +177,7 @@ export const articles: Record<string, ArticleMeta> = {
     title: "Flat Feet After 40: When It's a Problem, When It Isn't, and What Helps",
     category: "Alignment",
     readTime: "7 min",
-    imageUrl: "/images/pexels-7205913.jpg",
+    imageUrl: "/images/unsplash-m8QQln0sigA.jpg",
     excerpt:
       "A flat foot you've had all your life is a shape. One that arrives after 40, on one side, with a swollen inner ankle, is usually a tendon failing. How to tell them apart and what helps.",
     symptoms: ["alignment", "pain"],
@@ -188,7 +188,7 @@ export const articles: Record<string, ArticleMeta> = {
     title: "Measure Your Feet at Home: Length, Width, and Why Your Size Changed After 40",
     category: "Footwear Fit",
     readTime: "7 min",
-    imageUrl: "/images/pexels-12031206.jpg",
+    imageUrl: "/images/unsplash-cJ9AKMgICwY.jpg",
     excerpt:
       "Feet lengthen and widen after 40, and most men are still buying the size they wore at 25. The ten-minute paper method, a length-to-size table, width letters, and the store fit rules that overrule the box.",
     symptoms: ["footwear", "alignment"],
@@ -199,7 +199,7 @@ export const articles: Record<string, ArticleMeta> = {
     title: "Pain on Top of the Foot: Laces, Tendon, Stress Fracture, or Arthritis",
     category: "Pain",
     readTime: "7 min",
-    imageUrl: "/images/pexels-8729236.jpg",
+    imageUrl: "/images/unsplash-rP-9W__umN0.jpg",
     excerpt:
       "Top of foot pain usually comes down to laces, a tendon, a bone spur, or a stress fracture. How to tell them apart by where it hurts, why an early X-ray can be normal, and the signs that mean a same-week visit.",
     symptoms: ["pain"],
@@ -210,7 +210,7 @@ export const articles: Record<string, ArticleMeta> = {
     title: "Cold Feet and Poor Circulation: Nerve, Artery, or Just Cold",
     category: "Foot Health",
     readTime: "7 min",
-    imageUrl: "/images/pexels-8637976.jpg",
+    imageUrl: "/images/unsplash-SUPbHp8VkMQ.jpg",
     excerpt:
       "Feet that are cold to the touch and feet that only feel cold are different problems. The touch test, the PAD signs to look for, the 15-minute ABI test, and what to do this week.",
     symptoms: ["skin"],
@@ -221,7 +221,7 @@ export const articles: Record<string, ArticleMeta> = {
     title: "Hammer Toes and Curled Toes: What Straightens, What Doesn't, and the Shoe Fix",
     category: "Alignment",
     readTime: "7 min",
-    imageUrl: "/images/pexels-9616030.jpg",
+    imageUrl: "/images/unsplash-yExJ3n6_iiE.jpg",
     excerpt:
       "A hammer toe is the middle joint of a small toe buckling so the knuckle rides up. Flexible ones respond to shoes, pads, and toe work; rigid ones only change with surgery. The one-finger test decides which you have.",
     symptoms: ["alignment", "skin"],
@@ -232,7 +232,7 @@ export const articles: Record<string, ArticleMeta> = {
     title: "Morton's Neuroma: The Pebble Under the Foot and What Fixes It",
     category: "Pain",
     readTime: "7 min",
-    imageUrl: "/images/pexels-13122754.jpg",
+    imageUrl: "/images/unsplash-vIO0aTKj8lk.jpg",
     excerpt:
       "A nerve squeezed between two metatarsal heads thickens until it feels like a pebble under the foot with burning into two toes. Why it sets up after 40, the shoe and pad fix, and what injections and surgery trade.",
     symptoms: ["pain"],
@@ -243,7 +243,7 @@ export const articles: Record<string, ArticleMeta> = {
     title: "Heel Spurs: Why the Spur Usually Isn't the Pain",
     category: "Pain",
     readTime: "7 min",
-    imageUrl: "/images/pexels-9467290.jpg",
+    imageUrl: "/images/unsplash-pbHHfu95bBM.jpg",
     excerpt:
       "A heel spur is a record of years of load on the heel, not the thing that hurts. In X-ray studies, close to half of people with no heel pain have one. The pain is the fascia or the Achilles insertion, and that is what gets treated.",
     symptoms: ["pain"],

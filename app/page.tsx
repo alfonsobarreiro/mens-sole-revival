@@ -82,7 +82,7 @@ const articles = [
     category: "Foot Health",
     readTime: "7 min",
     excerpt: "Most swollen feet and ankles after 40 are gravity or a medication, and both feet swell the same. One leg, hot skin, or breathlessness moves it to a same-day call. Here is how to tell them apart.",
-    image: "/images/pexels-7787491.jpg",
+    image: "/images/unsplash-_qEZIh54p7E.jpg",
   },
   {
     slug: "burning-feet-men-over-40",
@@ -90,7 +90,7 @@ const articles = [
     category: "Foot Health",
     readTime: "7 min",
     excerpt: "Burning feet after 40 come from a short list: peripheral neuropathy, athlete's foot, a nerve trapped at the ankle, circulation, or the shoe. What each one feels like, the tests that sort them, and the signs that mean this week.",
-    image: "/images/pexels-13065922.jpg",
+    image: "/images/unsplash-jMHGpZaBlts.jpg",
   },
   {
     slug: "black-toenail-what-it-means",
@@ -98,7 +98,7 @@ const articles = [
     category: "Nails",
     readTime: "7 min",
     excerpt: "Most black toenails are blood from a stub or a short running shoe and grow out on their own. The color sequence, when to drain it, how long regrowth takes, and the one band that needs a dermatologist this week.",
-    image: "/images/pexels-5036256.jpg",
+    image: "/images/unsplash-4eSt3-ZfJT8.jpg",
   },
   {
     slug: "flat-feet-after-40",
@@ -106,7 +106,7 @@ const articles = [
     category: "Alignment",
     readTime: "7 min",
     excerpt: "A flat foot you've had all your life is a shape. One that arrives after 40, on one side, with a swollen inner ankle, is usually a tendon failing. How to tell them apart and what helps.",
-    image: "/images/pexels-7205913.jpg",
+    image: "/images/unsplash-m8QQln0sigA.jpg",
   },
   {
     slug: "how-to-measure-your-feet-for-shoes",
@@ -114,7 +114,7 @@ const articles = [
     category: "Footwear Fit",
     readTime: "7 min",
     excerpt: "Feet lengthen and widen after 40, and most men are still buying the size they wore at 25. The ten-minute paper method, a length-to-size table, width letters, and the store fit rules that overrule the box.",
-    image: "/images/pexels-12031206.jpg",
+    image: "/images/unsplash-cJ9AKMgICwY.jpg",
   },
   {
     slug: "pain-on-top-of-the-foot",
@@ -122,7 +122,7 @@ const articles = [
     category: "Pain",
     readTime: "7 min",
     excerpt: "Top of foot pain usually comes down to laces, a tendon, a bone spur, or a stress fracture. How to tell them apart by where it hurts, why an early X-ray can be normal, and the signs that mean a same-week visit.",
-    image: "/images/pexels-8729236.jpg",
+    image: "/images/unsplash-rP-9W__umN0.jpg",
   },
   {
     slug: "cold-feet-and-poor-circulation",
@@ -130,7 +130,7 @@ const articles = [
     category: "Foot Health",
     readTime: "7 min",
     excerpt: "Feet that are cold to the touch and feet that only feel cold are different problems. The touch test, the PAD signs to look for, the 15-minute ABI test, and what to do this week.",
-    image: "/images/pexels-8637976.jpg",
+    image: "/images/unsplash-SUPbHp8VkMQ.jpg",
   },
   {
     slug: "hammer-toes-and-curled-toes",
@@ -138,7 +138,7 @@ const articles = [
     category: "Alignment",
     readTime: "7 min",
     excerpt: "A hammer toe is the middle joint of a small toe buckling so the knuckle rides up. Flexible ones respond to shoes, pads, and toe work; rigid ones only change with surgery. The one-finger test decides which you have.",
-    image: "/images/pexels-9616030.jpg",
+    image: "/images/unsplash-yExJ3n6_iiE.jpg",
   },
   {
     slug: "mortons-neuroma-men-over-40",
@@ -146,7 +146,7 @@ const articles = [
     category: "Pain",
     readTime: "7 min",
     excerpt: "A nerve squeezed between two metatarsal heads thickens until it feels like a pebble under the foot with burning into two toes. Why it sets up after 40, the shoe and pad fix, and what injections and surgery trade.",
-    image: "/images/pexels-13122754.jpg",
+    image: "/images/unsplash-vIO0aTKj8lk.jpg",
   },
   {
     slug: "heel-spurs-explained",
@@ -154,7 +154,7 @@ const articles = [
     category: "Pain",
     readTime: "7 min",
     excerpt: "A heel spur is a record of years of load on the heel, not the thing that hurts. In X-ray studies, close to half of people with no heel pain have one. The pain is the fascia or the Achilles insertion, and that is what gets treated.",
-    image: "/images/pexels-9467290.jpg",
+    image: "/images/unsplash-pbHHfu95bBM.jpg",
   },
   {
     slug: "is-it-toenail-fungus",
