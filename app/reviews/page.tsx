@@ -34,19 +34,9 @@ export const metadata: Metadata = {
 
 // ── Data fetching ─────────────────────────────────────────────────────────────
 
+// Reviews are authored in lib/reviews.ts. There is no CMS behind them.
 async function getReviews(): Promise<Review[]> {
-  if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) {
-    return staticReviews;
-  }
-  try {
-    const { serverClient } = await import("@/sanity/lib/client");
-    const { reviewsQuery } = await import("@/sanity/lib/queries");
-    const reviews = await serverClient.fetch<Review[]>(reviewsQuery);
-    return reviews?.length > 0 ? reviews : staticReviews;
-  } catch (err) {
-    console.error("[reviews] Sanity fetch failed, using static fallback:", err);
-    return staticReviews;
-  }
+  return staticReviews;
 }
 
 // ── Review card ───────────────────────────────────────────────────────────────

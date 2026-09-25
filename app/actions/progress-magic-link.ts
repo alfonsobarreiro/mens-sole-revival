@@ -102,8 +102,7 @@ export async function requestProgressLink(
     });
 
     if (!res.ok) {
-      const body = await res.text();
-      console.error("[Progress magic-link] Resend send failed:", res.status, body);
+      console.error("[Progress magic-link] Resend send failed", { status: res.status });
       return {
         status: "error",
         message: "We couldn't send the email. Try again in a moment.",

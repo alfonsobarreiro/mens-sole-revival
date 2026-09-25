@@ -78,11 +78,7 @@ export async function submitNewsletter(
       );
       // 409 = already a contact; not an error worth surfacing.
       if (!contactRes.ok && contactRes.status !== 409) {
-        console.error(
-          "Resend (audience) error",
-          contactRes.status,
-          await contactRes.text()
-        );
+        console.error("Resend (audience) error", { status: contactRes.status });
       }
     } catch (err) {
       console.error("Newsletter audience add failed:", err);
@@ -138,8 +134,7 @@ export async function submitNewsletter(
     });
 
     if (!res.ok) {
-      const body = await res.text();
-      console.error("Resend (confirmation email) error", res.status, body);
+      console.error("Resend (confirmation email) error", { status: res.status });
       return {
         status: "error",
         message: "We couldn't send the confirmation email. Try again in a moment.",

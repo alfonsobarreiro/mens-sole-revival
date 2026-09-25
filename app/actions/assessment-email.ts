@@ -129,7 +129,7 @@ export async function submitAssessmentEmail(
         body: JSON.stringify({ email, unsubscribed: true }),
       });
       if (!contactRes.ok && contactRes.status !== 409) {
-        console.error("Resend (audience) error", contactRes.status, await contactRes.text());
+        console.error("Resend (audience) error", { status: contactRes.status });
       }
     } catch (err) {
       console.error("Resend audience add failed:", err);
@@ -166,8 +166,7 @@ export async function submitAssessmentEmail(
     });
 
     if (!userRes.ok) {
-      const body = await userRes.text();
-      console.error("Resend (user) error", userRes.status, body);
+      console.error("Resend (user) error", { status: userRes.status });
       return { status: "error", message: "Couldn't send right now. Try the PDF download instead." };
     }
 

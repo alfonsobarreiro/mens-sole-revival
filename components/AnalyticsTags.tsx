@@ -3,6 +3,7 @@
 import { GoogleAnalytics } from "@next/third-parties/google";
 import Script from "next/script";
 import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 
 /**
  * Google Analytics and Clarity, mounted everywhere except the pages that show
@@ -23,8 +24,26 @@ export default function AnalyticsTags({
   clarityId?: string;
 }) {
   const pathname = usePathname();
-  if (!enabled) return null;
-  if (PRIVATE_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`))) return null;
+  const isPrivate = PRIVATE_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`));
+
+  // Not mounting the tags on a private page is only half of it: tags loaded
+  // on a public page survive client-side navigation, so GA is switched off
+  // with its opt-out flag and Clarity told to stop recording while a private
+  // path is on screen, and both are switched back on when it leaves.
+  useEffect(() => {
+    if (!enabled) return;
+    const w = window as unknown as Record<string, unknown> & {
+      clarity?: (command: string) => void;
+    };
+    w[`ga-disable-${gaId}`] = isPrivate;
+    try {
+      w.clarity?.(isPrivate ? "stop" : "start");
+    } catch {
+      /* analytics never break the page */
+    }
+  }, [enabled, gaId, isPrivate]);
+
+  if (!enabled || isPrivate) return null;
 
   return (
     <>

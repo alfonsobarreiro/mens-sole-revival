@@ -61,7 +61,7 @@ export function categoryLabel(cat?: string): string {
 }
 
 // Six real products covering the core foot-health categories.
-// When Sanity is connected, these fall back if the CMS query is empty.
+// The catalog. Reviews are authored here; there is no CMS behind them.
 export const staticReviews: Review[] = [
   {
     productName: "Superfeet BLUE Insoles",

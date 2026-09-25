@@ -227,9 +227,10 @@ export default function FootCheckPage() {
           <div className="mx-auto max-w-2xl">
             <InlineNewsletterForm
               from="foot-check"
-              heading="Get the printable version by email."
-              body="One-tap link to this page in your inbox, so you have it when you need it. Plus the occasional new guide, review, or routine."
-              cta="Send me the link"
+              heading="Get new guides by email."
+              body="The list behind this checklist: a note when a new guide, review, or routine publishes. Nothing else."
+              cta="Send me new guides"
+              reassurance="One confirmation email. Unsubscribe anytime."
             />
           </div>
         </Container>

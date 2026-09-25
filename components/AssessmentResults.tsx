@@ -399,7 +399,7 @@ export default function AssessmentResults({
               className="mt-6 grid gap-3 rounded bg-white p-5"
             >
               {/* Structured payload — server rebuilds the results email,
-                   populates the Sanity submission, and updates the Resend
+                   stores the submission in Postgres, and updates the Resend
                    audience. Keep the hidden field set intact. */}
               <input type="hidden" name="flags" value={JSON.stringify(flagsForEmail)} />
               <input type="hidden" name="totalFlags" value={String(totalFlags)} />
