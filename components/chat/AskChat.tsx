@@ -374,7 +374,12 @@ export default function AskChat({
           }${toPlainText(fullText)}`,
         );
         trackAsk("ask_answer_shown", { variant, source_count: sources.length, turn });
-        if (turn >= MAX_TURNS) trackAsk("ask_turn_limit");
+        if (turn >= MAX_TURNS) {
+          // The composer is about to disappear with focus inside it; the
+          // turn-limit heading takes focus so the reader hears why.
+          pendingFocus.current = "turnLimit";
+          trackAsk("ask_turn_limit");
+        }
       } catch {
         if (controller.signal.aborted) return;
         fail({ kind: "error" }, assistantId);
@@ -428,7 +433,7 @@ export default function AskChat({
     setPhase("idle");
     setReading(null);
     setStatus(askCopy.stopped);
-    pendingFocus.current = "composer";
+    pendingFocus.current = userTurns >= MAX_TURNS ? "turnLimit" : "composer";
     trackAsk("ask_stopped", { turn: userTurns });
   };
 
@@ -462,6 +467,8 @@ export default function AskChat({
 
   const jumpToLatest = () => {
     endRef.current?.scrollIntoView({ block: "end", behavior: reducedMotion() ? "auto" : "smooth" });
+    // The button unmounts once the end is in view; don't let focus go with it.
+    textareaRef.current?.focus({ preventScroll: true });
   };
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -583,7 +590,7 @@ export default function AskChat({
                 enterKeyHint="send"
                 aria-invalid={tooLong || undefined}
                 aria-describedby={`${privacyId}${nearLimit ? ` ${counterId}` : ""}${tooLong ? ` ${errorId}` : ""}`}
-                className="block min-h-[3.25rem] w-full resize-none border border-border-input bg-bg-elevated py-3.5 pl-4 pr-16 text-[0.9375rem] leading-[1.5] text-ink placeholder:text-neutral-500 transition-colors focus:border-accent-600 focus:outline-none focus:ring-2 focus:ring-accent-600/40 aria-[invalid=true]:border-signal-error"
+                className="block min-h-[3.25rem] w-full resize-none border border-border-input bg-bg-elevated py-3.5 pl-4 pr-16 text-[0.9375rem] leading-[1.5] text-ink placeholder:text-neutral-600 transition-colors focus:border-accent-600 focus:outline-none focus:ring-2 focus:ring-accent-600/40 aria-[invalid=true]:border-signal-error"
               />
               <div className="absolute bottom-1 right-1">
                 {busy ? (

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { forwardRef, useId, useState } from "react";
+import { forwardRef, useEffect, useId, useRef, useState } from "react";
 import AlfredMark from "./AlfredMark";
 import { Button } from "@/components/ui";
 import { type } from "@/components/typography";
@@ -192,21 +192,7 @@ export function AssistantRow({
           <span aria-hidden="true" className="text-neutral-300">
             ·
           </span>
-          {feedback ? (
-            <p className="px-3 text-xs text-neutral-600" role="status">
-              {askCopy.feedback.thanks}
-            </p>
-          ) : (
-            <>
-              <p className="pl-3 text-xs text-neutral-600">{askCopy.feedback.prompt}</p>
-              <Button variant="ghost" size="sm" onClick={() => onFeedback(message.id, "up")}>
-                {askCopy.feedback.yes}
-              </Button>
-              <Button variant="ghost" size="sm" onClick={() => onFeedback(message.id, "down")}>
-                {askCopy.feedback.no}
-              </Button>
-            </>
-          )}
+          <Feedback feedback={feedback} onVote={(value) => onFeedback(message.id, value)} />
         </div>
       )}
 
@@ -324,3 +310,53 @@ export const NoticePanel = forwardRef<
     </section>
   );
 });
+
+/**
+ * "Helpful? Yes / No". Voting swaps the buttons for a thank-you line. The
+ * line's live region is on the page from the start (empty), so screen
+ * readers announce the thanks, and focus moves onto it so keyboard users
+ * aren't dropped at the top of the page when the button they pressed goes.
+ */
+function Feedback({
+  feedback,
+  onVote,
+}: {
+  feedback: AssistantMessage["feedback"];
+  onVote: (value: "up" | "down") => void;
+}) {
+  const thanksRef = useRef<HTMLParagraphElement>(null);
+  const [justVoted, setJustVoted] = useState(false);
+
+  useEffect(() => {
+    if (justVoted && feedback) thanksRef.current?.focus({ preventScroll: true });
+  }, [justVoted, feedback]);
+
+  const vote = (value: "up" | "down") => {
+    setJustVoted(true);
+    onVote(value);
+  };
+
+  return (
+    <>
+      {!feedback && (
+        <>
+          <p className="pl-3 text-xs text-neutral-600">{askCopy.feedback.prompt}</p>
+          <Button variant="ghost" size="sm" onClick={() => vote("up")}>
+            {askCopy.feedback.yes}
+          </Button>
+          <Button variant="ghost" size="sm" onClick={() => vote("down")}>
+            {askCopy.feedback.no}
+          </Button>
+        </>
+      )}
+      <p
+        ref={thanksRef}
+        tabIndex={-1}
+        role="status"
+        className={feedback ? "px-3 text-xs text-neutral-600 outline-none" : "sr-only"}
+      >
+        {feedback ? askCopy.feedback.thanks : ""}
+      </p>
+    </>
+  );
+}

@@ -15,7 +15,17 @@ import { askCopy } from "./copy";
  * out of the tab order). Navigating to another page starts fresh, which is
  * the privacy stance anyway.
  */
-export default function AskPanel({ open, onClose }: { open: boolean; onClose: () => void }) {
+export default function AskPanel({
+  open,
+  onClose,
+  returnFocusTo,
+}: {
+  open: boolean;
+  onClose: () => void;
+  /** The control that opened the drawer; focus goes back to it on close. */
+  returnFocusTo?: React.RefObject<HTMLElement | null>;
+}) {
+  const rootRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const previousFocus = useRef<HTMLElement | null>(null);
   const titleId = useId();
@@ -46,14 +56,34 @@ export default function AskPanel({ open, onClose }: { open: boolean; onClose: ()
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
-    const focusables = () =>
-      panelRef.current?.querySelectorAll<HTMLElement>(
-        'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])',
-      ) ?? [];
+    // Everything behind the drawer is inert while it's open: out of the tab
+    // order and out of reach of screen readers' virtual cursor.
+    const inerted: HTMLElement[] = [];
+    for (const el of Array.from(document.body.children) as HTMLElement[]) {
+      if (el === rootRef.current || el.inert) continue;
+      el.inert = true;
+      inerted.push(el);
+    }
 
-    // The composer gets focus so the reader can type right away.
-    const composer = panelRef.current?.querySelector<HTMLTextAreaElement>("textarea");
-    (composer ?? focusables()[0])?.focus();
+    // Only what's on screen: "Open full page" is hidden below 640px, and a
+    // display:none element can't take focus, so it can't anchor the loop.
+    const focusables = () =>
+      Array.from(
+        panelRef.current?.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ) ?? [],
+      ).filter((el) => el.getClientRects().length > 0);
+
+    // The composer gets focus so the reader can type right away. When there
+    // is no composer (a red-flag escalation, a notice, or the turn limit,
+    // all of which survive closing and reopening), the heading that explains
+    // why gets it instead, then the first control, then the dialog itself.
+    const panel = panelRef.current;
+    const composer = panel?.querySelector<HTMLTextAreaElement>("textarea");
+    const heading = panel?.querySelector<HTMLElement>(
+      'h2[tabindex="-1"]:not(.sr-only), h3[tabindex="-1"]',
+    );
+    (composer ?? heading ?? focusables()[0] ?? panel)?.focus();
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -66,10 +96,17 @@ export default function AskPanel({ open, onClose }: { open: boolean; onClose: ()
       if (nodes.length === 0) return;
       const first = nodes[0];
       const last = nodes[nodes.length - 1];
-      if (e.shiftKey && document.activeElement === first) {
+      const active = document.activeElement;
+      // Focus on the dialog itself, or somewhere outside it: bring it back in.
+      if (active === panelRef.current || !panelRef.current?.contains(active)) {
+        e.preventDefault();
+        (e.shiftKey ? last : first).focus();
+        return;
+      }
+      if (e.shiftKey && active === first) {
         e.preventDefault();
         last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
+      } else if (!e.shiftKey && active === last) {
         e.preventDefault();
         first.focus();
       }
@@ -79,14 +116,15 @@ export default function AskPanel({ open, onClose }: { open: boolean; onClose: ()
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = originalOverflow;
-      previousFocus.current?.focus?.();
+      for (const el of inerted) el.inert = false;
+      (returnFocusTo?.current ?? previousFocus.current)?.focus?.();
     };
-  }, [open, onClose]);
+  }, [open, onClose, returnFocusTo]);
 
   if (typeof document === "undefined") return null;
 
   return createPortal(
-    <div className={present ? "fixed inset-0 z-50" : "hidden"} role="presentation">
+    <div ref={rootRef} className={present ? "fixed inset-0 z-50" : "hidden"} role="presentation">
       <div
         className={`absolute inset-0 bg-ink/40 ${open ? "ask-backdrop-enter" : "ask-backdrop-exit"}`}
         onClick={onClose}
@@ -97,10 +135,11 @@ export default function AskPanel({ open, onClose }: { open: boolean; onClose: ()
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
+        tabIndex={-1}
         onAnimationEnd={() => {
           if (!open) setLeaving(false);
         }}
-        className={`absolute inset-y-0 right-0 flex w-full flex-col border-l border-neutral-200 bg-white shadow-xl sm:w-[440px] ${
+        className={`absolute inset-y-0 right-0 flex w-full flex-col border-l border-neutral-200 bg-white shadow-xl outline-none sm:w-[440px] ${
           open ? "ask-panel-enter" : "ask-panel-exit"
         }`}
       >
