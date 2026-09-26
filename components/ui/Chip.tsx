@@ -41,7 +41,7 @@ export const Chip = forwardRef<HTMLButtonElement, ChipProps>(function Chip(
     >
       {children}
       {count != null && (
-        <span className="ml-2 font-normal opacity-60">{count}</span>
+        <span className="ml-2 font-normal">{count}</span>
       )}
     </button>
   );

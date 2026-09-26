@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { askCopy } from "./copy";
 
 /**
  * Renders the small subset of markdown the assistant is allowed to write:
@@ -46,6 +47,7 @@ function renderInline(text: string, keyPrefix: string): ReactNode[] {
         return (
           <a key={key} href={href} target="_blank" rel="noopener noreferrer" className={linkClass}>
             {label}
+            <span className="sr-only"> {askCopy.message.newTab}</span>
           </a>
         );
       }
@@ -60,7 +62,7 @@ export default function RichText({ text }: { text: string }) {
   const blocks = text.trim().split(/\n{2,}/);
 
   return (
-    <div className="space-y-4 text-[1.0625rem] leading-[1.5] text-ink">
+    <div className="space-y-4 break-words text-[1.0625rem] leading-[1.5] text-ink">
       {blocks.map((block, b) => {
         const lines = block.split("\n").filter((l) => l.trim() !== "");
         if (lines.length === 0) return null;

@@ -19,10 +19,17 @@ export const askCopy = {
   // The field answers the assistant's opening question, so it reads as a
   // reply, not a form prompt.
   composer: {
-    label: "Your message",
+    // The accessible name matches the visible placeholder (WCAG 2.5.3).
+    label: "Describe what's going on",
     placeholder: "Describe what's going on",
     send: "Send",
-    stop: "Stop",
+    stop: "Stop answer",
+    /** Read by screen readers only, with the field. */
+    hint: "Enter sends. Shift and Enter starts a new line.",
+    /** Announced when Enter is pressed while an answer is still coming. */
+    busy: "Alfred is still answering. Stop the answer to ask something new.",
+    /** Read after the counter, e.g. "450 / 500 characters". */
+    characters: "characters",
     privacy:
       "Alfred isn't a doctor. What you type goes to Claude, by Anthropic, and isn't saved. Leave out your name and contact details.",
     tooLong: "Keep it under 500 characters.",
@@ -47,7 +54,13 @@ export const askCopy = {
     you: "You",
     sources: "From the guides",
     copy: "Copy",
+    /** Read by screen readers after "Copy", so each button says what it copies. */
+    copyWhat: "answer",
     copied: "Copied",
+    copiedAnnounce: "Answer copied.",
+    copyFailed: "Couldn't copy. Select the text to copy it.",
+    /** Read by screen readers after a link that opens a new tab. */
+    newTab: "(opens in a new tab)",
   },
 
   uncertain: {

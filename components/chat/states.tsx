@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { forwardRef, useEffect, useId, useRef, useState } from "react";
+import { createContext, forwardRef, useContext, useEffect, useId, useRef, useState } from "react";
 import AlfredMark from "./AlfredMark";
 import { Button } from "@/components/ui";
 import { type } from "@/components/typography";
@@ -14,7 +14,20 @@ const linkClass = "text-link underline underline-offset-4 hover:text-link-hover"
 const CLINICIAN = /\b(podiatrist|doctor|clinician|physician|urgent care)\b/i;
 const nameLabel = "text-xs font-medium tracking-[0.01em] text-neutral-600";
 const chipClass =
-  "inline-flex min-h-9 cursor-pointer items-center border border-neutral-300 bg-bg-elevated px-4 py-2 text-xs font-medium tracking-[0.01em] text-neutral-700 transition hover:border-ink hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2";
+  "inline-flex min-h-9 cursor-pointer items-center border border-neutral-300 bg-bg-elevated px-4 py-2 text-xs font-medium tracking-[0.01em] text-neutral-700 transition hover:border-ink hover:text-ink focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2";
+
+/**
+ * Heading level for the chat's own headings (warnings, notices, "not in the
+ * guides"): 2 on /ask, under the page's h1; 3 in the drawer, under its h2
+ * title. AskChat provides it from its variant.
+ */
+export const ChatHeadingLevel = createContext<2 | 3>(2);
+
+type HeadingTag = "h2" | "h3" | "h4";
+function useHeading(offset = 0): HeadingTag {
+  const base = useContext(ChatHeadingLevel);
+  return `h${Math.min(base + offset, 4)}` as HeadingTag;
+}
 
 // ── Speaker identity ─────────────────────────────────────────────────────────
 
@@ -60,7 +73,7 @@ export const UserRow = forwardRef<HTMLDivElement, { message: UserMessage }>(func
     <div ref={ref} className="flex scroll-mt-28 justify-end">
       <div className="max-w-[85%] bg-neutral-100 px-4 py-3">
         <span className="sr-only">{askCopy.message.you}: </span>
-        <p className="whitespace-pre-wrap text-[1.0625rem] leading-[1.5] text-ink">{message.text}</p>
+        <p className="whitespace-pre-wrap break-words text-[1.0625rem] leading-[1.5] text-ink">{message.text}</p>
       </div>
     </div>
   );
@@ -70,7 +83,8 @@ export function LoadingRow({ reading }: { reading?: string | null }) {
   return (
     <div aria-hidden="true">
       <AssistantFrame>
-        <p className="text-[1.0625rem] leading-[1.5] text-neutral-600 motion-safe:animate-pulse">
+        <p className="flex items-center gap-2 text-[1.0625rem] leading-[1.5] text-neutral-600">
+          <span className="inline-block h-2 w-2 shrink-0 rounded-full bg-accent-500 motion-safe:animate-pulse" />
           {reading ? askCopy.loadingGuide(reading) : askCopy.loading}
         </p>
       </AssistantFrame>
@@ -92,7 +106,7 @@ export function StarterChips({ onPick }: { onPick: (question: string) => void })
   );
 }
 
-function CopyButton({ text, onCopy }: { text: string; onCopy: () => void }) {
+function CopyButton({ text, onCopy }: { text: string; onCopy: (ok: boolean) => void }) {
   const [copied, setCopied] = useState(false);
   return (
     <Button
@@ -100,17 +114,28 @@ function CopyButton({ text, onCopy }: { text: string; onCopy: () => void }) {
       size="sm"
       className="-ml-4"
       onClick={() => {
+        if (!navigator.clipboard) {
+          onCopy(false);
+          return;
+        }
         navigator.clipboard
-          ?.writeText(toPlainText(text))
+          .writeText(toPlainText(text))
           .then(() => {
             setCopied(true);
             setTimeout(() => setCopied(false), 2000);
+            onCopy(true);
           })
-          .catch(() => {});
-        onCopy();
+          .catch(() => onCopy(false));
       }}
     >
-      {copied ? askCopy.message.copied : askCopy.message.copy}
+      {copied ? (
+        askCopy.message.copied
+      ) : (
+        <>
+          {askCopy.message.copy}
+          <span className="sr-only"> {askCopy.message.copyWhat}</span>
+        </>
+      )}
     </Button>
   );
 }
@@ -124,15 +149,16 @@ export function AssistantRow({
   message: AssistantMessage;
   isLatest: boolean;
   onFeedback: (id: string, value: "up" | "down") => void;
-  onCopy: (variant: AssistantMessage["variant"]) => void;
+  onCopy: (variant: AssistantMessage["variant"], ok: boolean) => void;
 }) {
   const { variant, sources, streaming, feedback } = message;
+  const Heading = useHeading();
 
   if (variant === "out_of_scope") {
     return (
       <AssistantFrame>
         <div className="border border-neutral-300 bg-neutral-100 p-4">
-          <h3 className={`${type.h4} text-ink`}>{askCopy.outOfScope.heading}</h3>
+          <Heading className={`${type.h4} text-ink`}>{askCopy.outOfScope.heading}</Heading>
           <p className={`${type.body} mt-2 text-neutral-700`}>{askCopy.outOfScope.body}</p>
           <p className="mt-3 text-[0.9375rem]">
             <Link href="/guides" className={linkClass}>
@@ -148,7 +174,7 @@ export function AssistantRow({
     <AssistantFrame>
       {variant === "uncertain" && (
         <div className="mb-3 border border-neutral-300 bg-neutral-100 p-4">
-          <h3 className={`${type.h4} text-ink`}>{askCopy.uncertain.heading}</h3>
+          <Heading className={`${type.h4} text-ink`}>{askCopy.uncertain.heading}</Heading>
           <p className={`${type.body} mt-1 text-neutral-700`}>{askCopy.uncertain.body}</p>
         </div>
       )}
@@ -188,7 +214,7 @@ export function AssistantRow({
 
       {!streaming && (
         <div className="mt-3 flex flex-wrap items-center gap-x-1 gap-y-2">
-          <CopyButton text={message.text} onCopy={() => onCopy(variant)} />
+          <CopyButton text={message.text} onCopy={(ok) => onCopy(variant, ok)} />
           <span aria-hidden="true" className="text-neutral-300">
             ·
           </span>
@@ -225,24 +251,28 @@ export const EscalationPanel = forwardRef<HTMLHeadingElement, { tier: RedFlagTie
   function EscalationPanel({ tier }, headingRef) {
     const copy = askCopy.escalation[tier];
     const headingId = useId();
+    const urgentId = useId();
+    const Heading = useHeading();
+    const SubHeading = useHeading(1);
     return (
       <section
         aria-labelledby={headingId}
         className="border-l-4 border-ink bg-neutral-100 p-6 md:p-8"
       >
-        <h2
+        <Heading
           id={headingId}
           ref={headingRef}
           tabIndex={-1}
+          aria-describedby={urgentId}
           className={`${type.h2} text-ink focus-visible:outline-none`}
         >
           {copy.heading}
-        </h2>
+        </Heading>
         <p className="mt-4 text-[1.0625rem] leading-[1.5] text-ink">{copy.body}</p>
 
-        <h3 className={`${type.h4} mt-6 text-ink`}>{copy.nextHeading}</h3>
+        <SubHeading className={`${type.h4} mt-6 text-ink`}>{copy.nextHeading}</SubHeading>
         <ul className="mt-3 list-disc space-y-3 pl-5 text-[1.0625rem] leading-[1.5] text-ink">
-          <li>{copy.urgent}</li>
+          <li id={urgentId}>{copy.urgent}</li>
           {copy.otherwise && <li>{copy.otherwise}</li>}
           <li>
             <Link href="/doctor-prep" className={linkClass}>
@@ -271,20 +301,21 @@ export const NoticePanel = forwardRef<
         ? askCopy.notice.rateLimited
         : askCopy.notice.resting;
   const headingId = useId();
+  const Heading = useHeading();
 
   return (
     <section
       aria-labelledby={headingId}
       className="border border-neutral-300 bg-neutral-100 p-6"
     >
-      <h2
+      <Heading
         id={headingId}
         ref={headingRef}
         tabIndex={-1}
         className={`${type.h3} text-ink focus-visible:outline-none`}
       >
         {copy.heading}
-      </h2>
+      </Heading>
       <p className={`${type.body} mt-2 text-neutral-700`}>{copy.body}</p>
 
       <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3">
@@ -325,6 +356,7 @@ function Feedback({
   onVote: (value: "up" | "down") => void;
 }) {
   const thanksRef = useRef<HTMLParagraphElement>(null);
+  const promptId = useId();
   const [justVoted, setJustVoted] = useState(false);
 
   useEffect(() => {
@@ -339,15 +371,17 @@ function Feedback({
   return (
     <>
       {!feedback && (
-        <>
-          <p className="pl-3 text-xs text-neutral-600">{askCopy.feedback.prompt}</p>
+        <div role="group" aria-labelledby={promptId} className="flex items-center gap-x-1">
+          <p id={promptId} className="pl-3 text-xs text-neutral-600">
+            {askCopy.feedback.prompt}
+          </p>
           <Button variant="ghost" size="sm" onClick={() => vote("up")}>
             {askCopy.feedback.yes}
           </Button>
           <Button variant="ghost" size="sm" onClick={() => vote("down")}>
             {askCopy.feedback.no}
           </Button>
-        </>
+        </div>
       )}
       <p
         ref={thanksRef}
