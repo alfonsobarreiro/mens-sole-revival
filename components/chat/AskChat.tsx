@@ -9,6 +9,7 @@ import { classifyRedFlag } from "@/lib/chat/red-flags";
 import { askCopy } from "./copy";
 import {
   AssistantRow,
+  ChatHeadingLevel,
   EscalationPanel,
   LoadingRow,
   NoticePanel,
@@ -101,7 +102,7 @@ function fitToContent(el: HTMLTextAreaElement) {
 }
 
 const iconButton =
-  "flex h-11 w-11 cursor-pointer items-center justify-center transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2";
+  "flex h-11 w-11 cursor-pointer items-center justify-center transition focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2";
 
 function ArrowUpIcon() {
   return (
@@ -133,6 +134,12 @@ export default function AskChat({
   const [notice, setNotice] = useState<Notice | null>(initial.notice);
   const [draft, setDraft] = useState("");
   const [status, setStatus] = useState("");
+  /** Status messages that can repeat ("too long", "copied"): clearing first
+   *  and setting on the next frame makes screen readers read them again. */
+  const announce = useCallback((message: string) => {
+    setStatus("");
+    requestAnimationFrame(() => setStatus(message));
+  }, []);
   const [reading, setReading] = useState<string | null>(initial.reading ?? null);
   const [atEnd, setAtEnd] = useState(true);
 
@@ -140,6 +147,7 @@ export default function AskChat({
   const privacyId = `${fieldId}-privacy`;
   const counterId = `${fieldId}-counter`;
   const errorId = `${fieldId}-error`;
+  const hintId = `${fieldId}-hint`;
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const escalationRef = useRef<HTMLHeadingElement>(null);
@@ -390,13 +398,17 @@ export default function AskChat({
 
   const send = (raw: string, via: "typed" | "starter") => {
     const text = raw.trim();
-    if (busy || composerHidden) return;
+    if (busy) {
+      announce(askCopy.composer.busy);
+      return;
+    }
+    if (composerHidden) return;
     if (text === "") {
       textareaRef.current?.focus();
       return;
     }
     if (text.length > MAX_INPUT_CHARS) {
-      setStatus(askCopy.composer.tooLong);
+      announce(askCopy.composer.tooLong);
       textareaRef.current?.focus();
       return;
     }
@@ -479,7 +491,10 @@ export default function AskChat({
 
   const restartFrom = escalation ? "escalation" : notice ? notice.kind : atTurnLimit ? "turn_limit" : "conversation";
 
+  const LimitHeading = variant === "panel" ? "h3" : "h2";
+
   return (
+    <ChatHeadingLevel.Provider value={variant === "panel" ? 3 : 2}>
     <div
       className={
         variant === "panel"
@@ -518,7 +533,10 @@ export default function AskChat({
               message={m}
               isLatest={m.id === lastAssistantId && !escalation}
               onFeedback={giveFeedback}
-              onCopy={(variant) => trackAsk("ask_copy", { variant })}
+              onCopy={(variant, ok) => {
+                trackAsk("ask_copy", { variant });
+                announce(ok ? askCopy.message.copiedAnnounce : askCopy.message.copyFailed);
+              }}
             />
           ),
         )}
@@ -537,13 +555,13 @@ export default function AskChat({
 
         {atTurnLimit && (
           <section className="border border-neutral-300 bg-neutral-100 p-6">
-            <h2
+            <LimitHeading
               ref={turnLimitRef}
               tabIndex={-1}
               className={`${type.h3} text-ink focus-visible:outline-none`}
             >
               {askCopy.turnLimit.heading}
-            </h2>
+            </LimitHeading>
             <p className={`${type.body} mt-2 text-neutral-700`}>{askCopy.turnLimit.body}</p>
           </section>
         )}
@@ -553,11 +571,11 @@ export default function AskChat({
       </section>
 
       {!composerHidden && (
-        <div className="sticky bottom-0 border-t border-neutral-200 bg-white px-4 py-3 md:px-6 md:py-4">
+        <div className="sticky bottom-0 border-t border-neutral-200 bg-white px-4 py-3 md:px-6 md:py-4 [@media(max-height:30rem)]:static">
           {showJump && (
             <div className="absolute -top-12 right-4 md:right-6">
               <Button variant="secondary" size="sm" className="bg-white" onClick={jumpToLatest}>
-                {askCopy.jumpToLatest} ↓
+                {askCopy.jumpToLatest} <span aria-hidden="true">↓</span>
               </Button>
             </div>
           )}
@@ -589,8 +607,8 @@ export default function AskChat({
                 onKeyDown={onKeyDown}
                 enterKeyHint="send"
                 aria-invalid={tooLong || undefined}
-                aria-describedby={`${privacyId}${nearLimit ? ` ${counterId}` : ""}${tooLong ? ` ${errorId}` : ""}`}
-                className="block min-h-[3.25rem] w-full resize-none border border-border-input bg-bg-elevated py-3.5 pl-4 pr-16 text-[0.9375rem] leading-[1.5] text-ink placeholder:text-neutral-600 transition-colors focus:border-accent-600 focus:outline-none focus:ring-2 focus:ring-accent-600/40 aria-[invalid=true]:border-signal-error"
+                aria-describedby={`${hintId} ${privacyId}${nearLimit ? ` ${counterId}` : ""}${tooLong ? ` ${errorId}` : ""}`}
+                className="block min-h-[3.25rem] w-full resize-none border border-border-input bg-bg-elevated py-3.5 pl-4 pr-16 text-[0.9375rem] leading-[1.5] text-ink placeholder:text-neutral-600 transition-colors focus:border-accent-600 focus:outline-hidden focus:ring-2 focus:ring-accent-600/40 aria-[invalid=true]:border-signal-error"
               />
               <div className="absolute bottom-1 right-1">
                 {busy ? (
@@ -616,6 +634,9 @@ export default function AskChat({
             </div>
 
             <div className="mt-2 flex items-start justify-between gap-4">
+              <p id={hintId} className="sr-only">
+                {askCopy.composer.hint}
+              </p>
               <p id={privacyId} className="text-xs leading-[1.5] text-neutral-600">
                 {askCopy.composer.privacy}
               </p>
@@ -625,6 +646,7 @@ export default function AskChat({
                   className={`shrink-0 text-xs tabular-nums ${tooLong ? "font-medium text-signal-error" : "text-neutral-600"}`}
                 >
                   {draft.length} / {MAX_INPUT_CHARS}
+                  <span className="sr-only"> {askCopy.composer.characters}</span>
                 </p>
               )}
             </div>
@@ -637,5 +659,6 @@ export default function AskChat({
         </div>
       )}
     </div>
+    </ChatHeadingLevel.Provider>
   );
 }

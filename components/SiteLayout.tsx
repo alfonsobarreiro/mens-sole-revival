@@ -9,6 +9,7 @@ import { Button, IconButton } from "@/components/ui";
 import SearchTrigger from "@/components/SearchTrigger";
 import AskTrigger from "@/components/chat/AskTrigger";
 import { AskProvider } from "@/components/chat/AskHost";
+import { SearchProvider } from "@/components/SearchHost";
 
 const navLinks = [
   { label: "Guides", href: "/guides" },
@@ -35,6 +36,18 @@ export default function SiteLayout({
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
 
+  // "Skip to content": move focus to <main> itself, so the next Tab starts
+  // inside the page content in every browser. tabindex is added only for the
+  // jump and removed on blur, so clicks inside main don't focus it.
+  const skipToContent = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const main = document.getElementById("main");
+    if (!main) return;
+    e.preventDefault();
+    main.setAttribute("tabindex", "-1");
+    main.focus();
+    main.addEventListener("blur", () => main.removeAttribute("tabindex"), { once: true });
+  };
+
   // Reusable hamburger / close icons
   const HamburgerIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
@@ -51,10 +64,18 @@ export default function SiteLayout({
 
   return (
     <AskProvider>
-    <main className="min-h-screen bg-ground text-ink">
+    <SearchProvider>
+    <div className="min-h-screen bg-ground text-ink">
+      <a
+        href="#main"
+        onClick={skipToContent}
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:bg-ink focus:px-4 focus:py-3 focus:text-sm focus:font-medium focus:text-inverse"
+      >
+        Skip to content
+      </a>
 
-      {/* ── Header ── */}
-      <header className="sticky top-0 left-0 right-0 z-40">
+      {/* ── Header ── (static when the window is very short, e.g. 400% zoom) */}
+      <header className="sticky top-0 left-0 right-0 z-40 [@media(max-height:30rem)]:static">
         <div className="bg-bg-elevated/95 shadow-md backdrop-blur-md">
           {/* ── Mobile header: logo left, hamburger right ──
               Explicit width alongside h-N so the browser rasterizes at
@@ -169,7 +190,9 @@ export default function SiteLayout({
       </header>
 
       {/* ── Page content ── */}
-      {children}
+      <main id="main" className="outline-none">
+        {children}
+      </main>
 
       {/* ── Footer ── */}
       <footer className="bg-ink">
@@ -256,7 +279,8 @@ export default function SiteLayout({
           </div>
         </Container>
       </footer>
-    </main>
+    </div>
+    </SearchProvider>
     </AskProvider>
   );
 }

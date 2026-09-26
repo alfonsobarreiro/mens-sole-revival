@@ -29,6 +29,8 @@ import {
 type Props = {
   open: boolean;
   onClose: () => void;
+  /** The control that opened the palette; focus goes back to it on close. */
+  returnFocusTo?: React.RefObject<HTMLElement | null>;
 };
 
 // Curated starting points shown when the palette opens with no query.
@@ -41,7 +43,7 @@ const START_HERE: SearchItem[] = [
   { id: "routines",   group: "Routines",   title: "The five-minute nightly routine",                  subtitle: "The habit that heads off most common problems.",   href: "/guides/5-minute-routine" },
 ];
 
-export default function SearchPalette({ open, onClose }: Props) {
+export default function SearchPalette({ open, onClose, returnFocusTo }: Props) {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
@@ -81,8 +83,10 @@ export default function SearchPalette({ open, onClose }: Props) {
     return () => {
       clearTimeout(t);
       document.body.style.overflow = "";
+      const back = returnFocusTo?.current;
+      if (back?.isConnected) back.focus();
     };
-  }, [open]);
+  }, [open, returnFocusTo]);
 
   useEffect(() => {
     setActiveIdx(0);
@@ -188,7 +192,7 @@ export default function SearchPalette({ open, onClose }: Props) {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search"
-            className="flex-1 bg-transparent py-5 text-base text-ink placeholder:text-neutral-500 focus:outline-none"
+            className="flex-1 bg-transparent py-5 text-base text-ink placeholder:text-neutral-600 focus:outline-hidden"
             aria-label="Search the site"
             aria-controls="search-results"
             aria-activedescendant={

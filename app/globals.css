@@ -119,7 +119,7 @@
   --color-border-subtle:      var(--color-neutral-200);
   --color-border-default:     var(--color-neutral-200);
   --color-border-strong:      var(--color-neutral-300);
-  --color-border-input:       var(--color-neutral-300);
+  --color-border-input:       var(--color-neutral-500);  /* 4.03:1 on white, 3.65:1 on neutral-100 (WCAG 1.4.11) */
   --color-border-input-focus: var(--color-accent-600);
   --color-border-primary:     var(--color-ink);
   --color-border-accent:      var(--color-accent);

@@ -7,7 +7,7 @@ export type ButtonSize = "sm" | "md" | "lg";
 
 const base =
   "inline-flex items-center justify-center gap-2 font-medium tracking-[0.01em] " +
-  "transition-colors focus-visible:outline-none focus-visible:ring-2 " +
+  "transition-colors focus-visible:outline-hidden focus-visible:ring-2 " +
   "focus-visible:ring-focus-ring focus-visible:ring-offset-2 " +
   "focus-visible:ring-offset-bg-page " +
   "disabled:pointer-events-none disabled:opacity-40 select-none cursor-pointer";

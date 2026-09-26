@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import SearchPalette from "@/components/SearchPalette";
+import { useSearch } from "@/components/SearchHost";
 
 /**
  * SearchTrigger — nav-mounted entry point for the global ⌘K palette.
@@ -10,16 +10,15 @@ import SearchPalette from "@/components/SearchPalette";
  *   • desktop: pill with magnifier icon, "Search" label, and ⌘K hint
  *   • mobile:  icon-only square button
  *
- * Listens for ⌘K / Ctrl+K globally and `/` (slash) when no input is focused.
- * Mounts SearchPalette as a sibling so the modal can sit above the sticky
- * header without z-index gymnastics.
+ * Both variants open the one palette owned by SearchProvider, which also
+ * handles ⌘K / Ctrl+K and `/` (slash) when no input is focused.
  */
 export default function SearchTrigger({
   variant = "desktop",
 }: {
   variant?: "desktop" | "mobile";
 }) {
-  const [open, setOpen] = useState(false);
+  const { open, openSearch } = useSearch();
   const [isMac, setIsMac] = useState(false);
 
   useEffect(() => {
@@ -27,32 +26,6 @@ export default function SearchTrigger({
       setIsMac(/Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent));
     }
   }, []);
-
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      // ⌘K / Ctrl+K from anywhere
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
-        e.preventDefault();
-        setOpen((o) => !o);
-        return;
-      }
-      // `/` shortcut when no input is focused (GitHub pattern)
-      if (e.key === "/" && !open) {
-        const target = e.target as HTMLElement | null;
-        const tag = target?.tagName;
-        const editable =
-          tag === "INPUT" ||
-          tag === "TEXTAREA" ||
-          target?.isContentEditable;
-        if (!editable) {
-          e.preventDefault();
-          setOpen(true);
-        }
-      }
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open]);
 
   return (
     <>
@@ -62,8 +35,10 @@ export default function SearchTrigger({
         // Keyboard shortcut still works, it just doesn't advertise itself.
         <button
           type="button"
-          onClick={() => setOpen(true)}
+          onClick={(e) => openSearch(e.currentTarget)}
           aria-label="Search the site"
+          aria-haspopup="dialog"
+          aria-expanded={open}
           title={isMac ? "Search  (⌘K)" : "Search  (Ctrl K)"}
           className="flex cursor-pointer items-center gap-1.5 text-sm font-medium text-neutral-600 transition hover:text-ink"
         >
@@ -73,15 +48,15 @@ export default function SearchTrigger({
       ) : (
         <button
           type="button"
-          onClick={() => setOpen(true)}
+          onClick={(e) => openSearch(e.currentTarget)}
           aria-label="Search the site"
+          aria-haspopup="dialog"
+          aria-expanded={open}
           className="flex h-10 w-10 cursor-pointer items-center justify-center text-ink transition hover:text-accent-700"
         >
           <SearchIcon className="h-5 w-5" />
         </button>
       )}
-
-      <SearchPalette open={open} onClose={() => setOpen(false)} />
     </>
   );
 }
