@@ -126,8 +126,8 @@ export function previewSnapshot(state: PreviewState): ChatSnapshot {
     case "redflag3":
       return {
         ...idle,
-        escalation: "tier3",
-        messages: [user("I've stretched every day for three months and my heel still hurts")],
+        escalation: "emergency",
+        messages: [user("My feet are swollen and I have chest pain")],
       };
     case "error":
       return { ...idle, notice: { kind: "error" }, messages: [heelQuestion] };

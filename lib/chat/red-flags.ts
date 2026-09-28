@@ -26,7 +26,8 @@
  * signoff.
  */
 
-export type RedFlagTier = "tier1" | "tier2" | "tier3" | null;
+/** emergency: call 911 now. tier1: see a doctor today. tier2: see a clinician this week. */
+export type RedFlagTier = "emergency" | "tier1" | "tier2" | null;
 
 export type RedFlagMatch = {
   tier: Exclude<RedFlagTier, null>;
@@ -85,8 +86,9 @@ const PATTERNS: Pattern[] = [
       /\bspreading\s+(redness|red)\b/,
       /\bred\s+streaks?\b/,
       /\bstreaks?\s+up\s+(the\s+)?(leg|foot|ankle|calf)\b/,
-      /\b(pus|drainage|discharge)\b/,
-      /\b(foul|bad|weird)\s+smell(ing)?\b/,
+      // A smell is a flag when it comes from a wound, not from feet or shoes.
+      /\b(wound|sore|ulcer|cut|blister)\b.{0,40}\b(smells?|stinks|odor)\b/,
+      /\b(foul|bad|weird)\s+smell(ing)?\b.{0,40}\b(wound|sore|ulcer|cut|blister)\b/,
       /\bcellulit(is|ic)\b/,
       /\bnecrotiz(ing|es)\b/,
     ],
@@ -95,7 +97,11 @@ const PATTERNS: Pattern[] = [
     tier: "tier1",
     label: "fever or chills with foot problem",
     patterns: [
-      /\bfever\b/,
+      // "I have a fever", "with a fever", "fever and a red toe"; not "does X cause a fever?"
+      /\b(i\s+(have|had|got|'ve\s+got|am\s+running|'m\s+running)|running|have|has|got|with|plus|and|also)\s+(a\s+)?(high\s+|low\s+|slight\s+)?(fever|temperature)\b/,
+      /^\s*fever\b/,
+      /\bfever\s+(and|with|plus|since)\b/,
+      /\bfeverish\b/,
       /\bchills\b/,
       /\b(hot|shaking|sweating)\s+(and|plus)\s+(foot|toe|feet)\b/,
     ],
@@ -104,8 +110,11 @@ const PATTERNS: Pattern[] = [
     tier: "tier1",
     label: "cannot bear weight after injury",
     patterns: [
-      /\bcan\W?t\s+(walk|stand|bear\s+weight|put\s+(weight|pressure))\b/,
-      /\bunable\s+to\s+(walk|stand|bear\s+weight)\b/,
+      /\b(can\W?t|cannot|unable\s+to)\s+(bear\s+weight|put\s+(any\s+)?(weight|pressure))\b/,
+      // "Can't walk / can't stand" on its own is usually a long day on the
+      // feet ("I can't stand for long at work"); cantWalkAfterInjury() below
+      // flags it only after an injury or a sudden onset.
+      /__CANT_WALK_AFTER_INJURY__/,
       /\b(fell|dropped|twisted|rolled)\b.*\b(and|now)\b.*\b(can\W?t|unable)\b.*\b(walk|stand)\b/,
     ],
   },
@@ -120,7 +129,7 @@ const PATTERNS: Pattern[] = [
     ],
   },
   {
-    tier: "tier1",
+    tier: "emergency",
     label: "chest pain or trouble breathing (call 911)",
     patterns: [
       /\bchest\s+(pain|pressure|tightness|hurts?)\b/,
@@ -178,17 +187,16 @@ const PATTERNS: Pattern[] = [
     patterns: [
       /\bnew\s+(numbness|tingling|pins\s+and\s+needles)\b/,
       /\bnumb(ness)?\b.*\b(after|since)\b.*\b(fell|hurt|injur|rolled|twisted|dropped)\b/,
-      /\bnumbness\s+in\s+(toes?|foot|feet)\b/,
+      /\bnumb(ness)?\b.{0,30}\b(spreading|spreads|getting\s+worse|won\W?t\s+go\s+away|all\s+the\s+time|constant(ly)?)\b/,
+      /\b(spreading|constant)\s+numbness\b/,
     ],
   },
   {
     tier: "tier2",
     label: "nighttime foot pain waking the user up",
-    patterns: [
-      /\bwakes?\s+(me|him|us)\s+up\b/,
-      /\bpain\s+at\s+night\b.*\b(wake|sleep|bed)\b/,
-      /\b(can\W?t|unable\s+to)\s+sleep\b.*\bpain\b/,
-    ],
+    // Night pain is a classic flag; night cramps are not (the cramps guide
+    // answers them), so nightPain() skips messages that name a cramp.
+    patterns: [/__NIGHT_PAIN__/],
   },
   {
     tier: "tier2",
@@ -201,6 +209,11 @@ const PATTERNS: Pattern[] = [
       /\bmelanoma\b/,
       /\bsubungual\b/,
     ],
+  },
+  {
+    tier: "tier2",
+    label: "pus or drainage (possible infection)",
+    patterns: [/\b(pus|drainage|discharge|oozing)\b/],
   },
   {
     tier: "tier2",
@@ -245,6 +258,22 @@ function charcotSigns(message: string): boolean {
 const FOOT_OR_LEG = /\b(foot|feet|toe|toes|leg|legs|ankle|ankles)\b/;
 const INJURY = /\b(twist(ed)?|roll(ed)?|sprain(ed)?|fell|fall|injur(y|ed)|hit|stubbed|dropped|kicked|landed)\b/;
 
+/** Can't walk or stand, but only after an injury or a sudden onset. */
+function cantWalkAfterInjury(message: string): boolean {
+  const cant = /\b(can\W?t|cannot|unable\s+to)\s+(walk|stand)\b/;
+  return cant.test(message) && (INJURY.test(message) || /\bsudden(ly)?\b/.test(message));
+}
+
+/** Pain that wakes you at night, unless it's a cramp. */
+function nightPain(message: string): boolean {
+  const night = [
+    /\bwakes?\s+(me|him|us)\s+up\b/,
+    /\bpain\s+at\s+night\b.*\b(wake|sleep|bed)\b/,
+    /\b(can\W?t|unable\s+to)\s+sleep\b.*\bpain\b/,
+  ];
+  return night.some((r) => r.test(message)) && !/\bcramp(s|ing|ed)?\b/.test(message);
+}
+
 /** Sudden cold or colour change in a foot: an artery can be blocked. */
 function suddenColdFoot(message: string): boolean {
   const sudden = /\b(sudden(ly)?|all\s+of\s+a\s+sudden|out\s+of\s+nowhere)\b/;
@@ -279,13 +308,25 @@ export function classifyRedFlag(rawMessage: string): RedFlagMatch | null {
   const message = rawMessage.toLowerCase().trim();
   if (message.length === 0) return null;
 
-  // Special AND-condition patterns first (order matters: Tier 1 checks).
+  const fromPatterns = (tier: Exclude<RedFlagTier, null>): RedFlagMatch | null => {
+    for (const p of PATTERNS.filter((x) => x.tier === tier)) {
+      for (const regex of p.patterns) {
+        // Sentinels ("__NAME__") stand for the AND-conditions handled below.
+        if (regex.source.startsWith("__")) continue;
+        const m = message.match(regex);
+        if (m) return { tier: p.tier, label: p.label, matched: m[0] };
+      }
+    }
+    return null;
+  };
+
+  // 1. Call 911: always wins, whatever else the message says.
+  const emergency = fromPatterns("emergency");
+  if (emergency) return emergency;
+
+  // 2. Doctor today: AND-conditions first, then the pattern list.
   if (diabetesPlusWound(message)) {
-    return {
-      tier: "tier1",
-      label: "diabetes plus wound/blister/sore",
-      matched: "diabetes + wound co-occurrence",
-    };
+    return { tier: "tier1", label: "diabetes plus wound/blister/sore", matched: "diabetes + wound co-occurrence" };
   }
   if (charcotSigns(message)) {
     return {
@@ -303,22 +344,17 @@ export function classifyRedFlag(rawMessage: string): RedFlagMatch | null {
   if (soleBruise(message)) {
     return { tier: "tier1", label: "bruising on the sole after an injury (possible midfoot injury)", matched: "bruise + sole + injury" };
   }
-
-  // Regex-list patterns. Sorted so Tier 1 matches short-circuit before Tier 2.
-  for (const tier of ["tier1", "tier2", "tier3"] as const) {
-    for (const p of PATTERNS.filter((x) => x.tier === tier)) {
-      // Skip the special AND-conditions we already handled.
-      if (p.patterns[0]?.source.startsWith("__")) continue;
-      for (const regex of p.patterns) {
-        const m = message.match(regex);
-        if (m) {
-          return { tier: p.tier, label: p.label, matched: m[0] };
-        }
-      }
-    }
+  if (cantWalkAfterInjury(message)) {
+    return { tier: "tier1", label: "cannot bear weight after injury", matched: "can't walk/stand + injury or sudden" };
   }
+  const tier1 = fromPatterns("tier1");
+  if (tier1) return tier1;
 
-  return null;
+  // 3. This week.
+  if (nightPain(message)) {
+    return { tier: "tier2", label: "nighttime foot pain waking the user up", matched: "night pain, not cramps" };
+  }
+  return fromPatterns("tier2");
 }
 
 /**
@@ -345,9 +381,9 @@ export const RED_FLAG_TEST_CASES: {
   // Added 2026-09-25 with the swollen-feet, cold-feet, gout, top-of-foot guides.
   { message: "my left calf is swollen and hurts and my ankle is puffy", expected: "tier1", reason: "possible DVT" },
   { message: "one leg is swollen and warm since my flight", expected: "tier1", reason: "possible DVT after travel" },
-  { message: "my ankles are swollen and I get short of breath lying down", expected: "tier1", reason: "possible heart failure" },
-  { message: "swollen feet and chest pain", expected: "tier1", reason: "chest pain: call 911" },
-  { message: "my feet are swollen and I can't breathe well", expected: "tier1", reason: "breathing trouble: call 911" },
+  { message: "my ankles are swollen and I get short of breath lying down", expected: "emergency", reason: "possible heart failure" },
+  { message: "swollen feet and chest pain", expected: "emergency", reason: "chest pain: call 911" },
+  { message: "my feet are swollen and I can't breathe well", expected: "emergency", reason: "breathing trouble: call 911" },
   { message: "my foot is suddenly cold, pale and numb", expected: "tier1", reason: "possible blocked artery" },
   { message: "my right foot is swollen and warm but I didn't hurt it", expected: "tier1", reason: "one-sided warm swelling" },
   { message: "the top of my foot is swollen after I twisted it and bruised underneath", expected: "tier1", reason: "possible Lisfranc injury" },
@@ -363,4 +399,19 @@ export const RED_FLAG_TEST_CASES: {
   { message: "I have a bruise under my toenail from running", expected: null, reason: "black toenail: the guide answers it" },
   { message: "my calves are tight after running", expected: null, reason: "no swelling" },
   { message: "calf pain when I walk that goes away when I stop", expected: null, reason: "claudication: routine visit, the guide answers it" },
+  // Added 2026-09-28 after the copy review: everyday questions that used to trip a warning.
+  { message: "I can't stand for long at work because my feet hurt", expected: null, reason: "long day on the feet, not an injury" },
+  { message: "I can't walk far without heel pain", expected: null, reason: "heel pain guide answers it" },
+  { message: "I twisted my ankle and now I can't walk", expected: "tier1", reason: "can't walk after an injury" },
+  { message: "I suddenly can't stand on my left foot", expected: "tier1", reason: "sudden loss of weight-bearing" },
+  { message: "does athlete's foot cause a fever?", expected: null, reason: "asking about fever, not reporting one" },
+  { message: "I have a fever and my toe is red and swollen", expected: "tier1", reason: "fever with a foot problem" },
+  { message: "my ingrown toenail has a little pus", expected: "tier2", reason: "pus alone: this week" },
+  { message: "my wound smells bad", expected: "tier1", reason: "smell from a wound" },
+  { message: "my feet have a bad smell", expected: null, reason: "foot odor: the guide answers it" },
+  { message: "calf cramps wake me up at night", expected: null, reason: "night cramps: the cramps guide answers it" },
+  { message: "my heel pain wakes me up", expected: "tier2", reason: "night pain stays a flag" },
+  { message: "numbness in toes when I run", expected: null, reason: "shoe-related numbness: the guide answers it" },
+  { message: "the numbness in my foot keeps spreading", expected: "tier2", reason: "spreading numbness" },
+  { message: "I get chest pain when I walk and my feet swell", expected: "emergency", reason: "chest pain wins over everything" },
 ];

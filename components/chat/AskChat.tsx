@@ -63,7 +63,7 @@ type StreamEvent =
   | { type: "error" }
   | { type: "notice"; kind?: string };
 
-const TIERS: RedFlagTier[] = ["tier1", "tier2", "tier3"];
+const TIERS: RedFlagTier[] = ["emergency", "tier1", "tier2"];
 
 /** The composer grows with the draft up to this height, then scrolls inside. */
 const COMPOSER_MAX_PX = 200;
