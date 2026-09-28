@@ -71,7 +71,7 @@ export const askCopy = {
 
   outOfScope: {
     heading: "That's outside what I cover",
-    body: "I can help with heel and arch pain, ball-of-foot pain, Achilles pain, big-toe stiffness, toenails, cracked heels, shoe fit, and daily foot-care routines.",
+    body: "I can help with pain anywhere in the foot or ankle, toes and toenails (including fungus), skin problems, swelling, circulation, numbness, shoe fit, and daily foot care.",
     browse: "Browse all guides",
   },
 
@@ -95,16 +95,25 @@ export const askCopy = {
 
   turnLimit: {
     heading: "This conversation has reached its limit",
-    body: "The assistant handles 10 questions at a time. Start a new conversation to keep going.",
+    body: "Alfred handles 10 questions per conversation. Start a new one to keep going.",
   },
 
   escalation: {
-    tier1: {
-      heading: "This is something to check with a doctor today",
-      body: "What you described is on the short list of foot symptoms that need in-person care before any self-treatment. That doesn't mean it's serious. When it is serious, waiting is what turns a fixable problem into a hard one.",
+    // Chest pain, trouble breathing, coughing blood. Shown instead of tier 1.
+    emergency: {
+      heading: "Chest pain or trouble breathing needs care now",
+      body: "These can come from the heart or from a blood clot in the lungs, with or without a foot problem. Don't wait to see if it passes.",
       nextHeading: "What to do next",
       urgent:
-        "Call 911 now if you have chest pain or trouble breathing. Go to urgent care or an ER now if any of these are true: the foot is black, blue, or very pale; one calf or leg is suddenly swollen, warm, or painful; you have a fever; you can't put weight on it; redness is spreading; the pain came on suddenly and is severe; or you have diabetes and an open wound.",
+        "Call 911 now if it's happening now, came on suddenly, or comes with sweating, nausea, or pain spreading to your arm, jaw, or back. Don't drive yourself. If it has been building over days or weeks, see a doctor today.",
+      otherwise: "",
+    },
+    tier1: {
+      heading: "This is something to check with a doctor today",
+      body: "What you described is on the short list of foot symptoms that need in-person care before any self-treatment. A clinician can rule out the serious causes in one visit, and most of these are easier to treat when they're seen early.",
+      nextHeading: "What to do next",
+      urgent:
+        "Call 911 if you also have chest pain or trouble breathing. Go to urgent care or an ER now if any of these are true: the foot is black, blue, or very pale; one calf or leg is suddenly swollen, warm, or painful; you have a fever; you can't put weight on it; redness is spreading; the pain came on suddenly and is severe; or you have diabetes and an open wound.",
       otherwise:
         "Otherwise, call a podiatrist and ask for a same-day or next-day appointment. Many keep slots for urgent problems.",
     },
@@ -116,23 +125,15 @@ export const askCopy = {
         "Book a podiatrist or your regular doctor within the next few days. If it gets worse before then (spreading redness, fever, severe pain, or you can't put weight on the foot), go to urgent care.",
       otherwise: "",
     },
-    tier3: {
-      heading: "A podiatrist should look at this",
-      body: "You've given home care a fair try. When a problem holds on this long, the next useful step is an exam, not another routine.",
-      nextHeading: "What to do next",
-      urgent: "Book a podiatrist visit within the next week or two.",
-      otherwise: "",
-    },
     checklist: "Bring the doctor-prep checklist",
     checklistNote: "It's a printable one-pager that keeps a 20-minute visit focused.",
-    stopped: "The assistant has stopped answering in this conversation.",
+    stopped: "Alfred has stopped answering in this conversation.",
   },
 
   // The nav entry and the slide-in panel that hosts the same conversation.
   panel: {
     trigger: "Ask",
     triggerLabel: "Ask Alfred a foot question",
-    title: "Alfred, your Sole Assistant",
     subtitle: "Alfred, your Sole Assistant.",
     fullPage: "Open full page",
     close: "Close",
@@ -141,24 +142,24 @@ export const askCopy = {
   // Shown outside /ask: under every article and on assessment results.
   promo: {
     body: "Have a question this page didn't answer?",
-    link: "Ask the assistant",
-    note: "It answers only from these guides and links to the one it used.",
+    link: "Ask Alfred",
+    note: "Answers come only from these guides, with a link to the one used.",
     fromAssessment: "Ask a question about your results →",
   },
 
   notice: {
     error: {
-      heading: "The assistant hit a snag",
+      heading: "Alfred hit a snag",
       body: "Something went wrong on our end. The guides are still here.",
       retry: "Try again",
     },
     rateLimited: {
-      heading: "The assistant is pausing",
+      heading: "Alfred is pausing",
       body: "You've asked a lot in a short time. Try again in about 10 minutes, or start with the 5-minute assessment.",
     },
     resting: {
-      heading: "The assistant is resting for the month",
-      body: "It has answered as many questions as its budget allows. Every guide is still here.",
+      heading: "Alfred is resting for the month",
+      body: "This month's budget for answers is used up. Every guide is still here.",
     },
     guides: "Browse all guides",
     assessment: "Take the 5-minute assessment",

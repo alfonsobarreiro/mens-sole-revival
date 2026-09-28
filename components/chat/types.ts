@@ -18,7 +18,7 @@ export type AssistantMessage = {
 
 export type ChatMessage = UserMessage | AssistantMessage;
 
-export type RedFlagTier = "tier1" | "tier2" | "tier3";
+export type RedFlagTier = "emergency" | "tier1" | "tier2";
 
 export type Notice =
   | { kind: "error" }
