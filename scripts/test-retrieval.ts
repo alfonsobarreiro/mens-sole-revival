@@ -20,13 +20,13 @@ const index = JSON.parse(
 ) as { chunks: EmbeddedChunk[] };
 
 const QUESTIONS: { q: string; expectSlug: string | null }[] = [
-  { q: "the bottom of my foot burns by dinner time", expectSlug: "ball-of-foot-pain-in-men-over-40" },
+  { q: "the bottom of my foot burns by dinner time", expectSlug: "burning-feet-men-over-40" },
   { q: "why does my heel kill me when I get out of bed", expectSlug: "heel-pain-first-thing-in-the-morning" },
   { q: "back of my ankle hurts when I run uphill", expectSlug: "achilles-tendon-pain-in-men-over-40" },
   { q: "my toenail keeps growing into the skin", expectSlug: "ingrown-toenail-what-actually-stops-the-cycle" },
   { q: "I sit at a desk all day, anything I can do for my feet at work", expectSlug: "office-day" },
   { q: "my knee hurts, could it be my feet", expectSlug: "knee-pain-that-starts-in-the-feet" },
-  { q: "yellow thick toenails what works", expectSlug: "toenail-fungus-what-works" },
+  { q: "yellow thick toenails what works", expectSlug: "toenail-fungus-treatments-compared" },
   { q: "what is the best pizza in Portland", expectSlug: null },
   { q: "how do I fix my car's alternator", expectSlug: null },
 ];
