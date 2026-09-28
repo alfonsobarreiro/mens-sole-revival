@@ -1884,6 +1884,87 @@ export const guideSeo: Record<string, GuideSeo> = {
 // deferred pending measurement.
 // ─────────────────────────────────────────────────────────────────────────────
 export const routineSeo: Record<string, GuideSeo> = {
+  balance: {
+    metaTitle: "Balance Exercises for Men Over 60: A 10-Minute Routine",
+    metaDescription:
+      "Five balance exercises men over 60 can do at the kitchen counter in 10 minutes, three days a week, plus the 10-second one-leg test and when to see a doctor.",
+    datePublished: "2026-09-28",
+    howTo: {
+      totalTime: "PT10M",
+      tools: ["Kitchen counter or sturdy chair back", "Firm chair without wheels", "Flat shoes with a firm sole"],
+      steps: [
+        { name: "One-leg stand", text: "Face the counter, fingertips on the edge. Lift one foot, hips level, standing knee soft. Hold 10 seconds, 3 holds per side. Build toward 30 seconds." },
+        { name: "Heel-to-toe walk", text: "Walk along the counter placing one heel directly in front of the other foot's toes, eyes forward. 10 to 20 steps, then turn and walk back." },
+        { name: "Sideways walk", text: "Feet together, knees slightly bent. Step sideways slowly with one foot and bring the other to meet it, hips level. 10 steps each way." },
+        { name: "Sit-to-stand", text: "Firm chair without wheels, arms crossed over the chest. Stand without using your hands, sit down slowly to a count of three. 10 reps. Use the armrests at first if you need them." },
+        { name: "Heel and toe raises", text: "Hold the counter. Rise onto the balls of the feet and lower slowly, 10 reps. Then rock back onto the heels and lift the toes, 10 reps." },
+      ],
+    },
+    faq: [
+      {
+        q: "What is the 10-second balance test?",
+        a: "Stand on one foot with the top of the other resting against the back of your standing calf, arms by your sides, eyes on a point ahead. Hold 10 seconds without touching down; you get three tries per foot. In a study of 1,702 adults aged 51 to 75, one in five couldn't do it, and after accounting for age and health, their risk of death over about seven years was 84% higher. That's an association, so use the test as a yardstick and retake it every four weeks.",
+      },
+      {
+        q: "Do balance exercises actually prevent falls?",
+        a: "Yes. In the Cochrane review of 108 trials in people 60 and over, exercise cut the rate of falls by 23%, balance and functional exercises alone by 24%, and balance combined with strength work by 34%. The Otago home program, which this routine borrows from, cut falls by 35% and worked as well in men as in women.",
+      },
+      {
+        q: "How often should I do balance exercises?",
+        a: "At least three days a week. Balance work is light enough to do daily, and the NHS sets two days a week of strength and balance work as the minimum for adults over 65. The trials with the biggest drop in falls challenged balance and added up to more than three hours of exercise a week, so walking and strength work belong alongside it.",
+      },
+      {
+        q: "Is it safe to do balance exercises with numbness in my feet?",
+        a: "Have a doctor check the numbness first, then do every exercise within reach of the counter. Numbness that's new or spreading, or numbness with a fall, needs a visit before a home routine. The [numbness guide](/guides/numbness-and-tingling-in-the-feet) covers what to rule out.",
+      },
+      {
+        q: "Should I do balance exercises barefoot or in shoes?",
+        a: "In flat shoes with a firm sole. Socks on a smooth floor can slide mid-hold. In a year-long study of older adults, the ones who fell at home were far more likely to go barefoot or in socks around the house, so shoes indoors help outside the routine too.",
+      },
+    ],
+    sources: [
+      {
+        label: "Cochrane \u2014 Exercise for preventing falls in older people living in the community (Sherrington 2019)",
+        url: "https://pubmed.ncbi.nlm.nih.gov/30703272/",
+      },
+      {
+        label: "PubMed \u2014 Exercise to prevent falls in older adults: updated meta-analysis (Sherrington 2017)",
+        url: "https://pubmed.ncbi.nlm.nih.gov/27707740/",
+      },
+      {
+        label: "PubMed \u2014 Otago home exercise program, falls and injuries (Robertson 2002)",
+        url: "https://pubmed.ncbi.nlm.nih.gov/12028179/",
+      },
+      {
+        label: "PubMed \u2014 10-second one-legged stance and survival (Araujo 2022)",
+        url: "https://pubmed.ncbi.nlm.nih.gov/35728834/",
+      },
+      {
+        label: "PubMed \u2014 Foot and ankle risk factors for falls in older people (Menz 2006)",
+        url: "https://pubmed.ncbi.nlm.nih.gov/16912106/",
+      },
+      {
+        label: "PubMed \u2014 Footwear and indoor and outdoor falls in older people (Menz 2006)",
+        url: "https://pubmed.ncbi.nlm.nih.gov/16645298/",
+      },
+      {
+        label: "BMJ \u2014 Podiatry intervention to prevent falls, randomised trial (Spink 2011)",
+        url: "https://pubmed.ncbi.nlm.nih.gov/21680622/",
+      },
+      {
+        label: "NHS \u2014 Balance exercises (2023)",
+        url: "https://www.nhs.uk/live-well/exercise/balance-exercises/",
+      },
+      {
+        label: "NHS \u2014 Physical activity guidelines for older adults",
+        url: "https://www.nhs.uk/live-well/exercise/physical-activity-guidelines-older-adults/",
+      },
+      {
+        label: "CDC \u2014 Older Adult Falls Data (2026)",
+        url: "https://www.cdc.gov/falls/data-research/index.html",
+      },
+    ],
+  },
   daily: {
     metaTitle: "The Nightly 5-Minute Foot-Care Checklist for Men Over 40",
     metaDescription:
