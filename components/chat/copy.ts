@@ -108,6 +108,17 @@ export const askCopy = {
         "Call 911 now if it's happening now, came on suddenly, or comes with sweating, nausea, or pain spreading to your arm, jaw, or back. Don't drive yourself. If it has been building over days or weeks, see a doctor today.",
       otherwise: "",
     },
+    // Face, speech, one-sided weakness, sudden vision or balance loss (CDC,
+    // B.E. F.A.S.T.). Its own copy because the 911 instructions differ.
+    stroke: {
+      heading: "These can be signs of a stroke",
+      body: "A drooping face, slurred speech, weakness or numbness on one side, sudden trouble seeing, or a sudden loss of balance can mean a stroke. The treatments that work best have to start within about three hours, so don't wait to see if it passes.",
+      nextHeading: "What to do next",
+      urgent:
+        "Call 911 now. Note the time the symptoms started and tell the dispatcher. Don't drive yourself or let someone drive you; paramedics can start treatment on the way.",
+      otherwise:
+        "If the symptoms came and went, get medical care right away anyway. A brief episode can be a mini-stroke (TIA), a warning that needs treatment.",
+    },
     tier1: {
       heading: "This is something to check with a doctor today",
       body: "What you described is on the short list of foot symptoms that need in-person care before any self-treatment. A clinician can rule out the serious causes in one visit, and most of these are easier to treat when they're seen early.",

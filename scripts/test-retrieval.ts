@@ -27,6 +27,7 @@ const QUESTIONS: { q: string; expectSlug: string | null }[] = [
   { q: "I sit at a desk all day, anything I can do for my feet at work", expectSlug: "office-day" },
   { q: "my knee hurts, could it be my feet", expectSlug: "knee-pain-that-starts-in-the-feet" },
   { q: "yellow thick toenails what works", expectSlug: "toenail-fungus-treatments-compared" },
+  { q: "I'm 64 and feel wobbly on my feet, what exercises help my balance", expectSlug: "balance" },
   { q: "what is the best pizza in Portland", expectSlug: null },
   { q: "how do I fix my car's alternator", expectSlug: null },
 ];

@@ -30,6 +30,14 @@ export type RoutineRef = {
  * full descriptions live on /routines/page.tsx, but we want a compact card
  * shape for the cross-link footer. */
 export const routines: Record<string, RoutineRef> = {
+  balance: {
+    anchor: "balance",
+    label: "Balance",
+    heading: "Ten minutes at the counter.",
+    time: "10 min · 3+ days a week",
+    action: "Take the 10-second one-leg test at the kitchen counter, then do the five balance exercises three days this week.",
+    href: "/routines/balance",
+  },
   daily: {
     anchor: "daily",
     label: "Daily",
@@ -84,6 +92,7 @@ export const routines: Record<string, RoutineRef> = {
     heading: "Antifungal protocol, skin and nail.",
     time: "2 min · twice daily",
     action: "Skin: OTC terbinafine cream twice daily for the full course, usually four weeks, and don't stop when it looks better. Nail: creams don't get through the plate, so get a clipping test first, then pick a treatment from the compared guide.",
+    href: "/guides/toenail-fungus-12-month-protocol",
   },
   recovery: {
     anchor: "recovery",
@@ -709,7 +718,7 @@ export const articleRelations: Record<
   },
   "numbness-and-tingling-in-the-feet": {
     reviews: ["kuru-atom-sneakers"],
-    routine: "movement",
+    routine: "balance",
     relatedArticles: ["ball-of-foot-pain-in-men-over-40", "what-your-dress-shoes-are-doing-to-your-feet", "diabetic-foot-care-men-over-40"],
   },
   "sprained-ankle-recovery-over-40": {

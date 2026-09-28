@@ -16,7 +16,7 @@ import { routineSeo } from "@/lib/guide-seo";
 export const metadata: Metadata = {
   title: { absolute: "Daily Foot-Care Routines for Men Over 40" },
   description:
-    "Stretches, soaks, daily habits, and treatment protocols for men over 40. Five to twenty minutes at a time, most days of the week — no gear required.",
+    "Stretches, soaks, daily habits, and treatment protocols for men over 40. Five to twenty minutes at a time, most days of the week, no gear required.",
   alternates: { canonical: "/routines" },
   openGraph: {
     title: "Daily Foot-Care Routines for Men Over 40",
@@ -29,9 +29,9 @@ export const metadata: Metadata = {
 
 // ── Routine categories ──────────────────────────────────────────────────────
 // Aphoristic card-closes swept per feedback_no_aphorisms.
-// href set on categories with a dedicated sub-page (shipped 2026-09-10):
-// movement / recovery / strength. Anchor id preserved on all six for legacy
-// links and internal cross-refs to `/routines#<anchor>`.
+// href set on every category: seven routine sub-pages plus treatment, which
+// links to the 12-month fungus protocol guide. Anchor ids stay on every card
+// because the assessment results and emails link to `/routines#<anchor>`.
 
 type RoutineCategory = {
   anchor: string;
@@ -43,14 +43,27 @@ type RoutineCategory = {
   icon: string;
   /** When set, the card becomes a clickable link to the full sub-page. */
   href?: string;
+  /** Link text when href isn't a routine sub-page. */
+  linkLabel?: string;
 };
 
-// Order per feedback_new_articles_top_of_list: newest first. The three
-// sub-pages shipped 2026-09-18 (daily, office-day, post-workout) lead;
-// the four shipped 2026-09-10 (movement/recovery/strength/weekly) follow;
-// the one remaining anchor-only category (treatment, still covered by
-// /guides/toenail-fungus-what-works) trails.
+// Order per feedback_new_articles_top_of_list: newest first. Balance
+// (2026-09-28) leads; the three sub-pages shipped 2026-09-18 (daily,
+// office-day, post-workout) follow, then the four shipped 2026-09-10
+// (movement/recovery/strength/weekly). Treatment, which points at a guide
+// rather than a routine page, trails.
 const categories: RoutineCategory[] = [
+  {
+    anchor: "balance",
+    label: "Balance",
+    heading: "Ten minutes at the counter.",
+    body:
+      "One-leg stands, heel-to-toe walks, sit-to-stands. Five exercises at the kitchen counter for men over 60, starting with the 10-second one-leg test.",
+    time: "10 min",
+    frequency: "3+ days a week",
+    icon: "🧍",
+    href: "/routines/balance",
+  },
   {
     anchor: "daily",
     label: "Daily",
@@ -131,12 +144,14 @@ const categories: RoutineCategory[] = [
   {
     anchor: "treatment",
     label: "Treatment",
-    heading: "Antifungal protocol.",
+    heading: "The 12-month fungus protocol.",
     body:
-      "Twice daily application, consistent for 4 to 6 weeks minimum. Most men stop at two weeks when it looks better. That is why recurrence rates run around 40%.",
+      "Skin fungus clears with about four weeks of cream. Nail fungus takes a year, because clear nail grows out from the base about a millimeter a month. The protocol covers the daily treatment, a monthly photo and trim, and what each stage should look like.",
     time: "2 min",
-    frequency: "Twice daily",
+    frequency: "Daily for 12 months",
     icon: "💊",
+    href: "/guides/toenail-fungus-12-month-protocol",
+    linkLabel: "Read the 12-month protocol →",
   },
 ];
 
@@ -245,7 +260,7 @@ export default function RoutinesPage() {
                     href={r.href}
                     className={`${type.small} mt-4 font-medium text-accent-600 underline-offset-4 hover:underline`}
                   >
-                    Read the full routine →
+                    {r.linkLabel ?? "Read the full routine →"}
                   </Link>
                 )}
               </Card>
@@ -260,13 +275,13 @@ export default function RoutinesPage() {
           <div className="md:flex md:items-center md:justify-between">
             <div className="max-w-xl">
               <h2 className={`${type.h2} text-ink`}>
-                Seven routines shipped.
+                Eight routines, each with its own page.
               </h2>
               <p className={`${type.lead} mt-3 text-neutral-600`}>
-                Daily, office day, post-workout, movement, recovery, strength,
-                and weekly all have full protocol pages. Only treatment is
-                still an anchor-only category. Subscribe for new routines as
-                they publish.
+                Balance, daily, office day, post-workout, movement, recovery,
+                strength, and weekly each have a full protocol page, and
+                treatment links to the 12-month fungus protocol. Subscribe for
+                new routines as they publish.
               </p>
             </div>
             <div className="mt-8 flex-shrink-0 md:ml-12 md:mt-0">

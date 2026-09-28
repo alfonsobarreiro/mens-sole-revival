@@ -274,7 +274,7 @@ export const EscalationPanel = forwardRef<HTMLHeadingElement, { tier: RedFlagTie
         <ul className="mt-3 list-disc space-y-3 pl-5 text-[1.0625rem] leading-[1.5] text-ink">
           <li id={urgentId}>{copy.urgent}</li>
           {copy.otherwise && <li>{copy.otherwise}</li>}
-          {tier !== "emergency" && (
+          {tier !== "emergency" && tier !== "stroke" && (
             <li>
               <Link href="/doctor-prep" className={linkClass}>
                 {askCopy.escalation.checklist}
