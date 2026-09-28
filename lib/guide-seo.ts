@@ -1963,6 +1963,10 @@ export const routineSeo: Record<string, GuideSeo> = {
         label: "CDC \u2014 Older Adult Falls Data (2026)",
         url: "https://www.cdc.gov/falls/data-research/index.html",
       },
+      {
+        label: "CDC \u2014 Signs and Symptoms of Stroke (2026)",
+        url: "https://www.cdc.gov/stroke/signs-symptoms/index.html",
+      },
     ],
   },
   daily: {

@@ -18,7 +18,7 @@ export type AssistantMessage = {
 
 export type ChatMessage = UserMessage | AssistantMessage;
 
-export type RedFlagTier = "emergency" | "tier1" | "tier2";
+export type RedFlagTier = "emergency" | "stroke" | "tier1" | "tier2";
 
 export type Notice =
   | { kind: "error" }
@@ -38,6 +38,7 @@ export const PREVIEW_STATES = [
   "redflag1",
   "redflag2",
   "redflag3",
+  "redflag4",
   "error",
   "ratelimit",
   "resting",

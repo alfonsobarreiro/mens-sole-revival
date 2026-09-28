@@ -26,8 +26,10 @@
  * signoff.
  */
 
-/** emergency: call 911 now. tier1: see a doctor today. tier2: see a clinician this week. */
-export type RedFlagTier = "emergency" | "tier1" | "tier2" | null;
+/** emergency: call 911 now (heart or lungs). stroke: call 911 now, with
+ *  stroke-specific instructions. tier1: see a doctor today. tier2: see a
+ *  clinician this week. */
+export type RedFlagTier = "emergency" | "stroke" | "tier1" | "tier2" | null;
 
 export type RedFlagMatch = {
   tier: Exclude<RedFlagTier, null>;
@@ -297,6 +299,42 @@ function soleBruise(message: string): boolean {
   return bruise.test(message) && sole.test(message) && !nail.test(message) && INJURY.test(message);
 }
 
+const SUDDEN = /\b(sudden(ly)?|all\s+of\s+a\s+sudden|out\s+of\s+nowhere)\b/;
+
+/**
+ * Stroke signs, per CDC and B.E. F.A.S.T.: a drooping face, slurred speech,
+ * one side of the body going weak or numb, and, when they come on suddenly,
+ * arm or leg weakness, trouble seeing, confusion, a severe headache, or loss
+ * of balance. Balance questions arrive with the balance routine, so everyday
+ * unsteadiness ("wobbly when I stand up") and trips stay out.
+ */
+function strokeSigns(message: string): boolean {
+  const face = /\b(face|mouth|smile)\b.{0,30}\b(droop\w*|sag\w*|lopsided|crooked)\b|\bdroop\w*\s+(face|mouth|smile)\b/;
+  const speech =
+    /\bslurr(ed|ing)\b|\b(words|speech)\s+(keeps?\s+)?(come|comes|came|coming)\s+out\s+(wrong|garbled|jumbled|funny|strange)\b|\bgarbled\s+(speech|words)\b|\b(trouble|difficulty|problems?)\s+(speaking|talking|getting\s+(my\s+)?words\s+out|finding\s+(the\s+)?words)\b(?!\s+(to|with|about))|\b(can\W?t|cannot|couldn\W?t)\s+(speak|talk|get\s+(my\s+)?words\s+out)\b(?!\s+(to|with|about))/;
+  if (face.test(message) || speech.test(message)) return true;
+
+  const weakOrNumb = /\b(weak\w*|numb\w*|tingl\w*|paraly\w*|limp|can\W?t\s+(move|lift|feel))\b/;
+  const oneSide = /\b(one|left|right)\s+side\s+of\s+(my\s+|his\s+|the\s+)?(body|face)\b|\bhalf\s+(of\s+)?(my|his)\s+(body|face)\b/;
+  if (oneSide.test(message) && weakOrNumb.test(message)) return true;
+
+  if (!SUDDEN.test(message)) return false;
+  if (/\b(arm|hand|face)\b/.test(message) && /\b(weak\w*|numb\w*|paraly\w*|limp|can\W?t\s+(move|lift|feel))\b/.test(message)) return true;
+  if (/\bleg\b/.test(message) && /\b(weak\w*|paraly\w*|can\W?t\s+(move|lift))\b/.test(message)) return true;
+  const vision =
+    /\b(lost|losing|loss\s+of|blurr?(y|ed)|double|dim)\s+(my\s+|the\s+)?(vision|sight|eyesight)\b|\b(vision|sight|eyesight)\s+(went|is|got|has\s+gone)\s+(\w+\s+)?(blurr?\w*|black|dark|dim|double)\b|\b(can\W?t|cannot|couldn\W?t)\s+see\s+(out\s+of|anything|clearly|properly)\b|\bblind\s+in\s+one\s+eye\b/;
+  if (vision.test(message)) return true;
+  if (/\bconfus(ed|ion)\b/.test(message)) return true;
+  if (/\b(severe|worst|terrible|excruciating)\s+headache\b/.test(message)) return true;
+  // Loss of balance or dizziness, unless something tripped you or it only
+  // comes with standing up or turning over (the balance routine covers those).
+  const balance =
+    /\b(lost|lose|losing|loss\s+of)\s+(my\s+)?balance\b|\boff\s+balance\b|\b(can\W?t|cannot|trouble)\s+walk(ing)?\s+straight\b|\b(keep|kept)\s+falling\b|\bfalling\s+over\b|\bdizz(y|iness)\b/;
+  const tripped = /\b(trip(ped)?|slip(ped)?|twist(ed)?|roll(ed)?|sprain(ed)?|stairs?|curb|ice|icy|wet\s+floor)\b/;
+  const positional = /\b(stand(ing)?\s+up|get(ting)?\s+up|roll(ing)?\s+over|turn(ing)?\s+my\s+head|bend(ing)?\s+(over|down)|lie\s+down|lying\s+down)\b/;
+  return balance.test(message) && !tripped.test(message) && !positional.test(message);
+}
+
 /**
  * Main entry. Returns the matched tier + label, or null if no red flag fires.
  * Returns the HIGHEST-severity match if multiple patterns hit (Tier 1 > 2 > 3).
@@ -323,6 +361,9 @@ export function classifyRedFlag(rawMessage: string): RedFlagMatch | null {
   // 1. Call 911: always wins, whatever else the message says.
   const emergency = fromPatterns("emergency");
   if (emergency) return emergency;
+  if (strokeSigns(message)) {
+    return { tier: "stroke", label: "stroke signs (call 911)", matched: "face, speech, one side, or sudden B.E. F.A.S.T. sign" };
+  }
 
   // 2. Doctor today: AND-conditions first, then the pattern list.
   if (diabetesPlusWound(message)) {
@@ -414,4 +455,21 @@ export const RED_FLAG_TEST_CASES: {
   { message: "numbness in toes when I run", expected: null, reason: "shoe-related numbness: the guide answers it" },
   { message: "the numbness in my foot keeps spreading", expected: "tier2", reason: "spreading numbness" },
   { message: "I get chest pain when I walk and my feet swell", expected: "emergency", reason: "chest pain wins over everything" },
+  // Added 2026-09-28 with the balance routine: stroke signs call 911, everyday unsteadiness doesn't.
+  { message: "I suddenly lost my balance and my left arm feels weak", expected: "stroke", reason: "sudden balance loss + arm weakness" },
+  { message: "all of a sudden I can't walk straight and my speech is slurred", expected: "stroke", reason: "slurred speech" },
+  { message: "my face is drooping and I keep falling over", expected: "stroke", reason: "face droop" },
+  { message: "the left side of my body went numb", expected: "stroke", reason: "one side of the body numb" },
+  { message: "I suddenly can't see out of one eye and my foot feels numb", expected: "stroke", reason: "sudden vision loss" },
+  { message: "sudden severe headache and my leg feels weak", expected: "stroke", reason: "sudden severe headache" },
+  { message: "I suddenly lost my balance for no reason", expected: "stroke", reason: "sudden balance loss, no trip" },
+  { message: "I feel wobbly when I stand up in the morning", expected: null, reason: "everyday unsteadiness: the balance routine answers it" },
+  { message: "what exercises help my balance after 60", expected: null, reason: "how-to question" },
+  { message: "I suddenly lost my balance on the stairs and twisted my ankle", expected: null, reason: "a trip, not a stroke sign" },
+  { message: "I get suddenly dizzy when I stand up", expected: null, reason: "positional dizziness: see a doctor, not 911" },
+  { message: "numbness on one side of my foot", expected: null, reason: "one side of the foot, not the body" },
+  { message: "can a stroke cause foot drop?", expected: null, reason: "information question" },
+  { message: "my words keep coming out wrong", expected: "stroke", reason: "speech trouble" },
+  { message: "I have trouble talking to my doctor about my feet", expected: null, reason: "not a speech problem" },
+  { message: "I suddenly got a blister on my sole and can't see it well", expected: null, reason: "can't see the blister, not vision loss" },
 ];

@@ -10,8 +10,8 @@ export default function Page() {
   return (
     <SiteLayout>
       <ArticleLayout
-        heroSrc="/images/pexels-8700843.jpg"
-        heroAlt="A man holding a lunge on grass, front knee bent, rear leg long"
+        heroSrc="/images/pexels-6975771.jpg"
+        heroAlt="A gray-bearded man standing on one leg in his living room, one knee raised and one arm out for balance"
         title="The 10-Minute Balance Routine"
         category="Balance Routine"
         readTime="7 min"
