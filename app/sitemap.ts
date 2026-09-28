@@ -13,7 +13,7 @@ import { ASK_LAUNCHED } from "@/lib/chat/launch";
 // distrust the sitemap since every URL claimed to change on every build.
 const ROUTE_LASTMOD: Record<string, string> = {
   // Listed only once the launch switch is on (lib/chat/launch.ts).
-  ...(ASK_LAUNCHED ? { "/ask": "2026-09-21" } : {}),
+  ...(ASK_LAUNCHED ? { "/ask": "2026-09-28" } : {}),
   "": "2026-08-14",
   "/about": "2026-08-14",
   "/privacy": "2026-09-25",

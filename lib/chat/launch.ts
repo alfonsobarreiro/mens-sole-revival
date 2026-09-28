@@ -12,4 +12,5 @@
  *   3. Voice pass done on components/chat/copy.ts and the red-flag list
  *   4. Update the /ask date in app/sitemap.ts to the launch day
  */
-export const ASK_LAUNCHED = false;
+// Launched 2026-09-28.
+export const ASK_LAUNCHED = true;
