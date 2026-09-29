@@ -31,7 +31,7 @@ export const askCopy = {
     /** Read after the counter, e.g. "450 / 500 characters". */
     characters: "characters",
     privacy:
-      "Alfred isn't a doctor. What you type goes to Claude, by Anthropic, and isn't saved. Leave out your name and contact details.",
+      "Alfred isn't a doctor. What you type goes to Voyage AI and Anthropic to find guides and write the answer. This site doesn't save it. Leave out your name and contact details.",
     tooLong: "Keep it under 500 characters.",
   },
 
@@ -99,7 +99,7 @@ export const askCopy = {
   },
 
   escalation: {
-    // Chest pain, trouble breathing, coughing blood. Shown instead of tier 1.
+    // Chest pain, trouble breathing, coughing blood. Outranks every other tier.
     emergency: {
       heading: "Chest pain or trouble breathing needs care now",
       body: "These can come from the heart or from a blood clot in the lungs, with or without a foot problem. Don't wait to see if it passes.",
@@ -119,14 +119,25 @@ export const askCopy = {
       otherwise:
         "If the symptoms came and went, get medical care right away anyway. A brief episode can be a mini-stroke (TIA), a warning that needs treatment.",
     },
+    // Blue, black, or pale foot; clot; spreading redness or red streaks;
+    // fever; can't bear weight after an injury; sudden severe pain.
+    urgent: {
+      heading: "Get this seen now, at urgent care or an ER",
+      body: "What you described can mean a blocked artery, a blood clot, a spreading infection, or a broken bone, and it can't wait for an appointment.",
+      nextHeading: "What to do next",
+      urgent: "Go now. Call 911 if you also have chest pain or trouble breathing, or can't get there safely.",
+      otherwise: "",
+    },
+    // Diabetes plus a wound, Charcot signs, one cold foot, one foot warm and
+    // swollen with no injury, bruising on the sole after an injury.
     tier1: {
       heading: "This is something to check with a doctor today",
       body: "What you described is on the short list of foot symptoms that need in-person care before any self-treatment. A clinician can rule out the serious causes in one visit, and most of these are easier to treat when they're seen early.",
       nextHeading: "What to do next",
       urgent:
-        "Call 911 if you also have chest pain or trouble breathing. Go to urgent care or an ER now if any of these are true: the foot is black, blue, or very pale; one calf or leg is suddenly swollen, warm, or painful; you have a fever; you can't put weight on it; redness is spreading; the pain came on suddenly and is severe; or you have diabetes and an open wound.",
+        "Call a podiatrist or your doctor and ask to be seen today. If you can't get in, go to urgent care.",
       otherwise:
-        "Otherwise, call a podiatrist and ask for a same-day or next-day appointment. Many keep slots for urgent problems.",
+        "Go now if the foot turns black, blue, or very pale, redness starts spreading, or you get a fever.",
     },
     tier2: {
       heading: "This is worth a clinician visit this week",

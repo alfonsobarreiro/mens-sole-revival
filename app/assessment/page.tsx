@@ -22,6 +22,9 @@ import {
 } from "@/lib/assessment-routing";
 import { trackAssessment } from "@/lib/analytics";
 
+/** `?from=` values recorded on assessment_started. */
+const ASSESSMENT_SOURCES = ["ask"];
+
 // ── Types ────────────────────────────────────────────────────
 
 interface CheckItem {
@@ -383,7 +386,10 @@ export default function AssessmentPage() {
   }
 
   function startTriage() {
-    trackAssessment("assessment_started", {});
+    // Where the visit came from, when a link tagged it (?from=ask from Alfred).
+    // Allow-listed so the param can't put arbitrary text into analytics.
+    const from = new URLSearchParams(window.location.search).get("from");
+    trackAssessment("assessment_started", from && ASSESSMENT_SOURCES.includes(from) ? { from } : {});
     setPhase("triage");
     window.scrollTo({ top: 0, behavior: "smooth" });
   }

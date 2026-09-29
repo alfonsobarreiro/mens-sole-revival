@@ -1,9 +1,9 @@
 /**
  * Red-flag triage for the MSR chatbot.
  *
- * Runs BEFORE the Claude Q&A call, on the raw user message. If any Tier 1 or
- * Tier 2 pattern matches, the route handler halts Q&A and shows the
- * escalation state.
+ * Runs BEFORE the Claude Q&A call, on the raw user message. If any pattern
+ * matches, the route handler halts Q&A and shows the escalation state for
+ * that tier.
  *
  * Layer 1 (this file): regex-based fast path. Deterministic, zero-latency,
  * zero-cost. Catches the obvious patterns. Errs on the side of MORE flags
@@ -27,9 +27,11 @@
  */
 
 /** emergency: call 911 now (heart or lungs). stroke: call 911 now, with
- *  stroke-specific instructions. tier1: see a doctor today. tier2: see a
- *  clinician this week. */
-export type RedFlagTier = "emergency" | "stroke" | "tier1" | "tier2" | null;
+ *  stroke-specific instructions. urgent: go to urgent care or an ER now.
+ *  tier1: see a doctor today. tier2: see a clinician this week.
+ *  Each tier's screen has its own heading, so a symptom that needs the ER
+ *  never lands under a see-a-doctor-today heading. */
+export type RedFlagTier = "emergency" | "stroke" | "urgent" | "tier1" | "tier2" | null;
 
 export type RedFlagMatch = {
   tier: Exclude<RedFlagTier, null>;
@@ -54,7 +56,8 @@ type Pattern = {
 // cost is trivial vs the API call that follows).
 
 const PATTERNS: Pattern[] = [
-  // ── TIER 1 — Emergency (ER now) ────────────────────────────────────────────
+  // ── Urgent (go now) and tier 1 (doctor today). classifyRedFlag() checks
+  //    urgent before tier 1, whatever the order here. ─────────────────────────
   {
     tier: "tier1",
     label: "diabetes plus wound/blister/sore",
@@ -63,18 +66,12 @@ const PATTERNS: Pattern[] = [
     patterns: [/__DIABETES_PLUS_WOUND__/],
   },
   {
-    tier: "tier1",
-    label: "foot turning black/blue/pale or cold foot",
+    tier: "urgent",
+    label: "foot turning black/blue/pale (possible blocked artery)",
     patterns: [
       // Colours of poor blood flow, for any foot word, allowing a word or two
       // in between ("my foot is suddenly pale").
       /\b(foot|toe|toes|feet|leg)\s+(is|are|turned|turning|went|going|looks?|feels?)\s+(?:\w+\s+){0,2}(black|blue|dusky|purple|pale|white)\b/,
-      // Cold on its own is only a flag for ONE foot. Both feet cold is the
-      // everyday complaint the cold-feet guide answers; sudden cold in both
-      // feet is caught by suddenColdFoot() below.
-      /\bmy\s+(left\s+|right\s+)?foot\s+(is|went|turned|feels?)\s+(?:\w+\s+){0,2}(cold|freezing|ice\s+cold|frozen)\b/,
-      /\bcold\s+foot\b/,
-      /\bone\s+foot\b.{0,40}\b(cold|colder)\b/,
       /\bblack(en|ening)?\s+(toe|foot|skin|tissue|nail)\b/,
       /\bgangren(e|ous)\b/,
       /\bpallor\b.*\bfoot\b/,
@@ -83,6 +80,18 @@ const PATTERNS: Pattern[] = [
   },
   {
     tier: "tier1",
+    label: "one cold foot",
+    patterns: [
+      // Cold on its own is only a flag for ONE foot. Both feet cold is the
+      // everyday complaint the cold-feet guide answers. Sudden cold, in one
+      // foot or both, is caught by suddenColdFoot() and goes to urgent.
+      /\bmy\s+(left\s+|right\s+)?foot\s+(is|went|turned|feels?)\s+(?:\w+\s+){0,2}(cold|freezing|ice\s+cold|frozen)\b/,
+      /\bcold\s+foot\b/,
+      /\bone\s+foot\b.{0,40}\b(cold|colder)\b/,
+    ],
+  },
+  {
+    tier: "urgent",
     label: "spreading redness / red streaks / pus",
     patterns: [
       /\bspreading\s+(redness|red)\b/,
@@ -96,7 +105,7 @@ const PATTERNS: Pattern[] = [
     ],
   },
   {
-    tier: "tier1",
+    tier: "urgent",
     label: "fever or chills with foot problem",
     patterns: [
       // "I have a fever", "with a fever", "fever and a red toe"; not "does X cause a fever?"
@@ -109,7 +118,7 @@ const PATTERNS: Pattern[] = [
     ],
   },
   {
-    tier: "tier1",
+    tier: "urgent",
     label: "cannot bear weight after injury",
     patterns: [
       /\b(can\W?t|cannot|unable\s+to)\s+(bear\s+weight|put\s+(any\s+)?(weight|pressure))\b/,
@@ -121,7 +130,7 @@ const PATTERNS: Pattern[] = [
     ],
   },
   {
-    tier: "tier1",
+    tier: "urgent",
     label: "sudden severe pain out of nowhere",
     patterns: [
       /\bsudden(ly)?\s+(severe|sharp|excruciat|intense|unbearab|terrible)\b/,
@@ -141,7 +150,7 @@ const PATTERNS: Pattern[] = [
     ],
   },
   {
-    tier: "tier1",
+    tier: "urgent",
     label: "possible blood clot (one leg or calf swollen)",
     patterns: [
       /\b(dvt|deep\s+vein\s+thrombosis|blood\s+clot)\b/,
@@ -153,7 +162,7 @@ const PATTERNS: Pattern[] = [
     ],
   },
   {
-    tier: "tier1",
+    tier: "urgent",
     label: "sudden cold, pale foot (possible blocked artery)",
     patterns: [/__SUDDEN_COLD_FOOT__/],
   },
@@ -337,7 +346,8 @@ function strokeSigns(message: string): boolean {
 
 /**
  * Main entry. Returns the matched tier + label, or null if no red flag fires.
- * Returns the HIGHEST-severity match if multiple patterns hit (Tier 1 > 2 > 3).
+ * Returns the HIGHEST-severity match if multiple patterns hit
+ * (911 > urgent > doctor today > this week).
  *
  * The caller is expected to call this on the user's raw message BEFORE
  * embedding, BEFORE retrieval, BEFORE any Claude call. Cheap, sync, ~<1ms.
@@ -365,7 +375,18 @@ export function classifyRedFlag(rawMessage: string): RedFlagMatch | null {
     return { tier: "stroke", label: "stroke signs (call 911)", matched: "face, speech, one side, or sudden B.E. F.A.S.T. sign" };
   }
 
-  // 2. Doctor today: AND-conditions first, then the pattern list.
+  // 2. Go now, to urgent care or an ER. Before the doctor-today checks, so a
+  //    blue foot outranks the diabetes-plus-wound match in the same message.
+  if (suddenColdFoot(message)) {
+    return { tier: "urgent", label: "sudden cold, pale foot (possible blocked artery)", matched: "sudden + cold/pale + foot" };
+  }
+  if (cantWalkAfterInjury(message)) {
+    return { tier: "urgent", label: "cannot bear weight after injury", matched: "can't walk/stand + injury or sudden" };
+  }
+  const urgent = fromPatterns("urgent");
+  if (urgent) return urgent;
+
+  // 3. Doctor today: AND-conditions first, then the pattern list.
   if (diabetesPlusWound(message)) {
     return { tier: "tier1", label: "diabetes plus wound/blister/sore", matched: "diabetes + wound co-occurrence" };
   }
@@ -376,22 +397,16 @@ export function classifyRedFlag(rawMessage: string): RedFlagMatch | null {
       matched: "diabetes + warm/red/swollen without wound",
     };
   }
-  if (suddenColdFoot(message)) {
-    return { tier: "tier1", label: "sudden cold, pale foot (possible blocked artery)", matched: "sudden + cold/pale + foot" };
-  }
   if (oneSidedWarmSwelling(message)) {
     return { tier: "tier1", label: "one-sided warm swelling with no injury", matched: "one ankle/foot + swollen + warm, no injury" };
   }
   if (soleBruise(message)) {
     return { tier: "tier1", label: "bruising on the sole after an injury (possible midfoot injury)", matched: "bruise + sole + injury" };
   }
-  if (cantWalkAfterInjury(message)) {
-    return { tier: "tier1", label: "cannot bear weight after injury", matched: "can't walk/stand + injury or sudden" };
-  }
   const tier1 = fromPatterns("tier1");
   if (tier1) return tier1;
 
-  // 3. This week.
+  // 4. This week.
   if (nightPain(message)) {
     return { tier: "tier2", label: "nighttime foot pain waking the user up", matched: "night pain, not cramps" };
   }
@@ -409,10 +424,10 @@ export const RED_FLAG_TEST_CASES: {
 }[] = [
   { message: "My heel hurts in the morning", expected: null, reason: "classic PF, not a red flag" },
   { message: "I'm diabetic and I have an open blister on my heel", expected: "tier1", reason: "diabetes + wound" },
-  { message: "My foot turned blue last night", expected: "tier1", reason: "blue foot = arterial obstruction sign" },
+  { message: "My foot turned blue last night", expected: "urgent", reason: "blue foot = arterial obstruction sign" },
   { message: "I have diabetes and my foot feels warm, red, and swollen", expected: "tier1", reason: "possible Charcot" },
-  { message: "Sudden severe pain in my heel out of nowhere", expected: "tier1", reason: "sudden severe pain" },
-  { message: "Red streaks going up my leg from the sore", expected: "tier1", reason: "lymphangitis sign" },
+  { message: "Sudden severe pain in my heel out of nowhere", expected: "urgent", reason: "sudden severe pain" },
+  { message: "Red streaks going up my leg from the sore", expected: "urgent", reason: "lymphangitis sign" },
   { message: "I have a wound on my foot that hasn't healed in 3 weeks", expected: "tier2", reason: "non-healing wound" },
   { message: "New numbness in my toes after I twisted my ankle", expected: "tier2", reason: "post-injury nerve involvement" },
   { message: "Foot pain wakes me up at night", expected: "tier2", reason: "nighttime pain pattern" },
@@ -420,12 +435,12 @@ export const RED_FLAG_TEST_CASES: {
   { message: "What are the best insoles for standing all day?", expected: null, reason: "shopping question, not medical" },
   { message: "How do I trim my toenails to prevent ingrowth?", expected: null, reason: "how-to question" },
   // Added 2026-09-25 with the swollen-feet, cold-feet, gout, top-of-foot guides.
-  { message: "my left calf is swollen and hurts and my ankle is puffy", expected: "tier1", reason: "possible DVT" },
-  { message: "one leg is swollen and warm since my flight", expected: "tier1", reason: "possible DVT after travel" },
+  { message: "my left calf is swollen and hurts and my ankle is puffy", expected: "urgent", reason: "possible DVT" },
+  { message: "one leg is swollen and warm since my flight", expected: "urgent", reason: "possible DVT after travel" },
   { message: "my ankles are swollen and I get short of breath lying down", expected: "emergency", reason: "possible heart failure" },
   { message: "swollen feet and chest pain", expected: "emergency", reason: "chest pain: call 911" },
   { message: "my feet are swollen and I can't breathe well", expected: "emergency", reason: "breathing trouble: call 911" },
-  { message: "my foot is suddenly cold, pale and numb", expected: "tier1", reason: "possible blocked artery" },
+  { message: "my foot is suddenly cold, pale and numb", expected: "urgent", reason: "possible blocked artery" },
   { message: "my right foot is swollen and warm but I didn't hurt it", expected: "tier1", reason: "one-sided warm swelling" },
   { message: "the top of my foot is swollen after I twisted it and bruised underneath", expected: "tier1", reason: "possible Lisfranc injury" },
   { message: "my big toe joint is red hot and swollen overnight", expected: "tier2", reason: "gout or infection" },
@@ -443,12 +458,12 @@ export const RED_FLAG_TEST_CASES: {
   // Added 2026-09-28 after the copy review: everyday questions that used to trip a warning.
   { message: "I can't stand for long at work because my feet hurt", expected: null, reason: "long day on the feet, not an injury" },
   { message: "I can't walk far without heel pain", expected: null, reason: "heel pain guide answers it" },
-  { message: "I twisted my ankle and now I can't walk", expected: "tier1", reason: "can't walk after an injury" },
-  { message: "I suddenly can't stand on my left foot", expected: "tier1", reason: "sudden loss of weight-bearing" },
+  { message: "I twisted my ankle and now I can't walk", expected: "urgent", reason: "can't walk after an injury" },
+  { message: "I suddenly can't stand on my left foot", expected: "urgent", reason: "sudden loss of weight-bearing" },
   { message: "does athlete's foot cause a fever?", expected: null, reason: "asking about fever, not reporting one" },
-  { message: "I have a fever and my toe is red and swollen", expected: "tier1", reason: "fever with a foot problem" },
+  { message: "I have a fever and my toe is red and swollen", expected: "urgent", reason: "fever with a foot problem" },
   { message: "my ingrown toenail has a little pus", expected: "tier2", reason: "pus alone: this week" },
-  { message: "my wound smells bad", expected: "tier1", reason: "smell from a wound" },
+  { message: "my wound smells bad", expected: "urgent", reason: "smell from a wound" },
   { message: "my feet have a bad smell", expected: null, reason: "foot odor: the guide answers it" },
   { message: "calf cramps wake me up at night", expected: null, reason: "night cramps: the cramps guide answers it" },
   { message: "my heel pain wakes me up", expected: "tier2", reason: "night pain stays a flag" },
@@ -472,4 +487,9 @@ export const RED_FLAG_TEST_CASES: {
   { message: "my words keep coming out wrong", expected: "stroke", reason: "speech trouble" },
   { message: "I have trouble talking to my doctor about my feet", expected: null, reason: "not a speech problem" },
   { message: "I suddenly got a blister on my sole and can't see it well", expected: null, reason: "can't see the blister, not vision loss" },
+  // Added 2026-09-28 after the case-study fact check: go-now symptoms get the
+  // urgent screen, and outrank the doctor-today checks in the same message.
+  { message: "My foot turned blue and I have diabetes with an open wound", expected: "urgent", reason: "blue foot outranks diabetes + wound" },
+  { message: "I'm diabetic, my toe went black and I have a blister", expected: "urgent", reason: "black toe outranks diabetes + wound" },
+  { message: "I have diabetes and a fever and a sore on my foot", expected: "urgent", reason: "fever outranks diabetes + wound" },
 ];

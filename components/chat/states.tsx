@@ -234,7 +234,7 @@ export function AssistantRow({
           ) : (
             <>
               {askCopy.nextStep.body}{" "}
-              <Link href="/assessment" className={linkClass}>
+              <Link href="/assessment?from=ask" className={linkClass}>
                 {askCopy.nextStep.link}
               </Link>
             </>
@@ -274,7 +274,8 @@ export const EscalationPanel = forwardRef<HTMLHeadingElement, { tier: RedFlagTie
         <ul className="mt-3 list-disc space-y-3 pl-5 text-[1.0625rem] leading-[1.5] text-ink">
           <li id={urgentId}>{copy.urgent}</li>
           {copy.otherwise && <li>{copy.otherwise}</li>}
-          {tier !== "emergency" && tier !== "stroke" && (
+          {/* The visit checklist fits a booked appointment, not a trip to the ER. */}
+          {(tier === "tier1" || tier === "tier2") && (
             <li>
               <Link href="/doctor-prep" className={linkClass}>
                 {askCopy.escalation.checklist}
@@ -331,7 +332,7 @@ export const NoticePanel = forwardRef<
         </Link>
         {notice.kind !== "error" && (
           <>
-            <Link href="/assessment" className={`${linkClass} text-[0.9375rem]`}>
+            <Link href="/assessment?from=ask" className={`${linkClass} text-[0.9375rem]`}>
               {askCopy.notice.assessment}
             </Link>
             <Link href="/doctor-prep" className={`${linkClass} text-[0.9375rem]`}>
