@@ -68,7 +68,7 @@ export function track(event: string, params: Record<string, unknown> = {}): void
 // ── Assessment event taxonomy ─────────────────────────────────────────────
 //
 // Lifecycle (in order a single session emits them):
-//   assessment_started       — user clicks "Start the assessment" on intro
+//   assessment_started       — user clicks "Start the assessment" on intro  { from?: "ask" }
 //   assessment_triage_done   — user picks symptoms (or "show me everything") + advances
 //   assessment_section_done  — user finishes a section (one event per section)
 //   assessment_section_skip  — user skips the active section

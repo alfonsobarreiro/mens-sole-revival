@@ -129,6 +129,12 @@ export function previewSnapshot(state: PreviewState): ChatSnapshot {
         escalation: "emergency",
         messages: [user("My feet are swollen and I have chest pain")],
       };
+    case "redflag5":
+      return {
+        ...idle,
+        escalation: "urgent",
+        messages: [user("My foot turned blue last night")],
+      };
     case "redflag4":
       return {
         ...idle,
